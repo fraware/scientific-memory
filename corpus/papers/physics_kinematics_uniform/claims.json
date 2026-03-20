@@ -5,8 +5,14 @@
     "section": "1",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 0 },
-      "end": { "page": 1, "offset": 80 }
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 80
+      }
     },
     "informal_text": "Under constant acceleration, final velocity u + a t equals u + t a over rationals.",
     "claim_type": "theorem",
@@ -31,8 +37,14 @@
     "section": "1",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 81 },
-      "end": { "page": 1, "offset": 160 }
+      "start": {
+        "page": 1,
+        "offset": 81
+      },
+      "end": {
+        "page": 1,
+        "offset": 160
+      }
     },
     "informal_text": "Displacement u t + (1/2) a t^2 rearranges to t (u + (1/2) a t).",
     "claim_type": "theorem",
@@ -57,8 +69,14 @@
     "section": "1",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 161 },
-      "end": { "page": 1, "offset": 220 }
+      "start": {
+        "page": 1,
+        "offset": 161
+      },
+      "end": {
+        "page": 1,
+        "offset": 220
+      }
     },
     "informal_text": "Velocity change over interval dt: (u + a dt) - u = a dt.",
     "claim_type": "theorem",
@@ -83,10 +101,16 @@
     "section": "2",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 221 },
-      "end": { "page": 1, "offset": 320 }
+      "start": {
+        "page": 1,
+        "offset": 221
+      },
+      "end": {
+        "page": 1,
+        "offset": 320
+      }
     },
-    "informal_text": "Displacement over 2T equals twice displacement over T plus a T^2 (kinematics identity in ℚ).",
+    "informal_text": "Displacement over 2T equals twice displacement over T plus a T^2 (kinematics identity in \u211a).",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -109,8 +133,14 @@
     "section": "2",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 321 },
-      "end": { "page": 1, "offset": 400 }
+      "start": {
+        "page": 1,
+        "offset": 321
+      },
+      "end": {
+        "page": 1,
+        "offset": 400
+      }
     },
     "informal_text": "Sum of two equal halves of (u+v) equals u+v.",
     "claim_type": "theorem",
@@ -120,7 +150,9 @@
       "physics_kinematics_uniform_symbol_u",
       "physics_kinematics_uniform_symbol_v"
     ],
-    "linked_assumptions": ["physics_kinematics_uniform_assumption_002"],
+    "linked_assumptions": [
+      "physics_kinematics_uniform_assumption_002"
+    ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints"
     ]
@@ -131,8 +163,14 @@
     "section": "3",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 401 },
-      "end": { "page": 1, "offset": 500 }
+      "start": {
+        "page": 1,
+        "offset": 401
+      },
+      "end": {
+        "page": 1,
+        "offset": 500
+      }
     },
     "informal_text": "Acceleration from velocity change: (dv/dt)*dt = dv when dt is nonzero.",
     "claim_type": "theorem",
@@ -156,10 +194,16 @@
     "section": "4",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 501 },
-      "end": { "page": 1, "offset": 580 }
+      "start": {
+        "page": 1,
+        "offset": 501
+      },
+      "end": {
+        "page": 1,
+        "offset": 580
+      }
     },
-    "informal_text": "Squared final velocity (u + a t)^2 expands to u^2 + 2 u a t + (a t)^2 in ℚ.",
+    "informal_text": "Squared final velocity (u + a t)^2 expands to u^2 + 2 u a t + (a t)^2 in \u211a.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -182,10 +226,16 @@
     "section": "4",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 581 },
-      "end": { "page": 1, "offset": 680 }
+      "start": {
+        "page": 1,
+        "offset": 581
+      },
+      "end": {
+        "page": 1,
+        "offset": 680
+      }
     },
-    "informal_text": "Torricelli-style identity: (u + a t)^2 = u^2 + 2 a (u t + ½ a t^2) for uniform acceleration in ℚ.",
+    "informal_text": "Torricelli-style identity: (u + a t)^2 = u^2 + 2 a (u t + \u00bd a t^2) for uniform acceleration in \u211a.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -208,10 +258,16 @@
     "section": "5",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 681 },
-      "end": { "page": 1, "offset": 760 }
+      "start": {
+        "page": 1,
+        "offset": 681
+      },
+      "end": {
+        "page": 1,
+        "offset": 760
+      }
     },
-    "informal_text": "With zero acceleration, u + 0·t = u (velocity unchanged in ℚ).",
+    "informal_text": "With zero acceleration, u + 0\u00b7t = u (velocity unchanged in \u211a).",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -219,7 +275,9 @@
       "physics_kinematics_uniform_symbol_u",
       "physics_kinematics_uniform_symbol_t"
     ],
-    "linked_assumptions": ["physics_kinematics_uniform_assumption_002"],
+    "linked_assumptions": [
+      "physics_kinematics_uniform_assumption_002"
+    ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant"
     ]
@@ -230,10 +288,16 @@
     "section": "5",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 761 },
-      "end": { "page": 1, "offset": 840 }
+      "start": {
+        "page": 1,
+        "offset": 761
+      },
+      "end": {
+        "page": 1,
+        "offset": 840
+      }
     },
-    "informal_text": "At t = 0, displacement u·0 + ½ a·0^2 = 0.",
+    "informal_text": "At t = 0, displacement u\u00b70 + \u00bd a\u00b70^2 = 0.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -255,10 +319,16 @@
     "section": "6",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 841 },
-      "end": { "page": 1, "offset": 940 }
+      "start": {
+        "page": 1,
+        "offset": 841
+      },
+      "end": {
+        "page": 1,
+        "offset": 940
+      }
     },
-    "informal_text": "Average of initial and final speeds times t equals u t + ½ a t^2 when v = u + a t.",
+    "informal_text": "Average of initial and final speeds times t equals u t + \u00bd a t^2 when v = u + a t.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -281,10 +351,16 @@
     "section": "6",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 941 },
-      "end": { "page": 1, "offset": 1040 }
+      "start": {
+        "page": 1,
+        "offset": 941
+      },
+      "end": {
+        "page": 1,
+        "offset": 1040
+      }
     },
-    "informal_text": "Velocity composition: u + a(t + s) = (u + a t) + a s for fixed a in ℚ.",
+    "informal_text": "Velocity composition: u + a(t + s) = (u + a t) + a s for fixed a in \u211a.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -308,10 +384,16 @@
     "section": "7",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 1041 },
-      "end": { "page": 1, "offset": 1140 }
+      "start": {
+        "page": 1,
+        "offset": 1041
+      },
+      "end": {
+        "page": 1,
+        "offset": 1140
+      }
     },
-    "informal_text": "Standard displacement formula is additive in initial velocity: (u1+u2)t + ½ a t^2 = u1 t + u2 t + ½ a t^2.",
+    "informal_text": "Standard displacement formula is additive in initial velocity: (u1+u2)t + \u00bd a t^2 = u1 t + u2 t + \u00bd a t^2.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -335,10 +417,16 @@
     "section": "7",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 1141 },
-      "end": { "page": 1, "offset": 1220 }
+      "start": {
+        "page": 1,
+        "offset": 1141
+      },
+      "end": {
+        "page": 1,
+        "offset": 1220
+      }
     },
-    "informal_text": "Doubling the half-quadratic term: 2·(½ a t^2) = a t^2 in ℚ.",
+    "informal_text": "Doubling the half-quadratic term: 2\u00b7(\u00bd a t^2) = a t^2 in \u211a.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -346,7 +434,9 @@
       "physics_kinematics_uniform_symbol_a",
       "physics_kinematics_uniform_symbol_t"
     ],
-    "linked_assumptions": ["physics_kinematics_uniform_assumption_002"],
+    "linked_assumptions": [
+      "physics_kinematics_uniform_assumption_002"
+    ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term"
     ]
@@ -357,10 +447,16 @@
     "section": "8",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 1221 },
-      "end": { "page": 1, "offset": 1320 }
+      "start": {
+        "page": 1,
+        "offset": 1221
+      },
+      "end": {
+        "page": 1,
+        "offset": 1320
+      }
     },
-    "informal_text": "Mean acceleration ((u + a Δt) - u) / Δt equals a when Δt ≠ 0 in ℚ.",
+    "informal_text": "Mean acceleration ((u + a \u0394t) - u) / \u0394t equals a when \u0394t \u2260 0 in \u211a.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",

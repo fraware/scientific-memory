@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/llm_lean_proposals.schema.json",
+  "title": "LLM Lean proposals (human review only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "paper_id",
+    "schema_version",
+    "verification_boundary",
+    "proposals"
+  ],
+  "properties": {
+    "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "verification_boundary": {
+      "type": "string",
+      "const": "human_review_only"
+    },
+    "metadata": { "$ref": "llm_run_provenance.schema.json" },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "proposal_id",
+          "paper_id",
+          "target_file",
+          "edit_kind"
+        ],
+        "properties": {
+          "proposal_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Stable id for human review and converter selection"
+          },
+          "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+          "claim_id": { "type": "string" },
+          "target_file": {
+            "type": "string",
+            "description": "Repo-relative Lean path under formal/ (e.g. formal/ScientificMemory/Foo.lean)"
+          },
+          "target_decl": {
+            "type": "string",
+            "description": "Short declaration name or focus hint (informational)"
+          },
+          "edit_kind": {
+            "type": "string",
+            "enum": ["new_theorem", "proof_repair", "lemma_extraction"]
+          },
+          "replacements": {
+            "type": "array",
+            "description": "Find/replace pairs; when non-empty, convertible to proof_repair_apply_bundle",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["find", "replace"],
+              "properties": {
+                "find": { "type": "string", "minLength": 1 },
+                "replace": { "type": "string" }
+              }
+            }
+          },
+          "patch_text": {
+            "type": "string",
+            "description": "Optional human-readable draft; not applied automatically"
+          },
+          "rationale": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+          "safety_flags": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

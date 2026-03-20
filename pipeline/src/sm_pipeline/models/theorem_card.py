@@ -16,6 +16,7 @@ class TheoremCard(BaseModel):
         "human_review_only",
     ]
     dependency_ids: list[str] = Field(default_factory=list)
+    dependency_extraction_method: str | None = None
     reviewer_status: Literal["unreviewed", "reviewed", "blocked", "accepted"]
     executable_links: list[str] = Field(default_factory=list)
     notes: str | None = None

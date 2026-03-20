@@ -1,0 +1,33 @@
+{
+  "paper_id": "math_sum_evens",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "prime_intellect",
+    "model": "example-model",
+    "created_at": "2026-03-20T12:00:00Z",
+    "latency_seconds": 1.0,
+    "prompt_tokens": 100,
+    "completion_tokens": 50,
+    "total_tokens": 150
+  },
+  "proposals": [
+    {
+      "proposal_id": "lean_math_sum_evens_001",
+      "paper_id": "math_sum_evens",
+      "claim_id": "math_sum_evens_claim_001",
+      "target_file": "formal/ScientificMemory/Mathematics/SumEvens.lean",
+      "target_decl": "sum_evens",
+      "edit_kind": "proof_repair",
+      "replacements": [
+        {
+          "find": "sorry",
+          "replace": "by exact rfl"
+        }
+      ],
+      "rationale": "Example only; human must verify before apply.",
+      "confidence": 0.5,
+      "safety_flags": ["example_fixture"]
+    }
+  ]
+}

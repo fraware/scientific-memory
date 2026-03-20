@@ -1,7 +1,8 @@
 {
   "paper_id": "temkin_1941_adsorption",
   "version": "0.1.0",
-  "build_hash": "c519fef66c82def5f945f1ec3c1e4c2249c31dc4044095a588e0997629ad6a24",
+  "build_hash": "d9bc80bb55f2ff01265e4b483816c43ba14754e8ac49770159b914d69919351c",
+  "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 12,
     "mapped_claim_count": 12,

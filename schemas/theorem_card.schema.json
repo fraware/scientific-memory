@@ -26,6 +26,10 @@
         "items": { "$ref": "common.schema.json#/$defs/id" },
         "default": []
       },
+      "dependency_extraction_method": {
+        "type": "string",
+        "description": "How dependency_ids were derived (e.g. lean_source_regex_tier0)."
+      },
       "verification_boundary": {
         "$ref": "common.schema.json#/$defs/verificationBoundary"
       },

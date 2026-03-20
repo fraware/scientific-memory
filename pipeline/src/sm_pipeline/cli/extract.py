@@ -15,11 +15,18 @@ app = typer.Typer()
 @app.command("extract-claims")
 def extract_claims(
     paper_id: str = typer.Option(..., "--paper-id", help="Paper ID"),
+    mode: str = typer.Option(
+        "scaffold_only",
+        "--mode",
+        help="scaffold_only (default placeholder if empty) | deterministic | llm_sidecar (no claim scaffold)",
+    ),
 ) -> None:
     repo_root = Path(".").resolve()
-    run_extract_claims(repo_root, paper_id)
+    out = run_extract_claims(repo_root, paper_id, mode=mode)
     typer.echo(
-        f"Extraction complete for {paper_id}. Edit corpus/papers/{paper_id}/claims.json (and assumptions, symbols) as needed."
+        f"Extraction complete for {paper_id} (mode={out.get('extraction_mode')!r}, "
+        f"placeholder_written={out.get('placeholder_claim_written')}). "
+        f"Edit corpus/papers/{paper_id}/claims.json (and assumptions, symbols) as needed."
     )
 
 

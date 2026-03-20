@@ -1,7 +1,8 @@
 {
   "paper_id": "physics_kinematics_uniform",
   "version": "0.1.0",
-  "build_hash": "73ae124a1c56442b79b2f339cff188e6dc6644ab1195aee3ffaa980f9d82b120",
+  "build_hash": "a43e2a8fb5d6bafe4ddd68e87fa760a3c3e7f42f08777a5927f769e96d2cb561",
+  "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 15,
     "mapped_claim_count": 15,

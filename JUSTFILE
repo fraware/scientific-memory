@@ -134,6 +134,25 @@ check-tooling:
 extract-from-source PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli extract-from-source {{PAPER_ID}}
 
+# Optional: Prime Intellect LLM proposal sidecars (API key in root `.env`; see docs/prime-intellect-llm.md)
+llm-claim-proposals PAPER_ID:
+	uv run --project pipeline python -m sm_pipeline.cli llm-claim-proposals --paper-id {{PAPER_ID}}
+
+llm-mapping-proposals PAPER_ID:
+	uv run --project pipeline python -m sm_pipeline.cli llm-mapping-proposals --paper-id {{PAPER_ID}}
+
+# Optional: surgical Lean find/replace suggestions (sidecar only; convert then proof-repair-apply after review)
+llm-lean-proposals PAPER_ID:
+	uv run --project pipeline python -m sm_pipeline.cli llm-lean-proposals --paper-id {{PAPER_ID}}
+
+# Optional: LLM smoke/live eval report (writes benchmarks/reports/llm_live_*.json; dir is gitignored)
+llm-live-eval *ARGS:
+	uv run python scripts/llm_live_eval.py {{ARGS}}
+
+# Optional: full lake build when LLM_EVAL_RUN_LAKE_BUILD=1 (manual sanity after Lean-related eval)
+llm-eval-lean-build-optional:
+	uv run python scripts/llm_eval_lean_build_optional.py
+
 # Optional: build Verso long-form docs (Verso is a Lake dependency; see lakefile.toml and docs/contributor-playbook.md#verso-integration-optional).
 build-verso:
 	-lake exe generate-site

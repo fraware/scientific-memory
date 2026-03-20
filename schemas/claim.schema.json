@@ -54,6 +54,18 @@
         "items": { "$ref": "common.schema.json#/$defs/id" },
         "default": []
       },
+      "linked_assumptions_unresolved": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 },
+        "description": "Assumption IDs referenced by the claim that are not yet present in assumptions.json (preserved across normalize; not validated as resolved edges).",
+        "default": []
+      },
+      "linked_symbols_unresolved": {
+        "type": "array",
+        "items": { "type": "string", "minLength": 1 },
+        "description": "Symbol IDs referenced by the claim that are not yet present in symbols.json (preserved across normalize).",
+        "default": []
+      },
       "linked_formal_targets": {
         "type": "array",
         "items": { "type": "string" },

@@ -1,5 +1,5 @@
 {
-  "description": "Minimum thresholds for benchmark regression (Gate 6). Fail if any task metric falls below these. tasks_ceiling: fail if a metric exceeds the given max (Gate 6 source-span alignment).",
+  "description": "Minimum thresholds for benchmark regression (Gate 6). Fail if any task metric falls below these. tasks_ceiling: fail if a metric exceeds the given max (Gate 6 source-span alignment). tasks.llm_eval: reviewed reference bundles under benchmarks/llm_eval/.",
   "runtime_budget_seconds_per_task": 120,
   "tasks_ceiling": {
     "gold": {
@@ -31,6 +31,34 @@
       "gold_assumption_precision": 0.95,
       "gold_assumption_recall": 0.95,
       "gold_assumption_f1": 0.95
+    },
+    "llm_suggestions": {
+      "papers_scanned": 0,
+      "llm_claim_proposal_files": 0,
+      "llm_mapping_proposal_files": 0,
+      "suggested_assumptions_files": 0,
+      "suggested_symbols_files": 0,
+      "suggested_mapping_files": 0,
+      "canonical_claims_unresolved_assumption_links": 0,
+      "canonical_claims_unresolved_symbol_links": 0
+    },
+    "llm_lean_suggestions": {
+      "papers_scanned": 0,
+      "llm_lean_proposal_files": 0,
+      "lean_proposals_total": 0,
+      "lean_proposals_with_replacements": 0,
+      "lean_proposals_conversion_ready": 0
+    },
+    "llm_eval": {
+      "cases_scanned": 1,
+      "reference_claim_bundles": 1,
+      "reference_mapping_bundles": 1,
+      "reference_lean_bundles": 1,
+      "gold_claim_id_recall_micro": 1.0,
+      "mapping_keys_recall_micro": 1.0,
+      "mapping_keys_precision_micro": 1.0,
+      "lean_reference_proposals_total": 1,
+      "lean_reference_conversion_ready": 1
     }
   }
 }

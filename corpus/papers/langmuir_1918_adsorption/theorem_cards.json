@@ -10,7 +10,8 @@
     "dependency_ids": [],
     "executable_links": [
       "langmuir_adsorption_kernel_v1"
-    ]
+    ],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_002",
@@ -21,7 +22,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_003",
@@ -32,7 +34,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_004",
@@ -43,7 +46,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_005",
@@ -54,7 +58,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_006",
@@ -65,7 +70,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_007",
@@ -76,7 +82,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_008",
@@ -87,7 +94,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_009",
@@ -98,7 +106,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_010",
@@ -109,7 +118,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_011",
@@ -120,7 +130,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_012",
@@ -131,7 +142,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_013",
@@ -142,7 +154,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_014",
@@ -153,7 +166,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_015",
@@ -164,7 +178,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_016",
@@ -175,7 +190,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_017",
@@ -186,7 +202,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_018",
@@ -199,7 +216,8 @@
     "dependency_ids": [
       "langmuir_1918_adsorption_card_016"
     ],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_019",
@@ -212,7 +230,8 @@
     "dependency_ids": [
       "langmuir_1918_adsorption_card_012"
     ],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "langmuir_1918_adsorption_card_020",
@@ -223,6 +242,7 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   }
 ]

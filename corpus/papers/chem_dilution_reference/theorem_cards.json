@@ -8,7 +8,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "chem_dilution_reference_card_002",
@@ -19,6 +20,7 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   }
 ]

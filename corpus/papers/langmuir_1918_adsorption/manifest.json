@@ -1,7 +1,8 @@
 {
   "paper_id": "langmuir_1918_adsorption",
   "version": "0.1.0",
-  "build_hash": "96c5af12f90f805213678d3fe0448dd0a3935f7a4a55ecd14522e0c34fc632fc",
+  "build_hash": "6fda97e9b2b82189d97f91008ef73dd2ae1c4262c52d78e75ba51be091cbd877",
+  "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 20,
     "mapped_claim_count": 20,

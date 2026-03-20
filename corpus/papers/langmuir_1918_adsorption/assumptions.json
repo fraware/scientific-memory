@@ -4,8 +4,14 @@
     "paper_id": "langmuir_1918_adsorption",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 2, "offset": 100 },
-      "end": { "page": 2, "offset": 130 }
+      "start": {
+        "page": 2,
+        "offset": 100
+      },
+      "end": {
+        "page": 2,
+        "offset": 130
+      }
     },
     "text": "Single-site adsorption; no lateral interactions.",
     "kind": "physical_regime",

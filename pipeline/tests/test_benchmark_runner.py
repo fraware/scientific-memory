@@ -3,7 +3,7 @@
 import json
 from pathlib import Path
 
-from sm_pipeline.benchmark_runner import check_regression
+from sm_pipeline.benchmark_runner import check_regression, run_benchmarks
 
 
 def _write_thresholds(root: Path, data: dict) -> None:
@@ -91,6 +91,97 @@ def test_check_regression_ceiling_fails(tmp_path: Path) -> None:
     ok, msg = check_regression(tmp_path, report)
     assert ok is False
     assert "Ceiling" in msg
+
+
+def test_check_regression_llm_suggestions_min_breach(tmp_path: Path) -> None:
+    _write_thresholds(
+        tmp_path,
+        {
+            "tasks": {
+                "llm_suggestions": {
+                    "papers_scanned": 5,
+                    "llm_claim_proposal_files": 0,
+                }
+            },
+        },
+    )
+    report = {
+        "tasks": {
+            "llm_suggestions": {
+                "papers_scanned": 2,
+                "llm_claim_proposal_files": 0,
+            }
+        }
+    }
+    ok, msg = check_regression(tmp_path, report)
+    assert ok is False
+    assert "llm_suggestions" in msg
+    assert "papers_scanned" in msg
+
+
+def test_run_benchmarks_includes_llm_suggestions_with_expected_keys() -> None:
+    repo = Path(__file__).resolve().parents[2]
+    report = run_benchmarks(repo)
+    task = report["tasks"].get("llm_suggestions")
+    assert isinstance(task, dict)
+    assert "error" not in task
+    for key in (
+        "papers_scanned",
+        "llm_claim_proposal_files",
+        "canonical_claims_unresolved_assumption_links",
+    ):
+        assert key in task
+
+
+def test_run_benchmarks_includes_llm_lean_suggestions_with_expected_keys() -> None:
+    repo = Path(__file__).resolve().parents[2]
+    report = run_benchmarks(repo)
+    task = report["tasks"].get("llm_lean_suggestions")
+    assert isinstance(task, dict)
+    assert "error" not in task
+    for key in (
+        "papers_scanned",
+        "llm_lean_proposal_files",
+        "lean_proposals_conversion_ready",
+    ):
+        assert key in task
+
+
+def test_run_benchmarks_includes_llm_eval_with_expected_keys() -> None:
+    repo = Path(__file__).resolve().parents[2]
+    report = run_benchmarks(repo)
+    task = report["tasks"].get("llm_eval")
+    assert isinstance(task, dict)
+    assert "error" not in task
+    for key in (
+        "cases_scanned",
+        "gold_claim_id_recall_micro",
+        "lean_reference_conversion_ready",
+    ):
+        assert key in task
+
+
+def test_check_regression_llm_lean_min_breach(tmp_path: Path) -> None:
+    _write_thresholds(
+        tmp_path,
+        {
+            "tasks": {
+                "llm_lean_suggestions": {
+                    "lean_proposals_total": 5,
+                }
+            },
+        },
+    )
+    report = {
+        "tasks": {
+            "llm_lean_suggestions": {
+                "lean_proposals_total": 1,
+            }
+        }
+    }
+    ok, msg = check_regression(tmp_path, report)
+    assert ok is False
+    assert "llm_lean_suggestions" in msg
 
 
 def test_check_regression_ceiling_skips_none(tmp_path: Path) -> None:

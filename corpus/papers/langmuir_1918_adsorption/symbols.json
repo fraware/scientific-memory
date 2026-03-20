@@ -5,20 +5,37 @@
     "raw_latex": "\\theta",
     "normalized_name": "coverage",
     "type_hint": "dimensionless",
-    "dimensional_metadata": { "kind": "dimensionless" }
+    "dimensional_metadata": {
+      "kind": "dimensionless",
+      "unit": "",
+      "dimension": ""
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "p",
     "paper_id": "langmuir_1918_adsorption",
     "raw_latex": "P",
     "normalized_name": "pressure",
-    "type_hint": "pressure"
+    "type_hint": "pressure",
+    "dimensional_metadata": {
+      "kind": "unknown",
+      "unit": "",
+      "dimension": ""
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "k",
     "paper_id": "langmuir_1918_adsorption",
     "raw_latex": "K",
     "normalized_name": "adsorption_constant",
-    "type_hint": "inverse_pressure"
+    "type_hint": "inverse_pressure",
+    "dimensional_metadata": {
+      "kind": "unknown",
+      "unit": "",
+      "dimension": ""
+    },
+    "ambiguity_flags": []
   }
 ]

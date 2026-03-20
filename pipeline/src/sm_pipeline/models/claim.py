@@ -29,5 +29,7 @@ class Claim(BaseModel):
     status: str
     linked_symbols: list[str] = Field(default_factory=list)
     linked_assumptions: list[str] = Field(default_factory=list)
+    linked_assumptions_unresolved: list[str] = Field(default_factory=list)
+    linked_symbols_unresolved: list[str] = Field(default_factory=list)
     linked_formal_targets: list[str] = Field(default_factory=list)
     review_notes: str | None = None

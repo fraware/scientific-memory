@@ -177,7 +177,8 @@
             "kind": "concentration",
             "unit": "mol/L",
             "dimension": "M L\u207b\u00b3"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "chem_dilution_reference_symbol_v0",
@@ -189,7 +190,8 @@
             "kind": "volume",
             "unit": "L",
             "dimension": "L\u00b3"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "chem_dilution_reference_symbol_k",
@@ -201,7 +203,8 @@
             "kind": "dimensionless_ratio",
             "unit": "1",
             "dimension": "1"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "chem_dilution_reference_symbol_c1",
@@ -213,7 +216,8 @@
             "kind": "concentration",
             "unit": "mol/L",
             "dimension": "M L\u207b\u00b3"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "chem_dilution_reference_symbol_v1",
@@ -225,7 +229,8 @@
             "kind": "volume",
             "unit": "L",
             "dimension": "L\u00b3"
-          }
+          },
+          "ambiguity_flags": []
         }
       ],
       "mapping": {
@@ -240,7 +245,8 @@
       "manifest": {
         "paper_id": "chem_dilution_reference",
         "version": "0.1.0",
-        "build_hash": "0bd7188b8110f8ec64f1498f047bdd33b76e45faa786f58e91ee1fe4745bffa2",
+        "build_hash": "96c160ee8eca714108f341703c618e5fdbed0badcba64377c2b4e1876abbfed1",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 2,
           "mapped_claim_count": 2,
@@ -271,7 +277,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "chem_dilution_reference_card_002",
@@ -282,7 +289,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     },
@@ -797,7 +805,8 @@
       "manifest": {
         "paper_id": "freundlich_1906_adsorption",
         "version": "0.1.0",
-        "build_hash": "425e11a2742d89ece62e23f7ddd1d763b9b7fcfe93610fd15387c1445588a395",
+        "build_hash": "452f64a6cee22ec4b4a841bee027b1b3a8475cbc119c8845205f1183f4f73f5b",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 12,
           "mapped_claim_count": 12,
@@ -862,7 +871,8 @@
           "dependency_ids": [],
           "executable_links": [
             "freundlich_adsorption_kernel_v1"
-          ]
+          ],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_002",
@@ -873,7 +883,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_003",
@@ -884,7 +895,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_004",
@@ -895,7 +907,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_005",
@@ -906,7 +919,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_006",
@@ -917,7 +931,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_007",
@@ -928,7 +943,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_008",
@@ -939,7 +955,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_009",
@@ -950,7 +967,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_010",
@@ -961,7 +979,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_011",
@@ -972,7 +991,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "freundlich_1906_adsorption_card_012",
@@ -983,7 +1003,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     },
@@ -1660,22 +1681,37 @@
           "normalized_name": "coverage",
           "type_hint": "dimensionless",
           "dimensional_metadata": {
-            "kind": "dimensionless"
-          }
+            "kind": "dimensionless",
+            "unit": "",
+            "dimension": ""
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "p",
           "paper_id": "langmuir_1918_adsorption",
           "raw_latex": "P",
           "normalized_name": "pressure",
-          "type_hint": "pressure"
+          "type_hint": "pressure",
+          "dimensional_metadata": {
+            "kind": "unknown",
+            "unit": "",
+            "dimension": ""
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "k",
           "paper_id": "langmuir_1918_adsorption",
           "raw_latex": "K",
           "normalized_name": "adsorption_constant",
-          "type_hint": "inverse_pressure"
+          "type_hint": "inverse_pressure",
+          "dimensional_metadata": {
+            "kind": "unknown",
+            "unit": "",
+            "dimension": ""
+          },
+          "ambiguity_flags": []
         }
       ],
       "mapping": {
@@ -1708,7 +1744,8 @@
       "manifest": {
         "paper_id": "langmuir_1918_adsorption",
         "version": "0.1.0",
-        "build_hash": "96c5af12f90f805213678d3fe0448dd0a3935f7a4a55ecd14522e0c34fc632fc",
+        "build_hash": "6fda97e9b2b82189d97f91008ef73dd2ae1c4262c52d78e75ba51be091cbd877",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 20,
           "mapped_claim_count": 20,
@@ -1806,7 +1843,8 @@
           "dependency_ids": [],
           "executable_links": [
             "langmuir_adsorption_kernel_v1"
-          ]
+          ],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_002",
@@ -1817,7 +1855,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_003",
@@ -1828,7 +1867,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_004",
@@ -1839,7 +1879,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_005",
@@ -1850,7 +1891,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_006",
@@ -1861,7 +1903,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_007",
@@ -1872,7 +1915,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_008",
@@ -1883,7 +1927,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_009",
@@ -1894,7 +1939,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_010",
@@ -1905,7 +1951,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_011",
@@ -1916,7 +1963,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_012",
@@ -1927,7 +1975,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_013",
@@ -1938,7 +1987,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_014",
@@ -1949,7 +1999,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_015",
@@ -1960,7 +2011,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_016",
@@ -1971,7 +2023,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_017",
@@ -1982,7 +2035,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_018",
@@ -1995,7 +2049,8 @@
           "dependency_ids": [
             "langmuir_1918_adsorption_card_016"
           ],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_019",
@@ -2008,7 +2063,8 @@
           "dependency_ids": [
             "langmuir_1918_adsorption_card_012"
           ],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "langmuir_1918_adsorption_card_020",
@@ -2019,7 +2075,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     },
@@ -2080,7 +2137,8 @@
       "manifest": {
         "paper_id": "math_sum_evens",
         "version": "0.1.0",
-        "build_hash": "d921d430727c47da09fbed6c53c56f83438b65394c10f9c40d5e8b5f86de07e0",
+        "build_hash": "9dbeaa46cbdf07dba622c3fde24ffa815490ca99079d318e8bcf4cbd2fca76a8",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 1,
           "mapped_claim_count": 1,
@@ -2108,7 +2166,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     },
@@ -2656,7 +2715,8 @@
             "kind": "velocity",
             "unit": "m/s",
             "dimension": "L T\u207b\u00b9"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_u",
@@ -2668,7 +2728,8 @@
             "kind": "velocity",
             "unit": "m/s",
             "dimension": "L T\u207b\u00b9"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_a",
@@ -2680,7 +2741,8 @@
             "kind": "acceleration",
             "unit": "m/s\u00b2",
             "dimension": "L T\u207b\u00b2"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_t",
@@ -2692,7 +2754,8 @@
             "kind": "time",
             "unit": "s",
             "dimension": "T"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_dv",
@@ -2704,7 +2767,8 @@
             "kind": "velocity",
             "unit": "m/s",
             "dimension": "L T\u207b\u00b9"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_dt",
@@ -2716,7 +2780,8 @@
             "kind": "time",
             "unit": "s",
             "dimension": "T"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_s",
@@ -2728,7 +2793,8 @@
             "kind": "time",
             "unit": "s",
             "dimension": "T"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_u1",
@@ -2740,7 +2806,8 @@
             "kind": "velocity",
             "unit": "m/s",
             "dimension": "L T\u207b\u00b9"
-          }
+          },
+          "ambiguity_flags": []
         },
         {
           "id": "physics_kinematics_uniform_symbol_u2",
@@ -2752,7 +2819,8 @@
             "kind": "velocity",
             "unit": "m/s",
             "dimension": "L T\u207b\u00b9"
-          }
+          },
+          "ambiguity_flags": []
         }
       ],
       "mapping": {
@@ -2780,7 +2848,8 @@
       "manifest": {
         "paper_id": "physics_kinematics_uniform",
         "version": "0.1.0",
-        "build_hash": "73ae124a1c56442b79b2f339cff188e6dc6644ab1195aee3ffaa980f9d82b120",
+        "build_hash": "a43e2a8fb5d6bafe4ddd68e87fa760a3c3e7f42f08777a5927f769e96d2cb561",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 15,
           "mapped_claim_count": 15,
@@ -2850,7 +2919,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_002",
@@ -2861,7 +2931,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_003",
@@ -2872,7 +2943,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_004",
@@ -2883,7 +2955,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_005",
@@ -2894,7 +2967,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_006",
@@ -2905,7 +2979,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_007",
@@ -2916,7 +2991,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_008",
@@ -2927,7 +3003,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_009",
@@ -2938,7 +3015,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_010",
@@ -2949,7 +3027,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_011",
@@ -2960,7 +3039,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_012",
@@ -2971,7 +3051,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_013",
@@ -2982,7 +3063,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_014",
@@ -2993,7 +3075,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "physics_kinematics_uniform_card_015",
@@ -3004,7 +3087,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     },
@@ -3595,7 +3679,8 @@
       "manifest": {
         "paper_id": "temkin_1941_adsorption",
         "version": "0.1.0",
-        "build_hash": "c519fef66c82def5f945f1ec3c1e4c2249c31dc4044095a588e0997629ad6a24",
+        "build_hash": "d9bc80bb55f2ff01265e4b483816c43ba14754e8ac49770159b914d69919351c",
+        "build_hash_version": "2",
         "coverage_metrics": {
           "claim_count": 12,
           "mapped_claim_count": 12,
@@ -3665,7 +3750,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_002",
@@ -3676,7 +3762,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_003",
@@ -3687,7 +3774,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_004",
@@ -3698,7 +3786,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_005",
@@ -3711,7 +3800,8 @@
           "dependency_ids": [
             "temkin_1941_adsorption_card_004"
           ],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_006",
@@ -3722,7 +3812,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_007",
@@ -3733,7 +3824,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_008",
@@ -3744,7 +3836,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_009",
@@ -3755,7 +3848,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_010",
@@ -3766,7 +3860,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_011",
@@ -3779,7 +3874,8 @@
           "dependency_ids": [
             "temkin_1941_adsorption_card_010"
           ],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         },
         {
           "id": "temkin_1941_adsorption_card_012",
@@ -3790,7 +3886,8 @@
           "verification_boundary": "fully_machine_checked",
           "reviewer_status": "accepted",
           "dependency_ids": [],
-          "executable_links": []
+          "executable_links": [],
+          "dependency_extraction_method": "lean_source_regex_tier0"
         }
       ]
     }

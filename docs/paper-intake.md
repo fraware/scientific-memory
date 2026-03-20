@@ -20,7 +20,11 @@ The reproducible ingestion flow is:
    just extract-claims <paper_id>
    just scaffold-formal <paper_id>
    ```
+   `extract-claims` supports `--mode scaffold_only` (default), `deterministic`, or `llm_sidecar`. In `scaffold_only`, a placeholder claim is written when `claims.json` is missing or `[]`. The other modes do not scaffold; use them when claims come from manual intake or LLM sidecars. Example: `uv run --project pipeline python -m sm_pipeline.cli extract-claims --paper-id <paper_id> --mode deterministic` (see [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md)).
+
    Then edit claims, assumptions, and mapping as needed. For papers with non-empty `claims.json`, **`extraction_run.json` is required** (validation fails otherwise). Run `just extraction-report <paper_id>` to create or refresh it.
+
+   Optional LLM assist (proposal sidecars only): [prime-intellect-llm.md](prime-intellect-llm.md) (`just llm-claim-proposals`, `just llm-mapping-proposals`, `just llm-lean-proposals` after mapping/Lean context exists; human-gated apply; Lean suggestions convert to `proof-repair-apply`).
 
 4. **Publish artifacts**
    ```bash

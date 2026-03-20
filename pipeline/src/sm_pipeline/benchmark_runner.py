@@ -7,8 +7,18 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
+from sm_pipeline.llm.prompt_templates import declared_llm_prompt_template_versions
 
-TASK_NAMES = ("extraction", "mapping", "theorem_cards", "gold")
+
+TASK_NAMES = (
+    "extraction",
+    "mapping",
+    "theorem_cards",
+    "gold",
+    "llm_suggestions",
+    "llm_lean_suggestions",
+    "llm_eval",
+)
 TREND_HISTORY_MAX_ENTRIES = 100
 TREND_HISTORY_FILENAME = "proof_success_history.json"
 
@@ -43,8 +53,12 @@ def run_benchmarks(repo_root: Path) -> dict:
             task_result["_runtime_seconds"] = round(time.perf_counter() - t0, 2)
             report["tasks"][name] = task_result
         except Exception as e:
-            report["tasks"][name] = {"error": str(e), "_runtime_seconds": round(time.perf_counter() - t0, 2)}
+            report["tasks"][name] = {
+                "error": str(e),
+                "_runtime_seconds": round(time.perf_counter() - t0, 2),
+            }
 
+    report["llm_prompt_templates"] = declared_llm_prompt_template_versions()
     return report
 
 
@@ -66,9 +80,7 @@ def check_regression(repo_root: Path, report: dict) -> tuple[bool, str]:
                 continue
             rt = actual.get("_runtime_seconds")
             if rt is not None and float(rt) > float(budget):
-                return False, (
-                    f"Runtime: {task_name} took {rt}s, above budget {budget}s"
-                )
+                return False, (f"Runtime: {task_name} took {rt}s, above budget {budget}s")
     for task_name, min_vals in task_thresholds.items():
         if not isinstance(min_vals, dict):
             continue
@@ -110,9 +122,7 @@ def check_regression(repo_root: Path, report: dict) -> tuple[bool, str]:
                 except (TypeError, ValueError):
                     continue
                 if v > float(max_val):
-                    return False, (
-                        f"Ceiling breach: {task_name}.{key} is {v}, above max {max_val}"
-                    )
+                    return False, (f"Ceiling breach: {task_name}.{key} is {v}, above max {max_val}")
     return True, ""
 
 

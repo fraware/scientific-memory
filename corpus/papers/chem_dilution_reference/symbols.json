@@ -8,8 +8,9 @@
     "dimensional_metadata": {
       "kind": "concentration",
       "unit": "mol/L",
-      "dimension": "M L⁻³"
-    }
+      "dimension": "M L\u207b\u00b3"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "chem_dilution_reference_symbol_v0",
@@ -20,8 +21,9 @@
     "dimensional_metadata": {
       "kind": "volume",
       "unit": "L",
-      "dimension": "L³"
-    }
+      "dimension": "L\u00b3"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "chem_dilution_reference_symbol_k",
@@ -33,7 +35,8 @@
       "kind": "dimensionless_ratio",
       "unit": "1",
       "dimension": "1"
-    }
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "chem_dilution_reference_symbol_c1",
@@ -44,8 +47,9 @@
     "dimensional_metadata": {
       "kind": "concentration",
       "unit": "mol/L",
-      "dimension": "M L⁻³"
-    }
+      "dimension": "M L\u207b\u00b3"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "chem_dilution_reference_symbol_v1",
@@ -56,7 +60,8 @@
     "dimensional_metadata": {
       "kind": "volume",
       "unit": "L",
-      "dimension": "L³"
-    }
+      "dimension": "L\u00b3"
+    },
+    "ambiguity_flags": []
   }
 ]

@@ -15,6 +15,10 @@
     "paper_id": { "$ref": "common.schema.json#/$defs/id" },
     "version": { "type": "string" },
     "build_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "build_hash_version": {
+      "type": "string",
+      "description": "2 = content-addressed over corpus + cards + kernel_index; omit or 1 = legacy path-based fingerprint"
+    },
     "coverage_metrics": {
       "type": "object",
       "additionalProperties": false,

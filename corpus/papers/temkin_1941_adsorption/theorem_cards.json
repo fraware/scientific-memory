@@ -8,7 +8,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_002",
@@ -19,7 +20,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_003",
@@ -30,7 +32,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_004",
@@ -41,7 +44,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_005",
@@ -54,7 +58,8 @@
     "dependency_ids": [
       "temkin_1941_adsorption_card_004"
     ],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_006",
@@ -65,7 +70,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_007",
@@ -76,7 +82,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_008",
@@ -87,7 +94,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_009",
@@ -98,7 +106,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_010",
@@ -109,7 +118,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_011",
@@ -122,7 +132,8 @@
     "dependency_ids": [
       "temkin_1941_adsorption_card_010"
     ],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "temkin_1941_adsorption_card_012",
@@ -133,6 +144,7 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   }
 ]

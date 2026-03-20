@@ -32,6 +32,14 @@ Validation (`just validate` / `sm_pipeline.cli validate-all`) runs the **gate en
 
 Optional: `validate-all --report-json <path>` writes a machine-readable report after success.
 
+### Non-blocking warnings
+
+After strict checks succeed, `validate-all` may still print stderr warnings that do **not** change the exit code: snapshot baseline quality (e.g. `corpus/snapshots/last-release.json` metadata); **dependency graph bootstrap** hints when a paper has multiple theorem cards, no `dependency_ids`, and at least one machine-checked claim (tier-0 Lean regex extraction may leave an empty graph); **suggestion sidecar** schema issues for optional `llm_*_proposals.json` (including `llm_lean_proposals.json`) and `suggested_*.json` under paper directories. See [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md).
+
+### Manifest fingerprint and graphs
+
+`publish_manifest` sets `manifest.build_hash_version` to **2** where `claims.json` exists (content-addressed digest over canonical corpus JSON, theorem cards, kernel index, and optional metadata source SHA256). Each publish recomputes `dependency_graph` and `kernel_index` from current cards and `corpus/kernels.json` unless `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1` is set.
+
 ## CI and release gates
 
 Core workflows:

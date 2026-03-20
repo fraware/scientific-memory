@@ -53,13 +53,54 @@ def normalize_paper(repo_root: Path, paper_id: str) -> dict:
     symbol_ids = {str(s.get("id")) for s in symbols if s.get("id")}
     unresolved_assumptions = 0
     unresolved_symbols = 0
+    unresolved_detail: list[dict] = []
     for claim in claims:
-        linked_a = [x for x in (claim.get("linked_assumptions") or []) if str(x) in assumption_ids]
-        linked_s = [x for x in (claim.get("linked_symbols") or []) if str(x) in symbol_ids]
-        unresolved_assumptions += len((claim.get("linked_assumptions") or [])) - len(linked_a)
-        unresolved_symbols += len((claim.get("linked_symbols") or [])) - len(linked_s)
+        cid = str(claim.get("id") or "")
+        raw_a = list(claim.get("linked_assumptions") or []) + list(
+            claim.get("linked_assumptions_unresolved") or []
+        )
+        raw_s = list(claim.get("linked_symbols") or []) + list(
+            claim.get("linked_symbols_unresolved") or []
+        )
+        seen_a: set[str] = set()
+        combined_a: list[str] = []
+        for x in raw_a:
+            sx = str(x)
+            if sx not in seen_a:
+                seen_a.add(sx)
+                combined_a.append(sx)
+        seen_s: set[str] = set()
+        combined_s: list[str] = []
+        for x in raw_s:
+            sx = str(x)
+            if sx not in seen_s:
+                seen_s.add(sx)
+                combined_s.append(sx)
+
+        linked_a = [x for x in combined_a if x in assumption_ids]
+        linked_s = [x for x in combined_s if x in symbol_ids]
+        unresolved_a = [x for x in combined_a if x not in assumption_ids]
+        unresolved_s = [x for x in combined_s if x not in symbol_ids]
+        unresolved_assumptions += len(unresolved_a)
+        unresolved_symbols += len(unresolved_s)
         claim["linked_assumptions"] = linked_a
         claim["linked_symbols"] = linked_s
+        if unresolved_a:
+            claim["linked_assumptions_unresolved"] = sorted(set(unresolved_a))
+        else:
+            claim.pop("linked_assumptions_unresolved", None)
+        if unresolved_s:
+            claim["linked_symbols_unresolved"] = sorted(set(unresolved_s))
+        else:
+            claim.pop("linked_symbols_unresolved", None)
+        if unresolved_a or unresolved_s:
+            unresolved_detail.append(
+                {
+                    "claim_id": cid,
+                    "linked_assumptions_unresolved": sorted(set(unresolved_a)),
+                    "linked_symbols_unresolved": sorted(set(unresolved_s)),
+                }
+            )
 
     symbols_path.write_text(json.dumps(symbols, indent=2), encoding="utf-8")
     assumptions_path.write_text(json.dumps(assumptions, indent=2), encoding="utf-8")
@@ -71,8 +112,9 @@ def normalize_paper(repo_root: Path, paper_id: str) -> dict:
         "symbol_count": len(symbols),
         "assumption_count": len(assumptions),
         "duplicate_normalized_name_count": duplicate_name_count,
-        "unresolved_assumption_links_removed": unresolved_assumptions,
-        "unresolved_symbol_links_removed": unresolved_symbols,
+        "unresolved_assumption_links_preserved": unresolved_assumptions,
+        "unresolved_symbol_links_preserved": unresolved_symbols,
+        "unresolved_claim_links": unresolved_detail,
     }
     (paper_dir / "normalization_report.json").write_text(
         json.dumps(out, indent=2), encoding="utf-8"

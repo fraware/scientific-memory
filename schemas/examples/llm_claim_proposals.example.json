@@ -1,0 +1,37 @@
+{
+  "paper_id": "example_paper",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "prime_intellect",
+    "model": "meta-llama/llama-3.1-70b-instruct",
+    "created_at": "2026-03-20T12:00:00Z",
+    "latency_seconds": 1.5,
+    "prompt_tokens": 100,
+    "completion_tokens": 50,
+    "total_tokens": 150
+  },
+  "proposals": [
+    {
+      "claim": {
+        "id": "example_paper_claim_001",
+        "paper_id": "example_paper",
+        "section": "1",
+        "source_span": {
+          "source_file": "source/main.tex",
+          "start": { "page": 1, "offset": 0 },
+          "end": { "page": 1, "offset": 120 }
+        },
+        "informal_text": "Example claim text.",
+        "claim_type": "theorem",
+        "status": "parsed",
+        "linked_symbols": [],
+        "linked_assumptions": [],
+        "linked_formal_targets": []
+      },
+      "rationale": "Illustrative proposal only.",
+      "confidence": 0.5,
+      "evidence_quote": "Example excerpt from source."
+    }
+  ]
+}

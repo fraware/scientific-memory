@@ -14,5 +14,8 @@ SPEC 10.1 requires ADRs for major design decisions. This directory is the single
 | [0008](0008-llm-worker-deferred.md) | LLM worker interface deferred | No LLM-assisted extraction in v0.1; human-curated or script-based only. |
 | [0009](0009-unit-system-deferred.md) | Unit system deferred | Kernel `unit_constraints` (strings) only; formal dimension/unit system in Lean deferred. |
 | [0010](0010-release-integrity-checksums.md) | Release integrity via checksums | Changelog, manifest checksum, per-file hashes, release artifact SHA-256; Sigstore keyless signing of checksums.txt. |
+| [0011](0011-llm-worker-suggest-only.md) | LLM worker (suggest-only) | Optional Prime Intellect chat completions; claim/mapping/Lean proposal sidecars; human-gated apply (`proof-repair-apply` for Lean); warn-only schema check for sidecars. |
+| [0012](0012-trust-boundary-canonical-artifacts.md) | Trust boundary and publish integrity | Recompute manifest graphs; content-addressed build hash; normalization preserves unresolved links; canonical vs suggestion artifacts. |
+| [0013](0013-llm-evaluation-policy.md) | LLM evaluation policy | Prompt template digests; `benchmarks/llm_eval` reference fixtures; `tasks.llm_eval`; human rubric; optional live-eval scripts. |
 
-When adding a new ADR, use the next number (e.g. 0011) and add a row to this table.
+When adding a new ADR, use the next number (e.g. 0014) and add a row to this table.

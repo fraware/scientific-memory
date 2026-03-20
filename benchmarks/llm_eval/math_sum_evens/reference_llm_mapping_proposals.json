@@ -1,0 +1,17 @@
+{
+  "paper_id": "math_sum_evens",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "eval_reference_fixture",
+    "model": "n/a"
+  },
+  "proposals": [
+    {
+      "claim_id": "math_sum_evens_claim_001",
+      "lean_declaration_short_name": "sum_evens",
+      "rationale": "Reference fixture matches corpus mapping.json claim_to_decl.",
+      "confidence": 1.0
+    }
+  ]
+}

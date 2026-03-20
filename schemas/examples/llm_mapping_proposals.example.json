@@ -1,0 +1,19 @@
+{
+  "paper_id": "example_paper",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "prime_intellect",
+    "model": "meta-llama/llama-3.1-70b-instruct",
+    "created_at": "2026-03-20T12:00:00Z",
+    "latency_seconds": 0.8
+  },
+  "proposals": [
+    {
+      "claim_id": "example_paper_claim_001",
+      "lean_declaration_short_name": "main_result",
+      "rationale": "Matches the formal definition name in the Lean module.",
+      "confidence": 0.7
+    }
+  ]
+}

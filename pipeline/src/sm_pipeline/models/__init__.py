@@ -6,6 +6,13 @@ from sm_pipeline.models.symbol import Symbol, DimensionalMetadata
 from sm_pipeline.models.theorem_card import TheoremCard
 from sm_pipeline.models.executable_kernel import ExecutableKernel
 from sm_pipeline.models.artifact_manifest import ArtifactManifest, CoverageMetrics
+from sm_pipeline.models.llm_proposals import (
+    LlmClaimProposalEntry,
+    LlmClaimProposalsBundle,
+    LlmMappingProposalEntry,
+    LlmMappingProposalsBundle,
+    LlmRunMetadata,
+)
 from sm_pipeline.models.stage_contracts import (
     PipelineRunReport,
     PipelineStage,
@@ -26,6 +33,11 @@ __all__ = [
     "ExecutableKernel",
     "ArtifactManifest",
     "CoverageMetrics",
+    "LlmRunMetadata",
+    "LlmClaimProposalEntry",
+    "LlmClaimProposalsBundle",
+    "LlmMappingProposalEntry",
+    "LlmMappingProposalsBundle",
     "PipelineRunReport",
     "PipelineStage",
     "StageOutcome",

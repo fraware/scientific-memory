@@ -5,10 +5,16 @@
     "section": "1",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 0 },
-      "end": { "page": 1, "offset": 120 }
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 120
+      }
     },
-    "informal_text": "When a solution is diluted by increasing volume by a positive factor k while solute amount is fixed, concentration scales inversely: c₀ v₀ = (c₀/k)(v₀ k) for positive rational concentration, volume, and k.",
+    "informal_text": "When a solution is diluted by increasing volume by a positive factor k while solute amount is fixed, concentration scales inversely: c\u2080 v\u2080 = (c\u2080/k)(v\u2080 k) for positive rational concentration, volume, and k.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -31,10 +37,16 @@
     "section": "1",
     "source_span": {
       "source_file": "source/source.pdf",
-      "start": { "page": 1, "offset": 121 },
-      "end": { "page": 1, "offset": 220 }
+      "start": {
+        "page": 1,
+        "offset": 121
+      },
+      "end": {
+        "page": 1,
+        "offset": 220
+      }
     },
-    "informal_text": "If two solution states carry the same fixed solute amount so that c₀ v₀ = c₁ v₁ with v₁ ≠ 0, then c₁ = (c₀ v₀)/v₁.",
+    "informal_text": "If two solution states carry the same fixed solute amount so that c\u2080 v\u2080 = c\u2081 v\u2081 with v\u2081 \u2260 0, then c\u2081 = (c\u2080 v\u2080)/v\u2081.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",

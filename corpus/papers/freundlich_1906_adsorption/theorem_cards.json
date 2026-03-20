@@ -10,7 +10,8 @@
     "dependency_ids": [],
     "executable_links": [
       "freundlich_adsorption_kernel_v1"
-    ]
+    ],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_002",
@@ -21,7 +22,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_003",
@@ -32,7 +34,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_004",
@@ -43,7 +46,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_005",
@@ -54,7 +58,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_006",
@@ -65,7 +70,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_007",
@@ -76,7 +82,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_008",
@@ -87,7 +94,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_009",
@@ -98,7 +106,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_010",
@@ -109,7 +118,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_011",
@@ -120,7 +130,8 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   },
   {
     "id": "freundlich_1906_adsorption_card_012",
@@ -131,6 +142,7 @@
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
     "dependency_ids": [],
-    "executable_links": []
+    "executable_links": [],
+    "dependency_extraction_method": "lean_source_regex_tier0"
   }
 ]
