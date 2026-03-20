@@ -1,0 +1,15 @@
+[
+  {
+    "id": "pinned_fixture_assumption_001",
+    "paper_id": "pinned_fixture_paper",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": { "page": 1, "offset": 0 },
+      "end": { "page": 1, "offset": 20 }
+    },
+    "text": "Minimal assumption.",
+    "kind": "editorial",
+    "explicit_or_implicit": "explicit",
+    "normalization_status": "raw"
+  }
+]

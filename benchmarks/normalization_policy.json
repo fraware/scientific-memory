@@ -1,0 +1,6 @@
+{
+  "description": "Normalization policy (SPEC 8.3). Optional. Used by metrics --normalization-policy. Warn-only unless CI promotes to fail.",
+  "duplicate_waivers": [],
+  "assumption_coverage_max_unlinked": 999,
+  "max_symbols_without_dimension": 999
+}

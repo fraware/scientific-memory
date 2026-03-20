@@ -1,0 +1,16 @@
+[
+  {
+    "claim_id": "freundlich_1906_adsorption_claim_001",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 100
+      }
+    }
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "paper_id": "math_sum_evens",
+  "version": "0.1.0",
+  "build_hash": "d921d430727c47da09fbed6c53c56f83438b65394c10f9c40d5e8b5f86de07e0",
+  "coverage_metrics": {
+    "claim_count": 1,
+    "mapped_claim_count": 1,
+    "machine_checked_count": 1,
+    "kernel_linked_count": 0
+  },
+  "generated_pages": [
+    "/papers/math_sum_evens",
+    "/claims/math_sum_evens_claim_001",
+    "/theorem-cards/math_sum_evens_card_001"
+  ],
+  "declaration_index": [
+    "ScientificMemory.Mathematics.SumEvens.sum_evens"
+  ],
+  "dependency_graph": [],
+  "kernel_index": []
+}

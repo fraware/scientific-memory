@@ -1,0 +1,40 @@
+[
+  {
+    "id": "physics_kinematics_uniform_assumption_001",
+    "paper_id": "physics_kinematics_uniform",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 60
+      }
+    },
+    "text": "Acceleration is constant over each time interval so that v = u + a t and s = u t + \u00bd a t\u00b2 apply.",
+    "kind": "physical_regime",
+    "explicit_or_implicit": "explicit",
+    "normalization_status": "normalized"
+  },
+  {
+    "id": "physics_kinematics_uniform_assumption_002",
+    "paper_id": "physics_kinematics_uniform",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 61
+      },
+      "end": {
+        "page": 1,
+        "offset": 120
+      }
+    },
+    "text": "Kinematic quantities are modeled as rational numbers for algebraic verification (idealized units).",
+    "kind": "domain_restriction",
+    "explicit_or_implicit": "explicit",
+    "normalization_status": "normalized"
+  }
+]

@@ -1,0 +1,31 @@
+name: Content sprint (Milestone 3)
+description: Track work toward 20–40 machine-checked claims
+title: "[content] "
+labels: ["content", "milestone-3"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to track content work for Milestone 3 (20–40 machine-checked claims). See the Content sprint checklist and CONTRIBUTING.md in the repository (ROADMAP.md#content-sprint-checklist-reach-20-40-claims).
+  - type: input
+    id: paper_id
+    attributes:
+      label: Paper ID (corpus/papers/<paper_id>)
+      placeholder: e.g. langmuir_1918_adsorption
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of work
+      options:
+        - New claims + mapping + formal
+        - Extend existing claims / mapping
+        - Complete proofs (machine_checked)
+        - Other
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope (claims, declarations, or papers involved)
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes (optional)

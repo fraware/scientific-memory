@@ -1,0 +1,9 @@
+# Default reviewers for new PRs. Replace @mateo with your GitHub username(s) or @org/team slug.
+# Per-area routing (optional): uncomment and adjust.
+# /corpus/ @mateo
+# /formal/ @mateo
+# /pipeline/ @mateo
+# /portal/ @mateo
+# /schemas/ @mateo
+
+* @mateo

@@ -1,0 +1,89 @@
+{
+  "paper_id": "langmuir_1918_adsorption",
+  "version": "0.1.0",
+  "build_hash": "96c5af12f90f805213678d3fe0448dd0a3935f7a4a55ecd14522e0c34fc632fc",
+  "coverage_metrics": {
+    "claim_count": 20,
+    "mapped_claim_count": 20,
+    "machine_checked_count": 20,
+    "kernel_linked_count": 1
+  },
+  "generated_pages": [
+    "/papers/langmuir_1918_adsorption",
+    "/claims/langmuir_1918_claim_001",
+    "/claims/langmuir_1918_claim_002",
+    "/claims/langmuir_1918_claim_003",
+    "/claims/langmuir_1918_claim_004",
+    "/claims/langmuir_1918_claim_005",
+    "/claims/langmuir_1918_claim_006",
+    "/claims/langmuir_1918_claim_007",
+    "/claims/langmuir_1918_claim_008",
+    "/claims/langmuir_1918_claim_009",
+    "/claims/langmuir_1918_claim_010",
+    "/claims/langmuir_1918_claim_011",
+    "/claims/langmuir_1918_claim_012",
+    "/claims/langmuir_1918_claim_013",
+    "/claims/langmuir_1918_claim_014",
+    "/claims/langmuir_1918_claim_015",
+    "/claims/langmuir_1918_claim_016",
+    "/claims/langmuir_1918_claim_017",
+    "/claims/langmuir_1918_claim_018",
+    "/claims/langmuir_1918_claim_019",
+    "/claims/langmuir_1918_claim_020",
+    "/theorem-cards/langmuir_1918_adsorption_card_001",
+    "/theorem-cards/langmuir_1918_adsorption_card_002",
+    "/theorem-cards/langmuir_1918_adsorption_card_003",
+    "/theorem-cards/langmuir_1918_adsorption_card_004",
+    "/theorem-cards/langmuir_1918_adsorption_card_005",
+    "/theorem-cards/langmuir_1918_adsorption_card_006",
+    "/theorem-cards/langmuir_1918_adsorption_card_007",
+    "/theorem-cards/langmuir_1918_adsorption_card_008",
+    "/theorem-cards/langmuir_1918_adsorption_card_009",
+    "/theorem-cards/langmuir_1918_adsorption_card_010",
+    "/theorem-cards/langmuir_1918_adsorption_card_011",
+    "/theorem-cards/langmuir_1918_adsorption_card_012",
+    "/theorem-cards/langmuir_1918_adsorption_card_013",
+    "/theorem-cards/langmuir_1918_adsorption_card_014",
+    "/theorem-cards/langmuir_1918_adsorption_card_015",
+    "/theorem-cards/langmuir_1918_adsorption_card_016",
+    "/theorem-cards/langmuir_1918_adsorption_card_017",
+    "/theorem-cards/langmuir_1918_adsorption_card_018",
+    "/theorem-cards/langmuir_1918_adsorption_card_019",
+    "/theorem-cards/langmuir_1918_adsorption_card_020"
+  ],
+  "declaration_index": [
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half",
+    "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero"
+  ],
+  "dependency_graph": [
+    {
+      "from": "langmuir_1918_adsorption_card_016",
+      "to": "langmuir_1918_adsorption_card_018"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_012",
+      "to": "langmuir_1918_adsorption_card_019"
+    }
+  ],
+  "kernel_index": [
+    "langmuir_adsorption_kernel_v1"
+  ]
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "pinned_fixture_claim_001",
+    "paper_id": "pinned_fixture_paper",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": { "page": 1, "offset": 0 },
+      "end": { "page": 1, "offset": 50 }
+    },
+    "informal_text": "Minimal claim for pinned fixture.",
+    "claim_type": "definition",
+    "status": "parsed"
+  }
+]

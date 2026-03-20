@@ -1,0 +1,13 @@
+[
+  {
+    "id": "math_sum_evens_card_001",
+    "claim_id": "math_sum_evens_claim_001",
+    "lean_decl": "ScientificMemory.Mathematics.SumEvens.sum_evens",
+    "file_path": "formal/ScientificMemory/Mathematics/SumEvens.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

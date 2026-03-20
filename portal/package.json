@@ -1,0 +1,23 @@
+{
+  "name": "scientific-memory-portal",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "node scripts/generate-search-index.mjs && next build",
+    "lint": "prettier --check \"app/**/*.{ts,tsx,css}\" \"lib/**/*.ts\" \"scripts/**/*.mjs\" \"*.json\" && tsc --noEmit",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.3.0",
+    "next": "^14.2.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

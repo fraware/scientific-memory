@@ -1,0 +1,36 @@
+{
+  "description": "Minimum thresholds for benchmark regression (Gate 6). Fail if any task metric falls below these. tasks_ceiling: fail if a metric exceeds the given max (Gate 6 source-span alignment).",
+  "runtime_budget_seconds_per_task": 120,
+  "tasks_ceiling": {
+    "gold": {
+      "source_span_alignment_error_rate": 0
+    }
+  },
+  "tasks": {
+    "extraction": {
+      "paper_count": 6,
+      "claim_count": 62,
+      "claims_with_source_span": 62,
+      "assumption_count": 10
+    },
+    "mapping": {
+      "paper_count": 6,
+      "mapped_claims": 62,
+      "total_claims": 62
+    },
+    "theorem_cards": {
+      "paper_count": 6,
+      "declaration_count": 62,
+      "machine_checked_count": 62
+    },
+    "gold": {
+      "papers_with_gold": 6,
+      "gold_claim_precision": 0.6,
+      "gold_claim_recall": 0.95,
+      "gold_claim_f1": 0.75,
+      "gold_assumption_precision": 0.95,
+      "gold_assumption_recall": 0.95,
+      "gold_assumption_f1": 0.95
+    }
+  }
+}

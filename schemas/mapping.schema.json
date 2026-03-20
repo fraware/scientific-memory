@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/mapping.schema.json",
+  "title": "Claim-to-Declaration Mapping",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["paper_id", "namespace", "claim_to_decl"],
+  "properties": {
+    "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+    "namespace": { "type": "string", "minLength": 1 },
+    "target_file": {
+      "type": "string",
+      "description": "Path to the Lean file containing the declarations (relative to repo root, e.g. formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean)"
+    },
+    "claim_to_decl": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Maps claim IDs to Lean declaration names"
+    }
+  }
+}

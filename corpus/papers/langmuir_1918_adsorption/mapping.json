@@ -1,0 +1,27 @@
+{
+  "paper_id": "langmuir_1918_adsorption",
+  "namespace": "ScientificMemory.Chemistry.Adsorption.Langmuir1918",
+  "claim_to_decl": {
+    "langmuir_1918_claim_001": "langmuir_isotherm",
+    "langmuir_1918_claim_002": "langmuir_isotherm_nonnegative",
+    "langmuir_1918_claim_003": "langmuir_isotherm_bounded",
+    "langmuir_1918_claim_004": "langmuir_isotherm_zero_pressure",
+    "langmuir_1918_claim_005": "langmuir_isotherm_zero_K",
+    "langmuir_1918_claim_006": "langmuir_denom_pos",
+    "langmuir_1918_claim_007": "langmuir_isotherm_pos_of_pos",
+    "langmuir_1918_claim_008": "langmuir_mono_in_P",
+    "langmuir_1918_claim_009": "langmuir_mono_in_K",
+    "langmuir_1918_claim_010": "langmuir_add_one_denom",
+    "langmuir_1918_claim_011": "langmuir_sym_recip",
+    "langmuir_1918_claim_012": "langmuir_isotherm_one",
+    "langmuir_1918_claim_013": "langmuir_mul_denom",
+    "langmuir_1918_claim_014": "langmuir_scale_K",
+    "langmuir_1918_claim_015": "langmuir_neg_P",
+    "langmuir_1918_claim_016": "langmuir_sub_one",
+    "langmuir_1918_claim_017": "langmuir_numer_nonneg",
+    "langmuir_1918_claim_018": "langmuir_recip_denom",
+    "langmuir_1918_claim_019": "langmuir_half",
+    "langmuir_1918_claim_020": "langmuir_zero_at_zero"
+  },
+  "target_file": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean"
+}

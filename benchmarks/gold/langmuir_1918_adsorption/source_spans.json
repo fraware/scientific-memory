@@ -1,0 +1,282 @@
+[
+  {
+    "claim_id": "langmuir_1918_claim_001",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 140
+      },
+      "end": {
+        "page": 2,
+        "offset": 290
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_002",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 291
+      },
+      "end": {
+        "page": 2,
+        "offset": 350
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_003",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 351
+      },
+      "end": {
+        "page": 2,
+        "offset": 410
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_004",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 411
+      },
+      "end": {
+        "page": 2,
+        "offset": 470
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_005",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 471
+      },
+      "end": {
+        "page": 2,
+        "offset": 530
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_006",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 531
+      },
+      "end": {
+        "page": 2,
+        "offset": 580
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_007",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 581
+      },
+      "end": {
+        "page": 2,
+        "offset": 630
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_008",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 631
+      },
+      "end": {
+        "page": 2,
+        "offset": 680
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_009",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 681
+      },
+      "end": {
+        "page": 2,
+        "offset": 730
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_010",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 731
+      },
+      "end": {
+        "page": 2,
+        "offset": 780
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_011",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 781
+      },
+      "end": {
+        "page": 2,
+        "offset": 830
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_012",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 831
+      },
+      "end": {
+        "page": 2,
+        "offset": 880
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_013",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 881
+      },
+      "end": {
+        "page": 2,
+        "offset": 930
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_014",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 931
+      },
+      "end": {
+        "page": 2,
+        "offset": 980
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_015",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 981
+      },
+      "end": {
+        "page": 2,
+        "offset": 1030
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_016",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1031
+      },
+      "end": {
+        "page": 2,
+        "offset": 1080
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_017",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1081
+      },
+      "end": {
+        "page": 2,
+        "offset": 1120
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_018",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1121
+      },
+      "end": {
+        "page": 2,
+        "offset": 1160
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_019",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1161
+      },
+      "end": {
+        "page": 2,
+        "offset": 1200
+      }
+    }
+  },
+  {
+    "claim_id": "langmuir_1918_claim_020",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1201
+      },
+      "end": {
+        "page": 2,
+        "offset": 1240
+      }
+    }
+  }
+]

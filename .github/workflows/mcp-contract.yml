@@ -1,0 +1,18 @@
+name: mcp-contract
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mcp-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - name: Install deps (including MCP extras)
+        run: uv sync --all-packages --extra mcp
+      - name: Run MCP contract tests
+        run: uv run --project pipeline pytest pipeline/tests/test_mcp_server_contract.py pipeline/tests/test_mcp_server_data_paths.py

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/paper.schema.json",
+  "title": "Paper",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "authors",
+    "year",
+    "domain",
+    "source",
+    "artifact_status"
+  ],
+  "properties": {
+    "id": { "$ref": "common.schema.json#/$defs/id" },
+    "title": { "type": "string", "minLength": 1 },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "year": { "type": "integer", "minimum": 1500, "maximum": 3000 },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "chemistry",
+        "mathematics",
+        "physics",
+        "probability",
+        "control",
+        "quantum_information",
+        "other"
+      ]
+    },
+    "abstract": { "type": "string" },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "path", "sha256"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["pdf", "latex", "arxiv_bundle", "other"]
+        },
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "doi": { "type": "string" },
+        "arxiv_id": { "type": "string" }
+      }
+    },
+    "artifact_status": {
+      "type": "string",
+      "enum": ["admitted", "in_progress", "published", "archived"]
+    },
+    "ingestion_status": {
+      "type": "string",
+      "enum": ["pending", "ingested", "failed"]
+    },
+    "first_artifact_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

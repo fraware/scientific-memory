@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/artifact_manifest.schema.json",
+  "title": "Artifact Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "paper_id",
+    "version",
+    "build_hash",
+    "coverage_metrics",
+    "generated_pages"
+  ],
+  "properties": {
+    "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+    "version": { "type": "string" },
+    "build_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "coverage_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_count",
+        "mapped_claim_count",
+        "machine_checked_count",
+        "kernel_linked_count"
+      ],
+      "properties": {
+        "claim_count": { "type": "integer", "minimum": 0 },
+        "mapped_claim_count": { "type": "integer", "minimum": 0 },
+        "machine_checked_count": { "type": "integer", "minimum": 0 },
+        "kernel_linked_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "generated_pages": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "declaration_index": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "dependency_graph": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "to"],
+        "properties": {
+          "from": { "$ref": "common.schema.json#/$defs/id" },
+          "to": { "$ref": "common.schema.json#/$defs/id" }
+        }
+      },
+      "default": []
+    },
+    "kernel_index": {
+      "type": "array",
+      "items": { "$ref": "common.schema.json#/$defs/id" },
+      "default": []
+    }
+  }
+}

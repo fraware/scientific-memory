@@ -1,0 +1,19 @@
+[
+  {
+    "id": "langmuir_1918_claim_001",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": { "page": 2, "offset": 140 },
+      "end": { "page": 2, "offset": 290 }
+    },
+    "informal_text": "At equilibrium, the surface coverage is determined by a ratio-form expression in pressure and an adsorption parameter.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "mapped",
+    "linked_symbols": ["theta", "P", "K"],
+    "linked_assumptions": ["langmuir_1918_assumption_001"],
+    "linked_formal_targets": ["ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm"]
+  }
+]

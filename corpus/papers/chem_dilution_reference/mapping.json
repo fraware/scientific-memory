@@ -1,0 +1,9 @@
+{
+  "paper_id": "chem_dilution_reference",
+  "namespace": "ScientificMemory.Chemistry.Solutions.DilutionRef",
+  "claim_to_decl": {
+    "chem_dilution_reference_claim_001": "solute_amount_preserved_under_dilution",
+    "chem_dilution_reference_claim_002": "conc_from_fixed_amount"
+  },
+  "target_file": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean"
+}

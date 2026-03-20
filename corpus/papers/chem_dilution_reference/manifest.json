@@ -1,0 +1,24 @@
+{
+  "paper_id": "chem_dilution_reference",
+  "version": "0.1.0",
+  "build_hash": "0bd7188b8110f8ec64f1498f047bdd33b76e45faa786f58e91ee1fe4745bffa2",
+  "coverage_metrics": {
+    "claim_count": 2,
+    "mapped_claim_count": 2,
+    "machine_checked_count": 2,
+    "kernel_linked_count": 0
+  },
+  "generated_pages": [
+    "/papers/chem_dilution_reference",
+    "/claims/chem_dilution_reference_claim_001",
+    "/claims/chem_dilution_reference_claim_002",
+    "/theorem-cards/chem_dilution_reference_card_001",
+    "/theorem-cards/chem_dilution_reference_card_002"
+  ],
+  "declaration_index": [
+    "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution",
+    "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount"
+  ],
+  "dependency_graph": [],
+  "kernel_index": []
+}

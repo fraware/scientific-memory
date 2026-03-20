@@ -1,0 +1,8 @@
+[
+  {
+    "claim_id": "freundlich_1906_adsorption_claim_001",
+    "description": "Demo literature-error record: Freundlich isotherm exponent 1/n is empirical; some secondary sources omit the typical domain restriction n > 0 (or n < 0 for inverse behavior). Corpus formalization encodes the stated isotherm identity only.",
+    "severity": "documentation",
+    "source": "curated demo for SPEC 12 literature_errors metric"
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assumption.schema.json",
+  "title": "Assumptions",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "paper_id", "source_span", "text", "kind"],
+    "properties": {
+      "id": { "$ref": "common.schema.json#/$defs/id" },
+      "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+      "source_span": { "$ref": "common.schema.json#/$defs/sourceSpan" },
+      "text": { "type": "string", "minLength": 1 },
+      "kind": {
+        "type": "string",
+        "enum": [
+          "physical_regime",
+          "domain_restriction",
+          "smoothness",
+          "boundedness",
+          "measurement_assumption",
+          "unit_convention",
+          "approximation",
+          "editorial",
+          "other"
+        ]
+      },
+      "explicit_or_implicit": {
+        "type": "string",
+        "enum": ["explicit", "implicit"]
+      },
+      "normalization_status": {
+        "type": "string",
+        "enum": ["raw", "normalized", "disputed"]
+      }
+    }
+  }
+}

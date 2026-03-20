@@ -1,0 +1,14 @@
+{
+  "id": "physics_kinematics_uniform",
+  "title": "Uniform acceleration kinematics (physics slice)",
+  "authors": ["Scientific Memory contributors"],
+  "year": 2024,
+  "domain": "physics",
+  "source": {
+    "kind": "pdf",
+    "path": "corpus/papers/physics_kinematics_uniform/source/source.pdf",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "artifact_status": "admitted",
+  "first_artifact_at": "2026-03-18T14:00:00Z"
+}

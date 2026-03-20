@@ -1,0 +1,24 @@
+[
+  {
+    "id": "chem_dilution_reference_card_001",
+    "claim_id": "chem_dilution_reference_claim_001",
+    "lean_decl": "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution",
+    "file_path": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "chem_dilution_reference_card_002",
+    "claim_id": "chem_dilution_reference_claim_002",
+    "lean_decl": "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount",
+    "file_path": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

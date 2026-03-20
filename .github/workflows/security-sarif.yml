@@ -1,0 +1,27 @@
+name: security-sarif
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  ruff-sarif:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - name: Install Python deps
+        run: uv sync --all-packages
+      - name: Generate Ruff SARIF (warning-first)
+        run: |
+          uv run --project pipeline ruff check pipeline kernels kernels/conformance scripts tests --output-format sarif --exit-zero > ruff.sarif
+      - name: Upload SARIF to code scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ruff.sarif

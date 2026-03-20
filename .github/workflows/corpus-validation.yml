@@ -1,0 +1,32 @@
+name: corpus-validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install Python deps
+        run: uv sync --all-packages
+
+      - name: Check schema migration notes (Gate 2)
+        run: uv run python scripts/check_schema_migration.py --base main --head HEAD
+
+      - name: Validate schemas and manifests
+        run: uv run --project pipeline python -m sm_pipeline.cli validate-all
+
+      - name: Run pipeline tests
+        run: uv run --project pipeline pytest
+
+      - name: Run kernel tests (numeric witness)
+        run: uv run --project kernels/adsorption pytest
+
+      - name: Run benchmark and regression check (Gate 6)
+        run: uv run --project pipeline python -m sm_pipeline.cli benchmark

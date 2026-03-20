@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+title: Scientific Memory
+message: If you use this software, please cite it as below.
+type: software
+authors:
+  - family-names: Scientific Memory Contributors
+    given-names: ""
+date-released: 2025-01-01
+url: https://github.com/fraware/scientific-memory

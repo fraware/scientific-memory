@@ -1,0 +1,228 @@
+[
+  {
+    "id": "langmuir_1918_adsorption_card_001",
+    "claim_id": "langmuir_1918_claim_001",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": [
+      "langmuir_adsorption_kernel_v1"
+    ]
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_002",
+    "claim_id": "langmuir_1918_claim_002",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_003",
+    "claim_id": "langmuir_1918_claim_003",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_004",
+    "claim_id": "langmuir_1918_claim_004",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_005",
+    "claim_id": "langmuir_1918_claim_005",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_006",
+    "claim_id": "langmuir_1918_claim_006",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_007",
+    "claim_id": "langmuir_1918_claim_007",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_008",
+    "claim_id": "langmuir_1918_claim_008",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_009",
+    "claim_id": "langmuir_1918_claim_009",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_010",
+    "claim_id": "langmuir_1918_claim_010",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_011",
+    "claim_id": "langmuir_1918_claim_011",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_012",
+    "claim_id": "langmuir_1918_claim_012",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_013",
+    "claim_id": "langmuir_1918_claim_013",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_014",
+    "claim_id": "langmuir_1918_claim_014",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_015",
+    "claim_id": "langmuir_1918_claim_015",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_016",
+    "claim_id": "langmuir_1918_claim_016",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_017",
+    "claim_id": "langmuir_1918_claim_017",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_018",
+    "claim_id": "langmuir_1918_claim_018",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [
+      "langmuir_1918_adsorption_card_016"
+    ],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_019",
+    "claim_id": "langmuir_1918_claim_019",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [
+      "langmuir_1918_adsorption_card_012"
+    ],
+    "executable_links": []
+  },
+  {
+    "id": "langmuir_1918_adsorption_card_020",
+    "claim_id": "langmuir_1918_claim_020",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

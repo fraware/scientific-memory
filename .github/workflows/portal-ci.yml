@@ -1,0 +1,33 @@
+name: portal-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  build-portal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Lint portal
+        run: pnpm --dir portal lint
+
+      - name: Build portal
+        run: pnpm --dir portal build
+
+      - name: Graph render smoke test (Gate 5)
+        run: node portal/scripts/smoke-graph.mjs

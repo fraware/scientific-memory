@@ -1,0 +1,36 @@
+# Monthly contributor dry-run (optional; cost-aware). SPEC Milestone 5.
+name: Contributor dry-run (monthly)
+on:
+  schedule:
+    - cron: "0 6 1 * *"
+  workflow_dispatch:
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - name: Install Python deps
+        run: uv sync --all-packages
+      - name: Install portal deps
+        run: pnpm --dir portal install --frozen-lockfile
+      - name: Validate corpus
+        run: uv run --project pipeline python -m sm_pipeline.cli validate-all
+      - name: Pipeline tests
+        run: uv run --project pipeline pytest
+      - name: Kernel tests
+        run: uv run --project kernels/adsorption pytest
+      - name: Lean build
+        run: lake build
+      - name: Portal build
+        run: pnpm --dir portal build
+      - name: Benchmark regression
+        run: uv run --project pipeline python -m sm_pipeline.cli benchmark

@@ -1,0 +1,8 @@
+[
+  {
+    "claim_id": "temkin_1941_adsorption_claim_002",
+    "description": "Secondary summaries occasionally collapse the reciprocal-pressure zero-crossing condition into a generic low-pressure limit claim; this formal slice keeps the explicit K*p=1 boundary.",
+    "severity": "methodological",
+    "source": "curated from Temkin-Pyzhev retrospectives"
+  }
+]

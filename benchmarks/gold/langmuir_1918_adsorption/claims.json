@@ -1,0 +1,622 @@
+[
+  {
+    "id": "langmuir_1918_claim_001",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 140
+      },
+      "end": {
+        "page": 2,
+        "offset": 290
+      }
+    },
+    "informal_text": "At equilibrium, the surface coverage is determined by a ratio-form expression in pressure and an adsorption parameter.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_002",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 291
+      },
+      "end": {
+        "page": 2,
+        "offset": 350
+      }
+    },
+    "informal_text": "Langmuir coverage is nonnegative for nonnegative K and P.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_003",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 351
+      },
+      "end": {
+        "page": 2,
+        "offset": 410
+      }
+    },
+    "informal_text": "Langmuir coverage is at most 1 when K and P are nonnegative.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_004",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 411
+      },
+      "end": {
+        "page": 2,
+        "offset": 470
+      }
+    },
+    "informal_text": "At zero pressure, coverage is zero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_005",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 471
+      },
+      "end": {
+        "page": 2,
+        "offset": 530
+      }
+    },
+    "informal_text": "When the adsorption constant is zero, coverage is zero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_006",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 531
+      },
+      "end": {
+        "page": 2,
+        "offset": 580
+      }
+    },
+    "informal_text": "Denominator 1 + K P is positive or K P is zero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_007",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 581
+      },
+      "end": {
+        "page": 2,
+        "offset": 630
+      }
+    },
+    "informal_text": "Coverage is positive for positive K and P.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_008",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 631
+      },
+      "end": {
+        "page": 2,
+        "offset": 680
+      }
+    },
+    "informal_text": "Coverage is monotone increasing in pressure.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_009",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 681
+      },
+      "end": {
+        "page": 2,
+        "offset": 730
+      }
+    },
+    "informal_text": "Coverage is monotone increasing in adsorption constant.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_010",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 731
+      },
+      "end": {
+        "page": 2,
+        "offset": 780
+      }
+    },
+    "informal_text": "Coverage plus reciprocal of denominator equals one.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_011",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 781
+      },
+      "end": {
+        "page": 2,
+        "offset": 830
+      }
+    },
+    "informal_text": "One minus coverage equals reciprocal of denominator.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_012",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 831
+      },
+      "end": {
+        "page": 2,
+        "offset": 880
+      }
+    },
+    "informal_text": "At P = 1/K coverage is one half.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_013",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 881
+      },
+      "end": {
+        "page": 2,
+        "offset": 930
+      }
+    },
+    "informal_text": "Coverage times denominator equals K P.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_014",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 931
+      },
+      "end": {
+        "page": 2,
+        "offset": 980
+      }
+    },
+    "informal_text": "Scaling K by c is equivalent to scaling P by c.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_015",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 981
+      },
+      "end": {
+        "page": 2,
+        "offset": 1030
+      }
+    },
+    "informal_text": "Relation between coverage at -P and at -K.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_016",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1031
+      },
+      "end": {
+        "page": 2,
+        "offset": 1080
+      }
+    },
+    "informal_text": "One minus coverage is reciprocal of denominator.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_017",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1081
+      },
+      "end": {
+        "page": 2,
+        "offset": 1120
+      }
+    },
+    "informal_text": "Numerator K P is nonnegative for nonnegative K and P.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_018",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1121
+      },
+      "end": {
+        "page": 2,
+        "offset": 1160
+      }
+    },
+    "informal_text": "Reciprocal of denominator equals one minus coverage.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_019",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1161
+      },
+      "end": {
+        "page": 2,
+        "offset": 1200
+      }
+    },
+    "informal_text": "At P = 1/K coverage equals one half.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half"
+    ]
+  },
+  {
+    "id": "langmuir_1918_claim_020",
+    "paper_id": "langmuir_1918_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 2,
+        "offset": 1201
+      },
+      "end": {
+        "page": 2,
+        "offset": 1240
+      }
+    },
+    "informal_text": "Coverage at (0,0) is zero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "theta",
+      "p",
+      "k"
+    ],
+    "linked_assumptions": [
+      "langmuir_1918_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero"
+    ]
+  }
+]

@@ -1,0 +1,376 @@
+[
+  {
+    "id": "freundlich_1906_adsorption_claim_001",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 100
+      }
+    },
+    "informal_text": "Empirical Freundlich relation: adsorbed amount per unit mass scales as concentration to the power 1/n times a constant k.",
+    "claim_type": "definition",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_xm",
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_002",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 100
+      },
+      "end": {
+        "page": 1,
+        "offset": 200
+      }
+    },
+    "informal_text": "For nonnegative k and positive concentration and exponent denominator n, the Freundlich isotherm value is nonnegative.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_xm",
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_003",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 200
+      },
+      "end": {
+        "page": 1,
+        "offset": 300
+      }
+    },
+    "informal_text": "For strictly positive k, c, and n, the Freundlich isotherm is strictly positive.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_xm",
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_004",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 300
+      },
+      "end": {
+        "page": 1,
+        "offset": 400
+      }
+    },
+    "informal_text": "When k is zero, the Freundlich isotherm is zero for any positive c and n.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_k",
+      "freund_c",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_005",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 400
+      },
+      "end": {
+        "page": 1,
+        "offset": 500
+      }
+    },
+    "informal_text": "When concentration is zero and n is positive, the Freundlich isotherm is zero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_006",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 500
+      },
+      "end": {
+        "page": 1,
+        "offset": 600
+      }
+    },
+    "informal_text": "For fixed positive k and n, the isotherm is monotone nondecreasing in concentration.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_007",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 600
+      },
+      "end": {
+        "page": 1,
+        "offset": 700
+      }
+    },
+    "informal_text": "For fixed positive c and n, the isotherm is monotone nondecreasing in k.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_k",
+      "freund_c",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_008",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 700
+      },
+      "end": {
+        "page": 1,
+        "offset": 800
+      }
+    },
+    "informal_text": "At unit concentration, the isotherm equals k when n is positive.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_009",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 800
+      },
+      "end": {
+        "page": 1,
+        "offset": 900
+      }
+    },
+    "informal_text": "Scaling k by a nonnegative factor scales the isotherm by the same factor.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_k",
+      "freund_c",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_010",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 900
+      },
+      "end": {
+        "page": 1,
+        "offset": 1000
+      }
+    },
+    "informal_text": "The concentration power term c^(1/n) is positive when c and n are positive.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_c",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_011",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1000
+      },
+      "end": {
+        "page": 1,
+        "offset": 1100
+      }
+    },
+    "informal_text": "For positive k and n, if c1 < c2 then the isotherm at c1 is strictly less than at c2.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_c",
+      "freund_k",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_claim_012",
+    "paper_id": "freundlich_1906_adsorption",
+    "section": "1",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1100
+      },
+      "end": {
+        "page": 1,
+        "offset": 1200
+      }
+    },
+    "informal_text": "Doubling k doubles the isotherm for fixed positive c and n.",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "freund_k",
+      "freund_c",
+      "freund_n"
+    ],
+    "linked_assumptions": [
+      "freundlich_1906_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
+    ]
+  }
+]

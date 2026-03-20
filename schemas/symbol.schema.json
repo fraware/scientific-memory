@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/symbol.schema.json",
+  "title": "Symbols",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "paper_id", "raw_latex", "normalized_name"],
+    "properties": {
+      "id": { "$ref": "common.schema.json#/$defs/id" },
+      "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+      "raw_latex": { "type": "string" },
+      "normalized_name": { "type": "string" },
+      "type_hint": { "type": "string" },
+      "dimensional_metadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "type": "string" },
+          "unit": { "type": "string" },
+          "dimension": { "type": "string" }
+        }
+      },
+      "ambiguity_flags": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "overloaded_symbol",
+            "unit_unclear",
+            "scope_unclear",
+            "role_unclear"
+          ]
+        },
+        "default": []
+      }
+    }
+  }
+}

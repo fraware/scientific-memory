@@ -1,0 +1,141 @@
+"""Provenance rules tests (Gate 3)."""
+
+import json
+import tempfile
+from pathlib import Path
+
+import pytest
+
+from sm_pipeline.validate.provenance import ProvenanceError, validate_provenance
+
+
+def test_claim_without_source_span_raises() -> None:
+    """Provenance check fails when a claim lacks source_span."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "corpus" / "papers" / "p1").mkdir(parents=True)
+        (root / "corpus" / "papers" / "p1" / "metadata.json").write_text(
+            json.dumps(
+                {
+                    "id": "p1",
+                    "title": "T",
+                    "authors": ["A"],
+                    "year": 2000,
+                    "domain": "other",
+                    "source": {"kind": "pdf", "path": "x", "sha256": "0" * 64},
+                    "artifact_status": "admitted",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / "corpus" / "papers" / "p1" / "claims.json").write_text(
+            json.dumps(
+                [
+                    {
+                        "id": "c1",
+                        "paper_id": "p1",
+                        "section": "1",
+                        "informal_text": "x",
+                        "claim_type": "definition",
+                        "status": "unparsed",
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+        with pytest.raises(ProvenanceError, match="missing source_span"):
+            validate_provenance(root)
+
+
+def test_claim_with_source_span_passes() -> None:
+    """Provenance check passes when all claims have source_span."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "corpus" / "papers" / "p1").mkdir(parents=True)
+        (root / "corpus" / "papers" / "p1" / "metadata.json").write_text(
+            json.dumps(
+                {
+                    "id": "p1",
+                    "title": "T",
+                    "authors": ["A"],
+                    "year": 2000,
+                    "domain": "other",
+                    "source": {"kind": "pdf", "path": "x", "sha256": "0" * 64},
+                    "artifact_status": "admitted",
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / "corpus" / "papers" / "p1" / "claims.json").write_text(
+            json.dumps(
+                [
+                    {
+                        "id": "c1",
+                        "paper_id": "p1",
+                        "section": "1",
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
+                        "informal_text": "x",
+                        "claim_type": "definition",
+                        "status": "unparsed",
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+        validate_provenance(root)
+
+
+def test_dangling_declaration_raises() -> None:
+    """Provenance check fails when declaration_index has a decl not in mapping.claim_to_decl."""
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        (root / "corpus" / "papers" / "p1").mkdir(parents=True)
+        (root / "corpus" / "papers" / "p1" / "metadata.json").write_text("{}", encoding="utf-8")
+        (root / "corpus" / "papers" / "p1" / "claims.json").write_text(
+            json.dumps(
+                [
+                    {
+                        "id": "c1",
+                        "paper_id": "p1",
+                        "section": "1",
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
+                        "informal_text": "x",
+                        "claim_type": "definition",
+                        "status": "unparsed",
+                    }
+                ]
+            ),
+            encoding="utf-8",
+        )
+        (root / "corpus" / "papers" / "p1" / "manifest.json").write_text(
+            json.dumps(
+                {
+                    "paper_id": "p1",
+                    "version": "0.1",
+                    "build_hash": "0" * 64,
+                    "coverage_metrics": {
+                        "claim_count": 1,
+                        "mapped_claim_count": 0,
+                        "machine_checked_count": 0,
+                        "kernel_linked_count": 0,
+                    },
+                    "generated_pages": [],
+                    "declaration_index": ["Some.Namespace.orphan_decl"],
+                }
+            ),
+            encoding="utf-8",
+        )
+        (root / "corpus" / "papers" / "p1" / "mapping.json").write_text(
+            json.dumps({"paper_id": "p1", "namespace": "Some.Namespace", "claim_to_decl": {}}),
+            encoding="utf-8",
+        )
+        with pytest.raises(ProvenanceError, match="no originating claim"):
+            validate_provenance(root)

@@ -1,0 +1,13 @@
+{
+  "id": "pinned_fixture_paper",
+  "title": "Pinned fixture paper",
+  "authors": ["Fixture Author"],
+  "year": 2020,
+  "domain": "chemistry",
+  "source": {
+    "kind": "pdf",
+    "path": "source/source.pdf",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "artifact_status": "admitted"
+}

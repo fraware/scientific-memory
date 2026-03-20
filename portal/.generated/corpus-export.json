@@ -1,0 +1,3833 @@
+{
+  "version": "0.1",
+  "papers_index": {
+    "version": "0.1",
+    "papers": [
+      {
+        "id": "chem_dilution_reference",
+        "title": "Dilution reference: solute amount vs concentration and volume (chemistry slice)",
+        "year": 2024,
+        "domain": "chemistry"
+      },
+      {
+        "id": "freundlich_1906_adsorption",
+        "title": "Over the adsorption in solution",
+        "year": 1906,
+        "domain": "chemistry"
+      },
+      {
+        "id": "langmuir_1918_adsorption",
+        "title": "The Adsorption of Gases on Plane Surfaces of Glass, Mica and Platinum",
+        "year": 1918,
+        "domain": "chemistry"
+      },
+      {
+        "id": "math_sum_evens",
+        "title": "Sum of two even natural numbers is even (reference slice)",
+        "year": 2024,
+        "domain": "mathematics"
+      },
+      {
+        "id": "physics_kinematics_uniform",
+        "title": "Uniform acceleration kinematics (physics slice)",
+        "year": 2024,
+        "domain": "physics"
+      },
+      {
+        "id": "temkin_1941_adsorption",
+        "title": "Kinetics of ammonia synthesis on promoted iron catalysts (Temkin-Pyzhev slice)",
+        "year": 1941,
+        "domain": "chemistry"
+      }
+    ]
+  },
+  "papers": {
+    "chem_dilution_reference": {
+      "metadata": {
+        "id": "chem_dilution_reference",
+        "title": "Dilution reference: solute amount vs concentration and volume (chemistry slice)",
+        "authors": [
+          "Scientific Memory contributors"
+        ],
+        "year": 2024,
+        "domain": "chemistry",
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/chem_dilution_reference/source/source.pdf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "artifact_status": "admitted",
+        "first_artifact_at": "2026-03-18T12:00:00Z"
+      },
+      "claims": [
+        {
+          "id": "chem_dilution_reference_claim_001",
+          "paper_id": "chem_dilution_reference",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 120
+            }
+          },
+          "informal_text": "When a solution is diluted by increasing volume by a positive factor k while solute amount is fixed, concentration scales inversely: c\u2080 v\u2080 = (c\u2080/k)(v\u2080 k) for positive rational concentration, volume, and k.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "chem_dilution_reference_symbol_c0",
+            "chem_dilution_reference_symbol_v0",
+            "chem_dilution_reference_symbol_k"
+          ],
+          "linked_assumptions": [
+            "chem_dilution_reference_assumption_001",
+            "chem_dilution_reference_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution"
+          ]
+        },
+        {
+          "id": "chem_dilution_reference_claim_002",
+          "paper_id": "chem_dilution_reference",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 121
+            },
+            "end": {
+              "page": 1,
+              "offset": 220
+            }
+          },
+          "informal_text": "If two solution states carry the same fixed solute amount so that c\u2080 v\u2080 = c\u2081 v\u2081 with v\u2081 \u2260 0, then c\u2081 = (c\u2080 v\u2080)/v\u2081.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "chem_dilution_reference_symbol_c0",
+            "chem_dilution_reference_symbol_c1",
+            "chem_dilution_reference_symbol_v0",
+            "chem_dilution_reference_symbol_v1"
+          ],
+          "linked_assumptions": [
+            "chem_dilution_reference_assumption_001",
+            "chem_dilution_reference_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "chem_dilution_reference_assumption_001",
+          "paper_id": "chem_dilution_reference",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 80
+            }
+          },
+          "text": "The solution is well mixed so that solute amount in a state is modeled as concentration times volume (rational idealization).",
+          "kind": "physical_regime",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        },
+        {
+          "id": "chem_dilution_reference_assumption_002",
+          "paper_id": "chem_dilution_reference",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 81
+            },
+            "end": {
+              "page": 1,
+              "offset": 119
+            }
+          },
+          "text": "Concentrations, volumes, and scale factors are rational numbers; any division is only by nonzero denominators.",
+          "kind": "domain_restriction",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        }
+      ],
+      "symbols": [
+        {
+          "id": "chem_dilution_reference_symbol_c0",
+          "paper_id": "chem_dilution_reference",
+          "raw_latex": "c_0",
+          "normalized_name": "initial_concentration",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "concentration",
+            "unit": "mol/L",
+            "dimension": "M L\u207b\u00b3"
+          }
+        },
+        {
+          "id": "chem_dilution_reference_symbol_v0",
+          "paper_id": "chem_dilution_reference",
+          "raw_latex": "v_0",
+          "normalized_name": "initial_volume",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "volume",
+            "unit": "L",
+            "dimension": "L\u00b3"
+          }
+        },
+        {
+          "id": "chem_dilution_reference_symbol_k",
+          "paper_id": "chem_dilution_reference",
+          "raw_latex": "k",
+          "normalized_name": "volume_scale_factor",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "dimensionless_ratio",
+            "unit": "1",
+            "dimension": "1"
+          }
+        },
+        {
+          "id": "chem_dilution_reference_symbol_c1",
+          "paper_id": "chem_dilution_reference",
+          "raw_latex": "c_1",
+          "normalized_name": "second_state_concentration",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "concentration",
+            "unit": "mol/L",
+            "dimension": "M L\u207b\u00b3"
+          }
+        },
+        {
+          "id": "chem_dilution_reference_symbol_v1",
+          "paper_id": "chem_dilution_reference",
+          "raw_latex": "v_1",
+          "normalized_name": "second_state_volume",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "volume",
+            "unit": "L",
+            "dimension": "L\u00b3"
+          }
+        }
+      ],
+      "mapping": {
+        "paper_id": "chem_dilution_reference",
+        "namespace": "ScientificMemory.Chemistry.Solutions.DilutionRef",
+        "claim_to_decl": {
+          "chem_dilution_reference_claim_001": "solute_amount_preserved_under_dilution",
+          "chem_dilution_reference_claim_002": "conc_from_fixed_amount"
+        },
+        "target_file": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean"
+      },
+      "manifest": {
+        "paper_id": "chem_dilution_reference",
+        "version": "0.1.0",
+        "build_hash": "0bd7188b8110f8ec64f1498f047bdd33b76e45faa786f58e91ee1fe4745bffa2",
+        "coverage_metrics": {
+          "claim_count": 2,
+          "mapped_claim_count": 2,
+          "machine_checked_count": 2,
+          "kernel_linked_count": 0
+        },
+        "generated_pages": [
+          "/papers/chem_dilution_reference",
+          "/claims/chem_dilution_reference_claim_001",
+          "/claims/chem_dilution_reference_claim_002",
+          "/theorem-cards/chem_dilution_reference_card_001",
+          "/theorem-cards/chem_dilution_reference_card_002"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution",
+          "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount"
+        ],
+        "dependency_graph": [],
+        "kernel_index": []
+      },
+      "theorem_cards": [
+        {
+          "id": "chem_dilution_reference_card_001",
+          "claim_id": "chem_dilution_reference_claim_001",
+          "lean_decl": "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution",
+          "file_path": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "chem_dilution_reference_card_002",
+          "claim_id": "chem_dilution_reference_claim_002",
+          "lean_decl": "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount",
+          "file_path": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    },
+    "freundlich_1906_adsorption": {
+      "metadata": {
+        "id": "freundlich_1906_adsorption",
+        "title": "Over the adsorption in solution",
+        "authors": [
+          "Freundlich, H."
+        ],
+        "year": 1906,
+        "domain": "chemistry",
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/freundlich_1906_adsorption/source/source.pdf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "artifact_status": "admitted",
+        "first_artifact_at": "2026-03-18T10:48:55Z"
+      },
+      "claims": [
+        {
+          "id": "freundlich_1906_adsorption_claim_001",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 100
+            }
+          },
+          "informal_text": "Empirical Freundlich relation: adsorbed amount per unit mass scales as concentration to the power 1/n times a constant k.",
+          "claim_type": "definition",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_xm",
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_002",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 100
+            },
+            "end": {
+              "page": 1,
+              "offset": 200
+            }
+          },
+          "informal_text": "For nonnegative k and positive concentration and exponent denominator n, the Freundlich isotherm value is nonnegative.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_xm",
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_003",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 200
+            },
+            "end": {
+              "page": 1,
+              "offset": 300
+            }
+          },
+          "informal_text": "For strictly positive k, c, and n, the Freundlich isotherm is strictly positive.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_xm",
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_004",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 300
+            },
+            "end": {
+              "page": 1,
+              "offset": 400
+            }
+          },
+          "informal_text": "When k is zero, the Freundlich isotherm is zero for any positive c and n.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_k",
+            "freund_c",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_005",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 400
+            },
+            "end": {
+              "page": 1,
+              "offset": 500
+            }
+          },
+          "informal_text": "When concentration is zero and n is positive, the Freundlich isotherm is zero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_006",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 500
+            },
+            "end": {
+              "page": 1,
+              "offset": 600
+            }
+          },
+          "informal_text": "For fixed positive k and n, the isotherm is monotone nondecreasing in concentration.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_007",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 600
+            },
+            "end": {
+              "page": 1,
+              "offset": 700
+            }
+          },
+          "informal_text": "For fixed positive c and n, the isotherm is monotone nondecreasing in k.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_k",
+            "freund_c",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_008",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 700
+            },
+            "end": {
+              "page": 1,
+              "offset": 800
+            }
+          },
+          "informal_text": "At unit concentration, the isotherm equals k when n is positive.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_009",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 800
+            },
+            "end": {
+              "page": 1,
+              "offset": 900
+            }
+          },
+          "informal_text": "Scaling k by a nonnegative factor scales the isotherm by the same factor.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_k",
+            "freund_c",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_010",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 900
+            },
+            "end": {
+              "page": 1,
+              "offset": 1000
+            }
+          },
+          "informal_text": "The concentration power term c^(1/n) is positive when c and n are positive.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_c",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_011",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1000
+            },
+            "end": {
+              "page": 1,
+              "offset": 1100
+            }
+          },
+          "informal_text": "For positive k and n, if c1 < c2 then the isotherm at c1 is strictly less than at c2.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_c",
+            "freund_k",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_claim_012",
+          "paper_id": "freundlich_1906_adsorption",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1100
+            },
+            "end": {
+              "page": 1,
+              "offset": 1200
+            }
+          },
+          "informal_text": "Doubling k doubles the isotherm for fixed positive c and n.",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "freund_k",
+            "freund_c",
+            "freund_n"
+          ],
+          "linked_assumptions": [
+            "freundlich_1906_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "freundlich_1906_assumption_001",
+          "paper_id": "freundlich_1906_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 120
+            }
+          },
+          "text": "Adsorbed amount per unit mass and solute concentration are positive scalars in the empirical regime; constants k and exponent 1/n are taken positive.",
+          "kind": "domain_restriction",
+          "explicit_or_implicit": "implicit",
+          "normalization_status": "normalized"
+        },
+        {
+          "id": "freundlich_1906_assumption_002",
+          "paper_id": "freundlich_1906_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 120
+            },
+            "end": {
+              "page": 1,
+              "offset": 240
+            }
+          },
+          "text": "The power-law form is an empirical fit over a range of concentrations, not a mechanistic identity.",
+          "kind": "approximation",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        }
+      ],
+      "symbols": [
+        {
+          "id": "freund_xm",
+          "paper_id": "freundlich_1906_adsorption",
+          "raw_latex": "x/m",
+          "normalized_name": "adsorbed_amount_per_mass",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "derived",
+            "unit": "mol/g",
+            "dimension": "amount_per_mass"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "freund_c",
+          "paper_id": "freundlich_1906_adsorption",
+          "raw_latex": "c",
+          "normalized_name": "solute_concentration",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "intensive",
+            "unit": "mol/L",
+            "dimension": "concentration"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "freund_k",
+          "paper_id": "freundlich_1906_adsorption",
+          "raw_latex": "k",
+          "normalized_name": "freundlich_constant",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "empirical",
+            "unit": "derived",
+            "dimension": "freundlich_k"
+          },
+          "ambiguity_flags": [
+            "unit_unclear"
+          ]
+        },
+        {
+          "id": "freund_n",
+          "paper_id": "freundlich_1906_adsorption",
+          "raw_latex": "n",
+          "normalized_name": "freundlich_exponent_denominator",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "dimensionless_parameter",
+            "unit": "1",
+            "dimension": "dimensionless"
+          },
+          "ambiguity_flags": []
+        }
+      ],
+      "mapping": {
+        "paper_id": "freundlich_1906_adsorption",
+        "namespace": "ScientificMemory.Chemistry.Adsorption.Freundlich1906",
+        "claim_to_decl": {
+          "freundlich_1906_adsorption_claim_001": "freundlich_isotherm",
+          "freundlich_1906_adsorption_claim_002": "freundlich_nonneg",
+          "freundlich_1906_adsorption_claim_003": "freundlich_pos",
+          "freundlich_1906_adsorption_claim_004": "freundlich_zero_k",
+          "freundlich_1906_adsorption_claim_005": "freundlich_zero_c",
+          "freundlich_1906_adsorption_claim_006": "freundlich_mono_in_c",
+          "freundlich_1906_adsorption_claim_007": "freundlich_mono_in_k",
+          "freundlich_1906_adsorption_claim_008": "freundlich_at_one",
+          "freundlich_1906_adsorption_claim_009": "freundlich_smul_k",
+          "freundlich_1906_adsorption_claim_010": "freundlich_rpow_pos",
+          "freundlich_1906_adsorption_claim_011": "freundlich_strict_mono_in_c",
+          "freundlich_1906_adsorption_claim_012": "freundlich_double_k"
+        },
+        "target_file": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean"
+      },
+      "manifest": {
+        "paper_id": "freundlich_1906_adsorption",
+        "version": "0.1.0",
+        "build_hash": "425e11a2742d89ece62e23f7ddd1d763b9b7fcfe93610fd15387c1445588a395",
+        "coverage_metrics": {
+          "claim_count": 12,
+          "mapped_claim_count": 12,
+          "machine_checked_count": 12,
+          "kernel_linked_count": 1
+        },
+        "generated_pages": [
+          "/papers/freundlich_1906_adsorption",
+          "/claims/freundlich_1906_adsorption_claim_001",
+          "/claims/freundlich_1906_adsorption_claim_002",
+          "/claims/freundlich_1906_adsorption_claim_003",
+          "/claims/freundlich_1906_adsorption_claim_004",
+          "/claims/freundlich_1906_adsorption_claim_005",
+          "/claims/freundlich_1906_adsorption_claim_006",
+          "/claims/freundlich_1906_adsorption_claim_007",
+          "/claims/freundlich_1906_adsorption_claim_008",
+          "/claims/freundlich_1906_adsorption_claim_009",
+          "/claims/freundlich_1906_adsorption_claim_010",
+          "/claims/freundlich_1906_adsorption_claim_011",
+          "/claims/freundlich_1906_adsorption_claim_012",
+          "/theorem-cards/freundlich_1906_adsorption_card_001",
+          "/theorem-cards/freundlich_1906_adsorption_card_002",
+          "/theorem-cards/freundlich_1906_adsorption_card_003",
+          "/theorem-cards/freundlich_1906_adsorption_card_004",
+          "/theorem-cards/freundlich_1906_adsorption_card_005",
+          "/theorem-cards/freundlich_1906_adsorption_card_006",
+          "/theorem-cards/freundlich_1906_adsorption_card_007",
+          "/theorem-cards/freundlich_1906_adsorption_card_008",
+          "/theorem-cards/freundlich_1906_adsorption_card_009",
+          "/theorem-cards/freundlich_1906_adsorption_card_010",
+          "/theorem-cards/freundlich_1906_adsorption_card_011",
+          "/theorem-cards/freundlich_1906_adsorption_card_012"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c",
+          "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
+        ],
+        "dependency_graph": [],
+        "kernel_index": [
+          "freundlich_adsorption_kernel_v1"
+        ]
+      },
+      "theorem_cards": [
+        {
+          "id": "freundlich_1906_adsorption_card_001",
+          "claim_id": "freundlich_1906_adsorption_claim_001",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": [
+            "freundlich_adsorption_kernel_v1"
+          ]
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_002",
+          "claim_id": "freundlich_1906_adsorption_claim_002",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_003",
+          "claim_id": "freundlich_1906_adsorption_claim_003",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_004",
+          "claim_id": "freundlich_1906_adsorption_claim_004",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_005",
+          "claim_id": "freundlich_1906_adsorption_claim_005",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_006",
+          "claim_id": "freundlich_1906_adsorption_claim_006",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_007",
+          "claim_id": "freundlich_1906_adsorption_claim_007",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_008",
+          "claim_id": "freundlich_1906_adsorption_claim_008",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_009",
+          "claim_id": "freundlich_1906_adsorption_claim_009",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_010",
+          "claim_id": "freundlich_1906_adsorption_claim_010",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_011",
+          "claim_id": "freundlich_1906_adsorption_claim_011",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "freundlich_1906_adsorption_card_012",
+          "claim_id": "freundlich_1906_adsorption_claim_012",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    },
+    "langmuir_1918_adsorption": {
+      "metadata": {
+        "id": "langmuir_1918_adsorption",
+        "title": "The Adsorption of Gases on Plane Surfaces of Glass, Mica and Platinum",
+        "authors": [
+          "Irving Langmuir"
+        ],
+        "year": 1918,
+        "domain": "chemistry",
+        "tags": [
+          "adsorption",
+          "surface science",
+          "thermodynamics"
+        ],
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/langmuir_1918_adsorption/source/source.pdf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "artifact_status": "in_progress",
+        "first_artifact_at": "2026-03-16T19:10:58Z"
+      },
+      "claims": [
+        {
+          "id": "langmuir_1918_claim_001",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 140
+            },
+            "end": {
+              "page": 2,
+              "offset": 290
+            }
+          },
+          "informal_text": "At equilibrium, the surface coverage is determined by a ratio-form expression in pressure and an adsorption parameter.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_002",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 291
+            },
+            "end": {
+              "page": 2,
+              "offset": 350
+            }
+          },
+          "informal_text": "Langmuir coverage is nonnegative for nonnegative K and P.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_003",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 351
+            },
+            "end": {
+              "page": 2,
+              "offset": 410
+            }
+          },
+          "informal_text": "Langmuir coverage is at most 1 when K and P are nonnegative.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_004",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 411
+            },
+            "end": {
+              "page": 2,
+              "offset": 470
+            }
+          },
+          "informal_text": "At zero pressure, coverage is zero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_005",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 471
+            },
+            "end": {
+              "page": 2,
+              "offset": 530
+            }
+          },
+          "informal_text": "When the adsorption constant is zero, coverage is zero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_006",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 531
+            },
+            "end": {
+              "page": 2,
+              "offset": 580
+            }
+          },
+          "informal_text": "Denominator 1 + K P is positive or K P is zero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_007",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 581
+            },
+            "end": {
+              "page": 2,
+              "offset": 630
+            }
+          },
+          "informal_text": "Coverage is positive for positive K and P.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_008",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 631
+            },
+            "end": {
+              "page": 2,
+              "offset": 680
+            }
+          },
+          "informal_text": "Coverage is monotone increasing in pressure.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_009",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 681
+            },
+            "end": {
+              "page": 2,
+              "offset": 730
+            }
+          },
+          "informal_text": "Coverage is monotone increasing in adsorption constant.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_010",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 731
+            },
+            "end": {
+              "page": 2,
+              "offset": 780
+            }
+          },
+          "informal_text": "Coverage plus reciprocal of denominator equals one.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_011",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 781
+            },
+            "end": {
+              "page": 2,
+              "offset": 830
+            }
+          },
+          "informal_text": "One minus coverage equals reciprocal of denominator.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_012",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 831
+            },
+            "end": {
+              "page": 2,
+              "offset": 880
+            }
+          },
+          "informal_text": "At P = 1/K coverage is one half.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_013",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 881
+            },
+            "end": {
+              "page": 2,
+              "offset": 930
+            }
+          },
+          "informal_text": "Coverage times denominator equals K P.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_014",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 931
+            },
+            "end": {
+              "page": 2,
+              "offset": 980
+            }
+          },
+          "informal_text": "Scaling K by c is equivalent to scaling P by c.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_015",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 981
+            },
+            "end": {
+              "page": 2,
+              "offset": 1030
+            }
+          },
+          "informal_text": "Relation between coverage at -P and at -K.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_016",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 1031
+            },
+            "end": {
+              "page": 2,
+              "offset": 1080
+            }
+          },
+          "informal_text": "One minus coverage is reciprocal of denominator.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_017",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 1081
+            },
+            "end": {
+              "page": 2,
+              "offset": 1120
+            }
+          },
+          "informal_text": "Numerator K P is nonnegative for nonnegative K and P.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_018",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 1121
+            },
+            "end": {
+              "page": 2,
+              "offset": 1160
+            }
+          },
+          "informal_text": "Reciprocal of denominator equals one minus coverage.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_019",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 1161
+            },
+            "end": {
+              "page": 2,
+              "offset": 1200
+            }
+          },
+          "informal_text": "At P = 1/K coverage equals one half.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half"
+          ]
+        },
+        {
+          "id": "langmuir_1918_claim_020",
+          "paper_id": "langmuir_1918_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 1201
+            },
+            "end": {
+              "page": 2,
+              "offset": 1240
+            }
+          },
+          "informal_text": "Coverage at (0,0) is zero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "theta",
+            "p",
+            "k"
+          ],
+          "linked_assumptions": [
+            "langmuir_1918_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "langmuir_1918_assumption_001",
+          "paper_id": "langmuir_1918_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 2,
+              "offset": 100
+            },
+            "end": {
+              "page": 2,
+              "offset": 130
+            }
+          },
+          "text": "Single-site adsorption; no lateral interactions.",
+          "kind": "physical_regime",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        }
+      ],
+      "symbols": [
+        {
+          "id": "theta",
+          "paper_id": "langmuir_1918_adsorption",
+          "raw_latex": "\\theta",
+          "normalized_name": "coverage",
+          "type_hint": "dimensionless",
+          "dimensional_metadata": {
+            "kind": "dimensionless"
+          }
+        },
+        {
+          "id": "p",
+          "paper_id": "langmuir_1918_adsorption",
+          "raw_latex": "P",
+          "normalized_name": "pressure",
+          "type_hint": "pressure"
+        },
+        {
+          "id": "k",
+          "paper_id": "langmuir_1918_adsorption",
+          "raw_latex": "K",
+          "normalized_name": "adsorption_constant",
+          "type_hint": "inverse_pressure"
+        }
+      ],
+      "mapping": {
+        "paper_id": "langmuir_1918_adsorption",
+        "namespace": "ScientificMemory.Chemistry.Adsorption.Langmuir1918",
+        "claim_to_decl": {
+          "langmuir_1918_claim_001": "langmuir_isotherm",
+          "langmuir_1918_claim_002": "langmuir_isotherm_nonnegative",
+          "langmuir_1918_claim_003": "langmuir_isotherm_bounded",
+          "langmuir_1918_claim_004": "langmuir_isotherm_zero_pressure",
+          "langmuir_1918_claim_005": "langmuir_isotherm_zero_K",
+          "langmuir_1918_claim_006": "langmuir_denom_pos",
+          "langmuir_1918_claim_007": "langmuir_isotherm_pos_of_pos",
+          "langmuir_1918_claim_008": "langmuir_mono_in_P",
+          "langmuir_1918_claim_009": "langmuir_mono_in_K",
+          "langmuir_1918_claim_010": "langmuir_add_one_denom",
+          "langmuir_1918_claim_011": "langmuir_sym_recip",
+          "langmuir_1918_claim_012": "langmuir_isotherm_one",
+          "langmuir_1918_claim_013": "langmuir_mul_denom",
+          "langmuir_1918_claim_014": "langmuir_scale_K",
+          "langmuir_1918_claim_015": "langmuir_neg_P",
+          "langmuir_1918_claim_016": "langmuir_sub_one",
+          "langmuir_1918_claim_017": "langmuir_numer_nonneg",
+          "langmuir_1918_claim_018": "langmuir_recip_denom",
+          "langmuir_1918_claim_019": "langmuir_half",
+          "langmuir_1918_claim_020": "langmuir_zero_at_zero"
+        },
+        "target_file": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean"
+      },
+      "manifest": {
+        "paper_id": "langmuir_1918_adsorption",
+        "version": "0.1.0",
+        "build_hash": "96c5af12f90f805213678d3fe0448dd0a3935f7a4a55ecd14522e0c34fc632fc",
+        "coverage_metrics": {
+          "claim_count": 20,
+          "mapped_claim_count": 20,
+          "machine_checked_count": 20,
+          "kernel_linked_count": 1
+        },
+        "generated_pages": [
+          "/papers/langmuir_1918_adsorption",
+          "/claims/langmuir_1918_claim_001",
+          "/claims/langmuir_1918_claim_002",
+          "/claims/langmuir_1918_claim_003",
+          "/claims/langmuir_1918_claim_004",
+          "/claims/langmuir_1918_claim_005",
+          "/claims/langmuir_1918_claim_006",
+          "/claims/langmuir_1918_claim_007",
+          "/claims/langmuir_1918_claim_008",
+          "/claims/langmuir_1918_claim_009",
+          "/claims/langmuir_1918_claim_010",
+          "/claims/langmuir_1918_claim_011",
+          "/claims/langmuir_1918_claim_012",
+          "/claims/langmuir_1918_claim_013",
+          "/claims/langmuir_1918_claim_014",
+          "/claims/langmuir_1918_claim_015",
+          "/claims/langmuir_1918_claim_016",
+          "/claims/langmuir_1918_claim_017",
+          "/claims/langmuir_1918_claim_018",
+          "/claims/langmuir_1918_claim_019",
+          "/claims/langmuir_1918_claim_020",
+          "/theorem-cards/langmuir_1918_adsorption_card_001",
+          "/theorem-cards/langmuir_1918_adsorption_card_002",
+          "/theorem-cards/langmuir_1918_adsorption_card_003",
+          "/theorem-cards/langmuir_1918_adsorption_card_004",
+          "/theorem-cards/langmuir_1918_adsorption_card_005",
+          "/theorem-cards/langmuir_1918_adsorption_card_006",
+          "/theorem-cards/langmuir_1918_adsorption_card_007",
+          "/theorem-cards/langmuir_1918_adsorption_card_008",
+          "/theorem-cards/langmuir_1918_adsorption_card_009",
+          "/theorem-cards/langmuir_1918_adsorption_card_010",
+          "/theorem-cards/langmuir_1918_adsorption_card_011",
+          "/theorem-cards/langmuir_1918_adsorption_card_012",
+          "/theorem-cards/langmuir_1918_adsorption_card_013",
+          "/theorem-cards/langmuir_1918_adsorption_card_014",
+          "/theorem-cards/langmuir_1918_adsorption_card_015",
+          "/theorem-cards/langmuir_1918_adsorption_card_016",
+          "/theorem-cards/langmuir_1918_adsorption_card_017",
+          "/theorem-cards/langmuir_1918_adsorption_card_018",
+          "/theorem-cards/langmuir_1918_adsorption_card_019",
+          "/theorem-cards/langmuir_1918_adsorption_card_020"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half",
+          "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero"
+        ],
+        "dependency_graph": [
+          {
+            "from": "langmuir_1918_adsorption_card_016",
+            "to": "langmuir_1918_adsorption_card_018"
+          },
+          {
+            "from": "langmuir_1918_adsorption_card_012",
+            "to": "langmuir_1918_adsorption_card_019"
+          }
+        ],
+        "kernel_index": [
+          "langmuir_adsorption_kernel_v1"
+        ]
+      },
+      "theorem_cards": [
+        {
+          "id": "langmuir_1918_adsorption_card_001",
+          "claim_id": "langmuir_1918_claim_001",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": [
+            "langmuir_adsorption_kernel_v1"
+          ]
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_002",
+          "claim_id": "langmuir_1918_claim_002",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_003",
+          "claim_id": "langmuir_1918_claim_003",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_004",
+          "claim_id": "langmuir_1918_claim_004",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_005",
+          "claim_id": "langmuir_1918_claim_005",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_006",
+          "claim_id": "langmuir_1918_claim_006",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_007",
+          "claim_id": "langmuir_1918_claim_007",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_008",
+          "claim_id": "langmuir_1918_claim_008",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_009",
+          "claim_id": "langmuir_1918_claim_009",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_010",
+          "claim_id": "langmuir_1918_claim_010",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_011",
+          "claim_id": "langmuir_1918_claim_011",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_012",
+          "claim_id": "langmuir_1918_claim_012",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_013",
+          "claim_id": "langmuir_1918_claim_013",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_014",
+          "claim_id": "langmuir_1918_claim_014",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_015",
+          "claim_id": "langmuir_1918_claim_015",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_016",
+          "claim_id": "langmuir_1918_claim_016",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_017",
+          "claim_id": "langmuir_1918_claim_017",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_018",
+          "claim_id": "langmuir_1918_claim_018",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [
+            "langmuir_1918_adsorption_card_016"
+          ],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_019",
+          "claim_id": "langmuir_1918_claim_019",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [
+            "langmuir_1918_adsorption_card_012"
+          ],
+          "executable_links": []
+        },
+        {
+          "id": "langmuir_1918_adsorption_card_020",
+          "claim_id": "langmuir_1918_claim_020",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Langmuir1918.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    },
+    "math_sum_evens": {
+      "metadata": {
+        "id": "math_sum_evens",
+        "title": "Sum of two even natural numbers is even (reference slice)",
+        "authors": [
+          "Scientific Memory contributors"
+        ],
+        "year": 2024,
+        "domain": "mathematics",
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/math_sum_evens/source/source.pdf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "artifact_status": "admitted",
+        "first_artifact_at": "2026-03-18T15:13:12Z"
+      },
+      "claims": [
+        {
+          "id": "math_sum_evens_claim_001",
+          "paper_id": "math_sum_evens",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 80
+            }
+          },
+          "informal_text": "The sum of two even natural numbers is even.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [],
+          "linked_assumptions": [],
+          "linked_formal_targets": [
+            "ScientificMemory.Mathematics.SumEvens.sum_evens"
+          ]
+        }
+      ],
+      "assumptions": [],
+      "symbols": [],
+      "mapping": {
+        "paper_id": "math_sum_evens",
+        "namespace": "ScientificMemory.Mathematics.SumEvens",
+        "claim_to_decl": {
+          "math_sum_evens_claim_001": "sum_evens"
+        },
+        "target_file": "formal/ScientificMemory/Mathematics/SumEvens.lean"
+      },
+      "manifest": {
+        "paper_id": "math_sum_evens",
+        "version": "0.1.0",
+        "build_hash": "d921d430727c47da09fbed6c53c56f83438b65394c10f9c40d5e8b5f86de07e0",
+        "coverage_metrics": {
+          "claim_count": 1,
+          "mapped_claim_count": 1,
+          "machine_checked_count": 1,
+          "kernel_linked_count": 0
+        },
+        "generated_pages": [
+          "/papers/math_sum_evens",
+          "/claims/math_sum_evens_claim_001",
+          "/theorem-cards/math_sum_evens_card_001"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Mathematics.SumEvens.sum_evens"
+        ],
+        "dependency_graph": [],
+        "kernel_index": []
+      },
+      "theorem_cards": [
+        {
+          "id": "math_sum_evens_card_001",
+          "claim_id": "math_sum_evens_claim_001",
+          "lean_decl": "ScientificMemory.Mathematics.SumEvens.sum_evens",
+          "file_path": "formal/ScientificMemory/Mathematics/SumEvens.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    },
+    "physics_kinematics_uniform": {
+      "metadata": {
+        "id": "physics_kinematics_uniform",
+        "title": "Uniform acceleration kinematics (physics slice)",
+        "authors": [
+          "Scientific Memory contributors"
+        ],
+        "year": 2024,
+        "domain": "physics",
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/physics_kinematics_uniform/source/source.pdf",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "artifact_status": "admitted",
+        "first_artifact_at": "2026-03-18T14:00:00Z"
+      },
+      "claims": [
+        {
+          "id": "physics_kinematics_uniform_claim_001",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 80
+            }
+          },
+          "informal_text": "Under constant acceleration, final velocity u + a t equals u + t a over rationals.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_at_time"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_002",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 81
+            },
+            "end": {
+              "page": 1,
+              "offset": 160
+            }
+          },
+          "informal_text": "Displacement u t + (1/2) a t^2 rearranges to t (u + (1/2) a t).",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_rearranged"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_003",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "1",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 161
+            },
+            "end": {
+              "page": 1,
+              "offset": 220
+            }
+          },
+          "informal_text": "Velocity change over interval dt: (u + a dt) - u = a dt.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_dt"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.delta_velocity"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_004",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 221
+            },
+            "end": {
+              "page": 1,
+              "offset": 320
+            }
+          },
+          "informal_text": "Displacement over 2T equals twice displacement over T plus a T^2 (kinematics identity in \u211a).",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_double_time"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_005",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 321
+            },
+            "end": {
+              "page": 1,
+              "offset": 400
+            }
+          },
+          "informal_text": "Sum of two equal halves of (u+v) equals u+v.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_v"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_006",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "3",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 401
+            },
+            "end": {
+              "page": 1,
+              "offset": 500
+            }
+          },
+          "informal_text": "Acceleration from velocity change: (dv/dt)*dt = dv when dt is nonzero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_dv",
+            "physics_kinematics_uniform_symbol_dt"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.accel_from_delta_v"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_007",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 501
+            },
+            "end": {
+              "page": 1,
+              "offset": 580
+            }
+          },
+          "informal_text": "Squared final velocity (u + a t)^2 expands to u^2 + 2 u a t + (a t)^2 in \u211a.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_squared_expand"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_008",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 581
+            },
+            "end": {
+              "page": 1,
+              "offset": 680
+            }
+          },
+          "informal_text": "Torricelli-style identity: (u + a t)^2 = u^2 + 2 a (u t + \u00bd a t^2) for uniform acceleration in \u211a.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.torricelli_squared"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_009",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "5",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 681
+            },
+            "end": {
+              "page": 1,
+              "offset": 760
+            }
+          },
+          "informal_text": "With zero acceleration, u + 0\u00b7t = u (velocity unchanged in \u211a).",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_010",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "5",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 761
+            },
+            "end": {
+              "page": 1,
+              "offset": 840
+            }
+          },
+          "informal_text": "At t = 0, displacement u\u00b70 + \u00bd a\u00b70^2 = 0.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.zero_time_zero_displacement"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_011",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "6",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 841
+            },
+            "end": {
+              "page": 1,
+              "offset": 940
+            }
+          },
+          "informal_text": "Average of initial and final speeds times t equals u t + \u00bd a t^2 when v = u + a t.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.average_velocity_displacement"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_012",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "6",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 941
+            },
+            "end": {
+              "page": 1,
+              "offset": 1040
+            }
+          },
+          "informal_text": "Velocity composition: u + a(t + s) = (u + a t) + a s for fixed a in \u211a.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t",
+            "physics_kinematics_uniform_symbol_s"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_time_additivity"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_013",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "7",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1041
+            },
+            "end": {
+              "page": 1,
+              "offset": 1140
+            }
+          },
+          "informal_text": "Standard displacement formula is additive in initial velocity: (u1+u2)t + \u00bd a t^2 = u1 t + u2 t + \u00bd a t^2.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u1",
+            "physics_kinematics_uniform_symbol_u2",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_linearity_in_u"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_014",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "7",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1141
+            },
+            "end": {
+              "page": 1,
+              "offset": 1220
+            }
+          },
+          "informal_text": "Doubling the half-quadratic term: 2\u00b7(\u00bd a t^2) = a t^2 in \u211a.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_t"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term"
+          ]
+        },
+        {
+          "id": "physics_kinematics_uniform_claim_015",
+          "paper_id": "physics_kinematics_uniform",
+          "section": "8",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1221
+            },
+            "end": {
+              "page": 1,
+              "offset": 1320
+            }
+          },
+          "informal_text": "Mean acceleration ((u + a \u0394t) - u) / \u0394t equals a when \u0394t \u2260 0 in \u211a.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "physics_kinematics_uniform_symbol_u",
+            "physics_kinematics_uniform_symbol_a",
+            "physics_kinematics_uniform_symbol_dt"
+          ],
+          "linked_assumptions": [
+            "physics_kinematics_uniform_assumption_001",
+            "physics_kinematics_uniform_assumption_002"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "physics_kinematics_uniform_assumption_001",
+          "paper_id": "physics_kinematics_uniform",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 60
+            }
+          },
+          "text": "Acceleration is constant over each time interval so that v = u + a t and s = u t + \u00bd a t\u00b2 apply.",
+          "kind": "physical_regime",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        },
+        {
+          "id": "physics_kinematics_uniform_assumption_002",
+          "paper_id": "physics_kinematics_uniform",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 61
+            },
+            "end": {
+              "page": 1,
+              "offset": 120
+            }
+          },
+          "text": "Kinematic quantities are modeled as rational numbers for algebraic verification (idealized units).",
+          "kind": "domain_restriction",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        }
+      ],
+      "symbols": [
+        {
+          "id": "physics_kinematics_uniform_symbol_v",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "v",
+          "normalized_name": "velocity_endpoint",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "velocity",
+            "unit": "m/s",
+            "dimension": "L T\u207b\u00b9"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_u",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "u",
+          "normalized_name": "initial_velocity",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "velocity",
+            "unit": "m/s",
+            "dimension": "L T\u207b\u00b9"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_a",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "a",
+          "normalized_name": "acceleration",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "acceleration",
+            "unit": "m/s\u00b2",
+            "dimension": "L T\u207b\u00b2"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_t",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "t",
+          "normalized_name": "time",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "time",
+            "unit": "s",
+            "dimension": "T"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_dv",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "\\Delta v",
+          "normalized_name": "velocity_change",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "velocity",
+            "unit": "m/s",
+            "dimension": "L T\u207b\u00b9"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_dt",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "\\Delta t",
+          "normalized_name": "time_interval",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "time",
+            "unit": "s",
+            "dimension": "T"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_s",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "s",
+          "normalized_name": "second_time_interval",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "time",
+            "unit": "s",
+            "dimension": "T"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_u1",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "u_1",
+          "normalized_name": "initial_velocity_component_one",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "velocity",
+            "unit": "m/s",
+            "dimension": "L T\u207b\u00b9"
+          }
+        },
+        {
+          "id": "physics_kinematics_uniform_symbol_u2",
+          "paper_id": "physics_kinematics_uniform",
+          "raw_latex": "u_2",
+          "normalized_name": "initial_velocity_component_two",
+          "type_hint": "rational",
+          "dimensional_metadata": {
+            "kind": "velocity",
+            "unit": "m/s",
+            "dimension": "L T\u207b\u00b9"
+          }
+        }
+      ],
+      "mapping": {
+        "paper_id": "physics_kinematics_uniform",
+        "namespace": "ScientificMemory.Physics.Kinematics.UniformAccel",
+        "claim_to_decl": {
+          "physics_kinematics_uniform_claim_001": "velocity_at_time",
+          "physics_kinematics_uniform_claim_002": "displacement_rearranged",
+          "physics_kinematics_uniform_claim_003": "delta_velocity",
+          "physics_kinematics_uniform_claim_004": "displacement_double_time",
+          "physics_kinematics_uniform_claim_005": "average_endpoints",
+          "physics_kinematics_uniform_claim_006": "accel_from_delta_v",
+          "physics_kinematics_uniform_claim_007": "velocity_squared_expand",
+          "physics_kinematics_uniform_claim_008": "torricelli_squared",
+          "physics_kinematics_uniform_claim_009": "zero_accel_velocity_constant",
+          "physics_kinematics_uniform_claim_010": "zero_time_zero_displacement",
+          "physics_kinematics_uniform_claim_011": "average_velocity_displacement",
+          "physics_kinematics_uniform_claim_012": "velocity_time_additivity",
+          "physics_kinematics_uniform_claim_013": "displacement_linearity_in_u",
+          "physics_kinematics_uniform_claim_014": "double_half_quadratic_term",
+          "physics_kinematics_uniform_claim_015": "mean_acceleration_over_interval"
+        },
+        "target_file": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean"
+      },
+      "manifest": {
+        "paper_id": "physics_kinematics_uniform",
+        "version": "0.1.0",
+        "build_hash": "73ae124a1c56442b79b2f339cff188e6dc6644ab1195aee3ffaa980f9d82b120",
+        "coverage_metrics": {
+          "claim_count": 15,
+          "mapped_claim_count": 15,
+          "machine_checked_count": 15,
+          "kernel_linked_count": 0
+        },
+        "generated_pages": [
+          "/papers/physics_kinematics_uniform",
+          "/claims/physics_kinematics_uniform_claim_001",
+          "/claims/physics_kinematics_uniform_claim_002",
+          "/claims/physics_kinematics_uniform_claim_003",
+          "/claims/physics_kinematics_uniform_claim_004",
+          "/claims/physics_kinematics_uniform_claim_005",
+          "/claims/physics_kinematics_uniform_claim_006",
+          "/claims/physics_kinematics_uniform_claim_007",
+          "/claims/physics_kinematics_uniform_claim_008",
+          "/claims/physics_kinematics_uniform_claim_009",
+          "/claims/physics_kinematics_uniform_claim_010",
+          "/claims/physics_kinematics_uniform_claim_011",
+          "/claims/physics_kinematics_uniform_claim_012",
+          "/claims/physics_kinematics_uniform_claim_013",
+          "/claims/physics_kinematics_uniform_claim_014",
+          "/claims/physics_kinematics_uniform_claim_015",
+          "/theorem-cards/physics_kinematics_uniform_card_001",
+          "/theorem-cards/physics_kinematics_uniform_card_002",
+          "/theorem-cards/physics_kinematics_uniform_card_003",
+          "/theorem-cards/physics_kinematics_uniform_card_004",
+          "/theorem-cards/physics_kinematics_uniform_card_005",
+          "/theorem-cards/physics_kinematics_uniform_card_006",
+          "/theorem-cards/physics_kinematics_uniform_card_007",
+          "/theorem-cards/physics_kinematics_uniform_card_008",
+          "/theorem-cards/physics_kinematics_uniform_card_009",
+          "/theorem-cards/physics_kinematics_uniform_card_010",
+          "/theorem-cards/physics_kinematics_uniform_card_011",
+          "/theorem-cards/physics_kinematics_uniform_card_012",
+          "/theorem-cards/physics_kinematics_uniform_card_013",
+          "/theorem-cards/physics_kinematics_uniform_card_014",
+          "/theorem-cards/physics_kinematics_uniform_card_015"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_at_time",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_rearranged",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.delta_velocity",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_double_time",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.accel_from_delta_v",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_squared_expand",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.torricelli_squared",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.zero_time_zero_displacement",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.average_velocity_displacement",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_time_additivity",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_linearity_in_u",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term",
+          "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval"
+        ],
+        "dependency_graph": [],
+        "kernel_index": []
+      },
+      "theorem_cards": [
+        {
+          "id": "physics_kinematics_uniform_card_001",
+          "claim_id": "physics_kinematics_uniform_claim_001",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_at_time",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_002",
+          "claim_id": "physics_kinematics_uniform_claim_002",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_rearranged",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_003",
+          "claim_id": "physics_kinematics_uniform_claim_003",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.delta_velocity",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_004",
+          "claim_id": "physics_kinematics_uniform_claim_004",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_double_time",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_005",
+          "claim_id": "physics_kinematics_uniform_claim_005",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_006",
+          "claim_id": "physics_kinematics_uniform_claim_006",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.accel_from_delta_v",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_007",
+          "claim_id": "physics_kinematics_uniform_claim_007",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_squared_expand",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_008",
+          "claim_id": "physics_kinematics_uniform_claim_008",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.torricelli_squared",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_009",
+          "claim_id": "physics_kinematics_uniform_claim_009",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_010",
+          "claim_id": "physics_kinematics_uniform_claim_010",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.zero_time_zero_displacement",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_011",
+          "claim_id": "physics_kinematics_uniform_claim_011",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.average_velocity_displacement",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_012",
+          "claim_id": "physics_kinematics_uniform_claim_012",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_time_additivity",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_013",
+          "claim_id": "physics_kinematics_uniform_claim_013",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_linearity_in_u",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_014",
+          "claim_id": "physics_kinematics_uniform_claim_014",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "physics_kinematics_uniform_card_015",
+          "claim_id": "physics_kinematics_uniform_claim_015",
+          "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval",
+          "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    },
+    "temkin_1941_adsorption": {
+      "metadata": {
+        "id": "temkin_1941_adsorption",
+        "title": "Kinetics of ammonia synthesis on promoted iron catalysts (Temkin-Pyzhev slice)",
+        "authors": [
+          "Temkin, M. I.",
+          "Pyzhev, V."
+        ],
+        "year": 1941,
+        "domain": "chemistry",
+        "source": {
+          "kind": "pdf",
+          "path": "corpus/papers/temkin_1941_adsorption/source/source.pdf",
+          "sha256": "90e5625b83f6e1bc7a422af5062ffddca7bad4c74e855168a70ee23d7f3e55f3"
+        },
+        "artifact_status": "admitted",
+        "first_artifact_at": "2026-03-18T23:30:00Z"
+      },
+      "claims": [
+        {
+          "id": "temkin_1941_adsorption_claim_001",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 100
+            }
+          },
+          "informal_text": "Temkin coverage relation is modeled as theta = (R*T/a) * ln(K*p).",
+          "claim_type": "definition",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_002",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 100
+            },
+            "end": {
+              "page": 1,
+              "offset": 200
+            }
+          },
+          "informal_text": "Coverage is zero at reciprocal pressure when K is nonzero.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_003",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "2",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 200
+            },
+            "end": {
+              "page": 1,
+              "offset": 300
+            }
+          },
+          "informal_text": "Equivalent unit-product condition K*p = 1 implies zero logarithmic coverage term.",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_004",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "3",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 300
+            },
+            "end": {
+              "page": 1,
+              "offset": 400
+            }
+          },
+          "informal_text": "With positive coefficient and positive K, the Temkin response is strictly increasing in pressure.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_005",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "3",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 400
+            },
+            "end": {
+              "page": 1,
+              "offset": 500
+            }
+          },
+          "informal_text": "The same positivity regime yields nondecreasing pressure response.",
+          "claim_type": "proposition",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_006",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "3",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 500
+            },
+            "end": {
+              "page": 1,
+              "offset": 600
+            }
+          },
+          "informal_text": "At fixed pressure and positive coefficient, response is strictly increasing in equilibrium constant K.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_007",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 600
+            },
+            "end": {
+              "page": 1,
+              "offset": 700
+            }
+          },
+          "informal_text": "Scaling gas constant scales Temkin response linearly.",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_008",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 700
+            },
+            "end": {
+              "page": 1,
+              "offset": 800
+            }
+          },
+          "informal_text": "Scaling absolute temperature scales Temkin response linearly.",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_009",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 800
+            },
+            "end": {
+              "page": 1,
+              "offset": 900
+            }
+          },
+          "informal_text": "Changing sign of interaction parameter flips the sign of the coverage value.",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_a"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_010",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 900
+            },
+            "end": {
+              "page": 1,
+              "offset": 1000
+            }
+          },
+          "informal_text": "For positive factors, ln(K*p) decomposes into ln(K)+ln(p).",
+          "claim_type": "identity",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_011",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "4",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1000
+            },
+            "end": {
+              "page": 1,
+              "offset": 1100
+            }
+          },
+          "informal_text": "Temkin relation can be rewritten as affine form in log-pressure with constant log-K offset.",
+          "claim_type": "proposition",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p"
+          ]
+        },
+        {
+          "id": "temkin_1941_adsorption_claim_012",
+          "paper_id": "temkin_1941_adsorption",
+          "section": "5",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 1100
+            },
+            "end": {
+              "page": 1,
+              "offset": 1200
+            }
+          },
+          "informal_text": "If coefficient is nonnegative and K*p >= 1, then logarithmic coverage value is nonnegative.",
+          "claim_type": "theorem",
+          "mathematical_density": "high",
+          "status": "machine_checked",
+          "linked_symbols": [
+            "temkin_theta",
+            "temkin_r",
+            "temkin_t",
+            "temkin_a",
+            "temkin_k",
+            "temkin_p"
+          ],
+          "linked_assumptions": [
+            "temkin_1941_assumption_001",
+            "temkin_1941_assumption_003"
+          ],
+          "linked_formal_targets": [
+            "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one"
+          ]
+        }
+      ],
+      "assumptions": [
+        {
+          "id": "temkin_1941_assumption_001",
+          "paper_id": "temkin_1941_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 0
+            },
+            "end": {
+              "page": 1,
+              "offset": 120
+            }
+          },
+          "text": "Pressure and adsorption constants are in the positive regime where logarithmic terms are defined.",
+          "kind": "domain_restriction",
+          "explicit_or_implicit": "implicit",
+          "normalization_status": "normalized"
+        },
+        {
+          "id": "temkin_1941_assumption_002",
+          "paper_id": "temkin_1941_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 120
+            },
+            "end": {
+              "page": 1,
+              "offset": 240
+            }
+          },
+          "text": "The logarithmic coverage relation is treated as an empirical approximation over a bounded operating window.",
+          "kind": "approximation",
+          "explicit_or_implicit": "explicit",
+          "normalization_status": "normalized"
+        },
+        {
+          "id": "temkin_1941_assumption_003",
+          "paper_id": "temkin_1941_adsorption",
+          "source_span": {
+            "source_file": "source/source.pdf",
+            "start": {
+              "page": 1,
+              "offset": 240
+            },
+            "end": {
+              "page": 1,
+              "offset": 360
+            }
+          },
+          "text": "Thermal coefficient R*T/a remains sign-consistent within the fitted data regime.",
+          "kind": "physical_regime",
+          "explicit_or_implicit": "implicit",
+          "normalization_status": "normalized"
+        }
+      ],
+      "symbols": [
+        {
+          "id": "temkin_theta",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "\\theta",
+          "normalized_name": "surface_coverage_fraction",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "dimensionless_parameter",
+            "unit": "1",
+            "dimension": "dimensionless"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "temkin_r",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "R",
+          "normalized_name": "gas_constant",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "physical_constant",
+            "unit": "J/(mol*K)",
+            "dimension": "energy_per_amount_temperature"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "temkin_t",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "T",
+          "normalized_name": "absolute_temperature",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "intensive",
+            "unit": "K",
+            "dimension": "temperature"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "temkin_a",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "a",
+          "normalized_name": "temkin_interaction_parameter",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "empirical",
+            "unit": "J/mol",
+            "dimension": "energy_per_amount"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "temkin_k",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "K",
+          "normalized_name": "temkin_equilibrium_constant",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "empirical",
+            "unit": "1/bar",
+            "dimension": "inverse_pressure"
+          },
+          "ambiguity_flags": []
+        },
+        {
+          "id": "temkin_p",
+          "paper_id": "temkin_1941_adsorption",
+          "raw_latex": "p",
+          "normalized_name": "partial_pressure",
+          "type_hint": "Real",
+          "dimensional_metadata": {
+            "kind": "intensive",
+            "unit": "bar",
+            "dimension": "pressure"
+          },
+          "ambiguity_flags": []
+        }
+      ],
+      "mapping": {
+        "paper_id": "temkin_1941_adsorption",
+        "namespace": "ScientificMemory.Chemistry.Adsorption.Temkin1941",
+        "claim_to_decl": {
+          "temkin_1941_adsorption_claim_001": "temkin_theta_eq",
+          "temkin_1941_adsorption_claim_002": "temkin_zero_at_inv_pressure",
+          "temkin_1941_adsorption_claim_003": "temkin_zero_when_Kp_eq_one",
+          "temkin_1941_adsorption_claim_004": "temkin_strict_mono_in_p",
+          "temkin_1941_adsorption_claim_005": "temkin_mono_in_p",
+          "temkin_1941_adsorption_claim_006": "temkin_strict_mono_in_K",
+          "temkin_1941_adsorption_claim_007": "temkin_smul_R",
+          "temkin_1941_adsorption_claim_008": "temkin_smul_T",
+          "temkin_1941_adsorption_claim_009": "temkin_flip_sign_a",
+          "temkin_1941_adsorption_claim_010": "temkin_log_split",
+          "temkin_1941_adsorption_claim_011": "temkin_linear_in_log_p",
+          "temkin_1941_adsorption_claim_012": "temkin_nonneg_when_Kp_ge_one"
+        },
+        "target_file": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean"
+      },
+      "manifest": {
+        "paper_id": "temkin_1941_adsorption",
+        "version": "0.1.0",
+        "build_hash": "c519fef66c82def5f945f1ec3c1e4c2249c31dc4044095a588e0997629ad6a24",
+        "coverage_metrics": {
+          "claim_count": 12,
+          "mapped_claim_count": 12,
+          "machine_checked_count": 12,
+          "kernel_linked_count": 0
+        },
+        "generated_pages": [
+          "/papers/temkin_1941_adsorption",
+          "/claims/temkin_1941_adsorption_claim_001",
+          "/claims/temkin_1941_adsorption_claim_002",
+          "/claims/temkin_1941_adsorption_claim_003",
+          "/claims/temkin_1941_adsorption_claim_004",
+          "/claims/temkin_1941_adsorption_claim_005",
+          "/claims/temkin_1941_adsorption_claim_006",
+          "/claims/temkin_1941_adsorption_claim_007",
+          "/claims/temkin_1941_adsorption_claim_008",
+          "/claims/temkin_1941_adsorption_claim_009",
+          "/claims/temkin_1941_adsorption_claim_010",
+          "/claims/temkin_1941_adsorption_claim_011",
+          "/claims/temkin_1941_adsorption_claim_012",
+          "/theorem-cards/temkin_1941_adsorption_card_001",
+          "/theorem-cards/temkin_1941_adsorption_card_002",
+          "/theorem-cards/temkin_1941_adsorption_card_003",
+          "/theorem-cards/temkin_1941_adsorption_card_004",
+          "/theorem-cards/temkin_1941_adsorption_card_005",
+          "/theorem-cards/temkin_1941_adsorption_card_006",
+          "/theorem-cards/temkin_1941_adsorption_card_007",
+          "/theorem-cards/temkin_1941_adsorption_card_008",
+          "/theorem-cards/temkin_1941_adsorption_card_009",
+          "/theorem-cards/temkin_1941_adsorption_card_010",
+          "/theorem-cards/temkin_1941_adsorption_card_011",
+          "/theorem-cards/temkin_1941_adsorption_card_012"
+        ],
+        "declaration_index": [
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p",
+          "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one"
+        ],
+        "dependency_graph": [
+          {
+            "from": "temkin_1941_adsorption_card_004",
+            "to": "temkin_1941_adsorption_card_005"
+          },
+          {
+            "from": "temkin_1941_adsorption_card_010",
+            "to": "temkin_1941_adsorption_card_011"
+          }
+        ],
+        "kernel_index": []
+      },
+      "theorem_cards": [
+        {
+          "id": "temkin_1941_adsorption_card_001",
+          "claim_id": "temkin_1941_adsorption_claim_001",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_002",
+          "claim_id": "temkin_1941_adsorption_claim_002",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_003",
+          "claim_id": "temkin_1941_adsorption_claim_003",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_004",
+          "claim_id": "temkin_1941_adsorption_claim_004",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_005",
+          "claim_id": "temkin_1941_adsorption_claim_005",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [
+            "temkin_1941_adsorption_card_004"
+          ],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_006",
+          "claim_id": "temkin_1941_adsorption_claim_006",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_007",
+          "claim_id": "temkin_1941_adsorption_claim_007",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_008",
+          "claim_id": "temkin_1941_adsorption_claim_008",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_009",
+          "claim_id": "temkin_1941_adsorption_claim_009",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_010",
+          "claim_id": "temkin_1941_adsorption_claim_010",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_011",
+          "claim_id": "temkin_1941_adsorption_claim_011",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [
+            "temkin_1941_adsorption_card_010"
+          ],
+          "executable_links": []
+        },
+        {
+          "id": "temkin_1941_adsorption_card_012",
+          "claim_id": "temkin_1941_adsorption_claim_012",
+          "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one",
+          "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+          "proof_status": "machine_checked",
+          "verification_boundary": "fully_machine_checked",
+          "reviewer_status": "accepted",
+          "dependency_ids": [],
+          "executable_links": []
+        }
+      ]
+    }
+  },
+  "kernels": [
+    {
+      "id": "langmuir_adsorption_kernel_v1",
+      "domain": "adsorption",
+      "input_schema": "K: float, P: float",
+      "output_schema": "coverage: float",
+      "semantic_contract": "Implements Langmuir isotherm theta = K*P / (1 + K*P); nonnegative K and P yield coverage in [0,1].",
+      "linked_theorem_cards": [
+        "langmuir_1918_adsorption_card_001"
+      ],
+      "unit_constraints": [
+        "K dimensionless or 1/pressure",
+        "P pressure",
+        "coverage dimensionless"
+      ],
+      "test_status": "tested"
+    },
+    {
+      "id": "freundlich_adsorption_kernel_v1",
+      "domain": "adsorption",
+      "input_schema": "k: float, c: float, n: float",
+      "output_schema": "amount: float",
+      "semantic_contract": "Implements Freundlich isotherm amount = k * c^(1/n); c > 0, n != 0 in typical use.",
+      "linked_theorem_cards": [
+        "freundlich_1906_adsorption_card_001"
+      ],
+      "unit_constraints": [
+        "k dimensioned",
+        "c concentration",
+        "n dimensionless",
+        "amount adsorbed per mass"
+      ],
+      "test_status": "tested"
+    }
+  ]
+}

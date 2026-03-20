@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/claim.schema.json",
+  "title": "Claim",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "paper_id",
+      "section",
+      "source_span",
+      "informal_text",
+      "claim_type",
+      "status"
+    ],
+    "properties": {
+      "id": { "$ref": "common.schema.json#/$defs/id" },
+      "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+      "section": { "type": "string" },
+      "source_span": { "$ref": "common.schema.json#/$defs/sourceSpan" },
+      "informal_text": { "type": "string", "minLength": 1 },
+      "claim_type": {
+        "type": "string",
+        "enum": [
+          "definition",
+          "theorem",
+          "lemma",
+          "proposition",
+          "corollary",
+          "estimator",
+          "identity",
+          "conservation_law",
+          "control_rule",
+          "dimensional_constraint",
+          "algorithmic_step",
+          "acceptance_criterion",
+          "editorial_exposition"
+        ]
+      },
+      "mathematical_density": {
+        "type": "string",
+        "enum": ["low", "medium", "high"]
+      },
+      "status": { "$ref": "common.schema.json#/$defs/status" },
+      "linked_symbols": {
+        "type": "array",
+        "items": { "$ref": "common.schema.json#/$defs/id" },
+        "default": []
+      },
+      "linked_assumptions": {
+        "type": "array",
+        "items": { "$ref": "common.schema.json#/$defs/id" },
+        "default": []
+      },
+      "linked_formal_targets": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": []
+      },
+      "review_notes": { "type": "string" }
+    }
+  }
+}

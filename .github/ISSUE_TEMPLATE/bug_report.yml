@@ -1,0 +1,49 @@
+name: Bug report
+description: Report a bug or incorrect behavior
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Describe the bug and steps to reproduce."
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      placeholder: What went wrong?
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. Run ... 2. See error"
+  - type: input
+    id: version
+    attributes:
+      label: Environment (Lake/uv/pnpm versions, OS)
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: What should have happened?
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / error output
+      placeholder: Paste the last ~30 lines of logs if relevant
+  - type: dropdown
+    id: area
+    attributes:
+      label: Likely area (best guess)
+      options:
+        - unsure
+        - pipeline / validate
+        - portal
+        - Lean build
+        - CI / Actions
+        - release / artifacts
+        - other
+  - type: input
+    id: commit
+    attributes:
+      label: Commit or tag (optional)
+      placeholder: e.g. main @ abc1234 or v0.2.0

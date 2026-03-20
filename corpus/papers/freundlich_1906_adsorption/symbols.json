@@ -1,0 +1,56 @@
+[
+  {
+    "id": "freund_xm",
+    "paper_id": "freundlich_1906_adsorption",
+    "raw_latex": "x/m",
+    "normalized_name": "adsorbed_amount_per_mass",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "derived",
+      "unit": "mol/g",
+      "dimension": "amount_per_mass"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "freund_c",
+    "paper_id": "freundlich_1906_adsorption",
+    "raw_latex": "c",
+    "normalized_name": "solute_concentration",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "intensive",
+      "unit": "mol/L",
+      "dimension": "concentration"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "freund_k",
+    "paper_id": "freundlich_1906_adsorption",
+    "raw_latex": "k",
+    "normalized_name": "freundlich_constant",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "empirical",
+      "unit": "derived",
+      "dimension": "freundlich_k"
+    },
+    "ambiguity_flags": [
+      "unit_unclear"
+    ]
+  },
+  {
+    "id": "freund_n",
+    "paper_id": "freundlich_1906_adsorption",
+    "raw_latex": "n",
+    "normalized_name": "freundlich_exponent_denominator",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "dimensionless_parameter",
+      "unit": "1",
+      "dimension": "dimensionless"
+    },
+    "ambiguity_flags": []
+  }
+]

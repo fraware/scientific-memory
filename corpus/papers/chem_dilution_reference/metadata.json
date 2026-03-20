@@ -1,0 +1,14 @@
+{
+  "id": "chem_dilution_reference",
+  "title": "Dilution reference: solute amount vs concentration and volume (chemistry slice)",
+  "authors": ["Scientific Memory contributors"],
+  "year": 2024,
+  "domain": "chemistry",
+  "source": {
+    "kind": "pdf",
+    "path": "corpus/papers/chem_dilution_reference/source/source.pdf",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "artifact_status": "admitted",
+  "first_artifact_at": "2026-03-18T12:00:00Z"
+}

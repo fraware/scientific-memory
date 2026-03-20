@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/theorem_card.schema.json",
+  "title": "Theorem Card",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "claim_id",
+      "lean_decl",
+      "file_path",
+      "proof_status",
+      "verification_boundary",
+      "reviewer_status"
+    ],
+    "properties": {
+      "id": { "$ref": "common.schema.json#/$defs/id" },
+      "claim_id": { "$ref": "common.schema.json#/$defs/id" },
+      "lean_decl": { "type": "string", "minLength": 1 },
+      "file_path": { "type": "string" },
+      "proof_status": { "$ref": "common.schema.json#/$defs/status" },
+      "dependency_ids": {
+        "type": "array",
+        "items": { "$ref": "common.schema.json#/$defs/id" },
+        "default": []
+      },
+      "verification_boundary": {
+        "$ref": "common.schema.json#/$defs/verificationBoundary"
+      },
+      "reviewer_status": {
+        "type": "string",
+        "enum": ["unreviewed", "reviewed", "blocked", "accepted"]
+      },
+      "executable_links": {
+        "type": "array",
+        "items": { "$ref": "common.schema.json#/$defs/id" },
+        "default": []
+      },
+      "notes": { "type": "string" }
+    }
+  }
+}

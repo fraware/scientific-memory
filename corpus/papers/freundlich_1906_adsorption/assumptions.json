@@ -1,0 +1,40 @@
+[
+  {
+    "id": "freundlich_1906_assumption_001",
+    "paper_id": "freundlich_1906_adsorption",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 120
+      }
+    },
+    "text": "Adsorbed amount per unit mass and solute concentration are positive scalars in the empirical regime; constants k and exponent 1/n are taken positive.",
+    "kind": "domain_restriction",
+    "explicit_or_implicit": "implicit",
+    "normalization_status": "normalized"
+  },
+  {
+    "id": "freundlich_1906_assumption_002",
+    "paper_id": "freundlich_1906_adsorption",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 120
+      },
+      "end": {
+        "page": 1,
+        "offset": 240
+      }
+    },
+    "text": "The power-law form is an empirical fit over a range of concentrations, not a mechanistic identity.",
+    "kind": "approximation",
+    "explicit_or_implicit": "explicit",
+    "normalization_status": "normalized"
+  }
+]

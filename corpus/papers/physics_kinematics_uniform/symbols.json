@@ -1,0 +1,110 @@
+[
+  {
+    "id": "physics_kinematics_uniform_symbol_v",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "v",
+    "normalized_name": "velocity_endpoint",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "velocity",
+      "unit": "m/s",
+      "dimension": "L T⁻¹"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_u",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "u",
+    "normalized_name": "initial_velocity",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "velocity",
+      "unit": "m/s",
+      "dimension": "L T⁻¹"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_a",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "a",
+    "normalized_name": "acceleration",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "acceleration",
+      "unit": "m/s²",
+      "dimension": "L T⁻²"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_t",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "t",
+    "normalized_name": "time",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "time",
+      "unit": "s",
+      "dimension": "T"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_dv",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "\\Delta v",
+    "normalized_name": "velocity_change",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "velocity",
+      "unit": "m/s",
+      "dimension": "L T⁻¹"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_dt",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "\\Delta t",
+    "normalized_name": "time_interval",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "time",
+      "unit": "s",
+      "dimension": "T"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_s",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "s",
+    "normalized_name": "second_time_interval",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "time",
+      "unit": "s",
+      "dimension": "T"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_u1",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "u_1",
+    "normalized_name": "initial_velocity_component_one",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "velocity",
+      "unit": "m/s",
+      "dimension": "L T⁻¹"
+    }
+  },
+  {
+    "id": "physics_kinematics_uniform_symbol_u2",
+    "paper_id": "physics_kinematics_uniform",
+    "raw_latex": "u_2",
+    "normalized_name": "initial_velocity_component_two",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "velocity",
+      "unit": "m/s",
+      "dimension": "L T⁻¹"
+    }
+  }
+]

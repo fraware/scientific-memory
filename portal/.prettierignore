@@ -1,0 +1,10 @@
+# Build outputs
+.next/
+out/
+.generated/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log

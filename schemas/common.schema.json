@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/common.schema.json",
+  "title": "Common Types",
+  "type": "object",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_\\-\\.]+$"
+    },
+    "uri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "sourceSpan": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_file", "start", "end"],
+      "properties": {
+        "source_file": { "type": "string" },
+        "start": {
+          "type": "object",
+          "required": ["page", "offset"],
+          "properties": {
+            "page": { "type": "integer", "minimum": 1 },
+            "offset": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "end": {
+          "type": "object",
+          "required": ["page", "offset"],
+          "properties": {
+            "page": { "type": "integer", "minimum": 1 },
+            "offset": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "verificationBoundary": {
+      "type": "string",
+      "enum": [
+        "fully_machine_checked",
+        "machine_checked_plus_axioms",
+        "numerically_witnessed",
+        "schema_valid_only",
+        "human_review_only"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "unparsed",
+        "parsed",
+        "mapped",
+        "stubbed",
+        "compiles_with_sorries",
+        "machine_checked",
+        "linked_to_kernel",
+        "disputed",
+        "superseded"
+      ]
+    }
+  }
+}

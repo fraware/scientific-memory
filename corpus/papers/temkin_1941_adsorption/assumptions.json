@@ -1,0 +1,59 @@
+[
+  {
+    "id": "temkin_1941_assumption_001",
+    "paper_id": "temkin_1941_adsorption",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 120
+      }
+    },
+    "text": "Pressure and adsorption constants are in the positive regime where logarithmic terms are defined.",
+    "kind": "domain_restriction",
+    "explicit_or_implicit": "implicit",
+    "normalization_status": "normalized"
+  },
+  {
+    "id": "temkin_1941_assumption_002",
+    "paper_id": "temkin_1941_adsorption",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 120
+      },
+      "end": {
+        "page": 1,
+        "offset": 240
+      }
+    },
+    "text": "The logarithmic coverage relation is treated as an empirical approximation over a bounded operating window.",
+    "kind": "approximation",
+    "explicit_or_implicit": "explicit",
+    "normalization_status": "normalized"
+  },
+  {
+    "id": "temkin_1941_assumption_003",
+    "paper_id": "temkin_1941_adsorption",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 240
+      },
+      "end": {
+        "page": 1,
+        "offset": 360
+      }
+    },
+    "text": "Thermal coefficient R*T/a remains sign-consistent within the fitted data regime.",
+    "kind": "physical_regime",
+    "explicit_or_implicit": "implicit",
+    "normalization_status": "normalized"
+  }
+]

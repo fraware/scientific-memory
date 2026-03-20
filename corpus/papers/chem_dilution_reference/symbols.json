@@ -1,0 +1,62 @@
+[
+  {
+    "id": "chem_dilution_reference_symbol_c0",
+    "paper_id": "chem_dilution_reference",
+    "raw_latex": "c_0",
+    "normalized_name": "initial_concentration",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "concentration",
+      "unit": "mol/L",
+      "dimension": "M L⁻³"
+    }
+  },
+  {
+    "id": "chem_dilution_reference_symbol_v0",
+    "paper_id": "chem_dilution_reference",
+    "raw_latex": "v_0",
+    "normalized_name": "initial_volume",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "volume",
+      "unit": "L",
+      "dimension": "L³"
+    }
+  },
+  {
+    "id": "chem_dilution_reference_symbol_k",
+    "paper_id": "chem_dilution_reference",
+    "raw_latex": "k",
+    "normalized_name": "volume_scale_factor",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "dimensionless_ratio",
+      "unit": "1",
+      "dimension": "1"
+    }
+  },
+  {
+    "id": "chem_dilution_reference_symbol_c1",
+    "paper_id": "chem_dilution_reference",
+    "raw_latex": "c_1",
+    "normalized_name": "second_state_concentration",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "concentration",
+      "unit": "mol/L",
+      "dimension": "M L⁻³"
+    }
+  },
+  {
+    "id": "chem_dilution_reference_symbol_v1",
+    "paper_id": "chem_dilution_reference",
+    "raw_latex": "v_1",
+    "normalized_name": "second_state_volume",
+    "type_hint": "rational",
+    "dimensional_metadata": {
+      "kind": "volume",
+      "unit": "L",
+      "dimension": "L³"
+    }
+  }
+]

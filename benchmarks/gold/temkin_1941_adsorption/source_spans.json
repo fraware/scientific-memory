@@ -1,0 +1,170 @@
+[
+  {
+    "claim_id": "temkin_1941_adsorption_claim_001",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 100
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_002",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 100
+      },
+      "end": {
+        "page": 1,
+        "offset": 200
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_003",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 200
+      },
+      "end": {
+        "page": 1,
+        "offset": 300
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_004",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 300
+      },
+      "end": {
+        "page": 1,
+        "offset": 400
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_005",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 400
+      },
+      "end": {
+        "page": 1,
+        "offset": 500
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_006",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 500
+      },
+      "end": {
+        "page": 1,
+        "offset": 600
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_007",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 600
+      },
+      "end": {
+        "page": 1,
+        "offset": 700
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_008",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 700
+      },
+      "end": {
+        "page": 1,
+        "offset": 800
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_009",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 800
+      },
+      "end": {
+        "page": 1,
+        "offset": 900
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_010",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 900
+      },
+      "end": {
+        "page": 1,
+        "offset": 1000
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_011",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1000
+      },
+      "end": {
+        "page": 1,
+        "offset": 1100
+      }
+    }
+  },
+  {
+    "claim_id": "temkin_1941_adsorption_claim_012",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1100
+      },
+      "end": {
+        "page": 1,
+        "offset": 1200
+      }
+    }
+  }
+]

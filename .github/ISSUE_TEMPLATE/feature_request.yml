@@ -1,0 +1,15 @@
+name: Feature request
+description: Request a new feature or improvement
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      placeholder: What should be added or changed?
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Motivation
+      placeholder: Why does this improve source traceability, correctness, or usability?

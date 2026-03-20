@@ -1,0 +1,24 @@
+[
+  {
+    "id": "theta",
+    "paper_id": "langmuir_1918_adsorption",
+    "raw_latex": "\\theta",
+    "normalized_name": "coverage",
+    "type_hint": "dimensionless",
+    "dimensional_metadata": { "kind": "dimensionless" }
+  },
+  {
+    "id": "p",
+    "paper_id": "langmuir_1918_adsorption",
+    "raw_latex": "P",
+    "normalized_name": "pressure",
+    "type_hint": "pressure"
+  },
+  {
+    "id": "k",
+    "paper_id": "langmuir_1918_adsorption",
+    "raw_latex": "K",
+    "normalized_name": "adsorption_constant",
+    "type_hint": "inverse_pressure"
+  }
+]

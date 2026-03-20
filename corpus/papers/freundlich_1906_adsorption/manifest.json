@@ -1,0 +1,56 @@
+{
+  "paper_id": "freundlich_1906_adsorption",
+  "version": "0.1.0",
+  "build_hash": "425e11a2742d89ece62e23f7ddd1d763b9b7fcfe93610fd15387c1445588a395",
+  "coverage_metrics": {
+    "claim_count": 12,
+    "mapped_claim_count": 12,
+    "machine_checked_count": 12,
+    "kernel_linked_count": 1
+  },
+  "generated_pages": [
+    "/papers/freundlich_1906_adsorption",
+    "/claims/freundlich_1906_adsorption_claim_001",
+    "/claims/freundlich_1906_adsorption_claim_002",
+    "/claims/freundlich_1906_adsorption_claim_003",
+    "/claims/freundlich_1906_adsorption_claim_004",
+    "/claims/freundlich_1906_adsorption_claim_005",
+    "/claims/freundlich_1906_adsorption_claim_006",
+    "/claims/freundlich_1906_adsorption_claim_007",
+    "/claims/freundlich_1906_adsorption_claim_008",
+    "/claims/freundlich_1906_adsorption_claim_009",
+    "/claims/freundlich_1906_adsorption_claim_010",
+    "/claims/freundlich_1906_adsorption_claim_011",
+    "/claims/freundlich_1906_adsorption_claim_012",
+    "/theorem-cards/freundlich_1906_adsorption_card_001",
+    "/theorem-cards/freundlich_1906_adsorption_card_002",
+    "/theorem-cards/freundlich_1906_adsorption_card_003",
+    "/theorem-cards/freundlich_1906_adsorption_card_004",
+    "/theorem-cards/freundlich_1906_adsorption_card_005",
+    "/theorem-cards/freundlich_1906_adsorption_card_006",
+    "/theorem-cards/freundlich_1906_adsorption_card_007",
+    "/theorem-cards/freundlich_1906_adsorption_card_008",
+    "/theorem-cards/freundlich_1906_adsorption_card_009",
+    "/theorem-cards/freundlich_1906_adsorption_card_010",
+    "/theorem-cards/freundlich_1906_adsorption_card_011",
+    "/theorem-cards/freundlich_1906_adsorption_card_012"
+  ],
+  "declaration_index": [
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c",
+    "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
+  ],
+  "dependency_graph": [],
+  "kernel_index": [
+    "freundlich_adsorption_kernel_v1"
+  ]
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "temkin_theta",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "\\theta",
+    "normalized_name": "surface_coverage_fraction",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "dimensionless_parameter",
+      "unit": "1",
+      "dimension": "dimensionless"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "temkin_r",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "R",
+    "normalized_name": "gas_constant",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "physical_constant",
+      "unit": "J/(mol*K)",
+      "dimension": "energy_per_amount_temperature"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "temkin_t",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "T",
+    "normalized_name": "absolute_temperature",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "intensive",
+      "unit": "K",
+      "dimension": "temperature"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "temkin_a",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "a",
+    "normalized_name": "temkin_interaction_parameter",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "empirical",
+      "unit": "J/mol",
+      "dimension": "energy_per_amount"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "temkin_k",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "K",
+    "normalized_name": "temkin_equilibrium_constant",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "empirical",
+      "unit": "1/bar",
+      "dimension": "inverse_pressure"
+    },
+    "ambiguity_flags": []
+  },
+  {
+    "id": "temkin_p",
+    "paper_id": "temkin_1941_adsorption",
+    "raw_latex": "p",
+    "normalized_name": "partial_pressure",
+    "type_hint": "Real",
+    "dimensional_metadata": {
+      "kind": "intensive",
+      "unit": "bar",
+      "dimension": "pressure"
+    },
+    "ambiguity_flags": []
+  }
+]

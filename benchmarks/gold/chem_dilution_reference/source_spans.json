@@ -1,0 +1,18 @@
+[
+  {
+    "claim_id": "chem_dilution_reference_claim_001",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": { "page": 1, "offset": 0 },
+      "end": { "page": 1, "offset": 120 }
+    }
+  },
+  {
+    "claim_id": "chem_dilution_reference_claim_002",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": { "page": 1, "offset": 121 },
+      "end": { "page": 1, "offset": 220 }
+    }
+  }
+]

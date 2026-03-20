@@ -1,0 +1,80 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps
+        run: |
+          uv sync --all-packages
+          pnpm install
+
+      - name: Full check
+        run: |
+          lake build
+          uv run --project pipeline python -m sm_pipeline.cli validate-all
+          pnpm --dir portal build
+
+      - name: Package artifacts
+        run: bash scripts/release_artifacts.sh
+
+      - name: Verify release checksums (Gate 7)
+        run: bash scripts/verify_release_checksums.sh
+
+      - name: Install cosign (Sigstore)
+        uses: sigstore/cosign-installer@v3
+        with:
+          cosign-release: "v2.2.3"
+
+      - name: Sign release manifest (Gate 7 – Sigstore keyless)
+        run: |
+          cosign sign-blob dist/checksums.txt \
+            --output-signature=dist/checksums.txt.sig \
+            --output-certificate=dist/checksums.txt.pem
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+
+      - name: Emit release integrity (Gate 7)
+        run: |
+          echo "--- Release checksums ---"
+          cat dist/checksums.txt
+          echo "--- Changelog ---"
+          head -30 dist/CHANGELOG.md
+
+      - name: Create release bundle archive (publication)
+        run: |
+          (cd dist && zip -r release-bundle.zip . -x "release-bundle.zip")
+          echo "Release bundle: dist/release-bundle.zip"
+
+      - name: Create GitHub Release and upload artifacts (publication)
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            dist/CHANGELOG.md
+            dist/checksums.txt
+            dist/checksums.txt.sig
+            dist/checksums.txt.pem
+            dist/release-bundle.zip
+          body_path: dist/CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

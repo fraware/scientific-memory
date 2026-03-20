@@ -1,0 +1,31 @@
+name: benchmark
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 7 * * 1"
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install deps
+        run: uv sync --all-packages
+
+      - name: Run benchmark suite
+        run: uv run --project pipeline python -m sm_pipeline.cli benchmark
+
+      - name: Proof success and trend summary (Gate 6)
+        run: |
+          if [ -f benchmarks/reports/proof_success_summary.md ]; then cat benchmarks/reports/proof_success_summary.md; fi
+          if [ -f benchmarks/reports/trend/proof_success_history.json ]; then echo "Trend history: benchmarks/reports/trend/proof_success_history.json"; fi
+
+      - name: Upload benchmark reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-reports
+          path: benchmarks/reports/

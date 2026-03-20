@@ -1,0 +1,8 @@
+[
+  {
+    "claim_id": "langmuir_1918_claim_001",
+    "description": "Demo literature-error record: secondary sources sometimes omit Langmuir's explicit ideal-monolayer caveats; corpus formalization encodes the stated isotherm identity only.",
+    "severity": "documentation",
+    "source": "curated demo for SPEC 12 literature_errors metric"
+  }
+]

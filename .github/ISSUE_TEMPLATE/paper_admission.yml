@@ -1,0 +1,32 @@
+name: Paper admission
+description: Admit a paper into the canonical corpus
+title: "[paper] "
+labels: ["paper-admission"]
+body:
+  - type: input
+    id: paper_title
+    attributes:
+      label: Title
+  - type: input
+    id: source_url
+    attributes:
+      label: Source URL
+  - type: dropdown
+    id: domain
+    attributes:
+      label: Domain
+      options:
+        - chemistry
+        - physics
+        - probability
+        - control
+        - quantum_information
+        - other
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this paper matters
+  - type: textarea
+    id: initial_claims
+    attributes:
+      label: Candidate reusable claims

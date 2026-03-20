@@ -1,0 +1,138 @@
+[
+  {
+    "id": "temkin_1941_adsorption_card_001",
+    "claim_id": "temkin_1941_adsorption_claim_001",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_002",
+    "claim_id": "temkin_1941_adsorption_claim_002",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_003",
+    "claim_id": "temkin_1941_adsorption_claim_003",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_004",
+    "claim_id": "temkin_1941_adsorption_claim_004",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_005",
+    "claim_id": "temkin_1941_adsorption_claim_005",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [
+      "temkin_1941_adsorption_card_004"
+    ],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_006",
+    "claim_id": "temkin_1941_adsorption_claim_006",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_007",
+    "claim_id": "temkin_1941_adsorption_claim_007",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_008",
+    "claim_id": "temkin_1941_adsorption_claim_008",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_009",
+    "claim_id": "temkin_1941_adsorption_claim_009",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_010",
+    "claim_id": "temkin_1941_adsorption_claim_010",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_011",
+    "claim_id": "temkin_1941_adsorption_claim_011",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [
+      "temkin_1941_adsorption_card_010"
+    ],
+    "executable_links": []
+  },
+  {
+    "id": "temkin_1941_adsorption_card_012",
+    "claim_id": "temkin_1941_adsorption_claim_012",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Temkin1941.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

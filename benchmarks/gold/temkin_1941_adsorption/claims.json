@@ -1,0 +1,408 @@
+[
+  {
+    "id": "temkin_1941_adsorption_claim_001",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 100
+      }
+    },
+    "informal_text": "Temkin coverage relation is modeled as theta = (R*T/a) * ln(K*p).",
+    "claim_type": "definition",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_002",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 100
+      },
+      "end": {
+        "page": 1,
+        "offset": 200
+      }
+    },
+    "informal_text": "Coverage is zero at reciprocal pressure when K is nonzero.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_003",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "2",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 200
+      },
+      "end": {
+        "page": 1,
+        "offset": 300
+      }
+    },
+    "informal_text": "Equivalent unit-product condition K*p = 1 implies zero logarithmic coverage term.",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_004",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "3",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 300
+      },
+      "end": {
+        "page": 1,
+        "offset": 400
+      }
+    },
+    "informal_text": "With positive coefficient and positive K, the Temkin response is strictly increasing in pressure.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_005",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "3",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 400
+      },
+      "end": {
+        "page": 1,
+        "offset": 500
+      }
+    },
+    "informal_text": "The same positivity regime yields nondecreasing pressure response.",
+    "claim_type": "proposition",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_006",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "3",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 500
+      },
+      "end": {
+        "page": 1,
+        "offset": 600
+      }
+    },
+    "informal_text": "At fixed pressure and positive coefficient, response is strictly increasing in equilibrium constant K.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_007",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "4",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 600
+      },
+      "end": {
+        "page": 1,
+        "offset": 700
+      }
+    },
+    "informal_text": "Scaling gas constant scales Temkin response linearly.",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_008",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "4",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 700
+      },
+      "end": {
+        "page": 1,
+        "offset": 800
+      }
+    },
+    "informal_text": "Scaling absolute temperature scales Temkin response linearly.",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_009",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "4",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 800
+      },
+      "end": {
+        "page": 1,
+        "offset": 900
+      }
+    },
+    "informal_text": "Changing sign of interaction parameter flips the sign of the coverage value.",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_a"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_010",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "4",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 900
+      },
+      "end": {
+        "page": 1,
+        "offset": 1000
+      }
+    },
+    "informal_text": "For positive factors, ln(K*p) decomposes into ln(K)+ln(p).",
+    "claim_type": "identity",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_011",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "4",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1000
+      },
+      "end": {
+        "page": 1,
+        "offset": 1100
+      }
+    },
+    "informal_text": "Temkin relation can be rewritten as affine form in log-pressure with constant log-K offset.",
+    "claim_type": "proposition",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p"
+    ]
+  },
+  {
+    "id": "temkin_1941_adsorption_claim_012",
+    "paper_id": "temkin_1941_adsorption",
+    "section": "5",
+    "source_span": {
+      "source_file": "source/source.pdf",
+      "start": {
+        "page": 1,
+        "offset": 1100
+      },
+      "end": {
+        "page": 1,
+        "offset": 1200
+      }
+    },
+    "informal_text": "If coefficient is nonnegative and K*p >= 1, then logarithmic coverage value is nonnegative.",
+    "claim_type": "theorem",
+    "mathematical_density": "high",
+    "status": "machine_checked",
+    "linked_symbols": [
+      "temkin_theta",
+      "temkin_r",
+      "temkin_t",
+      "temkin_a",
+      "temkin_k",
+      "temkin_p"
+    ],
+    "linked_assumptions": [
+      "temkin_1941_assumption_001",
+      "temkin_1941_assumption_003"
+    ],
+    "linked_formal_targets": [
+      "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one"
+    ]
+  }
+]

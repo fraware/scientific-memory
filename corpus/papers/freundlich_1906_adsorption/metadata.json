@@ -1,0 +1,16 @@
+{
+  "id": "freundlich_1906_adsorption",
+  "title": "Over the adsorption in solution",
+  "authors": [
+    "Freundlich, H."
+  ],
+  "year": 1906,
+  "domain": "chemistry",
+  "source": {
+    "kind": "pdf",
+    "path": "corpus/papers/freundlich_1906_adsorption/source/source.pdf",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "artifact_status": "admitted",
+  "first_artifact_at": "2026-03-18T10:48:55Z"
+}

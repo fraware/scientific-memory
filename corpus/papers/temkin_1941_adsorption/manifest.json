@@ -1,0 +1,63 @@
+{
+  "paper_id": "temkin_1941_adsorption",
+  "version": "0.1.0",
+  "build_hash": "c519fef66c82def5f945f1ec3c1e4c2249c31dc4044095a588e0997629ad6a24",
+  "coverage_metrics": {
+    "claim_count": 12,
+    "mapped_claim_count": 12,
+    "machine_checked_count": 12,
+    "kernel_linked_count": 0
+  },
+  "generated_pages": [
+    "/papers/temkin_1941_adsorption",
+    "/claims/temkin_1941_adsorption_claim_001",
+    "/claims/temkin_1941_adsorption_claim_002",
+    "/claims/temkin_1941_adsorption_claim_003",
+    "/claims/temkin_1941_adsorption_claim_004",
+    "/claims/temkin_1941_adsorption_claim_005",
+    "/claims/temkin_1941_adsorption_claim_006",
+    "/claims/temkin_1941_adsorption_claim_007",
+    "/claims/temkin_1941_adsorption_claim_008",
+    "/claims/temkin_1941_adsorption_claim_009",
+    "/claims/temkin_1941_adsorption_claim_010",
+    "/claims/temkin_1941_adsorption_claim_011",
+    "/claims/temkin_1941_adsorption_claim_012",
+    "/theorem-cards/temkin_1941_adsorption_card_001",
+    "/theorem-cards/temkin_1941_adsorption_card_002",
+    "/theorem-cards/temkin_1941_adsorption_card_003",
+    "/theorem-cards/temkin_1941_adsorption_card_004",
+    "/theorem-cards/temkin_1941_adsorption_card_005",
+    "/theorem-cards/temkin_1941_adsorption_card_006",
+    "/theorem-cards/temkin_1941_adsorption_card_007",
+    "/theorem-cards/temkin_1941_adsorption_card_008",
+    "/theorem-cards/temkin_1941_adsorption_card_009",
+    "/theorem-cards/temkin_1941_adsorption_card_010",
+    "/theorem-cards/temkin_1941_adsorption_card_011",
+    "/theorem-cards/temkin_1941_adsorption_card_012"
+  ],
+  "declaration_index": [
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p",
+    "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one"
+  ],
+  "dependency_graph": [
+    {
+      "from": "temkin_1941_adsorption_card_004",
+      "to": "temkin_1941_adsorption_card_005"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_010",
+      "to": "temkin_1941_adsorption_card_011"
+    }
+  ],
+  "kernel_index": []
+}

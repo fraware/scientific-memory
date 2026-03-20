@@ -1,0 +1,17 @@
+{
+  "id": "temkin_1941_adsorption",
+  "title": "Kinetics of ammonia synthesis on promoted iron catalysts (Temkin-Pyzhev slice)",
+  "authors": [
+    "Temkin, M. I.",
+    "Pyzhev, V."
+  ],
+  "year": 1941,
+  "domain": "chemistry",
+  "source": {
+    "kind": "pdf",
+    "path": "corpus/papers/temkin_1941_adsorption/source/source.pdf",
+    "sha256": "90e5625b83f6e1bc7a422af5062ffddca7bad4c74e855168a70ee23d7f3e55f3"
+  },
+  "artifact_status": "admitted",
+  "first_artifact_at": "2026-03-18T23:30:00Z"
+}

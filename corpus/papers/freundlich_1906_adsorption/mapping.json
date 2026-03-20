@@ -1,0 +1,19 @@
+{
+  "paper_id": "freundlich_1906_adsorption",
+  "namespace": "ScientificMemory.Chemistry.Adsorption.Freundlich1906",
+  "claim_to_decl": {
+    "freundlich_1906_adsorption_claim_001": "freundlich_isotherm",
+    "freundlich_1906_adsorption_claim_002": "freundlich_nonneg",
+    "freundlich_1906_adsorption_claim_003": "freundlich_pos",
+    "freundlich_1906_adsorption_claim_004": "freundlich_zero_k",
+    "freundlich_1906_adsorption_claim_005": "freundlich_zero_c",
+    "freundlich_1906_adsorption_claim_006": "freundlich_mono_in_c",
+    "freundlich_1906_adsorption_claim_007": "freundlich_mono_in_k",
+    "freundlich_1906_adsorption_claim_008": "freundlich_at_one",
+    "freundlich_1906_adsorption_claim_009": "freundlich_smul_k",
+    "freundlich_1906_adsorption_claim_010": "freundlich_rpow_pos",
+    "freundlich_1906_adsorption_claim_011": "freundlich_strict_mono_in_c",
+    "freundlich_1906_adsorption_claim_012": "freundlich_double_k"
+  },
+  "target_file": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean"
+}

@@ -1,0 +1,136 @@
+[
+  {
+    "id": "freundlich_1906_adsorption_card_001",
+    "claim_id": "freundlich_1906_adsorption_claim_001",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": [
+      "freundlich_adsorption_kernel_v1"
+    ]
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_002",
+    "claim_id": "freundlich_1906_adsorption_claim_002",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_003",
+    "claim_id": "freundlich_1906_adsorption_claim_003",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_004",
+    "claim_id": "freundlich_1906_adsorption_claim_004",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_005",
+    "claim_id": "freundlich_1906_adsorption_claim_005",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_006",
+    "claim_id": "freundlich_1906_adsorption_claim_006",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_007",
+    "claim_id": "freundlich_1906_adsorption_claim_007",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_008",
+    "claim_id": "freundlich_1906_adsorption_claim_008",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_009",
+    "claim_id": "freundlich_1906_adsorption_claim_009",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_010",
+    "claim_id": "freundlich_1906_adsorption_claim_010",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_011",
+    "claim_id": "freundlich_1906_adsorption_claim_011",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "freundlich_1906_adsorption_card_012",
+    "claim_id": "freundlich_1906_adsorption_claim_012",
+    "lean_decl": "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k",
+    "file_path": "formal/ScientificMemory/Chemistry/Adsorption/Freundlich1906.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

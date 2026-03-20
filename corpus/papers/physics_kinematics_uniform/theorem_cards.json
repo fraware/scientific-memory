@@ -1,0 +1,167 @@
+[
+  {
+    "id": "physics_kinematics_uniform_card_001",
+    "claim_id": "physics_kinematics_uniform_claim_001",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_at_time",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_002",
+    "claim_id": "physics_kinematics_uniform_claim_002",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_rearranged",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_003",
+    "claim_id": "physics_kinematics_uniform_claim_003",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.delta_velocity",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_004",
+    "claim_id": "physics_kinematics_uniform_claim_004",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_double_time",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_005",
+    "claim_id": "physics_kinematics_uniform_claim_005",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_006",
+    "claim_id": "physics_kinematics_uniform_claim_006",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.accel_from_delta_v",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_007",
+    "claim_id": "physics_kinematics_uniform_claim_007",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_squared_expand",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_008",
+    "claim_id": "physics_kinematics_uniform_claim_008",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.torricelli_squared",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_009",
+    "claim_id": "physics_kinematics_uniform_claim_009",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_010",
+    "claim_id": "physics_kinematics_uniform_claim_010",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.zero_time_zero_displacement",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_011",
+    "claim_id": "physics_kinematics_uniform_claim_011",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.average_velocity_displacement",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_012",
+    "claim_id": "physics_kinematics_uniform_claim_012",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_time_additivity",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_013",
+    "claim_id": "physics_kinematics_uniform_claim_013",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_linearity_in_u",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_014",
+    "claim_id": "physics_kinematics_uniform_claim_014",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  },
+  {
+    "id": "physics_kinematics_uniform_card_015",
+    "claim_id": "physics_kinematics_uniform_claim_015",
+    "lean_decl": "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval",
+    "file_path": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean",
+    "proof_status": "machine_checked",
+    "verification_boundary": "fully_machine_checked",
+    "reviewer_status": "accepted",
+    "dependency_ids": [],
+    "executable_links": []
+  }
+]

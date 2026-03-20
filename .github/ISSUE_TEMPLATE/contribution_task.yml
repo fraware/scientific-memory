@@ -1,0 +1,47 @@
+name: Contribution task
+description: Propose a bounded contribution (good for external contributors)
+title: "[contrib] "
+labels: ["help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for small, well-scoped work (docs, tests, portal UI, extractor edge cases).
+        For bugs use Bug report; for larger features use Feature request.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - documentation
+        - pipeline / validation
+        - portal
+        - corpus (claims / metadata)
+        - formal (Lean)
+        - kernels
+        - benchmarks
+        - CI / infra
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What will change and why it helps traceability, correctness, or contributor UX?
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      placeholder: "e.g. PR updates X; just validate and just test pass; no schema change"
+  - type: textarea
+    id: gates
+    attributes:
+      label: Expected CI / gate impact
+      placeholder: "e.g. corpus-validation only, portal-ci, none if docs-only"
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Contributor checklist
+      options:
+        - label: I read CONTRIBUTING.md and the relevant playbook under docs/playbooks/
+          required: true
+        - label: I will run local checks from docs/contributor-playbook.md#local-ci-checklist-green-before-merge (or just check) before opening the PR
+          required: false

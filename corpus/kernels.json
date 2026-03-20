@@ -1,0 +1,22 @@
+[
+  {
+    "id": "langmuir_adsorption_kernel_v1",
+    "domain": "adsorption",
+    "input_schema": "K: float, P: float",
+    "output_schema": "coverage: float",
+    "semantic_contract": "Implements Langmuir isotherm theta = K*P / (1 + K*P); nonnegative K and P yield coverage in [0,1].",
+    "linked_theorem_cards": ["langmuir_1918_adsorption_card_001"],
+    "unit_constraints": ["K dimensionless or 1/pressure", "P pressure", "coverage dimensionless"],
+    "test_status": "tested"
+  },
+  {
+    "id": "freundlich_adsorption_kernel_v1",
+    "domain": "adsorption",
+    "input_schema": "k: float, c: float, n: float",
+    "output_schema": "amount: float",
+    "semantic_contract": "Implements Freundlich isotherm amount = k * c^(1/n); c > 0, n != 0 in typical use.",
+    "linked_theorem_cards": ["freundlich_1906_adsorption_card_001"],
+    "unit_constraints": ["k dimensioned", "c concentration", "n dimensionless", "amount adsorbed per mass"],
+    "test_status": "tested"
+  }
+]

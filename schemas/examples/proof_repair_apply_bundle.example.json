@@ -1,0 +1,15 @@
+{
+  "verification_boundary": "human_review_only",
+  "review_record_path": "docs/reviews/proof_repair_2026-03-18.json",
+  "patches": [
+    {
+      "relative_path": "formal/ScientificMemory/Mathematics/SumEvens.lean",
+      "replacements": [
+        {
+          "find": "theorem sum_evens",
+          "replace": "theorem sum_evens"
+        }
+      ]
+    }
+  ]
+}

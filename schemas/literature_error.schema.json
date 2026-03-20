@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/literature_error.schema.json",
+  "title": "Literature errors",
+  "description": "Optional per-paper list of curated literature error records (research-value metric).",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["description"],
+    "properties": {
+      "claim_id": { "$ref": "common.schema.json#/$defs/id" },
+      "description": { "type": "string", "minLength": 1 },
+      "severity": { "type": "string" },
+      "source": { "type": "string" }
+    }
+  }
+}

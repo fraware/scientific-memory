@@ -1,0 +1,8 @@
+{
+  "paper_id": "math_sum_evens",
+  "namespace": "ScientificMemory.Mathematics.SumEvens",
+  "claim_to_decl": {
+    "math_sum_evens_claim_001": "sum_evens"
+  },
+  "target_file": "formal/ScientificMemory/Mathematics/SumEvens.lean"
+}

@@ -1,0 +1,22 @@
+{
+  "paper_id": "physics_kinematics_uniform",
+  "namespace": "ScientificMemory.Physics.Kinematics.UniformAccel",
+  "claim_to_decl": {
+    "physics_kinematics_uniform_claim_001": "velocity_at_time",
+    "physics_kinematics_uniform_claim_002": "displacement_rearranged",
+    "physics_kinematics_uniform_claim_003": "delta_velocity",
+    "physics_kinematics_uniform_claim_004": "displacement_double_time",
+    "physics_kinematics_uniform_claim_005": "average_endpoints",
+    "physics_kinematics_uniform_claim_006": "accel_from_delta_v",
+    "physics_kinematics_uniform_claim_007": "velocity_squared_expand",
+    "physics_kinematics_uniform_claim_008": "torricelli_squared",
+    "physics_kinematics_uniform_claim_009": "zero_accel_velocity_constant",
+    "physics_kinematics_uniform_claim_010": "zero_time_zero_displacement",
+    "physics_kinematics_uniform_claim_011": "average_velocity_displacement",
+    "physics_kinematics_uniform_claim_012": "velocity_time_additivity",
+    "physics_kinematics_uniform_claim_013": "displacement_linearity_in_u",
+    "physics_kinematics_uniform_claim_014": "double_half_quadratic_term",
+    "physics_kinematics_uniform_claim_015": "mean_acceleration_over_interval"
+  },
+  "target_file": "formal/ScientificMemory/Physics/Kinematics/UniformAccel.lean"
+}

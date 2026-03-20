@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/executable_kernel.schema.json",
+  "title": "Executable Kernel",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "domain",
+      "input_schema",
+      "output_schema",
+      "semantic_contract",
+      "linked_theorem_cards"
+    ],
+    "properties": {
+      "id": { "$ref": "common.schema.json#/$defs/id" },
+      "domain": { "type": "string" },
+      "input_schema": { "type": "string" },
+      "output_schema": { "type": "string" },
+      "semantic_contract": { "type": "string" },
+      "unit_constraints": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": []
+      },
+      "linked_theorem_cards": {
+        "type": "array",
+        "items": { "$ref": "common.schema.json#/$defs/id" }
+      },
+      "test_status": {
+        "type": "string",
+        "enum": ["untested", "tested", "failing"]
+      }
+    }
+  }
+}
