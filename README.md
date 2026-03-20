@@ -105,39 +105,39 @@ just portal       # local dev server (see terminal for URL)
 flowchart TD
   subgraph intake [Intake]
     Add[Add paper]
-    Extract[Extract claims]
+    Extract[Extract claims and context]
   end
 
-  subgraph canonical [Canonical work]
-    Norm[Normalize]
-    Map[Map to Lean]
-    Formal[Formal Lean code]
-  end
-
-  subgraph optional [Optional LLM assistance suggest only]
+  subgraph optional [Optional LLM assistance]
     LLM[LLM proposals]
     Review[Human review]
     Apply[Apply after review]
   end
 
+  subgraph canonical [Canonical work]
+    Norm[Normalize and link]
+    Map[Map to Lean]
+    Formal[Formalize in Lean]
+  end
+
   subgraph validation [Validation publish]
     Gates[Gate engine validate all]
-    Publish[Publish artifacts]
+    Publish[Publish manifests and theorem cards]
     Export[Portal export]
   end
 
   subgraph outputs [Outputs]
     Portal[Portal pages]
-    Bench[Benchmarks]
-    Manifests[Manifests theorem cards]
+    Bench[Benchmarks and regression]
+    Manifests[Published artifacts]
   end
 
   Add --> Extract
   Extract --> Norm
   Norm --> Map
   Map --> Formal
-  Formal --> Gates
   Norm --> Gates
+  Formal --> Gates
   Gates --> Publish
   Publish --> Manifests
   Publish --> Export
