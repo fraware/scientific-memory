@@ -11,12 +11,13 @@ from pydantic import BaseModel, Field
 
 from sm_pipeline.validate.coverage import validate_coverage
 from sm_pipeline.validate.extraction_artifacts import validate_extraction_run_required
-from sm_pipeline.validate.graph import validate_graph
+from sm_pipeline.validate.graph import validate_dependency_graph_bootstrap_warn, validate_graph
 from sm_pipeline.validate.migration import validate_migration_doc
 from sm_pipeline.validate.normalization import validate_normalization
 from sm_pipeline.validate.provenance import validate_provenance
 from sm_pipeline.validate.reviewer import validate_reviewer_lifecycle
 from sm_pipeline.validate.snapshot_quality import validate_snapshot_quality
+from sm_pipeline.validate.llm_proposals import validate_llm_proposal_sidecars_warn
 from sm_pipeline.validate.theorem_card_reviewer import validate_theorem_card_reviewer
 
 
@@ -115,6 +116,32 @@ def run_all_gates(repo_root: Path) -> GateReport:
             GateStepResult(
                 gate_id="gate2",
                 check_id="snapshot_quality",
+                status="warn",
+                message=w,
+            )
+        )
+
+    dep_bootstrap_warnings = validate_dependency_graph_bootstrap_warn(repo_root)
+    for w in dep_bootstrap_warnings:
+        report.warnings.append(w)
+        print(f"Dependency graph (warn): {w}", file=sys.stderr)
+        report.steps.append(
+            GateStepResult(
+                gate_id="gate2",
+                check_id="dependency_graph_bootstrap",
+                status="warn",
+                message=w,
+            )
+        )
+
+    llm_warnings = validate_llm_proposal_sidecars_warn(repo_root)
+    for w in llm_warnings:
+        report.warnings.append(w)
+        print(f"Suggestion sidecar (warn): {w}", file=sys.stderr)
+        report.steps.append(
+            GateStepResult(
+                gate_id="gate2",
+                check_id="suggestion_sidecars",
                 status="warn",
                 message=w,
             )

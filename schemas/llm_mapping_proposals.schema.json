@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/llm_mapping_proposals.schema.json",
+  "title": "LLM mapping proposals (human review only)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "paper_id",
+    "schema_version",
+    "verification_boundary",
+    "proposals"
+  ],
+  "properties": {
+    "paper_id": { "$ref": "common.schema.json#/$defs/id" },
+    "schema_version": { "type": "string", "const": "0.1.0" },
+    "verification_boundary": {
+      "type": "string",
+      "const": "human_review_only"
+    },
+    "metadata": { "$ref": "llm_run_provenance.schema.json" },
+    "proposals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["claim_id", "lean_declaration_short_name"],
+        "properties": {
+          "claim_id": { "$ref": "common.schema.json#/$defs/id" },
+          "lean_declaration_short_name": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-zA-Z_][a-zA-Z0-9_']*$"
+          },
+          "rationale": { "type": "string" },
+          "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "paper_id": "math_sum_evens",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "prime_intellect",
+    "model": "allenai/olmo-3.1-32b-instruct",
+    "model_version": null,
+    "created_at": "2026-03-20T13:23:43Z",
+    "latency_seconds": 2.244,
+    "temperature": null,
+    "top_p": null,
+    "max_tokens": null,
+    "seed": null,
+    "prompt_template_id": null,
+    "prompt_template_sha256": null,
+    "input_artifact_sha256": null,
+    "prompt_tokens": 767,
+    "completion_tokens": 43,
+    "total_tokens": 810,
+    "estimated_cost_usd": null,
+    "reviewer_decision": null,
+    "promotion_outcome": null,
+    "notes": null
+  },
+  "proposals": []
+}

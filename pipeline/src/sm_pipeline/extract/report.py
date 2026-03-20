@@ -5,11 +5,19 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 
-def write_extraction_run(repo_root: Path, paper_id: str) -> Path:
+def write_extraction_run(
+    repo_root: Path,
+    paper_id: str,
+    *,
+    extraction_mode: str | None = None,
+    placeholder_claim_written: bool | None = None,
+) -> Path:
     """
     Write corpus/papers/<paper_id>/extraction_run.json with claim_count,
     claims_with_source_span, assumption_count, recorded_at.
     Optional artifact; not required by validation.
+
+    When provided, records extraction_mode and placeholder_claim_written for trust auditing.
     """
     repo_root = repo_root.resolve()
     paper_dir = repo_root / "corpus" / "papers" / paper_id
@@ -59,6 +67,10 @@ def write_extraction_run(repo_root: Path, paper_id: str) -> Path:
         "claims_with_source_span": claims_with_source_span,
         "assumption_count": assumption_count,
     }
+    if extraction_mode is not None:
+        payload["extraction_mode"] = extraction_mode
+    if placeholder_claim_written is not None:
+        payload["placeholder_claim_written"] = placeholder_claim_written
     out_path = paper_dir / "extraction_run.json"
     out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
     return out_path

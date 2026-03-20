@@ -8,8 +8,9 @@
     "dimensional_metadata": {
       "kind": "velocity",
       "unit": "m/s",
-      "dimension": "L T⁻¹"
-    }
+      "dimension": "L T\u207b\u00b9"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_u",
@@ -20,8 +21,9 @@
     "dimensional_metadata": {
       "kind": "velocity",
       "unit": "m/s",
-      "dimension": "L T⁻¹"
-    }
+      "dimension": "L T\u207b\u00b9"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_a",
@@ -31,9 +33,10 @@
     "type_hint": "rational",
     "dimensional_metadata": {
       "kind": "acceleration",
-      "unit": "m/s²",
-      "dimension": "L T⁻²"
-    }
+      "unit": "m/s\u00b2",
+      "dimension": "L T\u207b\u00b2"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_t",
@@ -45,7 +48,8 @@
       "kind": "time",
       "unit": "s",
       "dimension": "T"
-    }
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_dv",
@@ -56,8 +60,9 @@
     "dimensional_metadata": {
       "kind": "velocity",
       "unit": "m/s",
-      "dimension": "L T⁻¹"
-    }
+      "dimension": "L T\u207b\u00b9"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_dt",
@@ -69,7 +74,8 @@
       "kind": "time",
       "unit": "s",
       "dimension": "T"
-    }
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_s",
@@ -81,7 +87,8 @@
       "kind": "time",
       "unit": "s",
       "dimension": "T"
-    }
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_u1",
@@ -92,8 +99,9 @@
     "dimensional_metadata": {
       "kind": "velocity",
       "unit": "m/s",
-      "dimension": "L T⁻¹"
-    }
+      "dimension": "L T\u207b\u00b9"
+    },
+    "ambiguity_flags": []
   },
   {
     "id": "physics_kinematics_uniform_symbol_u2",
@@ -104,7 +112,8 @@
     "dimensional_metadata": {
       "kind": "velocity",
       "unit": "m/s",
-      "dimension": "L T⁻¹"
-    }
+      "dimension": "L T\u207b\u00b9"
+    },
+    "ambiguity_flags": []
   }
 ]

@@ -21,11 +21,16 @@
 | [mcp-lean-tooling.md](mcp-lean-tooling.md) | MCP server |
 | [pandoc-latex-integration.md](pandoc-latex-integration.md) | Pandoc / LaTeX extraction |
 | [pipeline-extension-points.md](pipeline-extension-points.md) | Extending pipeline stages; blueprint / leanblueprint note |
+| [prime-intellect-llm.md](prime-intellect-llm.md) | Optional Prime Intellect LLM proposals (suggest-only; human-gated apply) |
+| [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md) | Canonical vs suggestion artifacts; risk register touchpoints |
 
 | Per-paper narrative | |
 |---------------------|---|
 | [blueprints/](blueprints/) | Blueprint-style claim maps (mapping remains canonical) |
 | [playbooks/](playbooks/) | Role-specific checklists |
 | [status/](status/) | Generated status (e.g. repo snapshot) |
+| [testing/trust-hardening-e2e-scenarios.md](testing/trust-hardening-e2e-scenarios.md) | Manual checklist for extraction modes, normalization, sidecars, publish/hash (complements automated tests) |
+| [testing/llm-lean-live-test-matrix.md](testing/llm-lean-live-test-matrix.md) | Operator checklist for LLM Lean assist (fake vs live provider, model routing, apply path) |
+| [testing/llm-human-eval-rubric.md](testing/llm-human-eval-rubric.md) | Human review rubric for LLM proposal sidecars (before apply) |
 
 **Playbook sections (same file):** [public alpha](contributor-playbook.md#public-alpha-and-repository-state) · [local CI](contributor-playbook.md#local-ci-checklist-green-before-merge) · [reuse](contributor-playbook.md#reusing-scientific-memory) · [reviewer / theorem-card lifecycle](contributor-playbook.md#theorem-card-reviewer-lifecycle-policy) · [verification boundary](contributor-playbook.md#verification-boundary) · [Verso](contributor-playbook.md#verso-integration-optional) · [schema versioning](contributor-playbook.md#schema-versioning-and-migration-notes) · [release integrity](contributor-playbook.md#release-integrity-gate-7) · [domain policy](contributor-playbook.md#domain-policy)

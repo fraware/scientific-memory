@@ -62,9 +62,8 @@ def validate_graph(repo_root: Path) -> None:
 
         mapping_path = paper_dir / "mapping.json"
         mapping_data = _load_json(mapping_path) if mapping_path.exists() else {}
-        has_mapping_namespace = (
-            isinstance(mapping_data, dict)
-            and bool((mapping_data.get("namespace") or "").strip())
+        has_mapping_namespace = isinstance(mapping_data, dict) and bool(
+            (mapping_data.get("namespace") or "").strip()
         )
 
         # Theorem cards: claim_id must exist in claims; file_path required when mapping has namespace
@@ -86,7 +85,11 @@ def validate_graph(repo_root: Path) -> None:
                             f"Theorem card {card.get('id', '?')} in {paper_id} references "
                             f"claim_id {cid} which does not exist in claims.json"
                         )
-                    if has_mapping_namespace and card.get("lean_decl") and not (card.get("file_path") or "").strip():
+                    if (
+                        has_mapping_namespace
+                        and card.get("lean_decl")
+                        and not (card.get("file_path") or "").strip()
+                    ):
                         raise GraphIntegrityError(
                             f"Theorem card {card.get('id', '?')} in {paper_id} has empty file_path; "
                             "re-run publish-artifacts to populate from mapping"
@@ -136,7 +139,9 @@ def validate_graph(repo_root: Path) -> None:
         if assumptions_path.exists():
             assumptions = _load_json(assumptions_path)
             if isinstance(assumptions, list):
-                assumption_ids = {a["id"] for a in assumptions if isinstance(a, dict) and a.get("id")}
+                assumption_ids = {
+                    a["id"] for a in assumptions if isinstance(a, dict) and a.get("id")
+                }
         symbols_path = paper_dir / "symbols.json"
         symbol_ids: set[str] = set()
         if symbols_path.exists():
@@ -198,3 +203,46 @@ def validate_graph(repo_root: Path) -> None:
                                 f"Kernel {k.get('id')} references theorem card {card_id} "
                                 "which is not a theorem card id in the corpus"
                             )
+
+
+def validate_dependency_graph_bootstrap_warn(repo_root: Path) -> list[str]:
+    """
+    Non-blocking: flag papers where multiple theorem cards exist but all dependency_ids are empty
+    while at least one claim is machine_checked (Tier-0 extractor may yield an empty graph).
+    """
+    repo_root = repo_root.resolve()
+    papers_dir = repo_root / "corpus" / "papers"
+    if not papers_dir.is_dir():
+        return []
+    warnings: list[str] = []
+    for paper_dir in sorted(papers_dir.iterdir()):
+        if not paper_dir.is_dir():
+            continue
+        paper_id = paper_dir.name
+        cards_path = paper_dir / "theorem_cards.json"
+        if not cards_path.exists():
+            continue
+        try:
+            cards = _load_json(cards_path)
+        except (json.JSONDecodeError, OSError):
+            continue
+        if not isinstance(cards, list) or len(cards) < 2:
+            continue
+        if any((isinstance(c, dict) and (c.get("dependency_ids") or [])) for c in cards):
+            continue
+        claims_path = paper_dir / "claims.json"
+        if not claims_path.exists():
+            continue
+        try:
+            claims = _load_json(claims_path)
+        except (json.JSONDecodeError, OSError):
+            continue
+        if not isinstance(claims, list):
+            continue
+        if not any(isinstance(c, dict) and c.get("status") == "machine_checked" for c in claims):
+            continue
+        warnings.append(
+            f"{paper_id}: {len(cards)} theorem cards but no dependency_ids "
+            f"(dependency_extraction_method is bootstrap regex; graph may be empty)"
+        )
+    return warnings

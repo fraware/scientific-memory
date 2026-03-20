@@ -110,4 +110,7 @@ def extract_dependency_ids_for_cards(
                 if isinstance(c, dict) and c.get("id") == card_id:
                     c["dependency_ids"] = dep_ids
                     break
+    for c in cards:
+        if isinstance(c, dict):
+            c.setdefault("dependency_extraction_method", "lean_source_regex_tier0")
     return cards

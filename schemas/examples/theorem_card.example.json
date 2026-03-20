@@ -7,6 +7,7 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "dependency_ids": [],
+    "dependency_extraction_method": "lean_source_regex_tier0",
     "executable_links": [
       "langmuir_adsorption_kernel_v1"
     ],

@@ -1,0 +1,28 @@
+{
+  "paper_id": "math_sum_evens",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "eval_reference_fixture",
+    "model": "n/a"
+  },
+  "proposals": [
+    {
+      "proposal_id": "eval_ref_lean_identity",
+      "paper_id": "math_sum_evens",
+      "claim_id": "math_sum_evens_claim_001",
+      "target_file": "formal/ScientificMemory/Mathematics/SumEvens.lean",
+      "target_decl": "sum_evens",
+      "edit_kind": "proof_repair",
+      "replacements": [
+        {
+          "find": "  ring_nf",
+          "replace": "  ring_nf"
+        }
+      ],
+      "rationale": "No-op replacement; unique find substring for static eval only.",
+      "confidence": 1.0,
+      "safety_flags": []
+    }
+  ]
+}

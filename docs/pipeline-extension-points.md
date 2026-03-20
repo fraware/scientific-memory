@@ -26,6 +26,15 @@ Stages that remain **manual by design** (`formalization`, `kernel_linkage`) stil
 
 - Add new invariant checks by extending the gate engine in [`validate/gate_engine.py`](../pipeline/src/sm_pipeline/validate/gate_engine.py) rather than ad hoc scripts, so `validate-all` and `--report-json` stay authoritative.
 
+## Optional LLM proposals (Prime Intellect)
+
+- **Provider code:** [`pipeline/src/sm_pipeline/llm/`](../pipeline/src/sm_pipeline/llm/) (`LLMProvider` protocol, Prime Intellect HTTP adapter).
+- **CLI:** `sm-pipeline llm-claim-proposals`, `llm-mapping-proposals`, `llm-lean-proposals`, `llm-lean-proposals-to-apply-bundle`, `llm-apply-*` (see [prime-intellect-llm.md](prime-intellect-llm.md)).
+- **Extension pattern:** wrap `run_extraction_stage` or add a local script that calls proposal generators; do not auto-apply in CI. Prefer `register_pipeline_stage_handler` only if the substituted handler remains deterministic or is explicitly opt-in via environment flags.
+- **Sidecar validation:** [`validate/llm_proposals.py`](../pipeline/src/sm_pipeline/validate/llm_proposals.py) is **warn-only** when suggestion sidecars (`llm_claim_proposals.json`, `llm_mapping_proposals.json`, `llm_lean_proposals.json`, `suggested_*.json`) exist under a paper directory.
+- **Eval / regression:** Prompt literals and template digests live in [`llm/prompt_templates.py`](../pipeline/src/sm_pipeline/llm/prompt_templates.py). Reviewed reference bundles under [`benchmarks/llm_eval/`](../benchmarks/llm_eval/README.md) are scored by benchmark task `llm_eval`; `just benchmark` also emits top-level `llm_prompt_templates`. See [ADR 0013](adr/0013-llm-evaluation-policy.md).
+- **Publish escape hatch:** set `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1` only if you intentionally need to preserve prior manifest `dependency_graph` / `kernel_index` (default is fresh recompute each publish).
+
 ## Schemas and models
 
 Schema changes require updates in lockstep per project rules: JSON schema under `schemas/`, Pydantic models under `pipeline/src/sm_pipeline/models/`, fixtures under `schemas/examples/`, and notes in [Schema versioning and migration notes](contributor-playbook.md#schema-versioning-and-migration-notes).

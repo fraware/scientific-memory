@@ -772,9 +772,11 @@ name = "sm-pipeline"
 version = "0.1.0"
 source = { editable = "pipeline" }
 dependencies = [
+    { name = "httpx" },
     { name = "jsonschema" },
     { name = "networkx" },
     { name = "pydantic" },
+    { name = "python-dotenv" },
     { name = "referencing" },
     { name = "rich" },
     { name = "typer" },
@@ -787,10 +789,12 @@ mcp = [
 
 [package.metadata]
 requires-dist = [
+    { name = "httpx", specifier = ">=0.27" },
     { name = "jsonschema", specifier = ">=4.23" },
     { name = "mcp", marker = "extra == 'mcp'", specifier = ">=1.0" },
     { name = "networkx", specifier = ">=3.3" },
     { name = "pydantic", specifier = ">=2.8" },
+    { name = "python-dotenv", specifier = ">=1.0" },
     { name = "referencing", specifier = ">=0.35" },
     { name = "rich", specifier = ">=13.7" },
     { name = "typer", specifier = ">=0.12" },

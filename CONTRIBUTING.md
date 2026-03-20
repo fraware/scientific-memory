@@ -38,7 +38,7 @@ just build
 
 If setup/build fails, run `just doctor` first.
 
-**Test coverage:** Run `just test` locally. As of the current tree: **133** tests total (**107** in `pipeline/tests`, **26** in `kernels/adsorption/tests`) via the workspace `pytest` configuration (MCP contract/integration tests live in the pipeline suite). Confirm with `uv run pytest --collect-only -q`. For MCP, ensure `uv sync --extra mcp` when exercising MCP-backed tests.
+**Test coverage:** Run `just test` locally. The workspace `pytest` configuration includes `pipeline/tests` and `kernels/adsorption/tests` (MCP contract/integration tests live in the pipeline suite). Confirm current counts with `uv run pytest --collect-only -q`. For MCP, ensure `uv sync --extra mcp` when exercising MCP-backed tests.
 
 **Contributor dry-run (smoke):** from repo root, `bash scripts/contributor_dry_run.sh` (or follow the same steps manually). A monthly workflow runs validate and tests on a clean runner; see `.github/workflows/contributor-dry-run-monthly.yml`.
 
@@ -61,6 +61,8 @@ If setup/build fails, run `just doctor` first.
 - claim status in allowed enum; `disputed` claims must have non-empty `review_notes`,
 - migration doc updated when schemas change.
 
+The same command may print **warn-only** stderr lines (exit code still 0) for snapshot baseline quality, dependency-graph bootstrap hints on papers with multiple theorem cards but empty `dependency_ids`, and invalid optional `llm_*` / `suggested_*` sidecar files. See [docs/trust-boundary-and-extraction.md](docs/trust-boundary-and-extraction.md).
+
 ## Helpful optional commands
 
 - `just metrics` (includes reviewer lifecycle warnings for `machine_checked_but_unreviewed` cards)
@@ -75,6 +77,8 @@ If setup/build fails, run `just doctor` first.
 - `just mcp-server` (requires `uv sync --extra mcp`)
 - `uv run --project pipeline python -m sm_pipeline.cli batch-admit <csv_path> [--dry-run]` (admit multiple papers from CSV; `--dry-run` validates without writing)
 - `uv run --project pipeline python -m sm_pipeline.cli proof-repair-proposals -o proposals.json` (human-review-only proposals; never auto-applied)
+- Optional LLM sidecars (API key in root `.env`): `just llm-claim-proposals <paper_id>`, `just llm-mapping-proposals <paper_id>`, `just llm-lean-proposals <paper_id>`; review then apply per [docs/prime-intellect-llm.md](docs/prime-intellect-llm.md) (Lean path uses `llm-lean-proposals-to-apply-bundle` and `proof-repair-apply`)
+- Optional LLM eval smoke: `just llm-live-eval --paper-ids <paper_id> --use-fake-provider` (writes JSON under `benchmarks/reports/`, gitignored); human rubric [docs/testing/llm-human-eval-rubric.md](docs/testing/llm-human-eval-rubric.md)
 
 ## Pull requests
 

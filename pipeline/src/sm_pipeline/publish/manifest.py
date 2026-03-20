@@ -1,11 +1,18 @@
 import hashlib
 import json
+import os
 from datetime import UTC, datetime
 from pathlib import Path
 
 from sm_pipeline.formalize.lean_deps import extract_dependency_ids_for_cards
 from sm_pipeline.formalize.theorem_cards import derive_theorem_cards
 from sm_pipeline.models.artifact_manifest import ArtifactManifest, CoverageMetrics
+
+
+def _reuse_manifest_graphs_from_env() -> bool:
+    """Opt-in escape hatch to preserve stale manifest graphs (not recommended)."""
+    v = os.environ.get("SM_PUBLISH_REUSE_MANIFEST_GRAPHS", "").strip().lower()
+    return v in ("1", "true", "yes")
 
 
 def publish_manifest(repo_root: Path, paper_id: str) -> None:
@@ -39,16 +46,23 @@ def publish_manifest(repo_root: Path, paper_id: str) -> None:
     declaration_index = [c["lean_decl"] for c in cards] if cards else _declaration_index(paper_dir)
     generated_pages = _generated_pages(paper_id, claims, cards)
     existing = _read_existing_manifest(paper_dir)
-    kernel_index = existing.get("kernel_index") or _kernel_index_from_corpus(
-        repo_root, paper_id, cards
+    if _reuse_manifest_graphs_from_env():
+        kernel_index = existing.get("kernel_index") or _kernel_index_from_corpus(
+            repo_root, paper_id, cards
+        )
+        dependency_graph = existing.get("dependency_graph") or _derive_dependency_graph(cards)
+    else:
+        kernel_index = _kernel_index_from_corpus(repo_root, paper_id, cards)
+        dependency_graph = _derive_dependency_graph(cards)
+    build_hash, build_hash_version = _compute_build_hash(
+        paper_dir, paper_id, declaration_index, cards, kernel_index
     )
-    dependency_graph = existing.get("dependency_graph") or _derive_dependency_graph(cards)
-    build_hash = _compute_build_hash(paper_id, declaration_index, cards)
 
     manifest = ArtifactManifest(
         paper_id=paper_id,
         version="0.1.0",
         build_hash=build_hash,
+        build_hash_version=build_hash_version,
         coverage_metrics=CoverageMetrics(
             claim_count=len(claims),
             mapped_claim_count=mapped,
@@ -103,8 +117,59 @@ def _kernel_index_from_corpus(repo_root: Path, paper_id: str, cards: list) -> li
     return result
 
 
-def _compute_build_hash(paper_id: str, declaration_index: list, cards: list) -> str:
-    """Compute deterministic build hash from paper id, declaration index, and theorem card file paths."""
+def _compute_build_hash(
+    paper_dir: Path,
+    paper_id: str,
+    declaration_index: list[str],
+    cards: list,
+    kernel_index: list[str],
+) -> tuple[str, str]:
+    """
+    Content-addressed build fingerprint (v2) over canonical corpus inputs and cards.
+
+    v1 fallback only when claims.json is missing (should not happen for published papers).
+    """
+    claims_path = paper_dir / "claims.json"
+    if not claims_path.exists():
+        return _compute_build_hash_legacy(paper_id, declaration_index, cards), "1"
+
+    h = hashlib.sha256()
+    for name in ("claims.json", "assumptions.json", "symbols.json", "mapping.json"):
+        p = paper_dir / name
+        h.update(name.encode("utf-8"))
+        if p.exists():
+            h.update(p.read_bytes())
+        else:
+            h.update(b"<missing>")
+
+    card_objs = [c for c in cards if isinstance(c, dict)]
+    card_objs.sort(key=lambda c: str(c.get("id") or ""))
+    h.update(b"theorem_cards")
+    h.update(json.dumps(card_objs, sort_keys=True).encode("utf-8"))
+
+    meta_path = paper_dir / "metadata.json"
+    if meta_path.exists():
+        try:
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            if isinstance(meta, dict):
+                src = meta.get("source") or {}
+                if isinstance(src, dict):
+                    sha = (src.get("sha256") or "").strip()
+                    if sha:
+                        h.update(f"source_sha256:{sha}".encode("utf-8"))
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    h.update(b"kernel_index")
+    h.update(json.dumps(sorted(str(x) for x in kernel_index), sort_keys=True).encode("utf-8"))
+    h.update(b"declaration_index")
+    h.update(json.dumps(list(declaration_index), sort_keys=True).encode("utf-8"))
+    h.update(f"paper_id:{paper_id}".encode("utf-8"))
+    return h.hexdigest(), "2"
+
+
+def _compute_build_hash_legacy(paper_id: str, declaration_index: list, cards: list) -> str:
+    """Legacy fingerprint (paths + decl names only)."""
     parts = [paper_id]
     if declaration_index:
         parts.extend(sorted(declaration_index))
@@ -165,7 +230,7 @@ def _merge_theorem_card_reviewer_fields(paper_dir: Path, cards: list[dict]) -> l
 
 
 def _read_existing_manifest(paper_dir: Path) -> dict:
-    """Read existing manifest to preserve kernel_index and dependency_graph."""
+    """Read existing manifest (e.g. for first_artifact_at); graphs default to fresh recompute."""
     p = paper_dir / "manifest.json"
     if not p.exists():
         return {}

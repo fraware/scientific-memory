@@ -1,7 +1,8 @@
 {
   "paper_id": "freundlich_1906_adsorption",
   "version": "0.1.0",
-  "build_hash": "425e11a2742d89ece62e23f7ddd1d763b9b7fcfe93610fd15387c1445588a395",
+  "build_hash": "452f64a6cee22ec4b4a841bee027b1b3a8475cbc119c8845205f1183f4f73f5b",
+  "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 12,
     "mapped_claim_count": 12,
