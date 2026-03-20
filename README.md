@@ -114,14 +114,14 @@ flowchart TD
     Formal[Formal Lean code]
   end
 
-  subgraph optional [Optional LLM assistance (suggest-only)]
+  subgraph optional [Optional LLM assistance suggest only]
     LLM[LLM proposals]
     Review[Human review]
     Apply[Apply after review]
   end
 
-  subgraph validation [Validation & publish]
-    Gates[Gate engine (validate-all)]
+  subgraph validation [Validation publish]
+    Gates[Gate engine validate all]
     Publish[Publish artifacts]
     Export[Portal export]
   end
@@ -129,7 +129,7 @@ flowchart TD
   subgraph outputs [Outputs]
     Portal[Portal pages]
     Bench[Benchmarks]
-    Manifests[Manifests / theorem cards]
+    Manifests[Manifests theorem cards]
   end
 
   Add --> Extract
@@ -145,7 +145,7 @@ flowchart TD
   Publish --> Bench
   Formal --> Bench
 
-  Extract -.optional.-> LLM
+  Extract -.-> LLM
   LLM --> Review
   Review --> Apply
   Apply --> Norm
