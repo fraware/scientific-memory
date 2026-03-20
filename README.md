@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/logo.png" alt="Scientific Memory logo" width="200">
+<img src="docs/assets/logo.png" alt="Scientific Memory logo" width="280">
 
 # Scientific Memory
 
