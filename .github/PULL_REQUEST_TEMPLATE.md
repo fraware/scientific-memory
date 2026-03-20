@@ -11,6 +11,7 @@ What artifact does this PR improve?
 - [ ] executable kernel
 - [ ] portal rendering
 - [ ] benchmarking
+- [ ] LLM integration / evaluation
 - [ ] infra / DX
 
 ## Artifact impact

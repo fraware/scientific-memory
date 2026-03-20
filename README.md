@@ -102,24 +102,56 @@ just portal       # local dev server (see terminal for URL)
 ## Artifact flow
 
 ```mermaid
-flowchart LR
-  subgraph inputs [Sources]
-    Papers[Corpus JSON]
-    Lean[Formal Lean]
+flowchart TD
+  subgraph intake [Intake]
+    Add[Add paper]
+    Extract[Extract claims]
   end
-  subgraph pipeline [Pipeline]
-    Gates[Gate engine]
-    Pub[Publish and export]
+
+  subgraph canonical [Canonical work]
+    Norm[Normalize]
+    Map[Map to Lean]
+    Formal[Formal Lean code]
   end
+
+  subgraph optional [Optional LLM assistance (suggest-only)]
+    LLM[LLM proposals]
+    Review[Human review]
+    Apply[Apply after review]
+  end
+
+  subgraph validation [Validation & publish]
+    Gates[Gate engine (validate-all)]
+    Publish[Publish artifacts]
+    Export[Portal export]
+  end
+
   subgraph outputs [Outputs]
-    Portal[Portal]
+    Portal[Portal pages]
     Bench[Benchmarks]
+    Manifests[Manifests / theorem cards]
   end
-  Papers --> Gates
-  Lean --> Gates
-  Gates --> Pub
-  Pub --> Portal
-  Gates --> Bench
+
+  Add --> Extract
+  Extract --> Norm
+  Norm --> Map
+  Map --> Formal
+  Formal --> Gates
+  Norm --> Gates
+  Gates --> Publish
+  Publish --> Manifests
+  Publish --> Export
+  Export --> Portal
+  Publish --> Bench
+  Formal --> Bench
+
+  Extract -.optional.-> LLM
+  LLM --> Review
+  Review --> Apply
+  Apply --> Norm
+  Apply --> Map
+  Apply --> Formal
+  Apply --> Gates
 ```
 
 ---

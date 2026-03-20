@@ -87,6 +87,7 @@ portal/public/generated/
 *.local.*
 benchmarks/reports/
 docs/verso/_build/
+tmp/
 
 # -----------------------------------------------------------------------------
 # Optional LLM proposal sidecars (non-canonical, generated on-demand)

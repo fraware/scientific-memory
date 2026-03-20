@@ -33,7 +33,7 @@ A scientist can open a paper page in the project, inspect claims and assumptions
 ### What this project is not
 
 - Not a generic paper summarizer
-- Not an LLM wrapper
+- Not an LLM-first system (LLMs are optional, suggest-only workers; artifacts are canonical)
 - Not “formalize all of science”
 - Not a pure theorem library detached from source literature
 - Not just a portal
@@ -91,14 +91,15 @@ The repo must support four users.
 - Assumption drift diffing
 - Numeric witness testing
 - Reviewer workflows
+- **Optional LLM assistance** (suggest-only, human-gated apply; Prime Intellect integration for claims, mapping, and Lean proposals; evaluation infrastructure with prompt versioning, reference fixtures, benchmark task `llm_eval`)
 
 ### Version 0.3
 
-- Agentic assistance modules
-- Proof repair
+- Proof repair (human-gated `proof-repair-apply` on `formal/`)
 - Multi-domain expansion
 - Public artifact releases
 - External contributor playbooks
+- Deeper automation (optional, beyond suggest-only)
 
 ---
 
