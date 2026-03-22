@@ -29,7 +29,7 @@ For contributors who add or extend Lean formalizations and link them to corpus c
 1. **Paper and mapping**  
    If the paper is new: `just add-paper <paper_id>`, `just extract-claims <paper_id>`, `just scaffold-formal <paper_id>`.  
    Edit `corpus/papers/<paper_id>/claims.json` (source_span, informal_text, claim_type, status) and `mapping.json` (claim_to_decl: claim_id -> Lean declaration name).  
-   Optional: Prime Intellect mapping suggestions via `just llm-mapping-proposals <paper_id>` and human-gated apply (see [prime-intellect-llm.md](../prime-intellect-llm.md)).
+   Optional: Prime Intellect mapping suggestions via `just llm-mapping-proposals <paper_id>` and human-gated apply (see [prime-intellect-llm.md](../tooling/prime-intellect-llm.md)).
 
 2. **Lean code**  
    Add or edit files under `formal/ScientificMemory/...` so the declarations in `claim_to_decl` exist and compile. Use the namespace in `mapping.json` (e.g. `ScientificMemory.Chemistry.Adsorption.Langmuir1918`). If adding a new module, add an `import` in `formal/ScientificMemory/Index.lean`.

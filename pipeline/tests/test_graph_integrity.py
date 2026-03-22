@@ -40,6 +40,7 @@ def _minimal_paper(root: Path, paper_id: str) -> None:
                     "informal_text": "x",
                     "claim_type": "definition",
                     "status": "unparsed",
+                    "value_kind": "foundational_law",
                 }
             ]
         ),
@@ -173,6 +174,7 @@ def test_dependency_id_valid_passes() -> None:
                         "informal_text": "x",
                         "claim_type": "definition",
                         "status": "unparsed",
+                        "value_kind": "foundational_law",
                     },
                     {
                         "id": "c2",
@@ -186,6 +188,7 @@ def test_dependency_id_valid_passes() -> None:
                         "informal_text": "y",
                         "claim_type": "theorem",
                         "status": "unparsed",
+                        "value_kind": "foundational_law",
                     },
                 ]
             ),
@@ -242,7 +245,18 @@ def test_executable_link_orphan_raises_when_kernels_defined() -> None:
         )
         (root / "corpus").mkdir(parents=True, exist_ok=True)
         (root / "corpus" / "kernels.json").write_text(
-            json.dumps([{"id": "other_kernel", "domain": "x", "input_schema": "", "output_schema": "", "semantic_contract": "", "linked_theorem_cards": []}]),
+            json.dumps(
+                [
+                    {
+                        "id": "other_kernel",
+                        "domain": "x",
+                        "input_schema": "",
+                        "output_schema": "",
+                        "semantic_contract": "",
+                        "linked_theorem_cards": [],
+                    }
+                ]
+            ),
             encoding="utf-8",
         )
         with pytest.raises(GraphIntegrityError, match="executable kernel.*not in corpus/kernels"):
@@ -277,8 +291,10 @@ def test_executable_link_valid_passes_when_kernels_defined() -> None:
                     {
                         "id": "k1",
                         "domain": "x",
-                        "input_schema": "",
-                        "output_schema": "",
+                        "io_typing": {
+                            "inputs": [{"name": "x", "numeric_kind": "float"}],
+                            "outputs": [{"name": "y", "numeric_kind": "float"}],
+                        },
                         "semantic_contract": "",
                         "linked_theorem_cards": ["card_1"],
                     }
@@ -302,7 +318,11 @@ def test_linked_assumption_orphan_raises() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "x",
                         "claim_type": "definition",
                         "status": "unparsed",
@@ -318,7 +338,11 @@ def test_linked_assumption_orphan_raises() -> None:
                     {
                         "id": "a1",
                         "paper_id": "p1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "text": "A",
                         "kind": "domain_restriction",
                     }
@@ -343,10 +367,15 @@ def test_linked_symbol_orphan_raises() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "x",
                         "claim_type": "definition",
                         "status": "unparsed",
+                        "value_kind": "foundational_law",
                         "linked_symbols": ["nonexistent_symbol"],
                     }
                 ]
@@ -354,7 +383,17 @@ def test_linked_symbol_orphan_raises() -> None:
             encoding="utf-8",
         )
         (root / "corpus" / "papers" / "p1" / "symbols.json").write_text(
-            json.dumps([{"id": "s1", "paper_id": "p1", "raw_latex": "x", "normalized_name": "x", "type_hint": "real"}]),
+            json.dumps(
+                [
+                    {
+                        "id": "s1",
+                        "paper_id": "p1",
+                        "raw_latex": "x",
+                        "normalized_name": "x",
+                        "type_hint": "real",
+                    }
+                ]
+            ),
             encoding="utf-8",
         )
         with pytest.raises(GraphIntegrityError, match="symbol.*does not exist"):
@@ -372,7 +411,12 @@ def test_manifest_kernel_index_orphan_raises() -> None:
                     "paper_id": "p1",
                     "version": "0.1",
                     "build_hash": "0" * 64,
-                    "coverage_metrics": {"claim_count": 1, "mapped_claim_count": 0, "machine_checked_count": 0, "kernel_linked_count": 0},
+                    "coverage_metrics": {
+                        "claim_count": 1,
+                        "mapped_claim_count": 0,
+                        "machine_checked_count": 0,
+                        "kernel_linked_count": 0,
+                    },
                     "generated_pages": [],
                     "kernel_index": ["undefined_kernel"],
                 }
@@ -381,7 +425,20 @@ def test_manifest_kernel_index_orphan_raises() -> None:
         )
         (root / "corpus").mkdir(parents=True, exist_ok=True)
         (root / "corpus" / "kernels.json").write_text(
-            json.dumps([{"id": "other", "domain": "x", "input_schema": "", "output_schema": "", "semantic_contract": "", "linked_theorem_cards": []}]),
+            json.dumps(
+                [
+                    {
+                        "id": "other",
+                        "domain": "x",
+                        "io_typing": {
+                            "inputs": [{"name": "x", "numeric_kind": "float"}],
+                            "outputs": [{"name": "y", "numeric_kind": "float"}],
+                        },
+                        "semantic_contract": "",
+                        "linked_theorem_cards": [],
+                    }
+                ]
+            ),
             encoding="utf-8",
         )
         with pytest.raises(GraphIntegrityError, match="kernel_index.*not in corpus/kernels"):

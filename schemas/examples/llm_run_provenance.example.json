@@ -14,5 +14,6 @@
   },
   "prompt_tokens": 100,
   "completion_tokens": 50,
+  "reviewer_time_seconds": 90.5,
   "reviewer_decision": "pending"
 }

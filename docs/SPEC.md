@@ -259,7 +259,7 @@ fully_machine_checked, machine_checked_plus_axioms, numerically_witnessed, schem
 | **C — Ingestion and extraction** | Source ingest, parsing, claim extraction, normalization, source-span alignment, batch runners | `pipeline/ingest/*`, `pipeline/extract/*` |
 | **D — Portal** | Public artifact pages, graph UI, claim/proof/kernels views, search, diff rendering | `portal/*` |
 | **E — Benchmarks** | Benchmark task definitions, gold labels, scorer, dashboard exports, regression reports | `benchmarks/*` |
-| **F — Infra and release** | GitHub Actions, devcontainers, Dockerfiles, release process, artifact caching, contributor DX | `infra/*`, `.github/workflows/*` |
+| **F — Infra and release** | GitHub Actions, devcontainers, Dockerfiles, release process, artifact caching, contributor DX | `docs/infra/*`, `.github/workflows/*` |
 
 ---
 

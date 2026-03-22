@@ -22,6 +22,7 @@
     "linked_assumptions": [],
     "linked_formal_targets": [
       "ScientificMemory.Mathematics.SumEvens.sum_evens"
-    ]
+    ],
+    "value_kind": "foundational_law"
   }
 ]

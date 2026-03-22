@@ -77,18 +77,12 @@ def compute_research_value_metrics(repo_root: Path) -> dict:
     literature_errors_count = _count_literature_errors(repo_root, paper_ids, papers_dir)
 
     # Claims whose assumptions were clarified (linked_assumptions non-empty)
-    claims_with_clarified_assumptions = _count_claims_with_linked_assumptions(
-        papers_dir, paper_ids
-    )
+    claims_with_clarified_assumptions = _count_claims_with_linked_assumptions(papers_dir, paper_ids)
 
     # Kernels with formally linked invariants (linked_theorem_cards non-empty)
-    kernels_with_formally_linked_invariants = _count_kernels_with_linked_cards(
-        repo_root
-    )
+    kernels_with_formally_linked_invariants = _count_kernels_with_linked_cards(repo_root)
 
-    disputed_after_formalization = _count_disputed_with_formal_targets(
-        papers_dir, paper_ids
-    )
+    disputed_after_formalization = _count_disputed_with_formal_targets(papers_dir, paper_ids)
 
     return {
         "reusable_foundation_count": reusable_foundation_count,
@@ -179,10 +173,7 @@ def _count_kernels_with_linked_cards(repo_root: Path) -> int:
         if not isinstance(data, list):
             return 0
         return sum(
-            1
-            for k in data
-            if isinstance(k, dict)
-            and len(k.get("linked_theorem_cards") or []) > 0
+            1 for k in data if isinstance(k, dict) and len(k.get("linked_theorem_cards") or []) > 0
         )
     except (json.JSONDecodeError, OSError):
         return 0

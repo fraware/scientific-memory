@@ -5,6 +5,7 @@ For contributors who add papers in a **new domain** (e.g. first mathematics or p
 ## Prerequisites
 
 - One-time setup: `just bootstrap`, `just build`. See [Contributor playbook](../contributor-playbook.md).
+- For **hard-dimension stress** admissions (units, asymptotics, etc.), declare `tags` / `hardness` rationale in `metadata.json` and read [Hard-wedge stress papers](../operations/hard-wedge-stress-papers.md).
 
 ## Gate checklist (before opening a PR)
 

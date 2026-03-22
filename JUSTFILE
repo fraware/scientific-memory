@@ -1,4 +1,7 @@
-set shell := ["bash", "-cu"]
+# Wrapper sources scripts/just_env.sh so uv/node/pnpm stay on PATH (no nested just).
+# Windows: use Git Bash, not WSL bash (Windows node/pnpm resolve /c/... correctly).
+set shell := ["bash", "scripts/just_shell_wrapper.sh", "-cu"]
+set windows-shell := ["C:/Program Files/Git/bin/bash.exe", "scripts/just_shell_wrapper.sh", "-cu"]
 
 # Diagnose environment (run when setup or check fails)
 doctor:
@@ -13,6 +16,7 @@ bootstrap:
 	./scripts/bootstrap.sh
 
 build:
+	@echo "==> build"
 	lake build
 	pnpm --dir portal build
 	uv run --project pipeline pytest
@@ -27,29 +31,32 @@ lake-build-verbose LOG='lake-build.log':
 	lake build 2>&1 | tee "{{LOG}}"
 
 fmt:
-	lake fmt
+	@echo "==> fmt"
+	bash scripts/lake_fmt_optional.sh
 	uv run --project pipeline ruff format .
 	pnpm --dir portal format
 
 lint:
+	@echo "==> lint"
 	uv run --project pipeline ruff check .
 	pnpm --dir portal lint
 
 validate:
+	@echo "==> validate"
 	uv run --project pipeline python -m sm_pipeline.cli validate-all
 
 # Regenerate docs/status/repo-snapshot.md from corpus manifests
 repo-snapshot:
 	uv run python scripts/generate_repo_snapshot.py
 
-# Alias for SPEC 17 contributor flow
-validate-corpus:
-	just validate
+# Alias for SPEC 17 contributor flow (same as validate; no nested just)
+validate-corpus: validate
 
 portal:
 	pnpm --dir portal dev
 
 test:
+	@echo "==> test"
 	uv run --project pipeline pytest
 	uv run --project kernels/adsorption pytest
 	bash tests/smoke/test_repo_bootstrap.sh
@@ -61,18 +68,13 @@ benchmark:
 benchmark-smoke:
 	uv run --project pipeline python -m sm_pipeline.cli benchmark
 
-check:
-	@echo "==> fmt"
-	just fmt
-	@echo "==> lint"
-	just lint
-	@echo "==> validate"
-	just validate
-	@echo "==> test"
-	just test
-	@echo "==> build"
-	just build
+# Recipe dependencies avoid nested `just` subprocesses (fixes PATH on Windows).
+check: fmt lint validate test build
 	@echo "==> check complete"
+
+# Canonical local contribution path.
+canonical-local: bootstrap check benchmark
+	@echo "==> canonical-local complete"
 
 add-paper PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli add-paper {{PAPER_ID}}
@@ -106,8 +108,7 @@ scaffold-gold PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli scaffold-gold --paper-id {{PAPER_ID}}
 
 # Validate full corpus (ensures PAPER_ID's files are valid) (SPEC 17)
-check-paper PAPER_ID:
-	just validate-corpus
+check-paper PAPER_ID: validate-corpus
 
 # Optional: report blueprint vs mapping.json mismatches (SPEC 8.4)
 check-paper-blueprint PAPER_ID:
@@ -134,7 +135,7 @@ check-tooling:
 extract-from-source PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli extract-from-source {{PAPER_ID}}
 
-# Optional: Prime Intellect LLM proposal sidecars (API key in root `.env`; see docs/prime-intellect-llm.md)
+# Optional: Prime Intellect LLM proposal sidecars (API key in root `.env`; see docs/tooling/prime-intellect-llm.md)
 llm-claim-proposals PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli llm-claim-proposals --paper-id {{PAPER_ID}}
 
@@ -162,7 +163,7 @@ build-verso:
 lake-update-no-cache:
 	MATHLIB_NO_CACHE_ON_UPDATE=1 lake update
 
-# Optional: run MCP server (requires: uv sync --extra mcp). Tools: list_declarations_for_paper, list_declarations_in_file, get_dependency_graph_for_declaration. See docs/mcp-lean-tooling.md.
+# Optional: run MCP server (requires: uv sync --extra mcp). Tools: list_declarations_for_paper, list_declarations_in_file, get_dependency_graph_for_declaration. See docs/tooling/mcp-lean-tooling.md.
 mcp-server:
 	uv run --project pipeline python -m sm_pipeline.mcp_server
 

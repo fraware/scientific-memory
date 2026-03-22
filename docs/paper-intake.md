@@ -12,19 +12,52 @@ The reproducible ingestion flow is:
    ```
    This creates `corpus/papers/<paper_id>/` with initial `metadata.json`, `claims.json`, `assumptions.json`, `symbols.json`, `mapping.json`, and `manifest.json`. An optional `intake_report.json` (paper_id, created_at, source_files_found) is written as a minimal "initial parsing report"; see [Generated artifacts](generated-artifacts.md). Use a stable paper ID (e.g. `author_year_topic`). Set `domain` in `metadata.json` to a schema-allowed value (see [Domain policy](contributor-playbook.md#domain-policy)). If you have a DOI or arXiv ID, set `metadata.source.doi` or `metadata.source.arxiv_id` (see [Contributor playbook](contributor-playbook.md)).
 
+   After admission, add **hard-paper admission metadata** under `metadata.tags` to ensure the next paper meaningfully stresses the pipeline beyond the current curated wedge.
+
+### Hard-paper intake matrix and admission policy
+
+For every **new** admitted paper, pick **one primary difficulty axis** (and optionally one or two secondary axes) and record it in `corpus/papers/<paper_id>/metadata.json` as tags:
+
+- `hardness.primary:<axis>`
+- `hardness.secondary:<axis>` (optional, repeatable)
+- `admission_rationale:<short>` (single short statement for why this paper is a valuable stress test)
+
+Recommended axis vocabulary:
+
+| Axis key | Stresses |
+|---|---|
+| `empirical_uncertainty_measurement` | experimental variability, measurement noise, calibration-aware reasoning |
+| `approximations_and_asymptotics` | approximations, regime limits, asymptotic rewrites, error bounds |
+| `units_and_dimensional_analysis` | unit consistency, dimensional constraints, scaling rules |
+| `statistical_assumptions` | probabilistic assumptions, confidence-level reasoning, averaging |
+| `notation_collisions` | incompatible notation across sections, ambiguous symbol reuse |
+| `regime_dependent_claims` | piecewise regimes, conditional validity, parameter ranges |
+| `ambiguous_prose_and_impl_details` | unclear definitions, implicit assumptions, editorial gaps |
+
+Selection heuristic:
+
+1. Your primary axis should be the **main source of formalization friction** you expect (not just topic difficulty).
+2. Your rationale tag should reference which part of the workflow will be exercised: extraction, normalization, mapping, Lean proof boundary, kernel witness, or graph composability.
+
+Notes:
+1. `metadata.tags` is already used for human navigation (for example `adsorption` or `surface science`). Do not remove existing tags; append hardness and rationale tags.
+2. `batch-admit` does not currently populate hardness tags. After batch admit, update tags manually before extracting or formalizing.
+
 2. **Place source assets (optional)**
-   Source files (PDF, LaTeX, etc.) may be placed under the paper directory in a documented location (e.g. `corpus/papers/<paper_id>/source/`). For optional pandoc-based extraction, use `corpus/papers/<paper_id>/source/main.tex`; then run `just extract-from-source <paper_id>` to generate `suggested_claims.json` (section headings plus candidate_equations, candidate_symbols, and macro_context from preamble) for human review (requires pandoc; see [pandoc-latex-integration.md](pandoc-latex-integration.md)). The exact path is not enforced by schema in v0.1.
+   Source files (PDF, LaTeX, etc.) may be placed under the paper directory in a documented location (e.g. `corpus/papers/<paper_id>/source/`). For optional pandoc-based extraction, use `corpus/papers/<paper_id>/source/main.tex`; then run `just extract-from-source <paper_id>` to generate `suggested_claims.json` (section headings plus candidate_equations, candidate_symbols, and macro_context from preamble) for human review (requires pandoc; see [pandoc-latex-integration.md](tooling/pandoc-latex-integration.md)). The exact path is not enforced by schema in v0.1.
 
 3. **Extract claims and scaffold formal mapping**
    ```bash
    just extract-claims <paper_id>
    just scaffold-formal <paper_id>
    ```
-   `extract-claims` supports `--mode scaffold_only` (default), `deterministic`, or `llm_sidecar`. In `scaffold_only`, a placeholder claim is written when `claims.json` is missing or `[]`. The other modes do not scaffold; use them when claims come from manual intake or LLM sidecars. Example: `uv run --project pipeline python -m sm_pipeline.cli extract-claims --paper-id <paper_id> --mode deterministic` (see [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md)).
+   `extract-claims` supports `--mode scaffold_only` (default), `deterministic`, or `llm_sidecar`. In `scaffold_only`, a placeholder claim is written when `claims.json` is missing or `[]`. The other modes do not scaffold; use them when claims come from manual intake or LLM sidecars. Example: `uv run --project pipeline python -m sm_pipeline.cli extract-claims --paper-id <paper_id> --mode deterministic` (see [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md)).
 
    Then edit claims, assumptions, and mapping as needed. For papers with non-empty `claims.json`, **`extraction_run.json` is required** (validation fails otherwise). Run `just extraction-report <paper_id>` to create or refresh it.
+   
+   Claim rows must include required `value_kind` once curated (see `schemas/claim.schema.json`).
 
-   Optional LLM assist (proposal sidecars only): [prime-intellect-llm.md](prime-intellect-llm.md) (`just llm-claim-proposals`, `just llm-mapping-proposals`, `just llm-lean-proposals` after mapping/Lean context exists; human-gated apply; Lean suggestions convert to `proof-repair-apply`).
+   Optional LLM assist (proposal sidecars only): [prime-intellect-llm.md](tooling/prime-intellect-llm.md) (`just llm-claim-proposals`, `just llm-mapping-proposals`, `just llm-lean-proposals` after mapping/Lean context exists; human-gated apply; Lean suggestions convert to `proof-repair-apply`).
 
 4. **Publish artifacts**
    ```bash
@@ -55,6 +88,10 @@ In v0.1, **source hash** is satisfied by:
 - **Corpus index:** Run `just build-index` to regenerate `corpus/index.json` from paper metadata; the index is used by the portal and export. It is rebuilt as part of the intake automation when admitting a paper.
 
 Acceptance criterion: *source hash stored* is met by version control, optional per-paper hash-source output, and release checksums (see [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7)).
+
+### Hardness scaffold note
+
+Gate 3 provenance normally rejects papers that have `manifest.json` while `metadata.source.sha256` remains the all-zero sentinel. Narrow exception: intake scaffolds tagged `hardness.primary:*` and still carrying empty `claims.json` may keep a temporary manifest until real source hashing and claim extraction are in place.
 
 ## Optional `metadata.yaml` (not used by pipeline)
 

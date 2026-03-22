@@ -19,6 +19,7 @@ def _minimal_claim(paper_id: str, cid: str = "c1") -> dict:
         "informal_text": "x",
         "claim_type": "definition",
         "status": "unparsed",
+        "value_kind": "foundational_law",
         "source_span": {
             "source_file": "source/source.pdf",
             "start": {"page": 1, "offset": 0},
@@ -35,9 +36,7 @@ def test_compute_build_hash_v2_changes_when_claims_change(tmp_path: Path) -> Non
     ki = ["k1"]
     decl_idx = ["N.T"]
 
-    (paper_dir / "claims.json").write_text(
-        json.dumps([_minimal_claim(paper_id)]), encoding="utf-8"
-    )
+    (paper_dir / "claims.json").write_text(json.dumps([_minimal_claim(paper_id)]), encoding="utf-8")
     (paper_dir / "assumptions.json").write_text("[]", encoding="utf-8")
     (paper_dir / "symbols.json").write_text("[]", encoding="utf-8")
     (paper_dir / "mapping.json").write_text(
@@ -58,9 +57,7 @@ def test_compute_build_hash_v2_deterministic_same_inputs(tmp_path: Path) -> None
     paper_id = "hash_v2_det"
     paper_dir = tmp_path / "corpus" / "papers" / paper_id
     paper_dir.mkdir(parents=True)
-    (paper_dir / "claims.json").write_text(
-        json.dumps([_minimal_claim(paper_id)]), encoding="utf-8"
-    )
+    (paper_dir / "claims.json").write_text(json.dumps([_minimal_claim(paper_id)]), encoding="utf-8")
     (paper_dir / "assumptions.json").write_text("[]", encoding="utf-8")
     (paper_dir / "symbols.json").write_text("[]", encoding="utf-8")
     (paper_dir / "mapping.json").write_text("{}", encoding="utf-8")
@@ -68,12 +65,8 @@ def test_compute_build_hash_v2_deterministic_same_inputs(tmp_path: Path) -> None
     cards_key_order_b = [{"z": 1, "id": "c1"}]
     ki = ["b", "a"]
     decl_idx = ["d2", "d1"]
-    h1, _ = manifest_mod._compute_build_hash(
-        paper_dir, paper_id, decl_idx, cards_key_order_a, ki
-    )
-    h2, _ = manifest_mod._compute_build_hash(
-        paper_dir, paper_id, decl_idx, cards_key_order_b, ki
-    )
+    h1, _ = manifest_mod._compute_build_hash(paper_dir, paper_id, decl_idx, cards_key_order_a, ki)
+    h2, _ = manifest_mod._compute_build_hash(paper_dir, paper_id, decl_idx, cards_key_order_b, ki)
     assert h1 == h2
 
 
@@ -87,13 +80,13 @@ def test_compute_build_hash_legacy_when_claims_missing(tmp_path: Path) -> None:
     assert len(h) == 64
 
 
-def test_publish_recomputes_stale_dependency_graph(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+def test_publish_recomputes_stale_dependency_graph(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
     paper_id = "pub_graph_fresh"
     paper_dir = tmp_path / "corpus" / "papers" / paper_id
     paper_dir.mkdir(parents=True)
-    (paper_dir / "claims.json").write_text(
-        json.dumps([_minimal_claim(paper_id)]), encoding="utf-8"
-    )
+    (paper_dir / "claims.json").write_text(json.dumps([_minimal_claim(paper_id)]), encoding="utf-8")
     (paper_dir / "mapping.json").write_text(
         json.dumps({"namespace": "TestNs", "claim_to_decl": {"c1": "Thm1"}}),
         encoding="utf-8",
@@ -119,9 +112,7 @@ def test_publish_reuse_manifest_graphs_env_preserves_stale_graph(
     paper_id = "pub_graph_reuse"
     paper_dir = tmp_path / "corpus" / "papers" / paper_id
     paper_dir.mkdir(parents=True)
-    (paper_dir / "claims.json").write_text(
-        json.dumps([_minimal_claim(paper_id)]), encoding="utf-8"
-    )
+    (paper_dir / "claims.json").write_text(json.dumps([_minimal_claim(paper_id)]), encoding="utf-8")
     (paper_dir / "mapping.json").write_text(
         json.dumps({"namespace": "TestNs", "claim_to_decl": {"c1": "Thm1"}}),
         encoding="utf-8",
@@ -185,18 +176,17 @@ def test_double_publish_identical_build_hash(
     publish_manifest(tmp_path, paper_id)
     h2 = json.loads((paper_dir / "manifest.json").read_text(encoding="utf-8"))["build_hash"]
     assert h1 == h2
-    assert json.loads((paper_dir / "manifest.json").read_text(encoding="utf-8"))[
-        "build_hash_version"
-    ] == "2"
+    assert (
+        json.loads((paper_dir / "manifest.json").read_text(encoding="utf-8"))["build_hash_version"]
+        == "2"
+    )
 
 
 def test_compute_build_hash_v2_kernel_index_affects_hash(tmp_path: Path) -> None:
     paper_id = "hash_ki"
     paper_dir = tmp_path / "corpus" / "papers" / paper_id
     paper_dir.mkdir(parents=True)
-    (paper_dir / "claims.json").write_text(
-        json.dumps([_minimal_claim(paper_id)]), encoding="utf-8"
-    )
+    (paper_dir / "claims.json").write_text(json.dumps([_minimal_claim(paper_id)]), encoding="utf-8")
     (paper_dir / "assumptions.json").write_text("[]", encoding="utf-8")
     (paper_dir / "symbols.json").write_text("[]", encoding="utf-8")
     (paper_dir / "mapping.json").write_text("{}", encoding="utf-8")

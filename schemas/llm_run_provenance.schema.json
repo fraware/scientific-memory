@@ -24,6 +24,11 @@
     "completion_tokens": { "type": "integer" },
     "total_tokens": { "type": "integer" },
     "estimated_cost_usd": { "type": "number" },
+    "reviewer_time_seconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Optional wall time spent by a human reviewer on this bundle (eval harness aggregate only)."
+    },
     "reviewer_decision": {
       "type": "string",
       "enum": ["pending", "accepted", "rejected", "edited"]

@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 import {
+  EXPECTED_PORTAL_BUNDLE_VERSION,
   parseCorpusExportBundle,
   toPaperReadModel,
   type CorpusExportBundle,
@@ -31,6 +32,12 @@ export async function getPapersList(): Promise<
 
 /** All claim IDs across papers (for static export). */
 export async function getAllClaimIds(): Promise<string[]> {
+  const exported = await readExportBundle();
+  const idx = exported?.indices as Record<string, unknown> | undefined;
+  const fromIndex = idx?.all_claim_ids;
+  if (Array.isArray(fromIndex) && fromIndex.length > 0) {
+    return fromIndex.map((x) => String(x));
+  }
   const papers = await getPapersList();
   const ids: string[] = [];
   for (const p of papers) {
@@ -45,6 +52,12 @@ export async function getAllClaimIds(): Promise<string[]> {
 
 /** All theorem card IDs (from manifest generated_pages) and declaration names (for static export). */
 export async function getAllTheoremCardIds(): Promise<string[]> {
+  const exported = await readExportBundle();
+  const idx = exported?.indices as Record<string, unknown> | undefined;
+  const fromIndex = idx?.all_theorem_card_route_ids;
+  if (Array.isArray(fromIndex) && fromIndex.length > 0) {
+    return fromIndex.map((x) => String(x));
+  }
   const papers = await getPapersList();
   const ids = new Set<string>();
   for (const p of papers) {
@@ -372,6 +385,26 @@ export async function getClaimById(claimId: string): Promise<{
   symbols: Record<string, unknown>[];
   mapping: Record<string, unknown>;
 } | null> {
+  const exported = await readExportBundle();
+  const indices = asRecord(exported?.indices);
+  const claimToPaper = asStringMap(indices.claim_id_to_paper_id);
+  const claimById = asRecordMap(indices.claim_id_to_claim);
+  const indexedPaperId = claimToPaper[claimId];
+  if (indexedPaperId) {
+    const bundle = await getPaperBundle(indexedPaperId);
+    const claim = claimById[claimId];
+    if (claim) {
+      return {
+        claim,
+        paperId: indexedPaperId,
+        metadata: bundle.metadata,
+        assumptions: bundle.assumptions,
+        symbols: bundle.symbols,
+        mapping: bundle.mapping,
+      };
+    }
+  }
+
   const index = await getPapersList();
   for (const p of index) {
     const bundle = await getPaperBundle(p.id);
@@ -412,6 +445,52 @@ export async function getTheoremCardById(cardId: string): Promise<{
   reviewerStatus: string;
   notes: string;
 } | null> {
+  const exported = await readExportBundle();
+  const indices = asRecord(exported?.indices);
+  const cardToPaper = asStringMap(indices.theorem_card_id_to_paper_id);
+  const cardById = asRecordMap(indices.theorem_card_id_to_card);
+  const declToCard = asStringMap(indices.declaration_to_theorem_card_id);
+  const cardToKernelIds = asStringArrayMap(
+    indices.theorem_card_id_to_kernel_ids,
+  );
+
+  const directCardId =
+    cardById[cardId] != null ? cardId : (declToCard[cardId] ?? "");
+  if (directCardId) {
+    const card = cardById[directCardId];
+    const paperId = cardToPaper[directCardId];
+    if (card && paperId) {
+      const bundle = await getPaperBundle(paperId);
+      const claimId = String(card.claim_id ?? "");
+      const claim =
+        ((bundle.claims as Record<string, unknown>[]).find(
+          (c) => String(c.id) === claimId,
+        ) as Record<string, unknown> | undefined) ?? {};
+      const executableLinks = Array.isArray(card.executable_links)
+        ? (card.executable_links as string[]).filter(Boolean)
+        : [];
+      const linkedKernelIds = new Set<string>([
+        ...executableLinks,
+        ...(cardToKernelIds[directCardId] ?? []),
+      ]);
+      return {
+        paperId,
+        claimId,
+        claim,
+        declaration: String(card.lean_decl ?? cardId),
+        namespace: String((bundle.mapping.namespace as string) ?? ""),
+        metadata: bundle.metadata,
+        manifest: bundle.manifest,
+        verificationBoundary: String(card.verification_boundary ?? ""),
+        executableLinks,
+        linkedKernelIds: Array.from(linkedKernelIds),
+        filePath: String(card.file_path ?? ""),
+        reviewerStatus: String(card.reviewer_status ?? ""),
+        notes: String(card.notes ?? ""),
+      };
+    }
+  }
+
   const index = await getPapersList();
   for (const p of index) {
     const bundle = await getPaperBundle(p.id);
@@ -510,14 +589,68 @@ async function getKernelsIndex(): Promise<Record<string, unknown>[]> {
   return Array.isArray(arr) ? (arr as Record<string, unknown>[]) : [];
 }
 
+let exportBundleCache: CorpusExportBundle | null | undefined;
+
 async function readExportBundle(): Promise<CorpusExportBundle | null> {
+  if (exportBundleCache !== undefined) {
+    return exportBundleCache;
+  }
   try {
     const raw = await fs.readFile(EXPORTED_BUNDLE, "utf8");
-    return parseCorpusExportBundle(JSON.parse(raw));
+    const parsed = parseCorpusExportBundle(JSON.parse(raw));
+    if (
+      parsed?.version != null &&
+      String(parsed.version) !== EXPECTED_PORTAL_BUNDLE_VERSION
+    ) {
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          `[portal] corpus-export.json version ${String(parsed.version)} != expected ${EXPECTED_PORTAL_BUNDLE_VERSION}; run \`just export-portal-data\`.`,
+        );
+      }
+    }
+    exportBundleCache = parsed;
+    return exportBundleCache;
   } catch {
-    // Fallback to direct corpus reads.
+    exportBundleCache = null;
+    return null;
   }
-  return null;
+}
+
+function asRecord(v: unknown): Record<string, unknown> {
+  return v !== null && typeof v === "object" && !Array.isArray(v)
+    ? (v as Record<string, unknown>)
+    : {};
+}
+
+function asRecordMap(v: unknown): Record<string, Record<string, unknown>> {
+  const out: Record<string, Record<string, unknown>> = {};
+  const base = asRecord(v);
+  for (const [k, val] of Object.entries(base)) {
+    if (val !== null && typeof val === "object" && !Array.isArray(val)) {
+      out[k] = val as Record<string, unknown>;
+    }
+  }
+  return out;
+}
+
+function asStringMap(v: unknown): Record<string, string> {
+  const out: Record<string, string> = {};
+  const base = asRecord(v);
+  for (const [k, val] of Object.entries(base)) {
+    if (typeof val === "string") out[k] = val;
+  }
+  return out;
+}
+
+function asStringArrayMap(v: unknown): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  const base = asRecord(v);
+  for (const [k, val] of Object.entries(base)) {
+    if (Array.isArray(val)) {
+      out[k] = val.map((x) => String(x)).filter(Boolean);
+    }
+  }
+  return out;
 }
 
 /** Resolve a kernel by id from corpus/kernels.json; fallback: papers that reference it in manifest. */
@@ -525,6 +658,22 @@ export async function getKernelById(kernelId: string): Promise<{
   kernel: Record<string, unknown>;
   paperIds: string[];
 } | null> {
+  const exported = await readExportBundle();
+  const indices = asRecord(exported?.indices);
+  const kernelById = asRecordMap(indices.kernel_id_to_kernel);
+  const kernelToPapers = asStringArrayMap(indices.kernel_id_to_paper_ids);
+  const preKernel = kernelById[kernelId] ?? null;
+  const prePaperIds = kernelToPapers[kernelId] ?? [];
+  if (preKernel || prePaperIds.length > 0) {
+    if (preKernel) {
+      return { kernel: preKernel, paperIds: prePaperIds };
+    }
+    return {
+      kernel: { id: kernelId, domain: "unknown", linked_theorem_cards: [] },
+      paperIds: prePaperIds,
+    };
+  }
+
   const kernels = await getKernelsIndex();
   const kernel = kernels.find((k) => String(k.id) === kernelId) ?? null;
   const paperIds: string[] = [];

@@ -1,4 +1,5 @@
-"""Benchmark slice: reference LLM proposal bundles under benchmarks/llm_eval/ (regression anchors).
+"""Benchmark slice: reference LLM proposal bundles under
+`benchmarks/llm_eval/` (regression anchors).
 
 Each subdirectory named like a paper_id may contain optional:
 - reference_llm_claim_proposals.json
@@ -13,7 +14,8 @@ Metrics (deterministic, no live API):
 - **lean_reference_conversion_ready**: Proposals in reference lean bundles with non-empty replacements,
   target_file under formal/, no ``..``, and each ``find`` occurring exactly once in the target file.
 
-These files are not canonical corpus data; they are reviewed regression fixtures (see benchmarks/llm_eval/README.md).
+These files are not canonical corpus data; they are reviewed regression
+fixtures (see `benchmarks/llm_eval/README.md`).
 """
 
 from __future__ import annotations
@@ -58,7 +60,8 @@ def _corpus_mapping_claim_to_decl(repo_root: Path, paper_id: str) -> dict[str, s
 
 
 def _lean_find_unique_count(repo_root: Path, target_file: str, find: str) -> int:
-    path = repo_root / target_file.replace("\\", "/")
+    clean_target = target_file.replace("\\", "/")
+    path = repo_root / clean_target
     if not path.is_file():
         return 0
     try:
@@ -81,24 +84,45 @@ def run(repo_root: Path) -> dict:
         "gold_claim_id_hits": 0,
         "gold_claim_id_total": 0,
         "gold_claim_id_recall_micro": 1.0,
+        "gold_claim_id_precision_micro": 1.0,
+        "gold_claim_id_f1_micro": 1.0,
+        "claim_disagreement_rate_micro": 0.0,
         "mapping_tp": 0,
         "mapping_proposal_count": 0,
         "mapping_gold_key_count": 0,
         "mapping_keys_precision_micro": 1.0,
         "mapping_keys_recall_micro": 1.0,
+        "mapping_keys_f1_micro": 1.0,
+        "mapping_disagreement_rate_micro": 0.0,
         "lean_reference_proposals_total": 0,
         "lean_reference_conversion_ready": 0,
+        "promotion_decisions_total": 0,
+        "promotion_accepted_total": 0,
+        "promotion_rejected_total": 0,
+        "promotion_edited_total": 0,
+        "promotion_pending_total": 0,
+        "promotion_acceptance_rate": 0.0,
+        "reviewer_time_seconds_total": 0.0,
+        "reviewer_time_observations": 0,
     }
     if not base.is_dir():
         return out
 
     claim_hits = 0
     claim_gold_total = 0
+    claim_proposed_total = 0
     map_tp = 0
     map_prop_n = 0
     map_gold_n = 0
     lean_total = 0
     lean_ready = 0
+    promo_total = 0
+    promo_accepted = 0
+    promo_rejected = 0
+    promo_edited = 0
+    promo_pending = 0
+    reviewer_time_total = 0.0
+    reviewer_time_n = 0
 
     for case_dir in sorted(p for p in base.iterdir() if p.is_dir()):
         paper_id = case_dir.name
@@ -126,6 +150,24 @@ def run(repo_root: Path) -> dict:
                 proposed_ids = {p.claim.id for p in bundle.proposals}
                 claim_gold_total += len(gold_ids)
                 claim_hits += len(gold_ids & proposed_ids)
+                claim_proposed_total += len(proposed_ids)
+            # Promotion metrics: only counted when a decision is present.
+            if bundle is not None and bundle.metadata is not None:
+                decision = bundle.metadata.reviewer_decision
+                if decision:
+                    promo_total += 1
+                    if decision == "accepted":
+                        promo_accepted += 1
+                    elif decision == "rejected":
+                        promo_rejected += 1
+                    elif decision == "edited":
+                        promo_edited += 1
+                    elif decision == "pending":
+                        promo_pending += 1
+                rt = bundle.metadata.reviewer_time_seconds
+                if rt is not None:
+                    reviewer_time_total += float(rt)
+                    reviewer_time_n += 1
 
         ref_map = case_dir / "reference_llm_mapping_proposals.json"
         if ref_map.is_file():
@@ -143,6 +185,18 @@ def run(repo_root: Path) -> dict:
                     exp = c2d.get(p.claim_id)
                     if exp is not None and p.lean_declaration_short_name == exp:
                         map_tp += 1
+            if mbundle is not None and mbundle.metadata is not None:
+                decision = mbundle.metadata.reviewer_decision
+                if decision:
+                    promo_total += 1
+                    if decision == "accepted":
+                        promo_accepted += 1
+                    elif decision == "rejected":
+                        promo_rejected += 1
+                    elif decision == "edited":
+                        promo_edited += 1
+                    elif decision == "pending":
+                        promo_pending += 1
 
         ref_lean = case_dir / "reference_llm_lean_proposals.json"
         if ref_lean.is_file():
@@ -153,6 +207,18 @@ def run(repo_root: Path) -> dict:
             except (json.JSONDecodeError, OSError, ValueError):
                 lbundle = None
             if lbundle is not None:
+                if lbundle.metadata is not None:
+                    decision = lbundle.metadata.reviewer_decision
+                    if decision:
+                        promo_total += 1
+                        if decision == "accepted":
+                            promo_accepted += 1
+                        elif decision == "rejected":
+                            promo_rejected += 1
+                        elif decision == "edited":
+                            promo_edited += 1
+                        elif decision == "pending":
+                            promo_pending += 1
                 for p in lbundle.proposals:
                     lean_total += 1
                     tf = (p.target_file or "").strip().replace("\\", "/")
@@ -173,6 +239,15 @@ def run(repo_root: Path) -> dict:
     out["gold_claim_id_total"] = claim_gold_total
     if claim_gold_total > 0:
         out["gold_claim_id_recall_micro"] = round(claim_hits / claim_gold_total, 6)
+    if claim_proposed_total > 0:
+        precision = claim_hits / claim_proposed_total
+        out["gold_claim_id_precision_micro"] = round(precision, 6)
+        out["claim_disagreement_rate_micro"] = round(1.0 - precision, 6)
+        recall = out.get("gold_claim_id_recall_micro", 0.0) or 0.0
+        if precision + recall > 0:
+            out["gold_claim_id_f1_micro"] = round(
+                2.0 * precision * recall / (precision + recall), 6
+            )
 
     out["mapping_tp"] = map_tp
     out["mapping_proposal_count"] = map_prop_n
@@ -181,7 +256,21 @@ def run(repo_root: Path) -> dict:
         out["mapping_keys_precision_micro"] = round(map_tp / map_prop_n, 6)
     if map_gold_n > 0:
         out["mapping_keys_recall_micro"] = round(map_tp / map_gold_n, 6)
+    prec = out.get("mapping_keys_precision_micro") or 0.0
+    rec = out.get("mapping_keys_recall_micro") or 0.0
+    if prec + rec > 0:
+        out["mapping_keys_f1_micro"] = round(2.0 * prec * rec / (prec + rec), 6)
+        out["mapping_disagreement_rate_micro"] = round(1.0 - prec, 6)
 
     out["lean_reference_proposals_total"] = lean_total
     out["lean_reference_conversion_ready"] = lean_ready
+    out["promotion_decisions_total"] = promo_total
+    out["promotion_accepted_total"] = promo_accepted
+    out["promotion_rejected_total"] = promo_rejected
+    out["promotion_edited_total"] = promo_edited
+    out["promotion_pending_total"] = promo_pending
+    if promo_total > 0:
+        out["promotion_acceptance_rate"] = round(promo_accepted / promo_total, 6)
+    out["reviewer_time_seconds_total"] = round(reviewer_time_total, 6)
+    out["reviewer_time_observations"] = reviewer_time_n
     return out

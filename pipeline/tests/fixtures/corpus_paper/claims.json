@@ -10,6 +10,7 @@
     },
     "informal_text": "Minimal claim for pinned fixture.",
     "claim_type": "definition",
-    "status": "parsed"
+    "status": "parsed",
+    "value_kind": "foundational_law"
   }
 ]

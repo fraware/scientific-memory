@@ -70,10 +70,7 @@ def compute_reviewer_status_metrics(repo_root: Path) -> dict:
             if rs_s == "accepted" and str(c.get("proof_status") or "") != "machine_checked":
                 report["accepted_without_machine_checked"] += 1
                 p["accepted_without_machine_checked"] += 1
-            if (
-                rs_s == "unreviewed"
-                and str(c.get("proof_status") or "") == "machine_checked"
-            ):
+            if rs_s == "unreviewed" and str(c.get("proof_status") or "") == "machine_checked":
                 report["machine_checked_but_unreviewed"] += 1
                 p["machine_checked_but_unreviewed"] += 1
 

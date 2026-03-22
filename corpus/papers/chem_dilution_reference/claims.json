@@ -14,7 +14,7 @@
         "offset": 120
       }
     },
-    "informal_text": "When a solution is diluted by increasing volume by a positive factor k while solute amount is fixed, concentration scales inversely: c\u2080 v\u2080 = (c\u2080/k)(v\u2080 k) for positive rational concentration, volume, and k.",
+    "informal_text": "When a solution is diluted by increasing volume by a positive factor k while solute amount is fixed, concentration scales inversely: c₀ v₀ = (c₀/k)(v₀ k) for positive rational concentration, volume, and k.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -29,7 +29,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Solutions.DilutionRef.solute_amount_preserved_under_dilution"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "chem_dilution_reference_claim_002",
@@ -46,7 +47,7 @@
         "offset": 220
       }
     },
-    "informal_text": "If two solution states carry the same fixed solute amount so that c\u2080 v\u2080 = c\u2081 v\u2081 with v\u2081 \u2260 0, then c\u2081 = (c\u2080 v\u2080)/v\u2081.",
+    "informal_text": "If two solution states carry the same fixed solute amount so that c₀ v₀ = c₁ v₁ with v₁ ≠ 0, then c₁ = (c₀ v₀)/v₁.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -62,6 +63,7 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount"
-    ]
+    ],
+    "value_kind": "foundational_law"
   }
 ]

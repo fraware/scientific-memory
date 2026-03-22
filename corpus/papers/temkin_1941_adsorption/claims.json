@@ -32,7 +32,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_theta_eq"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "temkin_1941_adsorption_claim_002",
@@ -66,7 +67,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_at_inv_pressure"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "temkin_1941_adsorption_claim_003",
@@ -100,7 +102,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_zero_when_Kp_eq_one"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_004",
@@ -135,7 +138,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_p"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "temkin_1941_adsorption_claim_005",
@@ -170,7 +174,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_mono_in_p"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_006",
@@ -205,7 +210,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_strict_mono_in_K"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "temkin_1941_adsorption_claim_007",
@@ -239,7 +245,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_R"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_008",
@@ -273,7 +280,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_smul_T"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_009",
@@ -303,7 +311,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_flip_sign_a"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_010",
@@ -333,7 +342,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_log_split"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_011",
@@ -368,7 +378,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_linear_in_log_p"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "temkin_1941_adsorption_claim_012",
@@ -403,6 +414,7 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Temkin1941.temkin_nonneg_when_Kp_ge_one"
-    ]
+    ],
+    "value_kind": "foundational_law"
   }
 ]

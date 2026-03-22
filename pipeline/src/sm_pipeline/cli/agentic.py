@@ -10,7 +10,9 @@ app = typer.Typer()
 @app.command("proof-repair-proposals")
 def proof_repair_proposals(
     paper_id: str | None = typer.Option(None, "--paper-id", help="Limit to one paper"),
-    output: str | None = typer.Option(None, "--output", "-o", help="Write proposal artifact to path"),
+    output: str | None = typer.Option(
+        None, "--output", "-o", help="Write proposal artifact to path"
+    ),
 ) -> None:
     """Generate proof-repair proposals (human_review_only). Never auto-applied; write to --output for review."""
     from sm_pipeline.agentic.proof_repair import generate_repair_proposals
@@ -22,7 +24,9 @@ def proof_repair_proposals(
         out_path = Path(output)
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(_json.dumps(result, indent=2), encoding="utf-8")
-        typer.echo(f"Proposals written to {out_path} (verification_boundary=human_review_only; do not auto-apply).")
+        typer.echo(
+            f"Proposals written to {out_path} (verification_boundary=human_review_only; do not auto-apply)."
+        )
     else:
         typer.echo(_json.dumps(result, indent=2))
     typer.echo(f"Proposal count: {len(result.get('proposals') or [])}")
@@ -48,7 +52,11 @@ def proof_repair_apply(
     ),
 ) -> None:
     """Apply human-reviewed find/replace patches under formal/ only. Never run from CI."""
-    from sm_pipeline.agentic.proof_repair_apply import apply_bundle, load_apply_bundle, preview_apply
+    from sm_pipeline.agentic.proof_repair_apply import (
+        apply_bundle,
+        load_apply_bundle,
+        preview_apply,
+    )
 
     repo_root = Path(".").resolve()
     bundle = load_apply_bundle(Path(proposal), repo_root)

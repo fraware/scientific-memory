@@ -56,6 +56,6 @@ For contributors who cut and publish a release. Ensures the release workflow run
 |------|-------------------|
 | Tag and push | `git tag vX.Y.Z` then `git push origin vX.Y.Z` |
 | Verify locally before tag | `just check` and `just benchmark` |
-| Release policy | [infra/release-policy.md](../../infra/release-policy.md) |
+| Release policy | [infra/release-policy.md](../infra/release-policy.md) |
 | Release integrity (Gate 7) | [Contributor playbook – Gate 7](../contributor-playbook.md#release-integrity-gate-7) |
 | Verify a release | Clone at tag, run `just bootstrap`, `just build`, then `scripts/verify_release_checksums.sh`; optionally cosign verify with .sig and .pem. |

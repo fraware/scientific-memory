@@ -20,4 +20,4 @@ Extraction and normalization are still largely bootstrap tooling. LLM integratio
 
 - Schema and pipeline model updates for claims, theorem cards, and manifests; migration note in contributor playbook.
 - Re-running `publish-artifacts` updates manifests and may change `build_hash` for all papers.
-- Human-readable trust contract: [trust-boundary-and-extraction.md](../trust-boundary-and-extraction.md).
+- Human-readable trust contract: [trust-boundary-and-extraction.md](../reference/trust-boundary-and-extraction.md).

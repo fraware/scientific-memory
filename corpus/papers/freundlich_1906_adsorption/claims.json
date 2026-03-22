@@ -29,7 +29,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_isotherm"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_002",
@@ -61,7 +62,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_nonneg"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_003",
@@ -93,7 +95,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_pos"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_004",
@@ -124,7 +127,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_k"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_005",
@@ -155,7 +159,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_zero_c"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_006",
@@ -186,7 +191,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_c"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_007",
@@ -217,7 +223,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_mono_in_k"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_008",
@@ -248,7 +255,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_at_one"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_009",
@@ -279,7 +287,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_smul_k"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_010",
@@ -309,7 +318,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_rpow_pos"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_011",
@@ -340,7 +350,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "freundlich_1906_adsorption_claim_012",
@@ -371,6 +382,7 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   }
 ]

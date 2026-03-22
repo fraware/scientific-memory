@@ -32,6 +32,18 @@
       "domain": "physics"
     },
     {
+      "id": "stress_approx_asymptotic_2024",
+      "title": "Stress test: approximations and asymptotic regimes (intake scaffold)",
+      "year": 2024,
+      "domain": "other"
+    },
+    {
+      "id": "stress_units_dimensional_2024",
+      "title": "Stress test: dimensional analysis and unit systems (intake scaffold)",
+      "year": 2024,
+      "domain": "other"
+    },
+    {
       "id": "temkin_1941_adsorption",
       "title": "Kinetics of ammonia synthesis on promoted iron catalysts (Temkin-Pyzhev slice)",
       "year": 1941,

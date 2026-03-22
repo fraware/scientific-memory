@@ -74,9 +74,7 @@ def test_alignment_malformed_reference_list_skipped(tmp_path: Path) -> None:
     assert r["alignment_error_rate"] is None
 
 
-def _layout_paper(
-    root: Path, paper_id: str, claims: list, ref_spans: list
-) -> None:
+def _layout_paper(root: Path, paper_id: str, claims: list, ref_spans: list) -> None:
     pdir = root / "corpus" / "papers" / paper_id
     pdir.mkdir(parents=True)
     (pdir / "claims.json").write_text(json.dumps(claims), encoding="utf-8")

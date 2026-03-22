@@ -34,11 +34,13 @@ Optional: `validate-all --report-json <path>` writes a machine-readable report a
 
 ### Non-blocking warnings
 
-After strict checks succeed, `validate-all` may still print stderr warnings that do **not** change the exit code: snapshot baseline quality (e.g. `corpus/snapshots/last-release.json` metadata); **dependency graph bootstrap** hints when a paper has multiple theorem cards, no `dependency_ids`, and at least one machine-checked claim (tier-0 Lean regex extraction may leave an empty graph); **suggestion sidecar** schema issues for optional `llm_*_proposals.json` (including `llm_lean_proposals.json`) and `suggested_*.json` under paper directories. See [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md).
+After strict checks succeed, `validate-all` may still print stderr warnings that do **not** change the exit code: snapshot baseline quality (e.g. `corpus/snapshots/last-release.json` metadata); **dependency graph bootstrap** hints when a paper has multiple theorem cards, no `dependency_ids`, and at least one machine-checked claim (tier-0 Lean regex extraction may leave an empty graph); **suggestion sidecar** schema issues for optional `llm_*_proposals.json` (including `llm_lean_proposals.json`) and `suggested_*.json` under paper directories. See [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md).
 
 ### Manifest fingerprint and graphs
 
 `publish_manifest` sets `manifest.build_hash_version` to **2** where `claims.json` exists (content-addressed digest over canonical corpus JSON, theorem cards, kernel index, and optional metadata source SHA256). Each publish recomputes `dependency_graph` and `kernel_index` from current cards and `corpus/kernels.json` unless `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1` is set.
+
+Gate 3 provenance remains strict for normal papers, with one narrow scaffold exception: papers tagged `hardness.primary:*` and still carrying empty `claims.json` may keep `manifest.json` while `metadata.source.sha256` is the all-zero sentinel. This is intended only for hard-dimension intake scaffolds.
 
 ## CI and release gates
 
@@ -59,6 +61,10 @@ Gate 7: checksums plus Sigstore signing; optional signature verification in veri
 ## Portal data model
 
 The portal reads from canonical corpus files and can prefer the exported bundle `portal/.generated/corpus-export.json` produced by `just export-portal-data` (built by `sm_pipeline.publish.portal_read_model.build_portal_bundle`).
+
+The export bundle now includes precomputed lookup indices under `indices` (claim, theorem-card, declaration, and kernel reverse lookups). Portal read paths should use these indices first, then fall back to direct corpus scans only when no export is available.
+
+Current bundle contract is version `0.3` (`PORTAL_BUNDLE_VERSION`) and includes route-oriented theorem-card ids (`indices.all_theorem_card_route_ids`) plus claim and kernel lookup maps used by `portal/lib/data.ts`.
 
 Static routes for papers, claims, theorem cards, and kernels are pre-rendered at build time.
 

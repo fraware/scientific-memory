@@ -1,6 +1,26 @@
 import Link from "next/link";
 import { getKernelById, getAllKernelIds } from "@/lib/data";
 
+function formatIoTyping(kernel: Record<string, unknown>): string {
+  const io = kernel.io_typing as
+    | {
+        inputs?: Array<{ name: string; numeric_kind: string }>;
+        outputs?: Array<{ name: string; numeric_kind: string }>;
+      }
+    | undefined;
+  if (!io?.inputs?.length && !io?.outputs?.length) {
+    return "";
+  }
+  const row = (
+    label: string,
+    xs: Array<{ name: string; numeric_kind: string }>,
+  ) => `${label}: ${xs.map((b) => `${b.name}: ${b.numeric_kind}`).join(", ")}`;
+  const parts: string[] = [];
+  if (io.inputs?.length) parts.push(row("Inputs", io.inputs));
+  if (io.outputs?.length) parts.push(row("Outputs", io.outputs));
+  return parts.join("\n");
+}
+
 export async function generateStaticParams() {
   const ids = await getAllKernelIds();
   return ids.map((kernelId) => ({ kernelId }));
@@ -32,6 +52,7 @@ export default async function KernelPage({
   const domain = String(kernel.domain ?? "");
   const inputSchema = String(kernel.input_schema ?? "");
   const outputSchema = String(kernel.output_schema ?? "");
+  const ioTypingText = formatIoTyping(kernel as Record<string, unknown>);
   const semanticContract = String(kernel.semantic_contract ?? "");
   const testStatus = String(kernel.test_status ?? "");
 
@@ -49,12 +70,18 @@ export default async function KernelPage({
         </section>
       )}
 
-      {(inputSchema || outputSchema) && (
+      {(ioTypingText || inputSchema || outputSchema) && (
         <section className="mt-6">
           <h2 className="text-lg font-medium">Input / output</h2>
           <div className="mt-2 space-y-2 rounded border bg-gray-50 p-4 font-mono text-sm">
-            {inputSchema && <div>Input: {inputSchema}</div>}
-            {outputSchema && <div>Output: {outputSchema}</div>}
+            {ioTypingText ? (
+              <pre className="whitespace-pre-wrap">{ioTypingText}</pre>
+            ) : (
+              <>
+                {inputSchema && <div>Input: {inputSchema}</div>}
+                {outputSchema && <div>Output: {outputSchema}</div>}
+              </>
+            )}
           </div>
         </section>
       )}

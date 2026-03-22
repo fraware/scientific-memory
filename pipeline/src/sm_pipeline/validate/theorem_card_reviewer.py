@@ -3,9 +3,7 @@
 import json
 from pathlib import Path
 
-ALLOWED_REVIEWER_STATUS = frozenset(
-    {"unreviewed", "reviewed", "blocked", "accepted"}
-)
+ALLOWED_REVIEWER_STATUS = frozenset({"unreviewed", "reviewed", "blocked", "accepted"})
 
 
 class TheoremCardReviewerError(Exception):
@@ -41,13 +39,11 @@ def validate_theorem_card_reviewer(repo_root: Path) -> None:
             rs = c.get("reviewer_status")
             if rs is None:
                 raise TheoremCardReviewerError(
-                    f"Paper {paper_dir.name} card {c.get('id')}: "
-                    "reviewer_status is required"
+                    f"Paper {paper_dir.name} card {c.get('id')}: reviewer_status is required"
                 )
             if str(rs) not in ALLOWED_REVIEWER_STATUS:
                 raise TheoremCardReviewerError(
-                    f"Paper {paper_dir.name} card {c.get('id')}: "
-                    f"invalid reviewer_status {rs!r}"
+                    f"Paper {paper_dir.name} card {c.get('id')}: invalid reviewer_status {rs!r}"
                 )
             if str(rs or "") == "blocked":
                 notes = (c.get("notes") or "").strip()

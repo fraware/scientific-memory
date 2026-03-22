@@ -110,6 +110,7 @@ def generate_llm_lean_proposals(
     meta_out = {
         "provider": "prime_intellect",
         "model": resp.model,
+        "model_version": "unknown",
         "created_at": datetime.now(UTC).isoformat(timespec="seconds").replace("+00:00", "Z"),
         "latency_seconds": round(latency, 3),
         "prompt_tokens": resp.prompt_tokens,
@@ -127,8 +128,11 @@ def generate_llm_lean_proposals(
     }
     existing_meta = data.get("metadata")
     if isinstance(existing_meta, dict):
-        data["metadata"] = {**meta_out, **existing_meta}
+        merged = {**meta_out, **existing_meta}
+        if not merged.get("model_version"):
+            merged["model_version"] = "unknown"
+        data["metadata"] = merged
     else:
         data["metadata"] = meta_out
     bundle = LlmLeanProposalsBundle.model_validate(data)
-    return bundle.model_dump(mode="json")
+    return bundle.model_dump(mode="json", exclude_none=True)

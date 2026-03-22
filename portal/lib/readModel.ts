@@ -6,7 +6,7 @@
  */
 
 /** Matches `portal_read_model.PORTAL_BUNDLE_VERSION` in the pipeline. */
-export const EXPECTED_PORTAL_BUNDLE_VERSION = "0.1";
+export const EXPECTED_PORTAL_BUNDLE_VERSION = "0.3";
 
 export type PaperIndexEntry = {
   id: string;
@@ -34,6 +34,7 @@ export type CorpusExportBundle = {
   papers_index?: PapersIndex;
   papers?: Record<string, ExportedPaperBundle>;
   kernels?: unknown[];
+  indices?: Record<string, unknown>;
 };
 
 export type ClaimRecord = Record<string, unknown>;

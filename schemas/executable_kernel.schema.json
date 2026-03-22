@@ -9,17 +9,170 @@
     "required": [
       "id",
       "domain",
-      "input_schema",
-      "output_schema",
+      "io_typing",
       "semantic_contract",
       "linked_theorem_cards"
     ],
     "properties": {
       "id": { "$ref": "common.schema.json#/$defs/id" },
       "domain": { "type": "string" },
-      "input_schema": { "type": "string" },
-      "output_schema": { "type": "string" },
+      "input_schema": {
+        "type": "string",
+        "description": "Deprecated human-readable summary; prefer io_typing."
+      },
+      "output_schema": {
+        "type": "string",
+        "description": "Deprecated human-readable summary; prefer io_typing."
+      },
+      "io_typing": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["inputs", "outputs"],
+        "properties": {
+          "inputs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "numeric_kind"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+                },
+                "numeric_kind": {
+                  "type": "string",
+                  "enum": ["float", "int", "nonnegative_float", "positive_float"]
+                }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "numeric_kind"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+                },
+                "numeric_kind": {
+                  "type": "string",
+                  "enum": ["float", "int", "nonnegative_float", "positive_float"]
+                }
+              }
+            }
+          }
+        }
+      },
       "semantic_contract": { "type": "string" },
+      "contract_v1": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "units",
+          "domains",
+          "exceptional_cases",
+          "approximation_regimes",
+          "tolerances",
+          "witness_type",
+          "obligations"
+        ],
+        "properties": {
+          "units": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["inputs", "outputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[A-Za-z][A-Za-z0-9_]*$": { "type": "string", "minLength": 1 }
+                }
+              },
+              "outputs": {
+                "type": "object",
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[A-Za-z][A-Za-z0-9_]*$": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          },
+          "domains": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["inputs", "outputs"],
+            "properties": {
+              "inputs": {
+                "type": "object",
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[A-Za-z][A-Za-z0-9_]*$": { "type": "string", "minLength": 1 }
+                }
+              },
+              "outputs": {
+                "type": "object",
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[A-Za-z][A-Za-z0-9_]*$": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          },
+          "exceptional_cases": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "default": []
+          },
+          "approximation_regimes": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "default": []
+          },
+          "tolerances": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["absolute_error", "relative_error"],
+            "properties": {
+              "absolute_error": { "type": "number", "minimum": 0 },
+              "relative_error": { "type": "number", "minimum": 0 }
+            }
+          },
+          "witness_type": {
+            "type": "string",
+            "enum": ["numerically_witnessed"]
+          },
+          "obligations": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "expected_linked_theorem_cards",
+              "satisfied_linked_theorem_cards",
+              "unsatisfied_linked_theorem_cards"
+            ],
+            "properties": {
+              "expected_linked_theorem_cards": {
+                "type": "array",
+                "items": { "$ref": "common.schema.json#/$defs/id" }
+              },
+              "satisfied_linked_theorem_cards": {
+                "type": "array",
+                "items": { "$ref": "common.schema.json#/$defs/id" }
+              },
+              "unsatisfied_linked_theorem_cards": {
+                "type": "array",
+                "items": { "$ref": "common.schema.json#/$defs/id" }
+              }
+            }
+          }
+        }
+      },
       "unit_constraints": {
         "type": "array",
         "items": { "type": "string" },

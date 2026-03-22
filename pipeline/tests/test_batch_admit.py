@@ -11,9 +11,7 @@ from sm_pipeline.ingest.batch_admit import batch_admit_from_csv
 def test_batch_admit_creates_and_updates(tmp_path: Path) -> None:
     root = tmp_path
     (root / "corpus").mkdir()
-    (root / "corpus" / "index.json").write_text(
-        '{"version":"0.1","papers":[]}', encoding="utf-8"
-    )
+    (root / "corpus" / "index.json").write_text('{"version":"0.1","papers":[]}', encoding="utf-8")
     csv_path = root / "in.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["paper_id", "domain", "title", "year"])
@@ -42,9 +40,7 @@ def test_batch_admit_dry_run(tmp_path: Path) -> None:
     """Test dry-run mode: validates CSV without writing files."""
     root = tmp_path
     (root / "corpus").mkdir()
-    (root / "corpus" / "index.json").write_text(
-        '{"version":"0.1","papers":[]}', encoding="utf-8"
-    )
+    (root / "corpus" / "index.json").write_text('{"version":"0.1","papers":[]}', encoding="utf-8")
     csv_path = root / "in.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["paper_id", "domain"])
@@ -63,9 +59,7 @@ def test_batch_admit_dry_run_invalid_domain(tmp_path: Path) -> None:
     """Test dry-run mode rejects invalid domain."""
     root = tmp_path
     (root / "corpus").mkdir()
-    (root / "corpus" / "index.json").write_text(
-        '{"version":"0.1","papers":[]}', encoding="utf-8"
-    )
+    (root / "corpus" / "index.json").write_text('{"version":"0.1","papers":[]}', encoding="utf-8")
     csv_path = root / "in.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["paper_id", "domain"])

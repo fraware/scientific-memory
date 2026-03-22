@@ -10,6 +10,7 @@
     },
     "informal_text": "At equilibrium, the surface coverage is determined by a ratio-form expression in pressure and an adsorption parameter.",
     "claim_type": "theorem",
+    "value_kind": "bridge_lemma",
     "mathematical_density": "high",
     "status": "mapped",
     "linked_symbols": ["theta", "P", "K"],

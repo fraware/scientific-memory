@@ -48,10 +48,16 @@
       "type": "array",
       "items": {
         "type": "object",
+        "additionalProperties": false,
         "required": ["from", "to"],
         "properties": {
           "from": { "$ref": "common.schema.json#/$defs/id" },
-          "to": { "$ref": "common.schema.json#/$defs/id" }
+          "to": { "$ref": "common.schema.json#/$defs/id" },
+          "confidence": {
+            "type": "string",
+            "enum": ["high", "medium", "low"],
+            "description": "Heuristic confidence from dependency extraction method on the consumer card (e.g. tier1 FQ refs -> high)."
+          }
         }
       },
       "default": []

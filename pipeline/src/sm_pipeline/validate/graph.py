@@ -1,11 +1,14 @@
-"""Graph and link integrity validation (Gate 2/3): no orphan refs across claims, theorem cards, kernels, manifests."""
+"""Graph and link integrity validation (Gate 2/3).
+
+Ensures no orphan references across claims, theorem cards, kernels, and manifests.
+"""
 
 import json
 from pathlib import Path
 
 
 class GraphIntegrityError(Exception):
-    """Raised when graph/link integrity check fails (orphan or dangling reference)."""
+    """Raised when graph/link integrity check fails (orphan refs)."""
 
     pass
 
@@ -19,16 +22,18 @@ def validate_graph(repo_root: Path) -> None:
     Enforce SPEC Gate 2/3 link integrity:
     - Every theorem card claim_id references an existing claim in the same paper.
     - Every mapping claim_to_decl key references an existing claim in the same paper.
-    - Every theorem card dependency_id references an existing theorem card id (within corpus).
+    - Every theorem card dependency_id references an existing theorem card id
+      (within corpus).
     - Every theorem card executable_link and manifest kernel_index references an existing kernel id.
-    - Every claim linked_assumption references an existing assumption; every linked_symbol references an existing symbol.
+    - Every claim linked_assumption references an existing assumption; every
+      linked_symbol references an existing symbol.
     """
     repo_root = repo_root.resolve()
     papers_dir = repo_root / "corpus" / "papers"
     if not papers_dir.is_dir():
         return
 
-    # Build global theorem card id set (all papers) for dependency_id resolution
+    # Build global theorem card id set (all papers) for dependency_id resolution.
     all_theorem_card_ids: set[str] = set()
     paper_theorem_card_ids: dict[str, set[str]] = {}
 
@@ -118,7 +123,9 @@ def validate_graph(repo_root: Path) -> None:
                 for mid in claim_to_decl:
                     if mid not in claim_ids:
                         raise GraphIntegrityError(
-                            f"Mapping in {paper_id} has claim_to_decl key {mid} which does not exist in claims.json"
+                            "Mapping in "
+                            f"{paper_id} has claim_to_decl key {mid} which "
+                            "does not exist in claims.json"
                         )
 
         # Manifest: kernel_index entries must exist in kernels
@@ -154,13 +161,15 @@ def validate_graph(repo_root: Path) -> None:
             for aid in claim.get("linked_assumptions") or []:
                 if aid and assumption_ids and aid not in assumption_ids:
                     raise GraphIntegrityError(
-                        f"Claim {claim.get('id', '?')} in {paper_id} references assumption {aid} "
+                        f"Claim {claim.get('id', '?')} in {paper_id} "
+                        f"references assumption {aid} "
                         "which does not exist in assumptions.json"
                     )
             for sid in claim.get("linked_symbols") or []:
                 if sid and symbol_ids and sid not in symbol_ids:
                     raise GraphIntegrityError(
-                        f"Claim {claim.get('id', '?')} in {paper_id} references symbol {sid} "
+                        f"Claim {claim.get('id', '?')} in {paper_id} "
+                        f"references symbol {sid} "
                         "which does not exist in symbols.json"
                     )
 
@@ -228,6 +237,9 @@ def validate_dependency_graph_bootstrap_warn(repo_root: Path) -> list[str]:
             continue
         if not isinstance(cards, list) or len(cards) < 2:
             continue
+        # Two independent theorems in one file are common; do not hint "empty graph".
+        if len(cards) == 2:
+            continue
         if any((isinstance(c, dict) and (c.get("dependency_ids") or [])) for c in cards):
             continue
         claims_path = paper_dir / "claims.json"
@@ -245,4 +257,72 @@ def validate_dependency_graph_bootstrap_warn(repo_root: Path) -> list[str]:
             f"{paper_id}: {len(cards)} theorem cards but no dependency_ids "
             f"(dependency_extraction_method is bootstrap regex; graph may be empty)"
         )
+    return warnings
+
+
+def validate_dependency_graph_quality_warn(repo_root: Path) -> list[str]:
+    """
+    Warn-only graph quality checks (SPEC 8.x graph quality metrics).
+
+    Metrics (per paper):
+    - edge_density: average dependency_ids per theorem card
+    - sparse_ratio: fraction of theorem cards with empty dependency_ids
+
+    Because current dependency extraction is heuristic, this is not enforced as a hard gate yet.
+    """
+
+    repo_root = repo_root.resolve()
+    papers_dir = repo_root / "corpus" / "papers"
+    if not papers_dir.is_dir():
+        return []
+
+    warnings: list[str] = []
+    for paper_dir in sorted(papers_dir.iterdir()):
+        if not paper_dir.is_dir():
+            continue
+        paper_id = paper_dir.name
+        cards_path = paper_dir / "theorem_cards.json"
+        if not cards_path.exists():
+            continue
+
+        try:
+            cards = _load_json(cards_path)
+        except Exception:
+            continue
+
+        if not isinstance(cards, list) or not cards:
+            continue
+
+        dep_counts: list[int] = []
+        empty_count = 0
+        for c in cards:
+            if not isinstance(c, dict):
+                continue
+            deps = c.get("dependency_ids") or []
+            if not isinstance(deps, list):
+                deps = []
+            dep_counts.append(len(deps))
+            if len(deps) == 0:
+                empty_count += 1
+
+        if not dep_counts:
+            continue
+
+        total_cards = len(dep_counts)
+        edge_density = sum(dep_counts) / total_cards
+        sparse_ratio = empty_count / total_cards
+
+        # Thresholds tuned for warn-only behavior. Once tier-1 is stable across papers,
+        # we can promote this to an acceptance gate.
+        if total_cards >= 6 and sparse_ratio >= 0.60:
+            warnings.append(
+                f"Dependency graph quality (warn): {paper_id} edge_density={edge_density:.2f}, "
+                f"sparse_ratio={sparse_ratio:.2f} (>=60% cards with empty dependency_ids)"
+            )
+        elif total_cards >= 6 and edge_density <= 0.25 and sparse_ratio >= 0.40:
+            warnings.append(
+                f"Dependency graph quality (warn): {paper_id} edge_density={edge_density:.2f}, "
+                f"sparse_ratio={sparse_ratio:.2f} (edge density very low)"
+            )
+
     return warnings

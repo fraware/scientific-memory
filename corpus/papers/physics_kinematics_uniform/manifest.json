@@ -1,7 +1,7 @@
 {
   "paper_id": "physics_kinematics_uniform",
   "version": "0.1.0",
-  "build_hash": "a43e2a8fb5d6bafe4ddd68e87fa760a3c3e7f42f08777a5927f769e96d2cb561",
+  "build_hash": "e8ad8b14f3f509a2a3ee26f5adef96383a56afe5e306c751c7eb3484fa219da9",
   "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 15,
@@ -59,6 +59,67 @@
     "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term",
     "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval"
   ],
-  "dependency_graph": [],
+  "dependency_graph": [
+    {
+      "from": "physics_kinematics_uniform_card_001",
+      "to": "physics_kinematics_uniform_card_002",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_002",
+      "to": "physics_kinematics_uniform_card_003",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_003",
+      "to": "physics_kinematics_uniform_card_004",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_004",
+      "to": "physics_kinematics_uniform_card_005",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_006",
+      "to": "physics_kinematics_uniform_card_007",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_007",
+      "to": "physics_kinematics_uniform_card_008",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_008",
+      "to": "physics_kinematics_uniform_card_009",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_009",
+      "to": "physics_kinematics_uniform_card_010",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_010",
+      "to": "physics_kinematics_uniform_card_011",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_011",
+      "to": "physics_kinematics_uniform_card_012",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_012",
+      "to": "physics_kinematics_uniform_card_013",
+      "confidence": "medium"
+    },
+    {
+      "from": "physics_kinematics_uniform_card_013",
+      "to": "physics_kinematics_uniform_card_014",
+      "confidence": "medium"
+    }
+  ],
   "kernel_index": []
 }

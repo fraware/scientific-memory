@@ -40,11 +40,13 @@ def run(repo_root: Path) -> dict:
         mc = int(coverage.get("machine_checked_count") or 0) if isinstance(coverage, dict) else 0
         declaration_count += decls
         machine_checked_count += mc
-        per_paper.append({
-            "paper_id": paper_id,
-            "declaration_count": decls,
-            "machine_checked_count": mc,
-        })
+        per_paper.append(
+            {
+                "paper_id": paper_id,
+                "declaration_count": decls,
+                "machine_checked_count": mc,
+            }
+        )
 
     return {
         "paper_count": paper_count,

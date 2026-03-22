@@ -13,7 +13,8 @@
       "source_span",
       "informal_text",
       "claim_type",
-      "status"
+      "status",
+      "value_kind"
     ],
     "properties": {
       "id": { "$ref": "common.schema.json#/$defs/id" },
@@ -44,6 +45,17 @@
         "enum": ["low", "medium", "high"]
       },
       "status": { "$ref": "common.schema.json#/$defs/status" },
+      "value_kind": {
+        "type": "string",
+        "enum": [
+          "foundational_law",
+          "bridge_lemma",
+          "executable_contract",
+          "experimental_invariant",
+          "cross_paper_anchor"
+        ],
+        "description": "Scientific value classification used to prevent theorem inflation by rejecting near-duplicate algebraic variants unless one claim explicitly carries reuse value."
+      },
       "linked_symbols": {
         "type": "array",
         "items": { "$ref": "common.schema.json#/$defs/id" },

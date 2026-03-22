@@ -8,6 +8,9 @@ from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
 from sm_pipeline.validate.kernel_witness import validate_kernel_witness_policy
+from sm_pipeline.validate.kernel_contracts_v1 import (
+    validate_kernel_contracts_v1,
+)
 
 SCHEMA_DIR = Path(__file__).resolve().parents[2] / "schemas"
 
@@ -24,12 +27,13 @@ def _build_registry(repo_root: Path) -> Registry:
     common_uri = f"{_BASE_URI}common.schema.json"
     common_schema = _load_json(schemas_dir / "common.schema.json")
     return Registry().with_resource(
-        common_uri, Resource.from_contents(common_schema, default_specification=DRAFT202012)
+        common_uri,
+        Resource.from_contents(common_schema, default_specification=DRAFT202012),
     )
 
 
 def validate_json_schemas_and_kernels(repo_root: Path) -> None:
-    """Gate: JSON Schema validation for all corpus objects and kernels.json + kernel witness policy."""
+    """Gate: validate all corpus objects + `kernels.json` and kernel policies."""
     repo_root = repo_root.resolve()
     schemas_dir = repo_root / "schemas"
     papers_dir = repo_root / "corpus" / "papers"
@@ -100,10 +104,11 @@ def validate_json_schemas_and_kernels(repo_root: Path) -> None:
             if isinstance(kernels, list):
                 kernel_validator.validate(kernels)
                 validate_kernel_witness_policy(repo_root)
+                validate_kernel_contracts_v1(repo_root)
 
 
 def validate_repo(repo_root: Path) -> None:
-    """Validate corpus and run all integrity gates (delegates to gate engine)."""
+    """Validate corpus and run all integrity gates (gate engine wrapper)."""
     from sm_pipeline.validate.gate_engine import run_all_gates
 
     run_all_gates(repo_root)

@@ -43,9 +43,7 @@ def test_custom_stage_handler_invoked(tmp_path: Path) -> None:
 
     register_pipeline_stage_handler(PipelineStage.publication, stub)
     try:
-        report = run_pipeline_for_paper(
-            tmp_path, "paper_x", stages=[PipelineStage.publication]
-        )
+        report = run_pipeline_for_paper(tmp_path, "paper_x", stages=[PipelineStage.publication])
         assert seen == ["paper_x"]
         assert len(report.outcomes) == 1
         assert report.outcomes[0].message == "stub-publication"

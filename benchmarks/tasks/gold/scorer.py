@@ -75,7 +75,9 @@ def run(repo_root: Path) -> dict:
             corpus_claims = []
         if not isinstance(corpus_claims, list):
             corpus_claims = []
-        corpus_ids = {str(c.get("id")) for c in corpus_claims if isinstance(c, dict) and c.get("id")}
+        corpus_ids = {
+            str(c.get("id")) for c in corpus_claims if isinstance(c, dict) and c.get("id")
+        }
         tp = len(corpus_ids & gold_ids)
         claim_tp += tp
         claim_corpus_total += len(corpus_ids)
@@ -94,8 +96,12 @@ def run(repo_root: Path) -> dict:
                 gold_assum = []
             if not isinstance(corpus_assum, list):
                 corpus_assum = []
-            gold_a_ids = {str(a.get("id")) for a in gold_assum if isinstance(a, dict) and a.get("id")}
-            corpus_a_ids = {str(a.get("id")) for a in corpus_assum if isinstance(a, dict) and a.get("id")}
+            gold_a_ids = {
+                str(a.get("id")) for a in gold_assum if isinstance(a, dict) and a.get("id")
+            }
+            corpus_a_ids = {
+                str(a.get("id")) for a in corpus_assum if isinstance(a, dict) and a.get("id")
+            }
             assumption_tp += len(corpus_a_ids & gold_a_ids)
             assumption_corpus_total += len(corpus_a_ids)
             assumption_gold_total += len(gold_a_ids)

@@ -1,9 +1,13 @@
 {
   "baseline_id": "last-release",
-  "title": null,
-  "narrative": null,
-  "highlights": [],
-  "snapshot_at": "2026-03-20T08:21:26Z",
+  "title": "Scientific Memory public release candidate",
+  "narrative": "This baseline captures the corpus for the public release: hardened gates, benchmark and portal indices, improved theorem-card dependency extraction, and snapshot quality metadata.",
+  "highlights": [
+    "Eight papers in the index with six formalized gold corpora",
+    "Dependency extraction links proofs that mention shared isotherm symbols",
+    "LLM run metadata and diff baselines aligned with schema quality checks"
+  ],
+  "snapshot_at": "2026-03-22T09:51:49Z",
   "papers": [
     {
       "id": "chem_dilution_reference",
@@ -470,6 +474,24 @@
           "proof_status": "machine_checked"
         }
       ]
+    },
+    {
+      "id": "stress_approx_asymptotic_2024",
+      "title": "Stress test: approximations and asymptotic regimes (intake scaffold)",
+      "year": 2024,
+      "claim_count": 0,
+      "assumption_ids": [],
+      "claim_statuses": [],
+      "declarations": []
+    },
+    {
+      "id": "stress_units_dimensional_2024",
+      "title": "Stress test: dimensional analysis and unit systems (intake scaffold)",
+      "year": 2024,
+      "claim_count": 0,
+      "assumption_ids": [],
+      "claim_statuses": [],
+      "declarations": []
     },
     {
       "id": "temkin_1941_adsorption",

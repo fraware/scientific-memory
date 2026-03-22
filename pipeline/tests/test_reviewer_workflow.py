@@ -27,10 +27,15 @@ def test_disputed_claim_without_review_notes_raises() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "Claim.",
                         "claim_type": "theorem",
                         "status": "disputed",
+                        "value_kind": "foundational_law",
                     }
                 ]
             ),
@@ -52,11 +57,16 @@ def test_disputed_claim_with_review_notes_passes() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "Claim.",
                         "claim_type": "theorem",
                         "status": "disputed",
                         "review_notes": "Formalization revealed missing hypothesis.",
+                        "value_kind": "foundational_law",
                     }
                 ]
             ),
@@ -77,7 +87,11 @@ def test_non_disputed_claim_without_notes_passes() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "Claim.",
                         "claim_type": "theorem",
                         "status": "machine_checked",
@@ -101,10 +115,15 @@ def test_invalid_status_raises_lifecycle() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "Claim.",
                         "claim_type": "theorem",
                         "status": "invalid_status_value",
+                        "value_kind": "foundational_law",
                     }
                 ]
             ),
@@ -126,10 +145,15 @@ def test_compute_reviewer_report_includes_claims_by_status() -> None:
                         "id": "c1",
                         "paper_id": "p1",
                         "section": "1",
-                        "source_span": {"source_file": "x", "start": {"page": 1, "offset": 0}, "end": {"page": 1, "offset": 0}},
+                        "source_span": {
+                            "source_file": "x",
+                            "start": {"page": 1, "offset": 0},
+                            "end": {"page": 1, "offset": 0},
+                        },
                         "informal_text": "Claim.",
                         "claim_type": "theorem",
                         "status": "machine_checked",
+                        "value_kind": "foundational_law",
                     }
                 ]
             ),

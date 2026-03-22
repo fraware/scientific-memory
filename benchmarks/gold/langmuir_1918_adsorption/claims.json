@@ -28,7 +28,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "langmuir_1918_claim_002",
@@ -59,7 +60,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_nonnegative"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "langmuir_1918_claim_003",
@@ -90,7 +92,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_bounded"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "langmuir_1918_claim_004",
@@ -121,7 +124,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_pressure"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_005",
@@ -152,7 +156,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_zero_K"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_006",
@@ -183,7 +188,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_denom_pos"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_007",
@@ -214,7 +220,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_pos_of_pos"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_008",
@@ -245,7 +252,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_P"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_009",
@@ -276,7 +284,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mono_in_K"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_010",
@@ -307,7 +316,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_add_one_denom"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_011",
@@ -338,7 +348,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sym_recip"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_012",
@@ -369,7 +380,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_isotherm_one"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "langmuir_1918_claim_013",
@@ -400,7 +412,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_mul_denom"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_014",
@@ -431,7 +444,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_scale_K"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_015",
@@ -462,7 +476,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_neg_P"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_016",
@@ -493,7 +508,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_sub_one"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_017",
@@ -524,7 +540,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_numer_nonneg"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_018",
@@ -555,7 +572,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_recip_denom"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "langmuir_1918_claim_019",
@@ -586,7 +604,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_half"
-    ]
+    ],
+    "value_kind": "bridge_lemma"
   },
   {
     "id": "langmuir_1918_claim_020",
@@ -617,6 +636,7 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Chemistry.Adsorption.Langmuir1918.langmuir_zero_at_zero"
-    ]
+    ],
+    "value_kind": "executable_contract"
   }
 ]

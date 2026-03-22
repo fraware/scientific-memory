@@ -105,9 +105,7 @@ def llm_lean_proposals(
     settings = LLMSettings.from_env()
     provider = get_llm_provider(repo_root, use_fake=use_fake_provider)
     model = settings.model_lean
-    data = generate_llm_lean_proposals(
-        repo_root, paper_id, provider, model=model, decl=decl
-    )
+    data = generate_llm_lean_proposals(repo_root, paper_id, provider, model=model, decl=decl)
     out_path = (
         Path(output)
         if output

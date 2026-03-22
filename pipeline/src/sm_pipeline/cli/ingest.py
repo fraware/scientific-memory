@@ -24,7 +24,9 @@ def add_paper(paper_id: str) -> None:
 
 @app.command("batch-admit")
 def batch_admit(
-    csv_path: str = typer.Argument(..., help="CSV with columns paper_id, domain; optional title, year"),
+    csv_path: str = typer.Argument(
+        ..., help="CSV with columns paper_id, domain; optional title, year"
+    ),
 ) -> None:
     """Admit multiple papers from CSV; updates index. See docs/paper-intake.md."""
     from sm_pipeline.ingest.batch_admit import batch_admit_from_csv

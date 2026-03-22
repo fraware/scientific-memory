@@ -17,7 +17,7 @@ def extract_json_object(text: str) -> dict:
     end = s.rfind("}")
     if start == -1 or end == -1 or end <= start:
         raise ValueError("No JSON object found in model output")
-    chunk = s[start:end + 1]
+    chunk = s[start : end + 1]
     try:
         data = json.loads(chunk)
     except json.JSONDecodeError:

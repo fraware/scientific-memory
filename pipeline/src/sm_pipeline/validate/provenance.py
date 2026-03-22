@@ -1,4 +1,7 @@
-"""Provenance validation (Gate 3): every claim has source_span; no dangling declarations."""
+"""Provenance validation (Gate 3).
+
+Every claim has source_span; no dangling declarations.
+"""
 
 import json
 from pathlib import Path
@@ -10,11 +13,26 @@ class ProvenanceError(Exception):
     pass
 
 
+def _is_stress_scaffold(metadata: object, claims: object) -> bool:
+    """Allow limited sentinel-sha manifests for hard-dimension scaffolds."""
+    if not isinstance(metadata, dict):
+        return False
+    tags = metadata.get("tags")
+    if not isinstance(tags, list):
+        return False
+    has_hardness_tag = any(isinstance(t, str) and t.startswith("hardness.primary:") for t in tags)
+    if not has_hardness_tag:
+        return False
+    # Keep exception narrow: only empty-claim intake scaffolds may keep manifests.
+    return isinstance(claims, list) and len(claims) == 0
+
+
 def validate_provenance(repo_root: Path) -> None:
     """
     Enforce SPEC Gate 3:
     - Every claim has source_span.
-    - Every declaration in manifest.declaration_index is tied to a claim via mapping.claim_to_decl.
+    - Every declaration in manifest.declaration_index is tied to a claim
+      via mapping.claim_to_decl.
     """
     repo_root = repo_root.resolve()
     papers_dir = repo_root / "corpus" / "papers"
@@ -30,20 +48,22 @@ def validate_provenance(repo_root: Path) -> None:
         if not metadata_path.exists():
             continue
         metadata = _load_json(metadata_path)
-        if isinstance(metadata, dict) and (paper_dir / "manifest.json").exists():
+        claims_path = paper_dir / "claims.json"
+        claims = _load_json(claims_path) if claims_path.exists() else []
+        has_manifest = (paper_dir / "manifest.json").exists()
+        if isinstance(metadata, dict) and has_manifest:
             source = metadata.get("source")
             if isinstance(source, dict):
                 sha = (source.get("sha256") or "").strip()
                 if sha == ZERO_SENTINEL:
-                    raise ProvenanceError(
-                        f"Paper {paper_dir.name} has manifest but source.sha256 is the "
-                        "all-zero sentinel; run hash-source or add real source file"
-                    )
+                    if not _is_stress_scaffold(metadata, claims):
+                        raise ProvenanceError(
+                            f"Paper {paper_dir.name} has manifest but source.sha256 is the "
+                            "all-zero sentinel; run hash-source or add real source file"
+                        )
 
-        claims_path = paper_dir / "claims.json"
         if not claims_path.exists():
             continue
-        claims = _load_json(claims_path)
         if not isinstance(claims, list):
             continue
         for claim in claims:

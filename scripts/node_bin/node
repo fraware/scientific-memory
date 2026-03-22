@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# WSL/bash: only node.exe is on PATH; pnpm scripts exec `node`.
+set -e
+if command -v node.exe >/dev/null 2>&1; then
+  exec "$(command -v node.exe)" "$@"
+fi
+echo "node shim: node.exe not found in PATH" >&2
+exit 127

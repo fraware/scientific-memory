@@ -26,7 +26,7 @@ Single entry for onboarding, local CI without `just`, reuse, review, verificatio
 
 This section describes what "public alpha" means and how the repository is set up today.
 
-- The repository is public. **Six papers** are in `corpus/index.json` (domains and narrative in [README](../README.md)). **Per-paper manifest facts** (machine-checked declaration counts, `build_hash_version`, dependency-graph edge counts) are generated in [docs/status/repo-snapshot.md](status/repo-snapshot.md) (`just repo-snapshot`); do not rely on hand-maintained counts in this bullet. Adsorption kernels carry Hypothesis-based property tests plus pytest numeric witnesses in CI.
+- The repository is public. **Eight papers** are in `corpus/index.json` (six formalized core slices plus two hard-dimension stress scaffolds; domains and narrative in [README](../README.md)). **Per-paper manifest facts** (machine-checked declaration counts, `build_hash_version`, dependency-graph edge counts) are generated in [docs/status/repo-snapshot.md](status/repo-snapshot.md) (`just repo-snapshot`); do not rely on hand-maintained counts in this bullet. Adsorption kernels carry Hypothesis-based property tests plus pytest numeric witnesses in CI.
 - Contributors can add a claim, run the pipeline, and pass CI. All seven CI gates are in place (Lean build, schema validation including normalization, extraction_run for papers with claims, and kernel/theorem-card referential integrity, provenance, coverage, portal build, benchmark regression with proof-success snapshot, runtime budgets, minimum thresholds under `tasks`, and **`tasks_ceiling`** (e.g. source-span alignment error rate on `tasks.gold`), release integrity with checksums and Sigstore keyless signing). Validation is centralized in [`sm_pipeline.validate.gate_engine`](../pipeline/src/sm_pipeline/validate/gate_engine.py); use `validate-all --report-json` for a machine-readable report after a successful run. **Test counts:** run `just test` or `uv run pytest --collect-only -q` from the repo root (workspace includes `pipeline/tests` and `kernels/adsorption/tests`). Ruff on pipeline. Run `just doctor` if setup fails; use `just lake-build` or `just lake-build-verbose LOG=file.log` for Lean diagnostics.
 - Release and tagging are the single source of truth for "what is released." No separate artifact tarball is required for the alpha; cloning at a release tag is the canonical way to obtain a reproducible snapshot. Gate 7 is documented under [Release integrity (Gate 7)](#release-integrity-gate-7) in this playbook.
 - Maintainers preparing to go public should follow [maintainers.md](maintainers.md).
@@ -83,7 +83,7 @@ Contributions flow through:
 2. **Extraction**: Run extraction pipelines to populate claims, assumptions, symbols from source-adjacent inputs.
 3. **Formalization**: Add Lean declarations under formal/ScientificMemory, linked via mapping.json and theorem cards.
 4. **Kernels**: Add or extend executable kernels with declared contracts and linked theorem cards.
-5. **Validation**: All changes must pass the unified gate sequence (`sm_pipeline.validate.gate_engine`): schema validation, normalization (unique IDs, resolved edges; unresolved link IDs live on `linked_*_unresolved`), provenance, graph integrity (theorem-card and kernel linkage), coverage, extraction_run requirement (papers with claims must have `extraction_run.json`), claim status and disputed-review_notes rules, migration doc check when schemas change, and non-blocking warnings (snapshot baseline quality; optional dependency-graph bootstrap hints for multi-card papers with empty `dependency_ids`; optional invalid LLM/suggestion sidecar schemas). Optional machine-readable output: `validate-all --report-json <path>`. See [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md) and [testing/trust-hardening-e2e-scenarios.md](testing/trust-hardening-e2e-scenarios.md).
+5. **Validation**: All changes must pass the unified gate sequence (`sm_pipeline.validate.gate_engine`): schema validation, normalization (unique IDs, resolved edges; unresolved link IDs live on `linked_*_unresolved`), provenance, graph integrity (theorem-card and kernel linkage), coverage, extraction_run requirement (papers with claims must have `extraction_run.json`), claim status and disputed-review_notes rules, migration doc check when schemas change, and non-blocking warnings (snapshot baseline quality; optional dependency-graph bootstrap hints for multi-card papers with empty `dependency_ids`; optional invalid LLM/suggestion sidecar schemas). Optional machine-readable output: `validate-all --report-json <path>`. See [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md) and [testing/trust-hardening-e2e-scenarios.md](testing/trust-hardening-e2e-scenarios.md).
 6. **Publish**: Manifests and portal data are generated from corpus and formal artifacts only. Portal export uses `portal_read_model.build_portal_bundle` (`just export-portal-data`). Regenerate [status/repo-snapshot.md](status/repo-snapshot.md) after corpus changes: `just repo-snapshot`.
 
 Optional: run `just metrics` for derived metrics (includes normalization-policy report, reviewer_report, assumption-suggestions, dimension-visibility, dimension-suggestions); optional policy file `benchmarks/normalization_policy.json`; `just check-paper-blueprint <paper_id>`; `just export-diff-baseline` (or `sm-pipeline export-diff-baseline --baseline-id <id> --title ... --narrative ...`); `just check-tooling` (pandoc); `just extract-from-source <paper_id>`; `just build-verso`; `just mcp-server` (requires `uv sync --extra mcp`); proof-repair proposals via `sm-pipeline proof-repair-proposals -o path` (human-review only); human-gated `proof-repair-apply` after review (formal tree only; never in CI); bulk skeleton admission via `sm-pipeline batch-admit` (see [paper-intake](paper-intake.md)); stage-shaped automation via `sm_pipeline.pipeline_orchestrator` for SPEC 8.x steps where applicable.
@@ -130,7 +130,20 @@ If any of these fail, run `just doctor` to verify tool versions (uv, pnpm, lean,
 
 ## Local CI checklist (green before merge)
 
-Run from the repository root. Mirrors the main gates without requiring `just` (which needs Bash on Windows).
+Run from the repository root.
+
+**Windows:** `just` is configured to use **Git for Windows** Bash (`C:/Program Files/Git/bin/bash.exe` in `JUSTFILE`). Install [Git for Windows](https://git-scm.com/download/win) if that path is missing. Avoid running `just` with **WSL** as the recipe shell: Windows `node`/`pnpm` and corepack paths break under WSL bash. Recipes use `scripts/just_shell_wrapper.sh`, which sources `scripts/just_env.sh` so `uv` and Node stay on `PATH` in non-interactive Bash (no nested `just` subprocesses).
+
+You can still mirror the main gates without `just` using the commands below.
+
+### Canonical local command workflow
+
+Preferred path (with `just` available):
+1. `just bootstrap`
+2. `just check`
+3. `just benchmark`
+
+Canonical fallback when you prefer not to use `just` is the command sequence in this section (validate, tests, Lean build, portal build, benchmark) using direct `uv`/`lake`/`pnpm` commands from PowerShell or any shell.
 
 ### 1. Validate corpus and schemas
 
@@ -217,15 +230,17 @@ pnpm --dir portal build
 
    This creates `corpus/papers/langmuir_1918_adsorption/` with initial `metadata.json`, `claims.json`, `assumptions.json`, `symbols.json`, `mapping.json`, and `manifest.json`. Use a short, stable `PAPER_ID` (e.g. `author_year_topic`). When adding a paper, if you have a DOI or arXiv ID, set `metadata.source.doi` or `metadata.source.arxiv_id` in the paper's metadata.
 
+   Hard-paper admission metadata: after `just add-paper`, edit `corpus/papers/<paper_id>/metadata.json` and append tags recording a single primary difficulty axis (and optional secondary axes) plus a short admission rationale. See [paper intake – Hard-paper intake matrix and admission policy](paper-intake.md#hard-paper-intake-matrix-and-admission-policy) for the required tag format and vocabulary.
+
 2. **Extract claims (scaffold)**
 
    ```bash
    just extract-claims langmuir_1918_adsorption
    ```
 
-   If `claims.json` is missing or empty, this writes a single placeholder claim (default `--mode scaffold_only`). Otherwise it leaves the file unchanged. Use `--mode deterministic` or `llm_sidecar` to skip placeholder scaffolding; see [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md).
+   If `claims.json` is missing or empty, this writes a single placeholder claim (default `--mode scaffold_only`). Otherwise it leaves the file unchanged. Use `--mode deterministic` or `llm_sidecar` to skip placeholder scaffolding; see [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md).
 
-   Optional: with a Prime Intellect API key in root `.env`, run `just llm-claim-proposals <PAPER_ID>` (claim drafts), `just llm-mapping-proposals <PAPER_ID>` (mapping suggestions), or after `mapping.json` and Lean exist `just llm-lean-proposals <PAPER_ID>` (surgical Lean find/replace sidecar). All are human-reviewed before apply; see [prime-intellect-llm.md](prime-intellect-llm.md).
+   Optional: with a Prime Intellect API key in root `.env`, run `just llm-claim-proposals <PAPER_ID>` (claim drafts), `just llm-mapping-proposals <PAPER_ID>` (mapping suggestions), or after `mapping.json` and Lean exist `just llm-lean-proposals <PAPER_ID>` (surgical Lean find/replace sidecar). All are human-reviewed before apply; see [prime-intellect-llm.md](tooling/prime-intellect-llm.md).
 
 3. **Scaffold formal mapping**
 
@@ -237,7 +252,7 @@ pnpm --dir portal build
 
 4. **Edit corpus and Lean**
 
-   - Edit `corpus/papers/<PAPER_ID>/claims.json`: set `source_span`, `informal_text`, `claim_type`, `status`, and (optionally) `linked_assumptions`, `linked_symbols`.
+   - Edit `corpus/papers/<PAPER_ID>/claims.json`: set `source_span`, `informal_text`, `claim_type`, `status`, and required `value_kind` (scientific value classification), plus `linked_assumptions`, `linked_symbols`.
    - Edit `corpus/papers/<PAPER_ID>/assumptions.json` and `symbols.json` as needed.
    - Edit `corpus/papers/<PAPER_ID>/mapping.json`: add entries in `claim_to_decl` mapping each claim ID to the corresponding Lean declaration name.
    - Add or update Lean code under `formal/` so that the declarations compile and (if applicable) proofs are machine-checked.
@@ -277,6 +292,7 @@ pnpm --dir portal build
 - **Schema validation:** Check the failing file against the JSON schema in `schemas/`. Use the pipeline’s `validate-all` output to see which file and field failed. After a successful run, `validate-all --report-json <path>` writes the ordered gate checklist from [`gate_engine`](../pipeline/src/sm_pipeline/validate/gate_engine.py).
 - **Normalization:** No duplicate claim/assumption/symbol IDs per paper; every `linked_assumptions` and `linked_symbols` reference must resolve to an existing ID in that paper.
 - **Provenance (Gate 3):** Add or fix `source_span` on claims; ensure every declaration in the manifest is reachable from some claim via `mapping.json`’s `claim_to_decl`.
+- **Hardness scaffolds:** For papers tagged `hardness.primary:*` with empty `claims.json`, Gate 3 allows a temporary `manifest.json` while `metadata.source.sha256` is still all-zero. For all normal papers, manifest + sentinel hash remains a hard error.
 - **Coverage (Gate 4):** Run `just publish-artifacts <paper_id>` so that `manifest.json`’s `coverage_metrics` are recomputed from the current claims. Do not edit `coverage_metrics` manually.
 - **Benchmark regression:** If extraction/mapping/theorem_cards/gold metrics fall below minima in `tasks` or above maxima in `tasks_ceiling` (e.g. source-span alignment error rate), either fix corpus/gold drift or adjust `benchmarks/baseline_thresholds.json` (with team agreement). The same applies to **`tasks.llm_eval`** when reference fixtures under `benchmarks/llm_eval/` drift after prompt changes.
 
@@ -604,13 +620,19 @@ Blueprint docs (e.g. `docs/blueprints/<paper>.md`) list claim IDs and target dec
 
 - **2026-03-18**: Tightened theorem card reviewer contract: `reviewer_status` is now required in `theorem_card.schema.json` (enum unchanged), pipeline TheoremCard model updated to require reviewer_status, and `schemas/examples/theorem_card.example.json` updated to canonical Langmuir IDs plus reviewer_status. Validator rules now additionally enforce `accepted -> proof_status=machine_checked`. Existing generated theorem cards already include reviewer_status via publish.
 
-- **2026-03-20**: Added `llm_claim_proposals.schema.json` and `llm_mapping_proposals.schema.json` for optional Prime Intellect proposal sidecars; pipeline `LlmClaimProposalsBundle` / `LlmMappingProposalsBundle` models; examples under `schemas/examples/`. Sidecars are optional; `validate-all` warns only if present and invalid. See [prime-intellect-llm.md](prime-intellect-llm.md) and [ADR 0011](adr/0011-llm-worker-suggest-only.md).
+- **2026-03-20**: Added `llm_claim_proposals.schema.json` and `llm_mapping_proposals.schema.json` for optional Prime Intellect proposal sidecars; pipeline `LlmClaimProposalsBundle` / `LlmMappingProposalsBundle` models; examples under `schemas/examples/`. Sidecars are optional; `validate-all` warns only if present and invalid. See [prime-intellect-llm.md](tooling/prime-intellect-llm.md) and [ADR 0011](adr/0011-llm-worker-suggest-only.md).
 
-- **2026-03-20 (trust hardening):** Added [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md) and [ADR 0012](adr/0012-trust-boundary-canonical-artifacts.md). **Claims:** optional `linked_assumptions_unresolved` / `linked_symbols_unresolved` (normalize preserves broken link IDs off the resolved edge lists). **Manifest:** optional `build_hash_version` (`2` = content-addressed over corpus JSON + theorem cards + kernel_index + source sha256); `dependency_graph` and `kernel_index` are recomputed on each publish unless `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1`. **Theorem cards:** optional `dependency_extraction_method` (`lean_source_regex_tier0`). **Extraction:** `extract-claims --mode scaffold_only|deterministic|llm_sidecar`; `extraction_run.json` may include `extraction_mode` and `placeholder_claim_written`. **Suggestion schemas:** `llm_run_provenance.schema.json`, `suggested_assumptions.schema.json`, `suggested_symbols.schema.json`, `suggested_mapping.schema.json`. **Benchmark:** `tasks.llm_suggestions` in `baseline_thresholds.json`. Re-run `just publish-artifacts` per paper and `just repo-snapshot` after pulling.
+- **2026-03-20 (trust hardening):** Added [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md) and [ADR 0012](adr/0012-trust-boundary-canonical-artifacts.md). **Claims:** optional `linked_assumptions_unresolved` / `linked_symbols_unresolved` (normalize preserves broken link IDs off the resolved edge lists). **Manifest:** optional `build_hash_version` (`2` = content-addressed over corpus JSON + theorem cards + kernel_index + source sha256); `dependency_graph` and `kernel_index` are recomputed on each publish unless `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1`. **Theorem cards:** optional `dependency_extraction_method` (`lean_source_regex_tier0`). **Extraction:** `extract-claims --mode scaffold_only|deterministic|llm_sidecar`; `extraction_run.json` may include `extraction_mode` and `placeholder_claim_written`. **Suggestion schemas:** `llm_run_provenance.schema.json`, `suggested_assumptions.schema.json`, `suggested_symbols.schema.json`, `suggested_mapping.schema.json`. **Benchmark:** `tasks.llm_suggestions` in `baseline_thresholds.json`. Re-run `just publish-artifacts` per paper and `just repo-snapshot` after pulling.
 
-- **2026-03-20:** Added `llm_lean_proposals.schema.json` for optional surgical Lean edit suggestions (`llm_lean_proposals.json` per paper). Pipeline `LlmLeanProposalsBundle` model; example `schemas/examples/llm_lean_proposals.example.json`. CLI: `sm-pipeline llm-lean-proposals`, `sm-pipeline llm-lean-proposals-to-apply-bundle` (produces `proof_repair_apply_bundle` for human-gated `proof-repair-apply`). Sidecar is optional; `validate-all` warns only if present and invalid. Env: `SM_LLM_MODEL_LEAN`. Benchmark: `tasks.llm_lean_suggestions`. See [prime-intellect-llm.md](prime-intellect-llm.md).
+- **2026-03-20:** Added `llm_lean_proposals.schema.json` for optional surgical Lean edit suggestions (`llm_lean_proposals.json` per paper). Pipeline `LlmLeanProposalsBundle` model; example `schemas/examples/llm_lean_proposals.example.json`. CLI: `sm-pipeline llm-lean-proposals`, `sm-pipeline llm-lean-proposals-to-apply-bundle` (produces `proof_repair_apply_bundle` for human-gated `proof-repair-apply`). Sidecar is optional; `validate-all` warns only if present and invalid. Env: `SM_LLM_MODEL_LEAN`. Benchmark: `tasks.llm_lean_suggestions`. See [prime-intellect-llm.md](tooling/prime-intellect-llm.md).
 
 - **2026-03-21:** LLM evaluation hardening (no new corpus schema): `pipeline/.../llm/prompt_templates.py` with `metadata.prompt_template_id` / `prompt_template_sha256` / `input_artifact_sha256` on generated proposal bundles; benchmark top-level `llm_prompt_templates`; task `tasks.llm_eval` over reviewed `benchmarks/llm_eval/<paper_id>/reference_llm_*_proposals.json`; `benchmarks/baseline_thresholds.json` minima for `llm_eval`; scripts `scripts/llm_live_eval.py`, `scripts/llm_eval_lean_build_optional.py`; docs [testing/llm-human-eval-rubric.md](testing/llm-human-eval-rubric.md), [ADR 0013](adr/0013-llm-evaluation-policy.md). Example [schemas/examples/llm_run_provenance.example.json](../schemas/examples/llm_run_provenance.example.json) updated for template id and input keys.
+- **2026-03-21 (claim value policy):** Added `value_kind` enum to [`schemas/claim.schema.json`](../schemas/claim.schema.json) (pipeline `Claim` model) to classify the scientific value of each claim (`foundational_law`, `bridge_lemma`, `executable_contract`, `experimental_invariant`, `cross_paper_anchor`). **2026-03-22:** `value_kind` is **required** on every claim row (corpus and gold fixtures updated). Validation includes `claim_value_policy` (near-duplicate algebraic variant detection); enforcement for duplicate pairs still requires both claims to carry explicit reuse kinds where applicable.
+- **2026-03-22 (kernel contract schema v1):** Added optional `contract_v1` structured object to [`schemas/executable_kernel.schema.json`](../schemas/executable_kernel.schema.json) and the pipeline `ExecutableKernel` model. `validate_kernel_contracts_v1` now enforces `contract_v1` completeness for `corpus/kernels.json` entries with `test_status: "tested"` (witness_type, units/domains, tolerances, and formal obligations coverage).
+- **2026-03-22 (kernel IO typing):** Required `io_typing` on each kernel (`inputs`/`outputs` as typed numeric bindings). Legacy `input_schema` / `output_schema` strings are optional documentation only. `validate_kernel_contracts_v1` checks `io_typing` names match `contract_v1.units` keys and that nonnegative/positive numeric kinds align with domain strings.
+- **2026-03-22 (manifest dependency edges):** Optional `confidence` (`high` \| `medium` \| `low`) on each `dependency_graph` edge in [`schemas/artifact_manifest.schema.json`](../schemas/artifact_manifest.schema.json), derived from `dependency_extraction_method` on the consumer theorem card (e.g. tier1 → `high`). Re-run `just publish-artifacts <paper_id>` to refresh manifests.
+- **2026-03-22 (LLM eval provenance):** Optional `reviewer_time_seconds` on [`schemas/llm_run_provenance.schema.json`](../schemas/llm_run_provenance.schema.json) / `LlmRunMetadata`; `benchmarks/tasks/llm_eval/scorer.py` aggregates `reviewer_time_seconds_total` and `reviewer_time_observations`.
+- **2026-03-22 (provenance scaffold exception):** Gate 3 provenance still rejects `manifest.json` when `metadata.source.sha256` is the all-zero sentinel for normal papers. Narrow exception: papers tagged `hardness.primary:*` with empty `claims.json` may keep manifests during intake scaffolding.
 
 ## Release integrity (Gate 7)
 
@@ -668,12 +690,12 @@ See [Running from a release](#running-from-a-release) for how to run from a rele
 | Publish artifacts       | `just publish-artifacts <paper_id>`          |
 | Scaffold gold           | `just scaffold-gold <paper_id>` (for each paper in `corpus/index.json`; update baseline `papers_with_gold` when adding papers) |
 | Derived metrics         | `just metrics` (optional `-o report.json`; includes normalization-report with suggest_merge, dimension-suggestions) |
-| Export diff baseline    | `just export-diff-baseline`                 |
+| Export diff baseline    | `just export-diff-baseline` or `uv run --project pipeline python -m sm_pipeline.cli export-diff-baseline --baseline-id <id> --title ... --narrative ...` (repeat `--highlight` for each bullet; see [release-policy](infra/release-policy.md)) |
 | Check tooling (pandoc)  | `just check-tooling`                         |
 | Extract from source     | `just extract-from-source <paper_id>` (pandoc + source/main.tex) |
 | Build Verso             | `just build-verso` (see [Verso integration (optional)](#verso-integration-optional)) |
 | MCP server              | `just mcp-server` (optional; tools: list_declarations_for_paper, list_declarations_in_file, get_dependency_graph_for_declaration; requires `uv sync --extra mcp`) |
-| LLM Lean suggestions (optional) | `just llm-lean-proposals <paper_id>` then review `llm_lean_proposals.json`; convert + `proof-repair-apply` per [prime-intellect-llm.md](prime-intellect-llm.md) |
+| LLM Lean suggestions (optional) | `just llm-lean-proposals <paper_id>` then review `llm_lean_proposals.json`; convert + `proof-repair-apply` per [prime-intellect-llm.md](tooling/prime-intellect-llm.md) |
 | Full pre-PR check       | `just check`                                 |
 
-Milestone 3 (20–40 machine-checked declarations) is **exceeded** at **62** machine-checked declarations across six papers (see [status/repo-snapshot.md](status/repo-snapshot.md), regenerated with `just repo-snapshot`). See [ROADMAP](../ROADMAP.md#content-target-milestone-3) for the content sprint checklist and stretch goals. Use the "Content sprint (Milestone 3)" issue template when opening a content-focused issue. The portal dashboard and `just metrics --proof-completion` reflect declaration totals.
+Milestone 3 (20–40 machine-checked declarations) is **exceeded** at **62** machine-checked declarations across six formalized core papers (with two additional stress scaffolds currently intake-only; see [status/repo-snapshot.md](status/repo-snapshot.md), regenerated with `just repo-snapshot`). See [ROADMAP](../ROADMAP.md#content-target-milestone-3) for the content sprint checklist and stretch goals. Use the "Content sprint (Milestone 3)" issue template when opening a content-focused issue. The portal dashboard and `just metrics --proof-completion` reflect declaration totals.

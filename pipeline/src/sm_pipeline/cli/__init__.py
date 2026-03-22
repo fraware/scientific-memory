@@ -2,7 +2,16 @@
 
 import typer
 
-from sm_pipeline.cli import agentic, extract, formalize, ingest, llm_proposals, metrics, publish, validate_cmd
+from sm_pipeline.cli import (
+    agentic,
+    extract,
+    formalize,
+    ingest,
+    llm_proposals,
+    metrics,
+    publish,
+    validate_cmd,
+)
 
 app = typer.Typer()
 
@@ -50,6 +59,4 @@ app.command("llm-mapping-proposals")(llm_proposals.llm_mapping_proposals)
 app.command("llm-apply-claim-proposals")(llm_proposals.llm_apply_claim_proposals)
 app.command("llm-apply-mapping-proposals")(llm_proposals.llm_apply_mapping_proposals)
 app.command("llm-lean-proposals")(llm_proposals.llm_lean_proposals)
-app.command("llm-lean-proposals-to-apply-bundle")(
-    llm_proposals.llm_lean_proposals_to_apply_bundle
-)
+app.command("llm-lean-proposals-to-apply-bundle")(llm_proposals.llm_lean_proposals_to_apply_bundle)

@@ -19,7 +19,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_001"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -31,7 +33,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_002"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -43,7 +47,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_003"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -55,7 +61,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_004"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -79,7 +87,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_006"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -91,7 +101,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_007"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -103,7 +115,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_008"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -115,7 +129,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_009"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -127,7 +143,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_010"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -139,7 +157,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_011"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -151,7 +171,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_012"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },
@@ -163,7 +185,9 @@
     "proof_status": "machine_checked",
     "verification_boundary": "fully_machine_checked",
     "reviewer_status": "accepted",
-    "dependency_ids": [],
+    "dependency_ids": [
+      "physics_kinematics_uniform_card_013"
+    ],
     "executable_links": [],
     "dependency_extraction_method": "lean_source_regex_tier0"
   },

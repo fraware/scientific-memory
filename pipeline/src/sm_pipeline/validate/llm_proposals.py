@@ -61,9 +61,7 @@ def validate_llm_proposal_sidecars_warn(repo_root: Path) -> list[str]:
         ),
         "llm_lean_proposals.json": (
             "llm_lean_proposals.schema.json",
-            Draft202012Validator(
-                _load(repo_root, "llm_lean_proposals.schema.json"), registry=reg
-            ),
+            Draft202012Validator(_load(repo_root, "llm_lean_proposals.schema.json"), registry=reg),
         ),
         "suggested_assumptions.json": (
             "suggested_assumptions.schema.json",

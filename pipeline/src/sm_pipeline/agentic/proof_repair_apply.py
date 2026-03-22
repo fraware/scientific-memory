@@ -11,6 +11,7 @@ from pathlib import Path
 
 from jsonschema import validate
 
+
 def _repo_root(repo_root: Path) -> Path:
     return Path(repo_root).resolve()
 

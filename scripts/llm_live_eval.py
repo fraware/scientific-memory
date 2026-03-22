@@ -3,7 +3,7 @@
 
 Uses the pipeline package (same code paths as CLI). Default is ``--use-fake-provider`` so the
 script is safe in CI or without API keys. For live runs, omit that flag and set
-``PRIME_INTELLECT_API_KEY`` (see docs/prime-intellect-llm.md).
+``PRIME_INTELLECT_API_KEY`` (see docs/tooling/prime-intellect-llm.md).
 
 Examples (repo root)::
 
@@ -189,7 +189,9 @@ def main() -> int:
                             "ok": ok,
                             "error": err2,
                             "proposal_count": len(ldata.get("proposals") or []),
-                            "conversion_ready_static": _lean_conversion_ready_count(repo_root, ldata),
+                            "conversion_ready_static": _lean_conversion_ready_count(
+                                repo_root, ldata
+                            ),
                             "metadata": ldata.get("metadata"),
                             "fallback_model_used": settings.model_mapping,
                             "fallback_reason": "primary_model_404",

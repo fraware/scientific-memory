@@ -19,9 +19,7 @@ def assert_monotone_nondecreasing(
     """Assert each value <= next (+ tol)."""
     for i in range(len(values) - 1):
         if values[i] > values[i + 1] + tol:
-            raise AssertionError(
-                f"not monotone at {i}: {values[i]!r} > {values[i + 1]!r}"
-            )
+            raise AssertionError(f"not monotone at {i}: {values[i]!r} > {values[i + 1]!r}")
 
 
 def assert_grid_monotone_in_first_arg(

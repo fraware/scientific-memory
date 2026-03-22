@@ -8,6 +8,6 @@ repos:
     hooks:
       - id: lake-fmt
         name: lake fmt
-        entry: lake fmt
+        entry: bash scripts/lake_fmt_optional.sh
         language: system
         files: \.lean$

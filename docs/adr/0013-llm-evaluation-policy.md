@@ -24,6 +24,6 @@ Optional LLM proposal sidecars ([ADR 0011](0011-llm-worker-suggest-only.md)) nee
 
 ## Links
 
-- [prime-intellect-llm.md](../prime-intellect-llm.md)
+- [prime-intellect-llm.md](../tooling/prime-intellect-llm.md)
 - [metrics.md](../metrics.md) (extraction / benchmark sections)
 - [llm-lean-live-test-matrix.md](../testing/llm-lean-live-test-matrix.md)

@@ -21,7 +21,7 @@ def test_extract_json_object_from_fence() -> None:
 
 
 def test_extract_json_object_with_unescaped_control_char() -> None:
-    raw = "{\n  \"a\": \"hello\tworld\"\n}"
+    raw = '{\n  "a": "hello\tworld"\n}'
     assert extract_json_object(raw) == {"a": "hello\tworld"}
 
 
@@ -70,6 +70,7 @@ def test_preview_apply_claim_proposals_merge_order(tmp_path: Path) -> None:
             "informal_text": "A",
             "claim_type": "theorem",
             "status": "parsed",
+            "value_kind": "foundational_law",
             "linked_symbols": [],
             "linked_assumptions": [],
             "linked_formal_targets": [],
@@ -113,6 +114,7 @@ def test_preview_apply_claim_proposals_merge_order(tmp_path: Path) -> None:
                             "informal_text": "N",
                             "claim_type": "definition",
                             "status": "parsed",
+                            "value_kind": "foundational_law",
                             "linked_symbols": [],
                             "linked_assumptions": [],
                             "linked_formal_targets": [],

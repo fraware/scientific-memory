@@ -17,6 +17,7 @@ def test_mcp_list_declarations_real_corpus() -> None:
 
     # Use monkeypatch to set cwd to repo root so _repo_root() finds corpus
     import os
+
     original_cwd = os.getcwd()
     try:
         os.chdir(str(repo))
@@ -55,6 +56,7 @@ def test_mcp_get_dependency_graph_real_corpus() -> None:
         pytest.skip("no lean_decl in first card")
 
     import os
+
     original_cwd = os.getcwd()
     try:
         os.chdir(str(repo))

@@ -91,7 +91,7 @@ flowchart LR
 
 | Item | Detail |
 |------|--------|
-| Policy docs | `infra/README.md`, `infra/cache-policy.md`, `infra/release-policy.md` |
+| Policy docs | `docs/infra/README.md`, `docs/infra/cache-policy.md`, `docs/infra/release-policy.md` |
 | Gate 7 | Sigstore (cosign) keyless signing of `dist/checksums.txt`; GitHub Release with bundle zip |
 
 ### Optional LLM assistance (suggest-only, human-gated)
@@ -102,7 +102,7 @@ flowchart LR
 | Evaluation infrastructure | Prompt template versioning (`prompt_template_id`, `prompt_template_sha256`), reference fixtures under `benchmarks/llm_eval/`, benchmark task `llm_eval`, human review rubric |
 | Live testing | Full end-to-end pipeline run validated on `math_sum_evens` with `allenai/olmo-3.1-32b-instruct`; all three LLM surfaces (claims, mapping, Lean) operational |
 | Commands | `just llm-claim-proposals <paper_id>`, `just llm-mapping-proposals <paper_id>`, `just llm-lean-proposals <paper_id>`; `just llm-live-eval` for smoke reports |
-| Documentation | [docs/prime-intellect-llm.md](docs/prime-intellect-llm.md), [docs/testing/llm-lean-live-test-matrix.md](docs/testing/llm-lean-live-test-matrix.md), [docs/testing/llm-human-eval-rubric.md](docs/testing/llm-human-eval-rubric.md), [ADR 0011](docs/adr/0011-llm-worker-suggest-only.md), [ADR 0013](docs/adr/0013-llm-evaluation-policy.md) |
+| Documentation | [docs/tooling/prime-intellect-llm.md](docs/tooling/prime-intellect-llm.md), [docs/testing/llm-lean-live-test-matrix.md](docs/testing/llm-lean-live-test-matrix.md), [docs/testing/llm-human-eval-rubric.md](docs/testing/llm-human-eval-rubric.md), [ADR 0011](docs/adr/0011-llm-worker-suggest-only.md), [ADR 0013](docs/adr/0013-llm-evaluation-policy.md) |
 
 ### Optional tooling
 

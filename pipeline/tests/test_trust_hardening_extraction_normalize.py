@@ -59,7 +59,9 @@ def test_scaffold_only_writes_placeholder_when_claims_empty_array(tmp_path: Path
 
 
 @pytest.mark.parametrize("mode", [EXTRACTION_MODE_DETERMINISTIC, EXTRACTION_MODE_LLM_SIDECAR])
-def test_non_scaffold_modes_do_not_scaffold_placeholder_when_missing(tmp_path: Path, mode: str) -> None:
+def test_non_scaffold_modes_do_not_scaffold_placeholder_when_missing(
+    tmp_path: Path, mode: str
+) -> None:
     paper_id = f"trust_no_scaffold_{mode}"
     _write_minimal_paper(tmp_path, paper_id)
     out = extract_claims(tmp_path, paper_id, mode=mode)
@@ -145,15 +147,11 @@ def test_normalize_clears_unresolved_fields_when_all_resolve(tmp_path: Path) -> 
     paper_id = "trust_norm_all_resolved"
     paper_dir = _write_minimal_paper(tmp_path, paper_id)
     (paper_dir / "assumptions.json").write_text(
-        json.dumps(
-            [{"id": "a1", "paper_id": paper_id, "text": "t", "kind": "domain_restriction"}]
-        ),
+        json.dumps([{"id": "a1", "paper_id": paper_id, "text": "t", "kind": "domain_restriction"}]),
         encoding="utf-8",
     )
     (paper_dir / "symbols.json").write_text(
-        json.dumps(
-            [{"id": "s1", "paper_id": paper_id, "raw_latex": "x", "normalized_name": "x"}]
-        ),
+        json.dumps([{"id": "s1", "paper_id": paper_id, "raw_latex": "x", "normalized_name": "x"}]),
         encoding="utf-8",
     )
     (paper_dir / "claims.json").write_text(

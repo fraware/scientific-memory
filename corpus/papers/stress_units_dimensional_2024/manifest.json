@@ -1,0 +1,18 @@
+{
+  "paper_id": "stress_units_dimensional_2024",
+  "version": "0.1.0",
+  "build_hash": "3fbd47d4cd14ca6f7eb8f25d43165833e6820e3318be1332ba853cd202413bad",
+  "build_hash_version": "2",
+  "coverage_metrics": {
+    "claim_count": 0,
+    "mapped_claim_count": 0,
+    "machine_checked_count": 0,
+    "kernel_linked_count": 0
+  },
+  "generated_pages": [
+    "/papers/stress_units_dimensional_2024"
+  ],
+  "declaration_index": [],
+  "dependency_graph": [],
+  "kernel_index": []
+}

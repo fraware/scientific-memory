@@ -1,6 +1,6 @@
 # LLM Lean assist: live and automated test matrix
 
-This checklist supports [prime-intellect-llm.md](../prime-intellect-llm.md) and the `llm_lean_proposals` sidecar. **Canonical `formal/` is never modified by generation**; only `proof-repair-apply` with explicit human-review flags may write Lean after you review a converted bundle.
+This checklist supports [prime-intellect-llm.md](../tooling/prime-intellect-llm.md) and the `llm_lean_proposals` sidecar. **Canonical `formal/` is never modified by generation**; only `proof-repair-apply` with explicit human-review flags may write Lean after you review a converted bundle.
 
 ## Regression workflow (prompts and reference fixtures)
 

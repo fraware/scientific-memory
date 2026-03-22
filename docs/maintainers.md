@@ -29,7 +29,7 @@ Map each item to CI workflows and local commands. Keep evidence (green Actions U
 
 ### Required gates (must pass before public push)
 
-These mirror merge expectations in [infra/README.md](../infra/README.md) and [CONTRIBUTING.md](../CONTRIBUTING.md).
+These mirror merge expectations in [infra/README.md](infra/README.md) and [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 | # | Gate | CI workflow | Local command (repo root) |
 |---|------|-------------|---------------------------|

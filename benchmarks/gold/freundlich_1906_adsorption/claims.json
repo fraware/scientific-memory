@@ -5,11 +5,18 @@
     "section": "1",
     "source_span": {
       "source_file": "corpus/papers/freundlich_1906_adsorption/source/source.pdf",
-      "start": { "page": 1, "offset": 0 },
-      "end": { "page": 1, "offset": 0 }
+      "start": {
+        "page": 1,
+        "offset": 0
+      },
+      "end": {
+        "page": 1,
+        "offset": 0
+      }
     },
     "informal_text": "TODO: extract claim from source",
     "claim_type": "editorial_exposition",
-    "status": "unparsed"
+    "status": "unparsed",
+    "value_kind": "bridge_lemma"
   }
 ]

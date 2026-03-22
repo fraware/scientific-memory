@@ -1,7 +1,7 @@
 {
   "paper_id": "temkin_1941_adsorption",
   "version": "0.1.0",
-  "build_hash": "d9bc80bb55f2ff01265e4b483816c43ba14754e8ac49770159b914d69919351c",
+  "build_hash": "9d9057ff5edb5cb930c256a6d54f6ddac1cb0ee84f28f5779680772ae56743d2",
   "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 12,
@@ -52,12 +52,59 @@
   ],
   "dependency_graph": [
     {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_002",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_003",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_004",
+      "confidence": "high"
+    },
+    {
       "from": "temkin_1941_adsorption_card_004",
-      "to": "temkin_1941_adsorption_card_005"
+      "to": "temkin_1941_adsorption_card_005",
+      "confidence": "medium"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_006",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_007",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_008",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_009",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_011",
+      "confidence": "high"
     },
     {
       "from": "temkin_1941_adsorption_card_010",
-      "to": "temkin_1941_adsorption_card_011"
+      "to": "temkin_1941_adsorption_card_011",
+      "confidence": "high"
+    },
+    {
+      "from": "temkin_1941_adsorption_card_001",
+      "to": "temkin_1941_adsorption_card_012",
+      "confidence": "high"
     }
   ],
   "kernel_index": []

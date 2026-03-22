@@ -26,6 +26,7 @@ class LlmRunMetadata(BaseModel):
     completion_tokens: int | None = None
     total_tokens: int | None = None
     estimated_cost_usd: float | None = None
+    reviewer_time_seconds: float | None = Field(default=None, ge=0.0)
     reviewer_decision: Literal["pending", "accepted", "rejected", "edited"] | None = None
     promotion_outcome: str | None = None
     notes: str | None = None

@@ -47,4 +47,4 @@ Manual or scripted checks that mirror the comprehensive test plan. Automated cov
 - `uv run --project pipeline python -m sm_pipeline.cli benchmark`
 - `uv run python scripts/generate_repo_snapshot.py`
 
-See [trust-boundary-and-extraction.md](../trust-boundary-and-extraction.md) and [ADR 0012](../adr/0012-trust-boundary-canonical-artifacts.md).
+See [trust-boundary-and-extraction.md](../reference/trust-boundary-and-extraction.md) and [ADR 0012](../adr/0012-trust-boundary-canonical-artifacts.md).

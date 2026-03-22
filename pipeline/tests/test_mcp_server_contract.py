@@ -11,9 +11,7 @@ def test_tool_definitions_have_expected_names_and_required_fields() -> None:
         "list_declarations_in_file",
         "get_dependency_graph_for_declaration",
     ]
-    required = {
-        d["name"]: set(d["inputSchema"].get("required") or []) for d in defs
-    }
+    required = {d["name"]: set(d["inputSchema"].get("required") or []) for d in defs}
     assert required["list_declarations_for_paper"] == {"paper_id"}
     assert required["list_declarations_in_file"] == {"paper_id", "file_path"}
     assert required["get_dependency_graph_for_declaration"] == {"paper_id", "lean_decl"}
@@ -28,7 +26,4 @@ def test_call_tool_payload_missing_required_args_messages() -> None:
         mcp_server._call_tool_payload("get_dependency_graph_for_declaration", {"paper_id": "x"})
         == "Missing required argument: lean_decl"
     )
-    assert (
-        mcp_server._call_tool_payload("unknown_tool", {})
-        == "Unknown tool: unknown_tool"
-    )
+    assert mcp_server._call_tool_payload("unknown_tool", {}) == "Unknown tool: unknown_tool"

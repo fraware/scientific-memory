@@ -3,10 +3,10 @@
   "private": true,
   "packageManager": "pnpm@10.0.0",
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "format": "turbo run format"
+    "build": "pnpm --dir portal build",
+    "dev": "pnpm --dir portal dev",
+    "lint": "pnpm --dir portal lint",
+    "format": "pnpm --dir portal format",
+    "portal:test": "pnpm --dir portal test"
   }
 }

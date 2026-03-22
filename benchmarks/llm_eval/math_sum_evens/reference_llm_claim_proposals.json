@@ -5,7 +5,8 @@
   "metadata": {
     "provider": "eval_reference_fixture",
     "model": "n/a",
-    "notes": "Regression anchor only; not from a live model run."
+    "notes": "Regression anchor only; not from a live model run.",
+    "reviewer_time_seconds": 42.0
   },
   "proposals": [
     {
@@ -22,6 +23,7 @@
         "claim_type": "theorem",
         "mathematical_density": "high",
         "status": "machine_checked",
+        "value_kind": "foundational_law",
         "linked_symbols": [],
         "linked_assumptions": [],
         "linked_formal_targets": [

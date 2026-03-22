@@ -8,9 +8,7 @@ from unittest.mock import MagicMock
 from sm_pipeline.publish.canonical import publish_paper_artifacts
 
 
-def test_publish_paper_artifacts_calls_manifest_then_export(
-    tmp_path: Path, monkeypatch
-) -> None:
+def test_publish_paper_artifacts_calls_manifest_then_export(tmp_path: Path, monkeypatch) -> None:
     calls: list[str] = []
 
     def fake_manifest(root: Path, paper_id: str) -> None:

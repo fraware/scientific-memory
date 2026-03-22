@@ -1,6 +1,6 @@
 # Kernels
 
-Executable kernels with declared verification boundaries and linked theorem cards. Each kernel has an input/output schema, optional `unit_constraints` (strings), and documents which formal declarations it implements. The portal renders kernel pages from `corpus/kernels.json` and linked theorem cards. See [Contributor playbook – Verification boundary](../docs/contributor-playbook.md#verification-boundary).
+Executable kernels with declared verification boundaries and linked theorem cards. Each kernel has an input/output schema, optional `unit_constraints` (strings), and (for `test_status: "tested"`) a structured `contract_v1` describing units, domains, tolerances, and formal obligations. The portal renders kernel pages from `corpus/kernels.json` and linked theorem cards. See [Contributor playbook – Verification boundary](../docs/contributor-playbook.md#verification-boundary).
 
 ## Shared test helpers (`kernel-conformance`)
 
@@ -17,4 +17,4 @@ Formal proofs for related claims live under `formal/ScientificMemory/`; the kern
 
 ## Corpus enforcement
 
-Pipeline validation requires every kernel with non-empty `linked_theorem_cards` to have `test_status: "tested"` (fail-fast). Kernels marked `tested` must keep passing the adsorption package pytest suite in CI.
+Pipeline validation requires every kernel with non-empty `linked_theorem_cards` to have `test_status: "tested"` (fail-fast). Kernels marked `tested` must also provide a complete `contract_v1` (units/domains/tolerances/witness/obligations) and keep passing the adsorption package pytest suite in CI.

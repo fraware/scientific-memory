@@ -1,7 +1,7 @@
 {
   "paper_id": "freundlich_1906_adsorption",
   "version": "0.1.0",
-  "build_hash": "452f64a6cee22ec4b4a841bee027b1b3a8475cbc119c8845205f1183f4f73f5b",
+  "build_hash": "207ff874c036d3f3de7a659ff10be769ae04d3bef3294f2307d319a1cca8db52",
   "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 12,
@@ -50,7 +50,58 @@
     "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_strict_mono_in_c",
     "ScientificMemory.Chemistry.Adsorption.Freundlich1906.freundlich_double_k"
   ],
-  "dependency_graph": [],
+  "dependency_graph": [
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_002",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_003",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_004",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_005",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_006",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_007",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_008",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_009",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_011",
+      "confidence": "high"
+    },
+    {
+      "from": "freundlich_1906_adsorption_card_001",
+      "to": "freundlich_1906_adsorption_card_012",
+      "confidence": "high"
+    }
+  ],
   "kernel_index": [
     "freundlich_adsorption_kernel_v1"
   ]

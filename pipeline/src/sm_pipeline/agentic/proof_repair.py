@@ -102,17 +102,19 @@ def generate_repair_proposals(repo_root: Path, paper_id: str | None = None) -> d
                 continue
             if not _needs_repair_proposal(card):
                 continue
-            proposals.append({
-                "theorem_card_id": str(card.get("id", "")),
-                "paper_id": pid,
-                "claim_id": str(card.get("claim_id", "")),
-                "lean_decl": str(card.get("lean_decl", "")),
-                "file_path": str(card.get("file_path", "")),
-                "current_proof_status": str(card.get("proof_status", "")),
-                "current_verification_boundary": str(card.get("verification_boundary", "")),
-                "suggested_action": _suggested_action(card),
-                "repair_hints": [],
-            })
+            proposals.append(
+                {
+                    "theorem_card_id": str(card.get("id", "")),
+                    "paper_id": pid,
+                    "claim_id": str(card.get("claim_id", "")),
+                    "lean_decl": str(card.get("lean_decl", "")),
+                    "file_path": str(card.get("file_path", "")),
+                    "current_proof_status": str(card.get("proof_status", "")),
+                    "current_verification_boundary": str(card.get("verification_boundary", "")),
+                    "suggested_action": _suggested_action(card),
+                    "repair_hints": [],
+                }
+            )
 
     return _wrap_proposals(proposals, paper_id)
 

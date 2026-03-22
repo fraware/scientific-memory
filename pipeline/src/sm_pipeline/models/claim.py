@@ -25,6 +25,13 @@ class Claim(BaseModel):
         "acceptance_criterion",
         "editorial_exposition",
     ]
+    value_kind: Literal[
+        "foundational_law",
+        "bridge_lemma",
+        "executable_contract",
+        "experimental_invariant",
+        "cross_paper_anchor",
+    ]
     mathematical_density: Literal["low", "medium", "high"] | None = None
     status: str
     linked_symbols: list[str] = Field(default_factory=list)

@@ -3,7 +3,7 @@ Optional MCP server: tool "list_declarations_for_paper"
 (read manifest/theorem_cards).
 Run with: uv run --project pipeline python -m sm_pipeline.mcp_server
 Requires: uv sync --extra mcp (or pip install mcp).
-Not a CI gate; see docs/mcp-lean-tooling.md.
+Not a CI gate; see docs/tooling/mcp-lean-tooling.md.
 """
 
 import json
@@ -42,9 +42,7 @@ TOOL_DEFINITIONS = [
                 "paper_id": {"type": "string"},
                 "file_path": {
                     "type": "string",
-                    "description": (
-                        "Path or substring (e.g. Langmuir1918.lean)"
-                    ),
+                    "description": ("Path or substring (e.g. Langmuir1918.lean)"),
                 },
             },
         },
@@ -138,8 +136,7 @@ def _list_declarations_in_file(paper_id: str, file_path: str) -> list[dict]:
     return [
         d
         for d in all_decls
-        if d.get("file_path")
-        and fp in d.get("file_path", "").replace("\\", "/")
+        if d.get("file_path") and fp in d.get("file_path", "").replace("\\", "/")
     ]
 
 
@@ -235,15 +232,11 @@ def _run_server() -> None:
         return [types.Tool(**tool) for tool in get_tool_definitions()]
 
     @server.call_tool()
-    async def call_tool(
-        name: str, arguments: dict | None
-    ) -> list[types.TextContent]:
+    async def call_tool(name: str, arguments: dict | None) -> list[types.TextContent]:
         payload = _call_tool_payload(name, arguments)
         if isinstance(payload, str):
             return [types.TextContent(type="text", text=payload)]
-        return [
-            types.TextContent(type="text", text=json.dumps(payload, indent=2))
-        ]
+        return [types.TextContent(type="text", text=json.dumps(payload, indent=2))]
 
     async def main() -> None:
         async with stdio_server() as (read_stream, write_stream):

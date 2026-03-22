@@ -16,7 +16,13 @@ class Paper(BaseModel):
     authors: list[str]
     year: int
     domain: Literal[
-        "chemistry", "mathematics", "physics", "probability", "control", "quantum_information", "other"
+        "chemistry",
+        "mathematics",
+        "physics",
+        "probability",
+        "control",
+        "quantum_information",
+        "other",
     ]
     abstract: str | None = None
     tags: list[str] = Field(default_factory=list)

@@ -24,7 +24,9 @@ from sm_pipeline.publish.export_portal_data import export_portal_data
 StageHandler = Callable[[Path, str], StageOutcome]
 
 
-def run_intake_stage(repo_root: Path, paper_id: str, *, admit_if_missing: bool = True) -> StageOutcome:
+def run_intake_stage(
+    repo_root: Path, paper_id: str, *, admit_if_missing: bool = True
+) -> StageOutcome:
     """8.1: admit paper skeleton, hash source, intake report, rebuild index."""
     repo_root = repo_root.resolve()
     paper_dir = repo_root / "corpus" / "papers" / paper_id

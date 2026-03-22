@@ -49,10 +49,10 @@ def test_run_benchmarks_includes_llm_eval_task() -> None:
         "lean_reference_conversion_ready",
     ):
         assert key in task
-    assert task["cases_scanned"] >= 1
+    assert task["cases_scanned"] >= 2
     assert task["gold_claim_id_recall_micro"] == pytest.approx(1.0)
     assert task["mapping_keys_recall_micro"] == pytest.approx(1.0)
-    assert task["lean_reference_conversion_ready"] >= 1
+    assert task["lean_reference_conversion_ready"] >= 2
 
 
 def test_generate_llm_claim_proposals_metadata_includes_template_digest(
@@ -76,9 +76,10 @@ def test_generate_llm_claim_proposals_metadata_includes_template_digest(
     data = generate_llm_claim_proposals(tmp_path, paper_id, provider, model="fake")
     meta = data.get("metadata") or {}
     assert meta.get("prompt_template_id") == CLAIM_PROMPT_TEMPLATE_ID
-    assert meta.get("prompt_template_sha256") == declared_llm_prompt_template_versions()[
-        CLAIM_PROMPT_TEMPLATE_ID
-    ]
+    assert (
+        meta.get("prompt_template_sha256")
+        == declared_llm_prompt_template_versions()[CLAIM_PROMPT_TEMPLATE_ID]
+    )
     dig = meta.get("input_artifact_sha256")
     assert isinstance(dig, dict)
     assert "metadata_json" in dig

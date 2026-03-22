@@ -1,0 +1,20 @@
+{
+  "id": "stress_units_dimensional_2024",
+  "title": "Stress test: dimensional analysis and unit systems (intake scaffold)",
+  "authors": [
+    "Scientific Memory (stress)"
+  ],
+  "year": 2024,
+  "domain": "other",
+  "tags": [
+    "hardness.primary:units_and_dimensional_analysis",
+    "admission_rationale:Pipeline stress for unit consistency, scaling, and dimensional constraints before full extraction."
+  ],
+  "source": {
+    "kind": "pdf",
+    "path": "corpus/papers/stress_units_dimensional_2024/source/source.pdf",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "artifact_status": "admitted",
+  "first_artifact_at": "2026-03-21T10:17:16Z"
+}

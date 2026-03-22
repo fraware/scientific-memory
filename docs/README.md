@@ -13,16 +13,21 @@
 | [paper-intake.md](paper-intake.md) | SPEC 8.1 intake and optional `metadata.yaml` note |
 | [metrics.md](metrics.md) | Metrics and gold benchmarks (SPEC 12) |
 | [generated-artifacts.md](generated-artifacts.md) | What is generated and how |
+| [infra/README.md](infra/README.md) | CI, release, and cache policy docs |
 | [ROADMAP.md](../ROADMAP.md) | Versions and content targets |
 | [adr/README.md](adr/README.md) | Architecture decision records |
 
 | Optional tooling | Purpose |
 |------------------|---------|
-| [mcp-lean-tooling.md](mcp-lean-tooling.md) | MCP server |
-| [pandoc-latex-integration.md](pandoc-latex-integration.md) | Pandoc / LaTeX extraction |
+| [tooling/mcp-lean-tooling.md](tooling/mcp-lean-tooling.md) | MCP server |
+| [tooling/pandoc-latex-integration.md](tooling/pandoc-latex-integration.md) | Pandoc / LaTeX extraction |
 | [pipeline-extension-points.md](pipeline-extension-points.md) | Extending pipeline stages; blueprint / leanblueprint note |
-| [prime-intellect-llm.md](prime-intellect-llm.md) | Optional Prime Intellect LLM proposals (suggest-only; human-gated apply) |
-| [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md) | Canonical vs suggestion artifacts; risk register touchpoints |
+| [tooling/prime-intellect-llm.md](tooling/prime-intellect-llm.md) | Optional Prime Intellect LLM proposals (suggest-only; human-gated apply) |
+| [reference/trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md) | Canonical vs suggestion artifacts; risk register touchpoints |
+
+| Operations | Purpose |
+|------------|---------|
+| [operations/hard-wedge-stress-papers.md](operations/hard-wedge-stress-papers.md) | Intake-only hard-dimension scaffold policy |
 
 | Per-paper narrative | |
 |---------------------|---|

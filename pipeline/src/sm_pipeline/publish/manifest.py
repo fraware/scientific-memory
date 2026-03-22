@@ -194,9 +194,17 @@ def _derive_dependency_graph(cards: list) -> list[dict[str, str]]:
         dep_ids = card.get("dependency_ids") or []
         if not card_id or not isinstance(dep_ids, list):
             continue
+        method = str(card.get("dependency_extraction_method") or "")
+        confidence = "high" if "tier1" in method else "medium"
         for dep_id in dep_ids:
             if isinstance(dep_id, str) and dep_id.strip():
-                edges.append({"from": dep_id.strip(), "to": str(card_id)})
+                edges.append(
+                    {
+                        "from": dep_id.strip(),
+                        "to": str(card_id),
+                        "confidence": confidence,
+                    }
+                )
     return edges
 
 

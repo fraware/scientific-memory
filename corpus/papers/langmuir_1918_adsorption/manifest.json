@@ -1,7 +1,7 @@
 {
   "paper_id": "langmuir_1918_adsorption",
   "version": "0.1.0",
-  "build_hash": "6fda97e9b2b82189d97f91008ef73dd2ae1c4262c52d78e75ba51be091cbd877",
+  "build_hash": "d0b82176db56057d9fec38e1ae8265fd60b563dbd661e888e6497e3459e217c5",
   "build_hash_version": "2",
   "coverage_metrics": {
     "claim_count": 20,
@@ -76,12 +76,89 @@
   ],
   "dependency_graph": [
     {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_002",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_003",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_004",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_005",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_007",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_008",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_009",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_010",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_011",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_012",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_013",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_014",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_015",
+      "confidence": "high"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_016",
+      "confidence": "high"
+    },
+    {
       "from": "langmuir_1918_adsorption_card_016",
-      "to": "langmuir_1918_adsorption_card_018"
+      "to": "langmuir_1918_adsorption_card_018",
+      "confidence": "medium"
     },
     {
       "from": "langmuir_1918_adsorption_card_012",
-      "to": "langmuir_1918_adsorption_card_019"
+      "to": "langmuir_1918_adsorption_card_019",
+      "confidence": "medium"
+    },
+    {
+      "from": "langmuir_1918_adsorption_card_001",
+      "to": "langmuir_1918_adsorption_card_020",
+      "confidence": "high"
     }
   ],
   "kernel_index": [

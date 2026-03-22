@@ -58,7 +58,13 @@ def main() -> int:
             "",
             f"**Total machine-checked declarations (sum of manifests):** {total}",
             "",
-            "**Test counts and CI gate details** are not embedded here; run `uv run pytest --collect-only -q` and see [trust-boundary-and-extraction.md](../trust-boundary-and-extraction.md) for canonical vs suggestion artifacts.",
+            (
+                "**Test counts and CI gate details** are not embedded here; run "
+                "`uv run pytest --collect-only -q` and see "
+                "[trust-boundary-and-extraction.md]"
+                "(../reference/trust-boundary-and-extraction.md) for canonical "
+                "vs suggestion artifacts."
+            ),
             "",
         ]
     )

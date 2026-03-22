@@ -1,0 +1,28 @@
+{
+  "paper_id": "chem_dilution_reference",
+  "schema_version": "0.1.0",
+  "verification_boundary": "human_review_only",
+  "metadata": {
+    "provider": "eval_reference_fixture",
+    "model": "n/a"
+  },
+  "proposals": [
+    {
+      "proposal_id": "eval_ref_dilution_noop",
+      "paper_id": "chem_dilution_reference",
+      "claim_id": "chem_dilution_reference_claim_001",
+      "target_file": "formal/ScientificMemory/Chemistry/Solutions/DilutionRef.lean",
+      "target_decl": "solute_amount_preserved_under_dilution",
+      "edit_kind": "proof_repair",
+      "replacements": [
+        {
+          "find": "  conv_lhs => rw [← div_mul_cancel₀ c0 hk]",
+          "replace": "  conv_lhs => rw [← div_mul_cancel₀ c0 hk]"
+        }
+      ],
+      "rationale": "No-op replacement; unique find substring for static eval only.",
+      "confidence": 1.0,
+      "safety_flags": []
+    }
+  ]
+}

@@ -57,9 +57,7 @@ Task: propose new or revised claims as JSON per system instructions. If source i
 
 
 def claim_prompt_template_sha256() -> str:
-    return sha256_hex(
-        f"{CLAIM_SYSTEM}\n---SM_USER_TEMPLATE---\n{CLAIM_USER_TEMPLATE}"
-    )
+    return sha256_hex(f"{CLAIM_SYSTEM}\n---SM_USER_TEMPLATE---\n{CLAIM_USER_TEMPLATE}")
 
 
 MAPPING_PROMPT_TEMPLATE_ID: Final = "llm_mapping_proposals/v1"
@@ -102,9 +100,7 @@ Task: propose claim_id -> lean_declaration_short_name entries as JSON per system
 
 
 def mapping_prompt_template_sha256() -> str:
-    return sha256_hex(
-        f"{MAPPING_SYSTEM}\n---SM_USER_TEMPLATE---\n{MAPPING_USER_TEMPLATE}"
-    )
+    return sha256_hex(f"{MAPPING_SYSTEM}\n---SM_USER_TEMPLATE---\n{MAPPING_USER_TEMPLATE}")
 
 
 LEAN_PROMPT_TEMPLATE_ID: Final = "llm_lean_proposals/v1"

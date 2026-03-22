@@ -16,4 +16,4 @@ Agents may propose corpus or formal edits. Verification must remain human-gated 
 
 ## Consequences
 
-Documentation in [mcp-lean-tooling.md](../mcp-lean-tooling.md) describes the recommended agent loop. New worker code requires ADR amendment and security review.
+Documentation in [mcp-lean-tooling.md](../tooling/mcp-lean-tooling.md) describes the recommended agent loop. New worker code requires ADR amendment and security review.

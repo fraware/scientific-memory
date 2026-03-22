@@ -14,7 +14,9 @@ app = typer.Typer()
 def publish(
     paper_id: str = typer.Option(..., "--paper-id", help="Paper ID"),
 ) -> None:
-    report = run_pipeline_for_paper(Path(".").resolve(), paper_id, stages=[PipelineStage.publication])
+    report = run_pipeline_for_paper(
+        Path(".").resolve(), paper_id, stages=[PipelineStage.publication]
+    )
     for o in report.outcomes:
         typer.echo(f"[{o.stage.value}] {o.message}")
 
@@ -43,16 +45,23 @@ def export_diff_baseline_cmd(
     narrative: str | None = typer.Option(
         None, "--narrative", help="Optional narrative summary shown on portal diff page"
     ),
+    highlight: list[str] | None = typer.Option(
+        None,
+        "--highlight",
+        help="Repeatable: one bullet for highlights (release baselines require >=1)",
+    ),
 ) -> None:
     """Export current corpus state to corpus/snapshots/<baseline-id>.json for the Diff page."""
     from sm_pipeline.publish.diff_baseline import export_diff_baseline
 
     repo_root = Path(".").resolve()
+    highlights = [h.strip() for h in (highlight or []) if h and str(h).strip()]
     out = export_diff_baseline(
         repo_root,
         snapshot_at=snapshot_at,
         baseline_id=baseline_id,
         title=title,
         narrative=narrative,
+        highlights=highlights or None,
     )
     typer.echo(f"Diff baseline written to {out}")

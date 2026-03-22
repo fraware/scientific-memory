@@ -231,7 +231,9 @@ def metrics_cmd(
         elif result.get("policy_loaded"):
             typer.echo("Normalization policy: no violations")
         else:
-            typer.echo("Normalization policy: no policy file (benchmarks/normalization_policy.json)")
+            typer.echo(
+                "Normalization policy: no policy file (benchmarks/normalization_policy.json)"
+            )
     if reviewer_report or run_all:
         from sm_pipeline.validate.reviewer import compute_reviewer_report
 
@@ -244,7 +246,9 @@ def metrics_cmd(
                 f"Reviewer report: {disputed_wo} disputed without notes, {invalid} invalid status(es)"
             )
         else:
-            typer.echo("Reviewer report: claims by status; no disputed-without-notes or invalid status")
+            typer.echo(
+                "Reviewer report: claims by status; no disputed-without-notes or invalid status"
+            )
         card_result = compute_reviewer_status_metrics(repo_root)
         report["reviewer_status"] = card_result
         typer.echo(

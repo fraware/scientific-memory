@@ -19,8 +19,10 @@ def test_linked_kernel_must_be_tested() -> None:
                     {
                         "id": "k1",
                         "domain": "x",
-                        "input_schema": "",
-                        "output_schema": "",
+                        "io_typing": {
+                            "inputs": [{"name": "x", "numeric_kind": "float"}],
+                            "outputs": [{"name": "y", "numeric_kind": "float"}],
+                        },
                         "semantic_contract": "",
                         "linked_theorem_cards": ["card1"],
                         "test_status": "untested",
@@ -43,8 +45,10 @@ def test_linked_kernel_tested_passes() -> None:
                     {
                         "id": "k1",
                         "domain": "x",
-                        "input_schema": "",
-                        "output_schema": "",
+                        "io_typing": {
+                            "inputs": [{"name": "x", "numeric_kind": "float"}],
+                            "outputs": [{"name": "y", "numeric_kind": "float"}],
+                        },
                         "semantic_contract": "",
                         "linked_theorem_cards": ["card1"],
                         "test_status": "tested",

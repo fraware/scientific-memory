@@ -29,7 +29,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_at_time"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_002",
@@ -61,7 +62,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_rearranged"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_003",
@@ -93,7 +95,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.delta_velocity"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_004",
@@ -110,7 +113,7 @@
         "offset": 320
       }
     },
-    "informal_text": "Displacement over 2T equals twice displacement over T plus a T^2 (kinematics identity in \u211a).",
+    "informal_text": "Displacement over 2T equals twice displacement over T plus a T^2 (kinematics identity in ℚ).",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -125,7 +128,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_double_time"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_005",
@@ -155,7 +159,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.average_endpoints"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_006",
@@ -186,7 +191,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.accel_from_delta_v"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_007",
@@ -203,7 +209,7 @@
         "offset": 580
       }
     },
-    "informal_text": "Squared final velocity (u + a t)^2 expands to u^2 + 2 u a t + (a t)^2 in \u211a.",
+    "informal_text": "Squared final velocity (u + a t)^2 expands to u^2 + 2 u a t + (a t)^2 in ℚ.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -218,7 +224,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_squared_expand"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_008",
@@ -235,7 +242,7 @@
         "offset": 680
       }
     },
-    "informal_text": "Torricelli-style identity: (u + a t)^2 = u^2 + 2 a (u t + \u00bd a t^2) for uniform acceleration in \u211a.",
+    "informal_text": "Torricelli-style identity: (u + a t)^2 = u^2 + 2 a (u t + ½ a t^2) for uniform acceleration in ℚ.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -250,7 +257,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.torricelli_squared"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_009",
@@ -267,7 +275,7 @@
         "offset": 760
       }
     },
-    "informal_text": "With zero acceleration, u + 0\u00b7t = u (velocity unchanged in \u211a).",
+    "informal_text": "With zero acceleration, u + 0·t = u (velocity unchanged in ℚ).",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -280,7 +288,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.zero_accel_velocity_constant"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_010",
@@ -297,7 +306,7 @@
         "offset": 840
       }
     },
-    "informal_text": "At t = 0, displacement u\u00b70 + \u00bd a\u00b70^2 = 0.",
+    "informal_text": "At t = 0, displacement u·0 + ½ a·0^2 = 0.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -311,7 +320,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.zero_time_zero_displacement"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_011",
@@ -328,7 +338,7 @@
         "offset": 940
       }
     },
-    "informal_text": "Average of initial and final speeds times t equals u t + \u00bd a t^2 when v = u + a t.",
+    "informal_text": "Average of initial and final speeds times t equals u t + ½ a t^2 when v = u + a t.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -343,7 +353,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.average_velocity_displacement"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_012",
@@ -360,7 +371,7 @@
         "offset": 1040
       }
     },
-    "informal_text": "Velocity composition: u + a(t + s) = (u + a t) + a s for fixed a in \u211a.",
+    "informal_text": "Velocity composition: u + a(t + s) = (u + a t) + a s for fixed a in ℚ.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -376,7 +387,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.velocity_time_additivity"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_013",
@@ -393,7 +405,7 @@
         "offset": 1140
       }
     },
-    "informal_text": "Standard displacement formula is additive in initial velocity: (u1+u2)t + \u00bd a t^2 = u1 t + u2 t + \u00bd a t^2.",
+    "informal_text": "Standard displacement formula is additive in initial velocity: (u1+u2)t + ½ a t^2 = u1 t + u2 t + ½ a t^2.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -409,7 +421,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.displacement_linearity_in_u"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_014",
@@ -426,7 +439,7 @@
         "offset": 1220
       }
     },
-    "informal_text": "Doubling the half-quadratic term: 2\u00b7(\u00bd a t^2) = a t^2 in \u211a.",
+    "informal_text": "Doubling the half-quadratic term: 2·(½ a t^2) = a t^2 in ℚ.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -439,7 +452,8 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.double_half_quadratic_term"
-    ]
+    ],
+    "value_kind": "foundational_law"
   },
   {
     "id": "physics_kinematics_uniform_claim_015",
@@ -456,7 +470,7 @@
         "offset": 1320
       }
     },
-    "informal_text": "Mean acceleration ((u + a \u0394t) - u) / \u0394t equals a when \u0394t \u2260 0 in \u211a.",
+    "informal_text": "Mean acceleration ((u + a Δt) - u) / Δt equals a when Δt ≠ 0 in ℚ.",
     "claim_type": "theorem",
     "mathematical_density": "high",
     "status": "machine_checked",
@@ -471,6 +485,7 @@
     ],
     "linked_formal_targets": [
       "ScientificMemory.Physics.Kinematics.UniformAccel.mean_acceleration_over_interval"
-    ]
+    ],
+    "value_kind": "foundational_law"
   }
 ]

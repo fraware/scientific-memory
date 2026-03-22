@@ -44,9 +44,7 @@ def main() -> int:
     except (subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired):
         return 0
     changed = [line.strip() for line in out.stdout.splitlines() if line.strip()]
-    schema_changed = any(
-        s.startswith("schemas/") and s.endswith(".schema.json") for s in changed
-    )
+    schema_changed = any(s.startswith("schemas/") and s.endswith(".schema.json") for s in changed)
     doc_changed = "docs/contributor-playbook.md" in changed
     if schema_changed and not doc_changed:
         print(

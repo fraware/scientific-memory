@@ -8,13 +8,13 @@
   },
   "tasks": {
     "extraction": {
-      "paper_count": 6,
+      "paper_count": 8,
       "claim_count": 62,
       "claims_with_source_span": 62,
       "assumption_count": 10
     },
     "mapping": {
-      "paper_count": 6,
+      "paper_count": 8,
       "mapped_claims": 62,
       "total_claims": 62
     },
@@ -50,15 +50,28 @@
       "lean_proposals_conversion_ready": 0
     },
     "llm_eval": {
-      "cases_scanned": 1,
-      "reference_claim_bundles": 1,
-      "reference_mapping_bundles": 1,
-      "reference_lean_bundles": 1,
+      "cases_scanned": 2,
+      "reference_claim_bundles": 2,
+      "reference_mapping_bundles": 2,
+      "reference_lean_bundles": 2,
+      "reviewer_time_seconds_total": 97,
+      "reviewer_time_observations": 2,
       "gold_claim_id_recall_micro": 1.0,
+      "gold_claim_id_precision_micro": 1.0,
+      "gold_claim_id_f1_micro": 1.0,
+      "claim_disagreement_rate_micro": 0.0,
       "mapping_keys_recall_micro": 1.0,
       "mapping_keys_precision_micro": 1.0,
-      "lean_reference_proposals_total": 1,
-      "lean_reference_conversion_ready": 1
+      "mapping_keys_f1_micro": 1.0,
+      "mapping_disagreement_rate_micro": 0.0,
+      "lean_reference_proposals_total": 2,
+      "lean_reference_conversion_ready": 2,
+      "promotion_decisions_total": 0,
+      "promotion_acceptance_rate": 0.0,
+      "promotion_accepted_total": 0,
+      "promotion_rejected_total": 0,
+      "promotion_edited_total": 0,
+      "promotion_pending_total": 0
     }
   }
 }

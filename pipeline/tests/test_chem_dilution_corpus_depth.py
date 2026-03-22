@@ -16,13 +16,9 @@ def test_chem_dilution_has_two_machine_checked_mapped_claims() -> None:
     enc = "utf-8"
     claims = json.loads((paper / "claims.json").read_text(encoding=enc))
     mapping = json.loads((paper / "mapping.json").read_text(encoding=enc))
-    assumptions = json.loads(
-        (paper / "assumptions.json").read_text(encoding=enc)
-    )
+    assumptions = json.loads((paper / "assumptions.json").read_text(encoding=enc))
     symbols = json.loads((paper / "symbols.json").read_text(encoding=enc))
-    cards = json.loads(
-        (paper / "theorem_cards.json").read_text(encoding=enc)
-    )
+    cards = json.loads((paper / "theorem_cards.json").read_text(encoding=enc))
 
     assert len(claims) == 2
     assert all(c.get("status") == "machine_checked" for c in claims)
@@ -31,17 +27,11 @@ def test_chem_dilution_has_two_machine_checked_mapped_claims() -> None:
 
     ctd = mapping.get("claim_to_decl") or {}
     assert len(ctd) == 2
-    assert (
-        ctd.get("chem_dilution_reference_claim_002")
-        == "conc_from_fixed_amount"
-    )
+    assert ctd.get("chem_dilution_reference_claim_002") == "conc_from_fixed_amount"
 
     assert len(assumptions) >= 2
     assert len(symbols) >= 5
     assert len(cards) == 2
     decls = {c.get("lean_decl") for c in cards if isinstance(c, dict)}
-    want = (
-        "ScientificMemory.Chemistry.Solutions.DilutionRef."
-        "conc_from_fixed_amount"
-    )
+    want = "ScientificMemory.Chemistry.Solutions.DilutionRef.conc_from_fixed_amount"
     assert want in decls

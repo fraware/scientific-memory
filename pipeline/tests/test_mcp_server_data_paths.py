@@ -10,7 +10,12 @@ def _write_minimal_paper(root: Path) -> None:
     paper = root / "corpus" / "papers" / "p1"
     paper.mkdir(parents=True)
     (root / "corpus" / "index.json").write_text(
-        json.dumps({"version": "0.1", "papers": [{"id": "p1", "title": "P1", "year": 2024, "domain": "other"}]}),
+        json.dumps(
+            {
+                "version": "0.1",
+                "papers": [{"id": "p1", "title": "P1", "year": 2024, "domain": "other"}],
+            }
+        ),
         encoding="utf-8",
     )
     (paper / "manifest.json").write_text(
@@ -51,7 +56,9 @@ def test_list_declarations_for_paper_reads_manifest_and_cards(tmp_path: Path, mo
     assert any(d.get("source") == "theorem_cards" for d in out)
 
 
-def test_dependency_graph_for_declaration_returns_card_and_graph(tmp_path: Path, monkeypatch) -> None:
+def test_dependency_graph_for_declaration_returns_card_and_graph(
+    tmp_path: Path, monkeypatch
+) -> None:
     _write_minimal_paper(tmp_path)
     monkeypatch.chdir(tmp_path)
     out = mcp_server._get_dependency_graph_for_declaration("p1", "ScientificMemory.P1.d1")

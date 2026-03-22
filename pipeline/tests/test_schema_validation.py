@@ -51,7 +51,13 @@ def test_validate_repo_on_pinned_fixture() -> None:
         paper_dir.mkdir(parents=True, exist_ok=True)
         (paper_dir / "extraction_run.json").write_text(
             json.dumps(
-                {"paper_id": "pinned_fixture", "recorded_at": "2026-03-01T00:00:00Z", "claim_count": 1, "claims_with_source_span": 0, "assumption_count": 0},
+                {
+                    "paper_id": "pinned_fixture",
+                    "recorded_at": "2026-03-01T00:00:00Z",
+                    "claim_count": 1,
+                    "claims_with_source_span": 0,
+                    "assumption_count": 0,
+                },
                 indent=2,
             ),
             encoding="utf-8",
@@ -70,14 +76,14 @@ def test_validate_repo_schemas() -> None:
     common = _load_json(schemas_dir / "common.schema.json")
     paper_schema = _load_json(schemas_dir / "paper.schema.json")
     claim_schema = _load_json(schemas_dir / "claim.schema.json")
-    
+
     # Build registry with common schema for $ref resolution
     base_uri = "https://scientific-memory.org/schemas/"
     common_uri = f"{base_uri}common.schema.json"
     registry = Registry().with_resource(
         common_uri, Resource.from_contents(common, default_specification=DRAFT202012)
     )
-    
+
     paper_validator = Draft202012Validator(paper_schema, registry=registry)
     claim_validator = Draft202012Validator(claim_schema, registry=registry)
 
@@ -101,13 +107,13 @@ def test_metadata_conforms_to_paper_schema() -> None:
     )
     paper_schema = _load_json(repo_root / "schemas" / "paper.schema.json")
     common = _load_json(repo_root / "schemas" / "common.schema.json")
-    
+
     # Build registry with common schema for $ref resolution
     base_uri = "https://scientific-memory.org/schemas/"
     common_uri = f"{base_uri}common.schema.json"
     registry = Registry().with_resource(
         common_uri, Resource.from_contents(common, default_specification=DRAFT202012)
     )
-    
+
     paper_validator = Draft202012Validator(paper_schema, registry=registry)
     paper_validator.validate(metadata)

@@ -1,0 +1,18 @@
+{
+  "paper_id": "stress_approx_asymptotic_2024",
+  "version": "0.1.0",
+  "build_hash": "2aad35988c72719d7ec2d1968a32e9289d865f365eca9bc15d3166e010e0b889",
+  "build_hash_version": "2",
+  "coverage_metrics": {
+    "claim_count": 0,
+    "mapped_claim_count": 0,
+    "machine_checked_count": 0,
+    "kernel_linked_count": 0
+  },
+  "generated_pages": [
+    "/papers/stress_approx_asymptotic_2024"
+  ],
+  "declaration_index": [],
+  "dependency_graph": [],
+  "kernel_index": []
+}
