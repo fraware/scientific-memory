@@ -22,6 +22,6 @@ jobs:
         run: |
           uv run --project pipeline ruff check pipeline kernels kernels/conformance scripts tests --output-format sarif --exit-zero > ruff.sarif
       - name: Upload SARIF to code scanning
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: ruff.sarif
