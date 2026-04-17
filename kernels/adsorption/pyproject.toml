@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 dependencies = [
   "hypothesis>=6.92",
   "kernel-conformance",
-  "pydantic>=2.8",
+  "pydantic>=2.13.2",
   "pytest>=8.0",
 ]
 
