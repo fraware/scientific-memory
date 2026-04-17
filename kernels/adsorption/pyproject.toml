@@ -3,7 +3,7 @@ name = "adsorption-kernel"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = [
-  "hypothesis>=6.92",
+  "hypothesis>=6.152.1",
   "kernel-conformance",
   "pydantic>=2.8",
   "pytest>=8.0",
