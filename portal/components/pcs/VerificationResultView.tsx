@@ -39,7 +39,7 @@ export function VerificationResultView({ result }: VerificationResultViewProps) 
       </p>
       <ul className="mt-3 space-y-2">
         {checks.map((c) => (
-          <li key={c.id} className="rounded border p-3 text-sm">
+          <li key={c.id || c.name} className="rounded border p-3 text-sm">
             <div className="flex flex-wrap items-center gap-2">
               <span className="font-medium">{c.name}</span>
               <span

@@ -10,11 +10,16 @@
       "type": "string",
       "pattern": "^SignedScienceClaimBundle\\.v0$"
     },
+    "bundle_id": { "type": "string", "minLength": 1 },
+    "bundle_digest": { "type": "string", "minLength": 1 },
+    "signed_at": { "type": "string", "minLength": 1 },
     "science_claim_bundle": {
-      "$ref": "https://scientific-memory.org/schemas/pcs/science_claim_bundle.schema.json"
+      "type": "object",
+      "description": "Validated by pcs-core or schemas/pcs/science_claim_bundle.schema.json"
     },
     "verification_result": {
-      "$ref": "https://scientific-memory.org/schemas/pcs/verification_result.schema.json"
+      "type": "object",
+      "description": "Validated by pcs-core or schemas/pcs/verification_result.schema.json"
     },
     "signature_or_digest": { "type": "string", "minLength": 1 },
     "reproduce_commands": {

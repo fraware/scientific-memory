@@ -20,6 +20,11 @@ export function RuntimeReceiptView({ receipt }: RuntimeReceiptViewProps) {
       {receipt.summary != null && (
         <p className="mt-2 text-sm">{String(receipt.summary)}</p>
       )}
+      {receipt.trace_hash != null && (
+        <p className="mt-2 font-mono text-xs text-gray-700" data-testid="pcs-runtime-trace-hash">
+          trace_hash: {String(receipt.trace_hash)}
+        </p>
+      )}
       {receipt.payload != null && (
         <pre className="mt-3 overflow-x-auto rounded border bg-gray-50 p-3 text-xs">
           {JSON.stringify(receipt.payload, null, 2)}

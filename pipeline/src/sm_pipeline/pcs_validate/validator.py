@@ -10,6 +10,12 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
+from sm_pipeline.pcs_validate.pcs_core_hook import (
+    is_pcs_core_science_claim_bundle,
+    is_pcs_core_verification_result,
+    validate_with_pcs_core,
+)
+
 PCS_SCHEMA_BASE_URI = "https://scientific-memory.org/schemas/pcs/"
 
 
@@ -51,18 +57,6 @@ def validator_for(schema_name: str, repo_root: Path) -> Draft202012Validator:
     return Draft202012Validator(schema, registry=registry)
 
 
-def _try_pcs_core_validate(bundle: dict[str, Any]) -> None:
-    """Optional pcs-core validation hook (no-op if package unavailable)."""
-    try:
-        from pcs_core.validate import validate_signed_science_claim_bundle  # type: ignore
-    except ImportError:
-        try:
-            from pcs_core import validate_signed_science_claim_bundle  # type: ignore
-        except ImportError:
-            return
-    validate_signed_science_claim_bundle(bundle)
-
-
 def validate_signed_bundle(
     bundle: dict[str, Any],
     *,
@@ -79,14 +73,14 @@ def validate_signed_bundle(
     errors: list[str] = []
 
     if strict:
-        _try_pcs_core_validate(bundle)
+        errors.extend(validate_with_pcs_core(bundle))
 
     validator = validator_for("signed_science_claim_bundle.schema.json", root)
     for err in sorted(validator.iter_errors(bundle), key=lambda e: e.path):
         errors.append(err.message)
 
     scb = bundle.get("science_claim_bundle")
-    if isinstance(scb, dict):
+    if isinstance(scb, dict) and not is_pcs_core_science_claim_bundle(scb):
         scb_validator = validator_for("science_claim_bundle.schema.json", root)
         for err in sorted(scb_validator.iter_errors(scb), key=lambda e: e.path):
             errors.append(f"science_claim_bundle: {err.message}")
@@ -100,10 +94,20 @@ def validate_signed_bundle(
         if not assumptions:
             errors.append("science_claim_bundle.assumption_set.assumptions is required")
 
+    if isinstance(scb, dict) and is_pcs_core_science_claim_bundle(scb):
+        assumption_set = scb.get("assumption_set")
+        assumptions = (
+            assumption_set.get("assumptions")
+            if isinstance(assumption_set, dict)
+            else None
+        )
+        if not assumptions:
+            errors.append("science_claim_bundle.assumption_set.assumptions is required")
+
     vr = bundle.get("verification_result")
     if vr is None and isinstance(scb, dict):
         vr = scb.get("verification_result")
-    if isinstance(vr, dict):
+    if isinstance(vr, dict) and not is_pcs_core_verification_result(vr):
         vr_validator = validator_for("verification_result.schema.json", root)
         for err in sorted(vr_validator.iter_errors(vr), key=lambda e: e.path):
             errors.append(f"verification_result: {err.message}")
@@ -128,6 +132,10 @@ def collect_import_warnings(bundle: dict[str, Any]) -> list[str]:
         warnings.append("VerificationResult is absent; import proceeds with advisory only.")
 
     trace_cert = scb.get("trace_certificate")
+    if not isinstance(trace_cert, dict):
+        certificates = scb.get("certificates")
+        if isinstance(certificates, list) and certificates and isinstance(certificates[0], dict):
+            trace_cert = certificates[0]
     if isinstance(trace_cert, dict):
         status = str(trace_cert.get("status") or "")
         if status != "CertificateChecked":

@@ -10,7 +10,14 @@ Scientific Memory imports **signed** `ScienceClaimBundle` artifacts produced by 
 - Optional top-level `verification_result` (`VerificationResult.v0`)
 - Top-level `signature_or_digest`
 
-Canonical artifact vocabulary is defined in [pcs-core](https://github.com/SentinelOps-CI/pcs-core). This repository validates against vendored JSON Schemas under `schemas/pcs/` and will call `pcs_core` when that package is installed.
+Canonical artifact vocabulary is defined in [pcs-core](https://github.com/SentinelOps-CI/pcs-core). This repository validates against vendored JSON Schemas under `schemas/pcs/` and calls `pcs_core` (editable path dependency in `pipeline/pyproject.toml`) for canonical `ScienceClaimBundle.v0` and `VerificationResult.v0` shapes.
+
+Two bundle shapes are supported:
+
+| Shape | Nested claim | Receipt / certificate |
+|-------|----------------|----------------------|
+| LabTrust portal (legacy) | `science_claim_bundle.claim` | singular `runtime_receipt`, `trace_certificate` |
+| pcs-core / Provability Fabric | `science_claim_bundle.claim_artifact` | `runtime_receipts[]`, `certificates[]` |
 
 ## Commands
 

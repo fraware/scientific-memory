@@ -10,8 +10,12 @@ dependencies = [
   "rich>=13.7",
   "networkx>=3.3",
   "httpx>=0.27",
-  "python-dotenv>=1.0"
+  "python-dotenv>=1.0",
+  "pcs-core>=0.1.0",
 ]
+
+[tool.uv.sources]
+pcs-core = { path = "../../pcs-core/python", editable = true }
 
 [project.optional-dependencies]
 mcp = ["mcp>=1.0"]
