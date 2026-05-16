@@ -1,0 +1,70 @@
+{
+  "schema_version": "SignedScienceClaimBundle.v0",
+  "signature_or_digest": "sha256:no-verification-result",
+  "science_claim_bundle": {
+    "schema_version": "ScienceClaimBundle.v0",
+    "created_at": "2026-05-01T11:30:00Z",
+    "producer": "LabTrust-Gym",
+    "producer_version": "0.1.0",
+    "source_repo": "https://github.com/fraware/LabTrust-Gym",
+    "source_commit": "warn-demo",
+    "status": "RuntimeChecked",
+    "signature_or_digest": "sha256:bundle",
+    "claim": {
+      "schema_version": "ClaimArtifact.v0",
+      "id": "claim-missing-vr",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "warn-demo",
+      "status": "RuntimeChecked",
+      "signature_or_digest": "sha256:claim",
+      "claim_text": "Bundle without verification result.",
+      "guarantee_types": {
+        "runtime_observed": true,
+        "certificate_checked": false
+      }
+    },
+    "assumption_set": {
+      "schema_version": "AssumptionSet.v0",
+      "id": "assumptions",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "warn-demo",
+      "status": "RuntimeObserved",
+      "signature_or_digest": "sha256:assumptions",
+      "assumptions": [
+        {
+          "id": "a1",
+          "text": "Simulation only."
+        }
+      ]
+    },
+    "runtime_receipt": {
+      "schema_version": "RuntimeReceipt.v0",
+      "id": "receipt",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "warn-demo",
+      "status": "RuntimeChecked",
+      "signature_or_digest": "sha256:receipt",
+      "trace_hash": "sha256:trace"
+    },
+    "trace_certificate": {
+      "schema_version": "TraceCertificate.v0",
+      "id": "cert",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "CertifyEdge",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/CertifyEdge",
+      "source_commit": "warn-demo",
+      "status": "CertificatePending",
+      "signature_or_digest": "sha256:cert"
+    }
+  }
+}
