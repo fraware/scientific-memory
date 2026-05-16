@@ -11,18 +11,6 @@ export default async function HomePage() {
         Buildable, machine-checkable scientific knowledge.
       </p>
 
-      <nav className="mt-6 flex gap-4 text-sm">
-        <Link href="/search" className="text-blue-600 hover:underline">
-          Search
-        </Link>
-        <Link href="/dashboard" className="text-blue-600 hover:underline">
-          Dashboard
-        </Link>
-        <Link href="/diff" className="text-blue-600 hover:underline">
-          Diff
-        </Link>
-      </nav>
-
       <section className="mt-8">
         <h2 className="text-xl font-medium">Papers</h2>
         <ul className="mt-3 space-y-2">

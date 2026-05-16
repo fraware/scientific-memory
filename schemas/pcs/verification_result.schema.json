@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/pcs/verification_result.schema.json",
+  "title": "VerificationResult.v0",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "created_at",
+    "producer",
+    "producer_version",
+    "source_repo",
+    "source_commit",
+    "status",
+    "signature_or_digest",
+    "checks"
+  ],
+  "properties": {
+    "schema_version": { "const": "VerificationResult.v0" },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "outcome"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "outcome": {
+            "type": "string",
+            "enum": ["pass", "fail", "skip", "warn"]
+          },
+          "detail": { "type": "string" },
+          "guarantee_type": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "overall_outcome": {
+      "type": "string",
+      "enum": ["pass", "fail", "partial"]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "https://scientific-memory.org/schemas/pcs/artifact_base.schema.json"
+    }
+  ]
+}

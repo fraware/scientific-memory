@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/pcs/signed_science_claim_bundle.schema.json",
+  "title": "SignedScienceClaimBundle (LabTrust v0.1)",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "science_claim_bundle", "signature_or_digest"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^SignedScienceClaimBundle\\.v0$"
+    },
+    "science_claim_bundle": {
+      "$ref": "https://scientific-memory.org/schemas/pcs/science_claim_bundle.schema.json"
+    },
+    "verification_result": {
+      "$ref": "https://scientific-memory.org/schemas/pcs/verification_result.schema.json"
+    },
+    "signature_or_digest": { "type": "string", "minLength": 1 },
+    "reproduce_commands": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "verify_commands": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}

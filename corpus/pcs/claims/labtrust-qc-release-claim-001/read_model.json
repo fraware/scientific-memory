@@ -1,0 +1,177 @@
+{
+  "artifact_hashes": [
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:claim-artifact-001",
+      "name": "claim_digest",
+      "source_artifact": "labtrust-qc-release-claim-001"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:trace-json-qc-release",
+      "name": "trace_hash",
+      "source_artifact": "runtime-receipt-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:events-qc-release",
+      "name": "events_hash",
+      "source_artifact": "runtime-receipt-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:temporal-policy-qc-release",
+      "name": "policy_hash",
+      "source_artifact": "trace-certificate-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:qc-release-stl",
+      "name": "spec_hash",
+      "source_artifact": "trace-certificate-qc-release"
+    }
+  ],
+  "assumption_set": {
+    "assumptions": [
+      {
+        "id": "assume-sim-lab",
+        "kind": "simulation_scope",
+        "status": "RuntimeObserved",
+        "text": "The environment is the LabTrust-Gym simulated hospital laboratory, not a production clinical site."
+      },
+      {
+        "id": "assume-qc-policy",
+        "kind": "policy",
+        "status": "CertificateChecked",
+        "text": "QC release policy template hospital_lab/qc_release.stl governs acceptable release transitions."
+      }
+    ],
+    "created_at": "2026-05-01T11:00:00Z",
+    "id": "labtrust-qc-release-assumptions",
+    "producer": "LabTrust-Gym",
+    "producer_version": "0.1.0",
+    "schema_version": "AssumptionSet.v0",
+    "signature_or_digest": "sha256:assumption-set-001",
+    "source_commit": "labtrust-qc-release-demo",
+    "source_repo": "https://github.com/fraware/LabTrust-Gym",
+    "status": "RuntimeObserved"
+  },
+  "bundle_signature_or_digest": "sha256:signed-bundle-labtrust-demo-001",
+  "claim": {
+    "created_at": "2026-05-01T11:00:00Z",
+    "guarantee_types": {
+      "certificate_checked": true,
+      "empirically_measured": false,
+      "formally_checked": true,
+      "human_reviewed": false,
+      "runtime_observed": true,
+      "unchecked_advisory": false
+    },
+    "id": "labtrust-qc-release-claim-001",
+    "producer": "LabTrust-Gym",
+    "producer_version": "0.1.0",
+    "signature_or_digest": "sha256:claim-artifact-001",
+    "status": "RuntimeChecked",
+    "text": "The qc-release workflow run observed protocol-compliant specimen handling and release gating in the LabTrust-Gym hospital-lab simulation."
+  },
+  "claim_id": "labtrust-qc-release-claim-001",
+  "limitation_notice": "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory.",
+  "limitations": [
+    "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory."
+  ],
+  "reproduce_commands": [
+    "labtrust run-demo qc-release",
+    "labtrust export-pcs --run runs/qc-release --out science_claim_bundle.pending.json"
+  ],
+  "runtime_receipt": {
+    "created_at": "2026-05-01T11:15:00Z",
+    "events_hash": "sha256:events-qc-release",
+    "id": "runtime-receipt-qc-release",
+    "payload": {
+      "release_gate": "passed",
+      "run_id": "runs/qc-release",
+      "steps_observed": 42
+    },
+    "producer": "LabTrust-Gym",
+    "producer_version": "0.1.0",
+    "schema_version": "RuntimeReceipt.v0",
+    "signature_or_digest": "sha256:runtime-receipt-001",
+    "source_commit": "labtrust-qc-release-demo",
+    "source_repo": "https://github.com/fraware/LabTrust-Gym",
+    "status": "RuntimeChecked",
+    "summary": "Observed workflow steps, instrument events, and release gate transitions for qc-release.",
+    "trace_hash": "sha256:trace-json-qc-release"
+  },
+  "schema_version": "PcsClaimReadModel.v0",
+  "source_repositories": [
+    {
+      "source_commit": "labtrust-qc-release-demo",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym"
+    },
+    {
+      "source_commit": "certifyedge-demo",
+      "source_repo": "https://github.com/fraware/CertifyEdge"
+    },
+    {
+      "source_commit": "abc123def456",
+      "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
+    }
+  ],
+  "trace_certificate": {
+    "created_at": "2026-05-01T11:20:00Z",
+    "id": "trace-certificate-qc-release",
+    "payload": {
+      "certificate_status": "valid",
+      "spec": "templates/hospital_lab/qc_release.stl"
+    },
+    "policy_hash": "sha256:temporal-policy-qc-release",
+    "producer": "CertifyEdge",
+    "producer_version": "0.1.0",
+    "schema_version": "TraceCertificate.v0",
+    "signature_or_digest": "sha256:trace-certificate-001",
+    "source_commit": "certifyedge-demo",
+    "source_repo": "https://github.com/fraware/CertifyEdge",
+    "spec_hash": "sha256:qc-release-stl",
+    "status": "CertificateChecked",
+    "summary": "Temporal certificate attests trace.json satisfies qc_release.stl."
+  },
+  "verification_result": {
+    "checks": [
+      {
+        "detail": "RuntimeReceipt.v0 digest matches bundle linkage.",
+        "guarantee_type": "runtime_observed",
+        "id": "check-runtime-receipt",
+        "name": "Runtime receipt hash chain",
+        "outcome": "pass"
+      },
+      {
+        "detail": "TraceCertificate.v0 status CertificateChecked.",
+        "guarantee_type": "certificate_checked",
+        "id": "check-trace-certificate",
+        "name": "Trace certificate temporal policy",
+        "outcome": "pass"
+      },
+      {
+        "detail": "Provability Fabric signing check passed.",
+        "guarantee_type": "formally_checked",
+        "id": "check-bundle-signature",
+        "name": "Bundle signature",
+        "outcome": "pass"
+      }
+    ],
+    "created_at": "2026-05-01T12:00:00Z",
+    "id": "verification-result-labtrust-qc-release",
+    "overall_outcome": "pass",
+    "producer": "provability-fabric",
+    "producer_version": "0.1.0",
+    "schema_version": "VerificationResult.v0",
+    "signature_or_digest": "sha256:verification-result-001",
+    "source_commit": "abc123def456",
+    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+    "status": "ProofChecked"
+  },
+  "verify_commands": [
+    "pf verify science-claim signed_science_claim_bundle.json",
+    "just pcs-validate-bundle BUNDLE=signed_science_claim_bundle.json"
+  ]
+}

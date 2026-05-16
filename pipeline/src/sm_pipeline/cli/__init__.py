@@ -9,6 +9,7 @@ from sm_pipeline.cli import (
     ingest,
     llm_proposals,
     metrics,
+    pcs,
     publish,
     validate_cmd,
 )
@@ -60,3 +61,8 @@ app.command("llm-apply-claim-proposals")(llm_proposals.llm_apply_claim_proposals
 app.command("llm-apply-mapping-proposals")(llm_proposals.llm_apply_mapping_proposals)
 app.command("llm-lean-proposals")(llm_proposals.llm_lean_proposals)
 app.command("llm-lean-proposals-to-apply-bundle")(llm_proposals.llm_lean_proposals_to_apply_bundle)
+
+# PCS LabTrust import (v0.1)
+app.command("pcs-import-bundle")(pcs.pcs_import_bundle)
+app.command("pcs-validate-bundle")(pcs.pcs_validate_bundle)
+app.command("pcs-render-claim")(pcs.pcs_render_claim)

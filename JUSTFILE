@@ -61,6 +61,11 @@ test:
 	uv run --project kernels/adsorption pytest
 	bash tests/smoke/test_repo_bootstrap.sh
 
+# PCS LabTrust import contract tests (also run via `just test`)
+test-pcs:
+	@echo "==> test-pcs"
+	uv run --project pipeline pytest ../tests/pcs
+
 benchmark:
 	uv run --project pipeline python -m sm_pipeline.cli benchmark
 
@@ -170,3 +175,13 @@ mcp-server:
 # Derived metrics from corpus (SPEC 12): median intake time, dependency reuse, symbol conflict
 metrics *ARGS:
 	uv run --project pipeline python -m sm_pipeline.cli metrics {{ARGS}}
+
+# PCS LabTrust v0.1: import, validate, and render proof-carrying science claims
+pcs-import-bundle BUNDLE:
+	uv run --project pipeline python -m sm_pipeline.cli pcs-import-bundle --bundle {{BUNDLE}}
+
+pcs-validate-bundle BUNDLE:
+	uv run --project pipeline python -m sm_pipeline.cli pcs-validate-bundle --bundle {{BUNDLE}}
+
+pcs-render-claim CLAIM_ID:
+	uv run --project pipeline python -m sm_pipeline.cli pcs-render-claim --claim-id {{CLAIM_ID}}
