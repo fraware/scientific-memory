@@ -2,14 +2,14 @@
   "allow_legacy": false,
   "bundle_shape": "pcs_core",
   "claim_id": "claim-pcs-qc-release-v0.1",
-  "imported_at": "2026-05-17T16:45:30Z",
+  "imported_at": "2026-05-17T15:39:09Z",
   "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
   "scientific_memory_commit": "01084512c1522a1e0df4334a1b304d1e7da076f7",
-  "source_bundle_path": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\labtrust-release\\signed_science_claim_bundle.json",
+  "source_bundle_path": "signed_science_claim_bundle.json",
   "stale_artifacts": [],
   "strict": true,
   "verification_status": "passed",
   "warnings": [],
-  "source_commit": "01084512c1522a1e0df4334a1b304d1e7da076f7",
-  "source_repo": "https://github.com/fraware/scientific-memory"
+  "source_repo": "https://github.com/fraware/scientific-memory",
+  "source_commit": "01084512c1522a1e0df4334a1b304d1e7da076f7"
 }
