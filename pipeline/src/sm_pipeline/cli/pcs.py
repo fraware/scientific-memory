@@ -7,7 +7,15 @@ from pathlib import Path
 import typer
 from rich.console import Console
 
+from sm_pipeline.pcs_import.claim_lineage import update_lineage_stale_flags
+from sm_pipeline.pcs_import.claim_query import (
+    list_claim_ids,
+    list_claims_by_certificate,
+    list_claims_by_source_commit,
+    load_claim_bundle,
+)
 from sm_pipeline.pcs_import.portal_export import write_pcs_portal_export
+from sm_pipeline.pcs_import.release_manifest_importer import import_release_manifest
 from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
 from sm_pipeline.pcs_validate.validator import BundleValidationError, validate_signed_bundle
 
@@ -83,6 +91,89 @@ def pcs_validate_bundle(
     console.print("[green]Bundle is valid[/green]")
     for w in warnings:
         console.print(f"[yellow]Warning:[/yellow] {w}")
+
+
+def pcs_import_release(
+    release_manifest: Path = typer.Option(
+        ...,
+        "--release-manifest",
+        "-m",
+        help="ReleaseManifest.v0 JSON path",
+    ),
+) -> None:
+    """Import a PCS release from ReleaseManifest.v0 (strict release mode)."""
+    try:
+        result = import_release_manifest(
+            release_manifest,
+            repo_root=_REPO_ROOT,
+            write=True,
+            render=True,
+        )
+    except BundleValidationError as exc:
+        console.print(f"[red]Release import rejected:[/red] {exc}")
+        raise typer.Exit(code=1) from exc
+
+    console.print(f"[green]Imported release claim[/green] {result.claim_id}")
+    console.print(f"  -> {result.import_dir}")
+    for warning in result.warnings:
+        console.print(f"[yellow]Warning:[/yellow] {warning}")
+
+
+def pcs_list_claims() -> None:
+    """List imported PCS claim IDs."""
+    ids = list_claim_ids(_REPO_ROOT)
+    if not ids:
+        console.print("[dim]No PCS claims imported.[/dim]")
+        return
+    for claim_id in ids:
+        console.print(claim_id)
+
+
+def pcs_show_claim(
+    claim_id: str = typer.Option(..., "--claim-id", help="PCS claim artifact id"),
+) -> None:
+    """Show claim read model summary."""
+    import json
+
+    try:
+        data = load_claim_bundle(_REPO_ROOT, claim_id)
+    except FileNotFoundError as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    console.print(json.dumps(data, indent=2))
+
+
+def pcs_check_stale(
+    claim_id: str = typer.Option(..., "--claim-id", help="PCS claim artifact id"),
+) -> None:
+    """Check whether a claim is stale vs on-disk artifacts."""
+    from sm_pipeline.pcs_import.claim_query import claims_root
+
+    claim_dir = claims_root(_REPO_ROOT) / claim_id
+    bundle_path = claim_dir / "signed_bundle.json"
+    try:
+        lineage = update_lineage_stale_flags(claim_dir, bundle_path=bundle_path)
+    except FileNotFoundError as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    if lineage.get("stale"):
+        console.print(f"[yellow]Stale[/yellow] {claim_id}: {', '.join(lineage.get('stale_reasons') or [])}")
+    else:
+        console.print(f"[green]Fresh[/green] {claim_id}")
+
+
+def pcs_list_claims_by_certificate(
+    certificate_id: str = typer.Option(..., "--certificate-id", help="Trace certificate id"),
+) -> None:
+    for claim_id in list_claims_by_certificate(_REPO_ROOT, certificate_id):
+        console.print(claim_id)
+
+
+def pcs_list_claims_by_source_commit(
+    commit: str = typer.Option(..., "--commit", help="40-char git commit hash"),
+) -> None:
+    for claim_id in list_claims_by_source_commit(_REPO_ROOT, commit):
+        console.print(claim_id)
 
 
 def pcs_render_claim(

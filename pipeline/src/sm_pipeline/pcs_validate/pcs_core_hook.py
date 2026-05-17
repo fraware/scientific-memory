@@ -13,6 +13,21 @@ def pcs_core_available() -> bool:
     return True
 
 
+def validate_protocol_artifact(data: dict[str, Any], artifact_type: str) -> list[str]:
+    """Run pcs-core schema + semantic validation for a protocol artifact."""
+    if not pcs_core_available():
+        return []
+
+    from pcs_core.validate import ValidationError as PcsCoreValidationError
+    from pcs_core.validate import validate_artifact
+
+    try:
+        validate_artifact(data, artifact_type)
+    except PcsCoreValidationError as exc:
+        return list(exc.errors or [str(exc)])
+    return []
+
+
 def validate_with_pcs_core(bundle: dict[str, Any]) -> list[str]:
     """Run pcs-core schema + semantic validation."""
     if not pcs_core_available():

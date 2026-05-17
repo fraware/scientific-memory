@@ -64,5 +64,11 @@ app.command("llm-lean-proposals-to-apply-bundle")(llm_proposals.llm_lean_proposa
 
 # PCS LabTrust import (v0.1)
 app.command("pcs-import-bundle")(pcs.pcs_import_bundle)
+app.command("pcs-import-release")(pcs.pcs_import_release)
+app.command("pcs-list-claims")(pcs.pcs_list_claims)
+app.command("pcs-show-claim")(pcs.pcs_show_claim)
+app.command("pcs-check-stale")(pcs.pcs_check_stale)
+app.command("pcs-list-claims-by-certificate")(pcs.pcs_list_claims_by_certificate)
+app.command("pcs-list-claims-by-source-commit")(pcs.pcs_list_claims_by_source_commit)
 app.command("pcs-validate-bundle")(pcs.pcs_validate_bundle)
 app.command("pcs-render-claim")(pcs.pcs_render_claim)

@@ -1,7 +1,7 @@
 """PCS tests: pipeline on PYTHONPATH; unit tests use mirrors unless PCS_INTEGRATION=1."""
 
 import os
-import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -13,6 +13,31 @@ if str(_PIPELINE_SRC) not in sys.path:
 _PCS_TESTS = Path(__file__).resolve().parent
 if str(_PCS_TESTS) not in sys.path:
     sys.path.insert(0, str(_PCS_TESTS))
+
+
+@pytest.fixture(scope="session", autouse=True)
+def _ensure_labtrust_phase2_fixtures() -> None:
+    """Keep Phase 2 fixtures aligned (promote_release_run can overwrite import report)."""
+    if os.environ.get("PCS_INTEGRATION") == "1":
+        return
+    repo = Path(__file__).resolve().parents[2]
+    script = repo / "scripts" / "ensure_labtrust_phase2_fixtures.py"
+    fixture_dir = repo / "tests" / "pcs" / "fixtures" / "labtrust-release"
+    if script.is_file() and (fixture_dir / "RELEASE_FIXTURE_MANIFEST.json").is_file():
+        subprocess.run(
+            [sys.executable, str(script)],
+            cwd=repo,
+            check=True,
+            capture_output=True,
+        )
+    release_run = repo / "release-run"
+    if script.is_file() and (release_run / "RELEASE_FIXTURE_MANIFEST.json").is_file():
+        subprocess.run(
+            [sys.executable, str(script), "--release-dir", str(release_run)],
+            cwd=repo,
+            check=True,
+            capture_output=True,
+        )
 
 
 @pytest.fixture(autouse=True)

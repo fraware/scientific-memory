@@ -23,6 +23,10 @@ MANIFEST_ARTIFACTS = (
     "scientific_memory_import_report.json",
     "RELEASE_FIXTURE_MANIFEST.json",
 )
+PHASE2_ARTIFACTS = (
+    "ReleaseManifest.v0.json",
+    "ReleaseChainValidationResult.v0.json",
+)
 CLAIM_ID = "claim-pcs-qc-release-v0.1"
 
 
@@ -49,6 +53,45 @@ def sync_from_pcs_core(
         shutil.copy2(pcs_core_dir / name, run_dir / name)
         shutil.copy2(pcs_core_dir / name, fixture_dir / name)
 
+    pcs_examples = pcs_core_dir.parent
+    if not pcs_examples.is_dir():
+        pcs_examples = REPO_ROOT.parent / "pcs-core" / "examples"
+    for name in PHASE2_ARTIFACTS:
+        src = pcs_core_dir / name
+        if not src.is_file() and pcs_examples.is_dir():
+            alt = pcs_examples / name
+            if alt.is_file():
+                src = alt
+            elif name == "ReleaseChainValidationResult.v0.json":
+                valid = pcs_examples / "release_chain_validation_result.valid.json"
+                if valid.is_file():
+                    src = valid
+            elif name == "ReleaseManifest.v0.json":
+                valid = pcs_examples / "release_manifest.valid.json"
+                if valid.is_file():
+                    src = valid
+        if src.is_file():
+            shutil.copy2(src, run_dir / name)
+            shutil.copy2(src, fixture_dir / name)
+
+    import subprocess
+
+    subprocess.run(
+        [sys.executable, str(REPO_ROOT / "scripts" / "ensure_labtrust_phase2_fixtures.py")],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "ensure_labtrust_phase2_fixtures.py"),
+            "--release-dir",
+            str(run_dir),
+        ],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+
     print(f"synced {pcs_core_dir} -> {run_dir}")
     print(f"synced {pcs_core_dir} -> {fixture_dir}")
 
@@ -66,11 +109,28 @@ def sync_from_pcs_core(
         return
 
     from sm_pipeline.pcs_import.portal_export import write_pcs_portal_export
-    from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
+    from sm_pipeline.pcs_import.release_manifest_importer import import_release_manifest
 
-    signed_path = fixture_dir / "signed_science_claim_bundle.json"
+    manifest_path = fixture_dir / "ReleaseManifest.v0.json"
     report_path = fixture_dir / "scientific_memory_import_report.json"
-    result = import_signed_bundle(signed_path, repo_root=REPO_ROOT, strict=True, write=True)
+    if manifest_path.is_file():
+        result = import_release_manifest(
+            manifest_path,
+            repo_root=REPO_ROOT,
+            write=True,
+            render=False,
+        )
+    else:
+        from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
+
+        signed_path = fixture_dir / "signed_science_claim_bundle.json"
+        result = import_signed_bundle(
+            signed_path,
+            repo_root=REPO_ROOT,
+            strict=True,
+            release_mode=True,
+            write=True,
+        )
     if result.claim_id != CLAIM_ID:
         print(f"error: unexpected claim_id {result.claim_id}", file=sys.stderr)
         raise SystemExit(1)

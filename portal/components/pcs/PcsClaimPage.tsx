@@ -1,10 +1,14 @@
 import type { PcsClaimReadModel } from "@/lib/pcsTypes";
 
+import { ArtifactDependencyGraph } from "./ArtifactDependencyGraph";
 import { ArtifactHashTable } from "./ArtifactHashTable";
+import { ArtifactRegistryView } from "./ArtifactRegistryView";
 import { AssumptionSetView } from "./AssumptionSetView";
 import { ClaimArtifactView } from "./ClaimArtifactView";
 import { EvidenceBundleView } from "./EvidenceBundleView";
 import { LimitationNotice } from "./LimitationNotice";
+import { ReleaseChainValidationView } from "./ReleaseChainValidationView";
+import { ReleaseManifestView } from "./ReleaseManifestView";
 import { ReplayCommand } from "./ReplayCommand";
 import { RuntimeReceiptView } from "./RuntimeReceiptView";
 import { SourceRepositories } from "./SourceRepositories";
@@ -37,6 +41,18 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
         <EvidenceBundleView evidence={model.evidence_bundle} />
       ) : null}
       <VerificationResultView result={model.verification_result} />
+      {model.release_manifest ? (
+        <ReleaseManifestView manifest={model.release_manifest} />
+      ) : null}
+      {model.release_chain_validation ? (
+        <ReleaseChainValidationView validation={model.release_chain_validation} />
+      ) : null}
+      {model.artifact_registry?.length ? (
+        <ArtifactRegistryView entries={model.artifact_registry} />
+      ) : null}
+      {model.artifact_dependency_graph?.length ? (
+        <ArtifactDependencyGraph edges={model.artifact_dependency_graph} />
+      ) : null}
       <ArtifactHashTable
         hashes={model.artifact_hashes}
         canonicalDigests={model.canonical_digests}

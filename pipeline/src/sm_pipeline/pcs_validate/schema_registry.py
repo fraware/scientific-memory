@@ -8,6 +8,9 @@ from pathlib import Path
 SIGNED_BUNDLE_SCHEMA = "SignedScienceClaimBundle.v0.schema.json"
 SCIENCE_CLAIM_BUNDLE_SCHEMA = "ScienceClaimBundle.v0.schema.json"
 VERIFICATION_RESULT_SCHEMA = "VerificationResult.v0.schema.json"
+RELEASE_MANIFEST_SCHEMA = "ReleaseManifest.v0.schema.json"
+HANDOFF_MANIFEST_SCHEMA = "HandoffManifest.v0.schema.json"
+RELEASE_CHAIN_VALIDATION_RESULT_SCHEMA = "ReleaseChainValidationResult.v0.schema.json"
 
 LEGACY_SIGNED_BUNDLE_SCHEMA = "legacy/LabTrust.SignedScienceClaimBundle.v0.schema.json"
 LEGACY_SCIENCE_CLAIM_BUNDLE_SCHEMA = "legacy/LabTrust.ScienceClaimBundle.v0.schema.json"

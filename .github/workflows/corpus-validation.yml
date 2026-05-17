@@ -48,6 +48,10 @@ jobs:
       - name: PCS portal read-model contract
         run: pnpm --dir portal test:pcs-contract
 
+      - name: Ensure PCS Phase 2 fixtures
+        if: hashFiles('pcs-core/examples/**') != '' || hashFiles('tests/pcs/fixtures/labtrust-release/**') != ''
+        run: uv run python scripts/ensure_labtrust_phase2_fixtures.py
+
       - name: Check schema migration notes (Gate 2)
         run: uv run python scripts/check_schema_migration.py --base main --head HEAD
 
@@ -62,11 +66,14 @@ jobs:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
         run: bash scripts/run_pcs_tests.sh
 
-      - name: PCS canonical RC gate (fixture drift + strict import + render)
-        if: hashFiles('pcs-core/examples/labtrust-release/**') != ''
+      - name: Install just
+        run: sudo apt-get update && sudo apt-get install -y just
+
+      - name: PCS RC gate (drift, strict import, render, Phase 2)
+        if: hashFiles('pcs-core/examples/labtrust-release/**') != '' || hashFiles('tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json') != ''
         env:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
-        run: uv run pytest tests/pcs/test_canonical_rc.py -q
+        run: bash scripts/run_pcs_rc_ci_gate.sh
 
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''

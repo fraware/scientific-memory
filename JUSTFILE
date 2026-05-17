@@ -84,7 +84,10 @@ pcs-verify: test-pcs
 
 # Atomic PCS v0.1: sync from canonical pcs-core/examples/labtrust-release/ only
 refresh-pcs-release:
+	bash scripts/sm_python.sh scripts/sync_pcs_schemas.py
 	bash scripts/sm_python.sh scripts/sync_labtrust_release_from_pcs_core.py
+	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py
+	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py --release-dir release-run
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py --write
 	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
@@ -93,6 +96,9 @@ refresh-pcs-release:
 refresh-pcs-fixtures: refresh-pcs-release
 
 refresh-pcs-corpus:
+	bash scripts/sm_python.sh scripts/refresh_pcs_corpus_from_release.py
+
+refresh-pcs-corpus-legacy:
 	bash scripts/sm_python.sh scripts/refresh_pcs_corpus_demo.py
 
 benchmark:
@@ -205,9 +211,11 @@ mcp-server:
 metrics *ARGS:
 	uv run --project pipeline python -m sm_pipeline.cli metrics {{ARGS}}
 
-# Canonical RC gate (fixture drift + strict import + render); requires pcs-core checkout
+# Canonical RC + Phase 2 gate (drift, import-release, portal contracts); requires pcs-core checkout
 pcs-rc-gate:
-	bash scripts/sm_python.sh -m pytest tests/pcs/test_canonical_rc.py -q
+	bash scripts/run_pcs_rc_ci_gate.sh
+
+pcs-phase2-gate: pcs-rc-gate
 
 # PCS LabTrust v0.1 (positional args; optional defaults on pcs-v01-clean-chain-sm)
 #   just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json
@@ -246,6 +254,28 @@ pcs-import-labtrust-release:
 # Canonical RC import (strict, non-legacy, fixture-pinned import report)
 pcs-import-rc-bundle:
 	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json --strict --release-mode
+
+# Phase 2: import from ReleaseManifest.v0 (strict release mode)
+pcs-import-release release_manifest="tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json":
+	just pcs-import-release-manifest "{{release_manifest}}"
+
+pcs-import-release-manifest release_manifest:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"
+
+pcs-list-claims:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims
+
+pcs-show-claim claim_id:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-show-claim --claim-id "{{claim_id}}"
+
+pcs-check-stale claim_id:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-check-stale --claim-id "{{claim_id}}"
+
+pcs-list-claims-by-certificate certificate_id:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-certificate --certificate-id "{{certificate_id}}"
+
+pcs-list-claims-by-source-commit commit:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-source-commit --commit "{{commit}}"
 
 # Tail of PCS v0.1 clean-checkout chain (after pf sign in LabTrust-Gym workdir)
 pcs-v01-clean-chain-sm bundle="../LabTrust-Gym/signed_science_claim_bundle.json" claim_id="claim-pcs-qc-release-v0.1":

@@ -9,10 +9,15 @@ from pathlib import Path
 from typing import Any
 
 from sm_pipeline.pcs_import.artifact_normalizer import normalize_signed_bundle
+from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
 from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
 from sm_pipeline.pcs_import.provenance import git_head_commit
 from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 from sm_pipeline.pcs_validate.stale_checker import find_stale_artifacts
+from sm_pipeline.pcs_import.release_mode_finalize import (
+    finalize_release_mode_claim,
+    load_sibling_release_validation,
+)
 from sm_pipeline.pcs_validate.validator import (
     BundleValidationError,
     validate_signed_bundle,
@@ -52,10 +57,20 @@ def _overlay_canonical_import_report(import_dir: Path, bundle_path: Path) -> Non
         "scientific_memory_commit",
         "source_commit",
         "source_repo",
+        "source_bundle_path",
         "strict",
         "allow_legacy",
         "bundle_shape",
         "verification_status",
+        "release_id",
+        "release_candidate",
+        "release_manifest_path",
+        "release_manifest_hash",
+        "validation_profile",
+        "release_chain_validation_id",
+        "release_chain_validation_status",
+        "release_chain_validator",
+        "release_chain_checked_at",
     ):
         if key in canonical_report:
             imported[key] = canonical_report[key]
@@ -94,6 +109,9 @@ def import_signed_bundle(
         strict=strict,
         allow_legacy=allow_legacy,
     )
+    release_validation: dict[str, Any] | None = None
+    if release_mode:
+        release_validation = load_sibling_release_validation(bundle_path, repo_root=root)
     stale = find_stale_artifacts(raw)
     if stale:
         warnings.extend(f"Stale or deprecated artifact: {p}" for p in stale)
@@ -132,7 +150,7 @@ def import_signed_bundle(
         import_report: dict[str, Any] = {
             "claim_id": claim_id,
             "imported_at": imported_at,
-            "source_bundle_path": str(bundle_path.resolve()),
+            "source_bundle_path": portable_repo_path(bundle_path, root),
             "bundle_shape": bundle_shape,
             "strict": strict,
             "allow_legacy": allow_legacy,
@@ -150,6 +168,15 @@ def import_signed_bundle(
         )
         if release_mode:
             _overlay_canonical_import_report(import_dir, bundle_path)
+            if release_validation is not None:
+                report_path = import_dir / "scientific_memory_import_report.json"
+                finalize_release_mode_claim(
+                    import_dir,
+                    bundle_path,
+                    repo_root=root,
+                    release_validation=release_validation,
+                    import_report_path=report_path,
+                )
 
     return ImportResult(
         claim_id=claim_id,

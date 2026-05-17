@@ -16,7 +16,7 @@
   ],
   "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "SignedScienceClaimBundle.v0" },
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
     "signed_bundle_id": { "type": "string", "minLength": 1 },
     "science_claim_bundle": { "$ref": "ScienceClaimBundle.v0.schema.json" },
     "verification_result": { "$ref": "VerificationResult.v0.schema.json" },
@@ -25,6 +25,7 @@
     "source_repo": { "type": "string", "format": "uri" },
     "source_commit": { "type": "string", "minLength": 1 },
     "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" },
+    "signed_input_bundle_hash": { "$ref": "common.defs.json#/$defs/hex_digest" },
     "local_dev": { "type": "boolean" }
   }
 }

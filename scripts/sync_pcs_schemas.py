@@ -10,6 +10,9 @@ from pathlib import Path
 
 # Canonical v0.1 artifacts Scientific Memory imports/renders.
 CANONICAL_SCHEMAS = (
+    "ReleaseManifest.v0.schema.json",
+    "HandoffManifest.v0.schema.json",
+    "ReleaseChainValidationResult.v0.schema.json",
     "SignedScienceClaimBundle.v0.schema.json",
     "ScienceClaimBundle.v0.schema.json",
     "VerificationResult.v0.schema.json",

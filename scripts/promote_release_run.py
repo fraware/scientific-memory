@@ -26,6 +26,10 @@ MANIFEST_ARTIFACTS = (
     "scientific_memory_import_report.json",
     MANIFEST_NAME,
 )
+PHASE2_ARTIFACTS = (
+    "ReleaseManifest.v0.json",
+    "ReleaseChainValidationResult.v0.json",
+)
 PRESERVE_GLOBS = ("invalid_*.json", "missing_claim_*.json", "FIXTURE_*.md")
 
 
@@ -65,13 +69,30 @@ def promote(run_dir: Path, *, target: Path, pcs_core: bool) -> None:
             raise SystemExit(1)
         shutil.copy2(src, target / name)
 
+    for name in PHASE2_ARTIFACTS:
+        src = run_dir / name
+        if src.is_file():
+            shutil.copy2(src, target / name)
+
     print(f"promoted {run_dir} -> {target}")
 
     if pcs_core:
         PCS_CORE_RELEASE.mkdir(parents=True, exist_ok=True)
-        for name in MANIFEST_ARTIFACTS:
-            shutil.copy2(run_dir / name, PCS_CORE_RELEASE / name)
+        for name in (*MANIFEST_ARTIFACTS, *PHASE2_ARTIFACTS):
+            src = run_dir / name
+            if src.is_file():
+                shutil.copy2(src, PCS_CORE_RELEASE / name)
         print(f"promoted {run_dir} -> {PCS_CORE_RELEASE}")
+
+    import subprocess
+
+    ensure = REPO_ROOT / "scripts" / "ensure_labtrust_phase2_fixtures.py"
+    if ensure.is_file():
+        subprocess.run(
+            [sys.executable, str(ensure), "--release-dir", str(target)],
+            cwd=REPO_ROOT,
+            check=True,
+        )
 
 
 def main() -> int:

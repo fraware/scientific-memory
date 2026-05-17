@@ -1,0 +1,22 @@
+{
+  "bundle_id": "scb-pcs-qc-release-v0.1",
+  "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+  "claim_id": "claim-pcs-qc-release-v0.1",
+  "release_id": "release-pcs-v0.1-labtrust-qc",
+  "release_manifest_hash": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6",
+  "schema_versions": {
+    "science_claim_bundle": "v0",
+    "signed_bundle": "v0"
+  },
+  "signed_bundle_hash": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
+  "source_commits": {
+    "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+    "labtrust_gym": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+    "pcs_core": "b492937e1b1128f88a77689dde611f4314650e44",
+    "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+    "scientific_memory": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
+  },
+  "stale": false,
+  "stale_reasons": [],
+  "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
+}
