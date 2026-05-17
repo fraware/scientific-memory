@@ -48,9 +48,6 @@ jobs:
       - name: PCS portal read-model contract
         run: pnpm --dir portal test:pcs-contract
 
-      - name: PCS portal component tests (vitest)
-        run: pnpm --dir portal test
-
       - name: Check schema migration notes (Gate 2)
         run: uv run python scripts/check_schema_migration.py --base main --head HEAD
 

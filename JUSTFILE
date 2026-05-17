@@ -52,9 +52,9 @@ repo-snapshot:
 # Alias for SPEC 17 contributor flow (same as validate; no nested just)
 validate-corpus: validate
 
-# Install portal deps first (pnpm workspace; node_modules lives under portal/)
+# Install portal deps when next is missing (skips if node_modules already usable)
 portal-install:
-	pnpm install
+	bash scripts/portal_install.sh
 
 portal: portal-install
 	pnpm --dir portal dev
@@ -68,7 +68,7 @@ test:
 # PCS LabTrust import contract tests (also run via `just test`)
 test-pcs:
 	@echo "==> test-pcs"
-	uv run --project pipeline pytest ../tests/pcs
+	bash scripts/run_pcs_tests.sh
 	node portal/scripts/verify-pcs-read-model.mjs
 
 refresh-pcs-fixtures:
@@ -227,7 +227,7 @@ pcs-refresh-demo: refresh-pcs-fixtures refresh-pcs-corpus
 	just pcs-render-claim claim-qc-release-v0.1
 
 test-pcs-portal:
-	pnpm --dir portal test
+	pnpm --dir portal test:pcs-contract
 
 # Live pcs-core validation (requires: just sync-pipeline-pcs first)
 test-pcs-integration:

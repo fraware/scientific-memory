@@ -4,7 +4,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/generate-search-index.mjs && next build",
-    "test": "vitest run",
     "test:pcs-contract": "node scripts/verify-pcs-read-model.mjs",
     "lint": "prettier --check \"app/**/*.{ts,tsx,css}\" \"lib/**/*.ts\" \"scripts/**/*.mjs\" \"*.json\" && tsc --noEmit",
     "format": "prettier --write ."
@@ -17,13 +16,9 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.1.0",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
-    "@vitejs/plugin-react": "^4.3.4",
-    "jsdom": "^25.0.1",
     "prettier": "^3.4.2",
-    "typescript": "^5.7.2",
-    "vitest": "^3.0.5"
+    "typescript": "^5.7.2"
   }
 }

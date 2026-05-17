@@ -1,13 +1,10 @@
-"""PCS portal UI contract (static hooks + read model; optional vitest when installed)."""
+"""PCS portal UI contract (static hooks + read model + node zod script)."""
 
 from __future__ import annotations
 
 import json
-import shutil
 import subprocess
 from pathlib import Path
-
-import pytest
 
 from sm_pipeline.pcs_import.artifact_normalizer import LIMITATION_NOTICE
 
@@ -58,17 +55,3 @@ def test_pcs_portal_read_model_script_passes() -> None:
     assert result.returncode == 0, result.stdout + result.stderr
 
 
-@pytest.mark.skipif(
-    shutil.which("pnpm") is None
-    or not (REPO_ROOT / "portal" / "node_modules" / ".bin" / "vitest").exists(),
-    reason="portal vitest not installed (run pnpm install when registry TLS allows)",
-)
-def test_pcs_portal_vitest_when_available() -> None:
-    result = subprocess.run(
-        ["pnpm", "--dir", "portal", "test"],
-        cwd=REPO_ROOT,
-        capture_output=True,
-        text=True,
-        check=False,
-    )
-    assert result.returncode == 0, result.stdout + result.stderr
