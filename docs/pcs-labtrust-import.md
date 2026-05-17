@@ -4,7 +4,7 @@ Scientific Memory imports **signed** `ScienceClaimBundle` artifacts produced by 
 
 ## Expected input
 
-- File: `signed_science_claim_bundle.json` (PF output; vendored as `tests/pcs/fixtures/signed_science_claim_bundle.valid.json`)
+- File: `signed_science_claim_bundle.json` (PF output; vendored as `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` from `pcs-core/examples/labtrust-release/`)
 - Top-level `schema_version`: `SignedScienceClaimBundle.v0`
 - Nested `science_claim_bundle` with `ScienceClaimBundle.v0`
 - Optional top-level `verification_result` (`VerificationResult.v0`)
@@ -35,6 +35,8 @@ just pcs-import-legacy-bundle path/to/legacy_signed_bundle.json
 just pcs-render-claim <claim_id>
 
 # shortcuts
+just pcs-v01-clean-chain-sm
+just pcs-import-labtrust-release
 just pcs-import-labtrust-demo
 just pcs-refresh-demo
 ```
@@ -79,7 +81,7 @@ Top-level `reproduce_commands` / `verify_commands` are Scientific Memory extensi
 
 | Requirement | Status |
 |-------------|--------|
-| Import PF / PCS Core signed bundle | `just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.valid.json` |
+| Import PF / PCS Core signed bundle | `just pcs-v01-clean-chain-sm` (after `pf sign` in LabTrust-Gym) or `just pcs-import-labtrust-release` (vendored fixture) |
 | Strict mode rejects `verification_result.status: failed` | Enforced in `bundle_semantics` |
 | Strict mode rejects legacy bundles without `--allow-legacy` | `detect_bundle_shape` + validator |
 | Write `scientific_memory_import_report.json` | Every import |
@@ -104,7 +106,7 @@ just refresh-pcs-corpus
 | Strict default | PCS Core signed bundles accepted; legacy LabTrust envelopes require `--allow-legacy` |
 | Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed or missing `verification_result`, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
 | `strict=false` | May import legacy bundles and bundles without `VerificationResult` (warning only) |
-| Canonical fixture | `tests/pcs/fixtures/signed_science_claim_bundle.valid.json` (from `pf sign` or pcs-core example via `just refresh-pcs-fixtures`) |
+| Canonical fixture | `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` (from `pf sign` or `pcs-core/examples/labtrust-release/` via `just refresh-pcs-fixtures`) |
 | Preserve IDs | Claim, assumption set, receipt, certificate IDs unchanged |
 | Preserve provenance | `source_repo`, `source_commit`, `signature_or_digest` on each artifact |
 | Preserve checks | Provability Fabric `VerificationResult.v0` `checks` stored verbatim |
@@ -149,9 +151,11 @@ pf verify science-claim science_claim_bundle.certified.json
 pf sign science-claim science_claim_bundle.certified.json \
   --out signed_science_claim_bundle.json
 
-# Scientific Memory
-just pcs-import-bundle BUNDLE=signed_science_claim_bundle.json
-just pcs-render-claim CLAIM_ID=<claim_id>
+# Scientific Memory (from repo root; bundle path is the LabTrust-Gym workdir file)
+cd ../scientific-memory
+just pcs-import-bundle ../LabTrust-Gym/signed_science_claim_bundle.json
+just pcs-render-claim claim-pcs-qc-release-v0.1
+# Or: just pcs-v01-clean-chain-sm
 ```
 
 ## What is checked vs not checked

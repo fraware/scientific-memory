@@ -8,8 +8,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
-# Canonical PF / PCS Core signed bundle (replace via `pf sign` + `just refresh-pcs-fixtures`).
-PF_SIGNED_BUNDLE = FIXTURES / "signed_science_claim_bundle.valid.json"
+# PF release-chain bundle: pcs-core/examples/labtrust-release (pf sign science-claim ...).
+LABTRUST_RELEASE_BUNDLE = FIXTURES / "labtrust-release" / "signed_science_claim_bundle.json"
+LABTRUST_RELEASE_MANIFEST = FIXTURES / "labtrust-release" / "RELEASE_FIXTURE_MANIFEST.json"
+# Canonical import/render tests use the LabTrust v0.1 release fixture.
+PF_SIGNED_BUNDLE = LABTRUST_RELEASE_BUNDLE
 LEGACY_SIGNED_BUNDLE = FIXTURES / "valid_signed_science_claim_bundle.json"
 
 IMPORT_REPORT_REQUIRED_KEYS = frozenset(

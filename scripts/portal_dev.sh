@@ -21,5 +21,5 @@ rm -rf "$_root/portal/.next/trace" 2>/dev/null || true
 
 cd "$_root/portal"
 echo "portal: http://localhost:${PORT}"
-echo "  PCS claims: http://localhost:${PORT}/pcs/claims/claim-qc-release-v0.1"
+echo "  PCS claims: http://localhost:${PORT}/pcs/claims/claim-pcs-qc-release-v0.1"
 exec pnpm exec next dev -p "$PORT"

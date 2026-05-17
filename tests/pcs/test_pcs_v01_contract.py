@@ -15,10 +15,13 @@ REQUIRED_TEST_MODULES = ("test_pcs_import", "test_pcs_render")
 
 REQUIRED_TEST_NAMES = (
     "test_import_pf_signed_bundle_valid",
+    "test_import_labtrust_release_bundle_writes_corpus_artifacts",
     "test_import_legacy_bundle_rejected_in_strict_mode",
     "test_import_legacy_bundle_allowed_only_with_allow_legacy",
     "test_import_missing_verification_result_rejected",
     "test_import_failed_verification_result_rejected",
+    "test_import_missing_signature_or_digest_rejected",
+    "test_import_missing_source_commit_rejected",
     "test_import_report_contains_verification_status",
     "test_render_claim_displays_runtime_receipt",
     "test_render_claim_displays_trace_certificate",

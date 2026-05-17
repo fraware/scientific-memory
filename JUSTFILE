@@ -82,6 +82,7 @@ pcs-verify: test-pcs refresh-pcs-fixtures refresh-pcs-corpus
 	bash scripts/sm_python.sh -m sm_pipeline.cli validate-all
 
 refresh-pcs-fixtures:
+	bash scripts/sm_python.sh scripts/vendor_labtrust_release_fixture.py
 	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
 
 refresh-pcs-corpus:
@@ -197,9 +198,9 @@ mcp-server:
 metrics *ARGS:
 	uv run --project pipeline python -m sm_pipeline.cli metrics {{ARGS}}
 
-# PCS LabTrust v0.1 (just uses positional args, not make-style VAR=value)
-#   just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
-#   just pcs-render-claim labtrust-qc-release-claim-001
+# PCS LabTrust v0.1 (positional args; optional defaults on pcs-v01-clean-chain-sm)
+#   just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json
+#   just pcs-render-claim claim-pcs-qc-release-v0.1
 pcs-import-bundle bundle *FLAGS:
 	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-bundle --bundle "{{bundle}}" {{FLAGS}}
 
@@ -228,13 +229,21 @@ sync-pcs-schemas:
 pcs-import-labtrust-demo:
 	just pcs-import-legacy-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
 
+pcs-import-labtrust-release:
+	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json
+
+# Tail of PCS v0.1 clean-checkout chain (after pf sign in LabTrust-Gym workdir)
+pcs-v01-clean-chain-sm bundle="../LabTrust-Gym/signed_science_claim_bundle.json" claim_id="claim-pcs-qc-release-v0.1":
+	just pcs-import-bundle "{{bundle}}"
+	just pcs-render-claim "{{claim_id}}"
+
 pcs-import-pcs-core-demo:
 	just sync-pipeline-pcs
-	just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.valid.json
+	just pcs-import-labtrust-release
 
 pcs-refresh-demo: refresh-pcs-fixtures refresh-pcs-corpus
+	just pcs-render-claim claim-pcs-qc-release-v0.1
 	just pcs-render-claim labtrust-qc-release-claim-001
-	just pcs-render-claim claim-qc-release-v0.1
 
 test-pcs-portal:
 	pnpm --dir portal test:pcs-contract

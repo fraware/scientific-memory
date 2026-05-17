@@ -26,7 +26,6 @@
       "producer": "labtrust-gym",
       "producer_version": "0.2.0",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
-      "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
       "signature_or_digest": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b"
     },
     "assumption_set": {

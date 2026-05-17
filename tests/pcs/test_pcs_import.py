@@ -11,6 +11,7 @@ from sm_pipeline.pcs_validate.validator import BundleValidationError
 
 from schema_fixtures import (
     IMPORT_REPORT_REQUIRED_KEYS,
+    LABTRUST_RELEASE_BUNDLE,
     LEGACY_SIGNED_BUNDLE,
     PF_SIGNED_BUNDLE,
     copy_pcs_schemas,
@@ -20,19 +21,42 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
 def test_import_pf_signed_bundle_valid() -> None:
-    assert PF_SIGNED_BUNDLE.is_file(), "missing PF canonical fixture; run: just refresh-pcs-fixtures"
+    assert PF_SIGNED_BUNDLE.is_file(), (
+        "missing labtrust-release fixture; copy from pcs-core/examples/labtrust-release"
+    )
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_schemas(root)
         result = import_signed_bundle(PF_SIGNED_BUNDLE, repo_root=root, write=True)
-        assert result.claim_id == "claim-qc-release-v0.1"
+        assert result.claim_id == "claim-pcs-qc-release-v0.1"
         read_model = json.loads(
             (root / "corpus" / "pcs" / "claims" / result.claim_id / "read_model.json").read_text(
                 encoding="utf-8"
             )
         )
-        assert read_model["verification_result"]["verification_id"] == "verify-scb-qc-release-v0.1"
+        assert read_model["verification_result"]["verification_id"].startswith("verification-")
         assert read_model["claim"]["signature_or_digest"].startswith("sha256:")
+
+
+def test_import_labtrust_release_bundle_writes_corpus_artifacts() -> None:
+    assert LABTRUST_RELEASE_BUNDLE.is_file()
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        result = import_signed_bundle(LABTRUST_RELEASE_BUNDLE, repo_root=root, write=True)
+        claim_dir = root / "corpus" / "pcs" / "claims" / result.claim_id
+        for name in (
+            "signed_bundle.json",
+            "read_model.json",
+            "import_manifest.json",
+            "scientific_memory_import_report.json",
+        ):
+            assert (claim_dir / name).is_file(), f"missing {name}"
+        report = json.loads(
+            (claim_dir / "scientific_memory_import_report.json").read_text(encoding="utf-8")
+        )
+        assert report["render_path"] == f"/pcs/claims/{result.claim_id}"
+        assert report["verification_status"] == "passed"
 
 
 def test_import_legacy_bundle_rejected_in_strict_mode() -> None:
@@ -69,6 +93,30 @@ def test_import_missing_verification_result_rejected() -> None:
                 repo_root=root,
                 strict=True,
                 allow_legacy=True,
+                write=False,
+            )
+
+
+def test_import_missing_signature_or_digest_rejected() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        with pytest.raises(BundleValidationError, match="signature_or_digest is required"):
+            import_signed_bundle(
+                FIXTURES / "labtrust-release" / "missing_claim_signature.json",
+                repo_root=root,
+                write=False,
+            )
+
+
+def test_import_missing_source_commit_rejected() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        with pytest.raises(BundleValidationError, match="source_commit is required"):
+            import_signed_bundle(
+                FIXTURES / "labtrust-release" / "missing_claim_source_commit.json",
+                repo_root=root,
                 write=False,
             )
 

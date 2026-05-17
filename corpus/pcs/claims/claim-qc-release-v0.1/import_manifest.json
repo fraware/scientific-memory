@@ -1,6 +1,6 @@
 {
   "claim_id": "claim-qc-release-v0.1",
-  "imported_from": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\signed_science_claim_bundle.valid.json",
+  "imported_from": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\labtrust-release\\signed_science_claim_bundle.json",
   "warnings": [],
   "stale_artifacts": []
 }
