@@ -46,22 +46,17 @@ CANONICAL_RC_CERTIFIED_BUNDLE_HASH = (
 CANONICAL_RC_LABTRUST_COMMIT = "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
 CANONICAL_RC_CERTIFYEDGE_COMMIT = "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc"
 CANONICAL_RC_PF_COMMIT = "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d"
-_CANONICAL_MANIFEST_PATH = PCS_CORE_CANONICAL_RELEASE / "RELEASE_FIXTURE_MANIFEST.json"
-_CANONICAL_REPORT_PATH = PCS_CORE_CANONICAL_RELEASE / "scientific_memory_import_report.json"
+# Scientific Memory commit pinned in vendored import report (synced from pcs-core RC).
+def _fixture_scientific_memory_commit() -> str:
+    if LABTRUST_RELEASE_IMPORT_REPORT.is_file():
+        report = json.loads(LABTRUST_RELEASE_IMPORT_REPORT.read_text(encoding="utf-8-sig"))
+        commit = report.get("scientific_memory_commit")
+        if isinstance(commit, str) and len(commit) == 40:
+            return commit
+    return "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
 
 
-def _canonical_manifest_value(key: str, fallback: str) -> str:
-    if not _CANONICAL_MANIFEST_PATH.is_file():
-        return fallback
-    manifest = json.loads(_CANONICAL_MANIFEST_PATH.read_text(encoding="utf-8-sig"))
-    value = manifest.get(key)
-    return value if isinstance(value, str) else fallback
-
-
-CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = _canonical_manifest_value(
-    "scientific_memory_commit",
-    "d49cbf78837d42883a3c73078f098669e69f5e3d",
-)
+CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = _fixture_scientific_memory_commit()
 
 # Canonical import/render tests use the LabTrust v0.1 release fixture (synced from pcs-core).
 PF_SIGNED_BUNDLE = LABTRUST_RELEASE_BUNDLE

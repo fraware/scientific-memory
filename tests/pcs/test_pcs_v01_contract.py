@@ -49,9 +49,10 @@ REQUIRED_TEST_NAMES = (
     "test_render_read_model_certificate_matches_certified_bundle",
     "test_scimem_signed_bundle_fixture_matches_pcs_core_rc",
     "test_scimem_fixture_matches_pcs_core_rc",
+    "test_scimem_strict_import_canonical_rc_bundle",
+    "test_scimem_render_canonical_rc_claim",
     "test_import_canonical_rc_signed_bundle",
     "test_render_canonical_rc_claim",
-    "test_pcs_import_and_render_canonical_rc_via_just",
     "test_portal_read_model_contract_sections",
 )
 

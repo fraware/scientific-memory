@@ -205,6 +205,10 @@ mcp-server:
 metrics *ARGS:
 	uv run --project pipeline python -m sm_pipeline.cli metrics {{ARGS}}
 
+# Canonical RC gate (fixture drift + strict import + render); requires pcs-core checkout
+pcs-rc-gate:
+	bash scripts/sm_python.sh -m pytest tests/pcs/test_canonical_rc.py -q
+
 # PCS LabTrust v0.1 (positional args; optional defaults on pcs-v01-clean-chain-sm)
 #   just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json
 #   just pcs-render-claim claim-pcs-qc-release-v0.1
