@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -15,6 +17,29 @@ REPORT = "scientific_memory_import_report.json"
 MANIFEST = "RELEASE_FIXTURE_MANIFEST.json"
 CLAIM_ID = "claim-pcs-qc-release-v0.1"
 SM_SOURCE_REPO = "https://github.com/fraware/scientific-memory"
+MANIFEST_ARTIFACTS = (
+    "trace.json",
+    "runtime_receipt.json",
+    "trace_certificate.json",
+    "science_claim_bundle.pending.json",
+    "science_claim_bundle.certified.json",
+    "verification_result.json",
+    "signed_science_claim_bundle.json",
+    "scientific_memory_import_report.json",
+)
+
+
+def _refresh_manifest_hashes(run_dir: Path) -> None:
+    manifest_path = run_dir / MANIFEST
+    if not manifest_path.is_file():
+        return
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    manifest["artifacts"] = {
+        name: f"sha256:{hashlib.sha256((run_dir / name).read_bytes()).hexdigest()}"
+        for name in MANIFEST_ARTIFACTS
+        if (run_dir / name).is_file()
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -36,10 +61,18 @@ def main() -> int:
     from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
     from sm_pipeline.pcs_validate.release_chain import validate_release_chain
 
-    issues = validate_release_chain(run_dir)
-    if issues:
-        for issue in issues:
-            print(f"error: {issue.format()}", file=sys.stderr)
+    report_path = run_dir / REPORT
+    if report_path.is_file():
+        report_path.unlink()
+
+    certified = json.loads((run_dir / "science_claim_bundle.certified.json").read_text(encoding="utf-8-sig"))
+    signed = json.loads(signed_path.read_text(encoding="utf-8-sig"))
+    scb = signed["science_claim_bundle"]
+    if scb["bundle_id"] != certified["bundle_id"]:
+        print("error: signed bundle_id != certified bundle_id", file=sys.stderr)
+        return 1
+    if scb["certificates"][0]["certificate_id"] != certified["certificates"][0]["certificate_id"]:
+        print("error: signed certificate_id != certified certificate_id", file=sys.stderr)
         return 1
 
     result = import_signed_bundle(signed_path, repo_root=REPO_ROOT, strict=True, write=True)
@@ -81,9 +114,14 @@ def main() -> int:
 
     write_pcs_portal_export(REPO_ROOT)
 
-    if args.promote:
-        import subprocess
+    _refresh_manifest_hashes(run_dir)
+    issues = validate_release_chain(run_dir)
+    if issues:
+        for issue in issues:
+            print(f"error: {issue.format()}", file=sys.stderr)
+        return 1
 
+    if args.promote:
         cmd = [
             sys.executable,
             str(REPO_ROOT / "scripts" / "promote_release_run.py"),

@@ -43,6 +43,7 @@ REQUIRED_TEST_NAMES = (
     "test_labtrust_release_pf_provenance_matches_release_manifest",
     "test_import_read_model_matches_canonical_golden_fixture",
     "test_pcs_corpus_claim_passes_validate_all_gate",
+    "test_release_chain_consistency_import",
     "test_fixture_release_chain_identity",
     "test_render_read_model_certificate_matches_certified_bundle",
 )

@@ -69,7 +69,7 @@ def validate_release_chain(directory: Path) -> list[ReleaseChainIssue]:
             ReleaseChainIssue(code=issue.code, message=issue.message)
             for issue in _pcs_validate(directory)
         ]
-    except ImportError:
+    except (ImportError, SyntaxError):
         return _validate_release_chain_fallback(directory)
 
 

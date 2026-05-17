@@ -17,6 +17,8 @@ from sm_pipeline.pcs_validate.release_chain import validate_release_chain
 from schema_fixtures import (
     EXPECTED_LABTRUST_CLAIM_ID,
     LABTRUST_RELEASE_BUNDLE,
+    LABTRUST_RELEASE_CERTIFIED,
+    LABTRUST_RELEASE_IMPORT_REPORT,
     LABTRUST_RELEASE_MANIFEST,
     copy_pcs_schemas,
 )
@@ -46,6 +48,20 @@ def test_release_run_directory_passes_chain_validation() -> None:
         pytest.skip("release-run not populated; run: just refresh-pcs-release")
     issues = validate_release_chain(RELEASE_RUN)
     assert not issues, "\n".join(i.format() for i in issues)
+
+
+def test_release_chain_consistency_import() -> None:
+    """Release-chain consistency across manifest, certified bundle, signed bundle, import report."""
+    manifest = json.loads(LABTRUST_RELEASE_MANIFEST.read_text(encoding="utf-8-sig"))
+    certified = json.loads(LABTRUST_RELEASE_CERTIFIED.read_text(encoding="utf-8-sig"))
+    signed = json.loads(LABTRUST_RELEASE_BUNDLE.read_text(encoding="utf-8-sig"))
+    report = json.loads(LABTRUST_RELEASE_IMPORT_REPORT.read_text(encoding="utf-8-sig"))
+    scb = signed["science_claim_bundle"]
+
+    assert scb["bundle_id"] == certified["bundle_id"]
+    assert _first_certificate_id(scb) == _first_certificate_id(certified)
+    assert report["verification_status"] == "passed"
+    assert report["scientific_memory_commit"] == manifest["scientific_memory_commit"]
 
 
 def test_fixture_release_chain_identity() -> None:

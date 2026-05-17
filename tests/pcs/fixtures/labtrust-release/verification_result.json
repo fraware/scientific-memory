@@ -1,6 +1,6 @@
 {
   "schema_version": "v0",
-  "verification_id": "verification-31ac5758-9219-47cf-b832-0ca8ae07a871",
+  "verification_id": "verification-aaa87233-55b6-4425-8109-f2281daa45aa",
   "bundle_id": "scb-pcs-qc-release-v0.1",
   "verifier": "Provability Fabric",
   "verifier_version": "0.1.0",
@@ -104,7 +104,7 @@
           "as-pcs-qc-release-v0.1"
         ],
         "certificate_refs": [
-          "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942"
+          "cert-trace-645df403-1729-40f4-9326-1b4e29141f4a"
         ],
         "claim_refs": [
           "claim-pcs-qc-release-v0.1"
@@ -139,8 +139,13 @@
       "details": {}
     }
   ],
-  "created_at": "2026-01-15T11:00:00Z",
+  "created_at": "2026-05-17T15:35:27Z",
   "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
-  "source_commit": "122bfce57b05b2d64f17815a457ad0b19fbbfde8",
-  "signature_or_digest": "sha256:e4e529b692da529770d59a9eb39a433940d2ce71128146a74169d1ecaf5815fa"
+  "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "signature_or_digest": "sha256:3159038b1d212549bebde182fc3d7608e9b68d2edfdd62d22a9f5350101d955c",
+  "verified_input": {
+    "bundle_hash": "sha256:1c3d71e1c4afc9ffdf2da610723a0a716850445b29764ff98b020b4f70b4fc2e",
+    "certificate_id": "cert-trace-645df403-1729-40f4-9326-1b4e29141f4a",
+    "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
+  }
 }
