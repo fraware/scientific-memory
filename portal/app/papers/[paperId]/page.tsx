@@ -7,7 +7,8 @@ export async function generateStaticParams() {
   return papers.map((p) => ({ paperId: p.id }));
 }
 
-export const dynamicParams = false;
+// Allow on-demand paper routes in dev; production static export uses generateStaticParams.
+export const dynamicParams = process.env.NODE_ENV === "development";
 
 export default async function PaperPage({
   params,

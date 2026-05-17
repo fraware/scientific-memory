@@ -6,7 +6,7 @@ export async function generateStaticParams() {
   return ids.map((claimId) => ({ claimId }));
 }
 
-export const dynamicParams = false;
+export const dynamicParams = process.env.NODE_ENV === "development";
 
 export default async function PcsClaimRoute({
   params,

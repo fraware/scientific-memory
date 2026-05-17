@@ -7,7 +7,7 @@ export async function generateStaticParams() {
   return ids.map((cardId) => ({ cardId }));
 }
 
-export const dynamicParams = false;
+export const dynamicParams = process.env.NODE_ENV === "development";
 
 export default async function TheoremCardPage({
   params,
