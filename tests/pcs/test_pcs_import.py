@@ -7,11 +7,14 @@ from pathlib import Path
 import pytest
 
 from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
+from sm_pipeline.pcs_validate.placeholder_commits import is_placeholder_commit
 from sm_pipeline.pcs_validate.validator import BundleValidationError
 
 from schema_fixtures import (
+    EXPECTED_LABTRUST_CLAIM_ID,
     IMPORT_REPORT_REQUIRED_KEYS,
     LABTRUST_RELEASE_BUNDLE,
+    LABTRUST_RELEASE_MANIFEST,
     LEGACY_SIGNED_BUNDLE,
     PF_SIGNED_BUNDLE,
     copy_pcs_schemas,
@@ -116,6 +119,52 @@ def test_import_missing_signature_or_digest_rejected() -> None:
                 repo_root=root,
                 write=False,
             )
+
+
+def test_import_rejects_placeholder_pf_source_commit() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        with pytest.raises(BundleValidationError, match="placeholder commit"):
+            import_signed_bundle(
+                FIXTURES / "labtrust-release" / "invalid_placeholder_pf_source_commit.json",
+                repo_root=root,
+                write=False,
+            )
+
+
+def test_import_rejects_local_dev_in_release_fixture() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        with pytest.raises(BundleValidationError, match="local_dev"):
+            import_signed_bundle(
+                FIXTURES / "labtrust-release" / "invalid_local_dev_release.json",
+                repo_root=root,
+                write=False,
+            )
+
+
+def test_import_accepts_pf_signed_bundle_with_real_commit() -> None:
+    manifest = json.loads(LABTRUST_RELEASE_MANIFEST.read_text(encoding="utf-8"))
+    bundle = json.loads(LABTRUST_RELEASE_BUNDLE.read_text(encoding="utf-8"))
+    pf_commit = manifest["provability_fabric_commit"]
+    assert bundle["verification_result"]["source_commit"] == pf_commit
+    assert bundle["source_commit"] == pf_commit
+    assert not is_placeholder_commit(pf_commit)
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        result = import_signed_bundle(LABTRUST_RELEASE_BUNDLE, repo_root=root, write=True)
+        assert result.claim_id == EXPECTED_LABTRUST_CLAIM_ID
+
+
+def test_import_manifest_pf_provenance_alignment() -> None:
+    manifest = json.loads(LABTRUST_RELEASE_MANIFEST.read_text(encoding="utf-8"))
+    bundle = json.loads(LABTRUST_RELEASE_BUNDLE.read_text(encoding="utf-8"))
+    pf_commit = manifest["provability_fabric_commit"]
+    assert bundle["verification_result"]["source_commit"] == pf_commit
+    assert bundle["source_commit"] == pf_commit
 
 
 def test_import_missing_source_commit_rejected() -> None:

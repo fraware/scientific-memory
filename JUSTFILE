@@ -84,10 +84,13 @@ pcs-verify: test-pcs
 
 # Re-vendor PF fixtures from provability-fabric sibling (developer / release refresh)
 refresh-pcs-fixtures:
-	bash scripts/sm_python.sh scripts/vendor_labtrust_release_fixture.py --copy-all
+	bash scripts/sm_python.sh scripts/vendor_labtrust_release_fixture.py
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py --write
 	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
+
+export-pcs-release-report:
+	bash scripts/sm_python.sh scripts/export_pcs_release_import_report.py
 
 refresh-pcs-corpus:
 	bash scripts/sm_python.sh scripts/refresh_pcs_corpus_demo.py

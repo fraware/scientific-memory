@@ -10,7 +10,8 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 # PF release bundle: provability-fabric/tests/pcs/fixtures/labtrust-release/ (pf sign).
 LABTRUST_RELEASE_BUNDLE = FIXTURES / "labtrust-release" / "signed_science_claim_bundle.json"
-LABTRUST_RELEASE_MANIFEST = FIXTURES / "labtrust-release" / "FIXTURE_MANIFEST.json"
+LABTRUST_RELEASE_MANIFEST = FIXTURES / "labtrust-release" / "RELEASE_FIXTURE_MANIFEST.json"
+SM_FIXTURE_MANIFEST = FIXTURES / "labtrust-release" / "FIXTURE_MANIFEST.json"
 EXPECTED_LABTRUST_CLAIM_ID = "claim-pcs-qc-release-v0.1"
 # Canonical import/render tests use the LabTrust v0.1 release fixture.
 PF_SIGNED_BUNDLE = LABTRUST_RELEASE_BUNDLE

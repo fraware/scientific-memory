@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from typing import Any
 
-from sm_pipeline.pcs_validate.bundle_detection import is_legacy_signed_bundle
+from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape, is_legacy_signed_bundle
+from sm_pipeline.pcs_validate.placeholder_commits import (
+    is_local_dev_marker,
+    validate_source_commit_for_release,
+)
 
 _CHECK_PASS = frozenset({"pass", "passed", "ok", "success"})
 _CHECK_FAIL = frozenset({"fail", "failed", "error", "rejected"})
@@ -107,9 +111,38 @@ def _require_signature(artifact: dict[str, Any], path: str, errors: list[str]) -
         errors.append(f"{path}: signature_or_digest is required")
 
 
-def _require_source_commit(artifact: dict[str, Any], path: str, errors: list[str]) -> None:
-    if not str(artifact.get("source_commit") or "").strip():
+def _require_source_commit(
+    artifact: dict[str, Any],
+    path: str,
+    errors: list[str],
+    *,
+    strict: bool,
+) -> None:
+    commit = str(artifact.get("source_commit") or "").strip()
+    if not commit:
         errors.append(f"{path}: source_commit is required")
+        return
+    if strict:
+        local_dev = artifact.get("local_dev")
+        msg = validate_source_commit_for_release(
+            commit, path=path, local_dev=local_dev
+        )
+        if msg:
+            errors.append(msg)
+
+
+def _reject_release_local_dev_flags(bundle: dict[str, Any], errors: list[str]) -> None:
+    scb = _get_scb(bundle)
+    if not isinstance(scb, dict):
+        return
+    if is_local_dev_marker(scb.get("local_dev")):
+        errors.append("science_claim_bundle.local_dev is not allowed for release import")
+    for label, artifact in (
+        ("signed_bundle", bundle),
+        ("verification_result", _get_verification_result(bundle, scb)),
+    ):
+        if isinstance(artifact, dict) and is_local_dev_marker(artifact.get("local_dev")):
+            errors.append(f"{label}.local_dev is not allowed for release import")
 
 
 def collect_semantic_errors(bundle: dict[str, Any], *, strict: bool) -> list[str]:
@@ -162,6 +195,11 @@ def collect_semantic_errors(bundle: dict[str, Any], *, strict: bool) -> list[str
     if _is_signed_bundle(bundle):
         _require_signature(bundle, "signed_bundle", errors)
 
+    release_strict = strict and detect_bundle_shape(bundle) == "pcs_core"
+
+    if release_strict:
+        _reject_release_local_dev_flags(bundle, errors)
+
     for label, artifact in (
         ("science_claim_bundle.claim_artifact", claim),
         ("science_claim_bundle.assumption_set", assumption_set),
@@ -170,13 +208,16 @@ def collect_semantic_errors(bundle: dict[str, Any], *, strict: bool) -> list[str
         ("verification_result", vr),
     ):
         if isinstance(artifact, dict):
-            _require_source_commit(artifact, label, errors)
+            _require_source_commit(artifact, label, errors, strict=release_strict)
             _require_signature(artifact, label, errors)
 
     if isinstance(scb, dict):
-        _require_source_commit(scb, "science_claim_bundle", errors)
+        _require_source_commit(scb, "science_claim_bundle", errors, strict=release_strict)
         if is_legacy_signed_bundle({"science_claim_bundle": scb}):
             _require_signature(scb, "science_claim_bundle", errors)
+
+    if release_strict and _is_signed_bundle(bundle):
+        _require_source_commit(bundle, "signed_bundle", errors, strict=True)
 
     return errors
 

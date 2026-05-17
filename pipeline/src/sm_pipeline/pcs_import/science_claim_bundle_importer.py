@@ -10,6 +10,7 @@ from typing import Any
 
 from sm_pipeline.pcs_import.artifact_normalizer import normalize_signed_bundle
 from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
+from sm_pipeline.pcs_import.provenance import git_head_commit
 from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 from sm_pipeline.pcs_validate.stale_checker import find_stale_artifacts
 from sm_pipeline.pcs_validate.validator import (
@@ -96,9 +97,12 @@ def import_signed_bundle(
             json.dumps(manifest, indent=2) + "\n",
             encoding="utf-8",
         )
-        import_report = {
+        imported_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+        if imported_at.endswith("+00:00"):
+            imported_at = imported_at[:-6] + "Z"
+        import_report: dict[str, Any] = {
             "claim_id": claim_id,
-            "imported_at": datetime.now(timezone.utc).isoformat(),
+            "imported_at": imported_at,
             "source_bundle_path": str(bundle_path.resolve()),
             "bundle_shape": bundle_shape,
             "strict": strict,
@@ -108,6 +112,9 @@ def import_signed_bundle(
             "stale_artifacts": stale,
             "render_path": render_path,
         }
+        sm_commit = git_head_commit(root)
+        if sm_commit:
+            import_report["scientific_memory_commit"] = sm_commit
         (import_dir / "scientific_memory_import_report.json").write_text(
             json.dumps(import_report, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",

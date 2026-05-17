@@ -44,6 +44,7 @@ IMPORT_REPORT_KEYS = IMPORT_REPORT_REQUIRED_KEYS | frozenset(
         "bundle_shape",
         "strict",
         "allow_legacy",
+        "scientific_memory_commit",
     }
 )
 

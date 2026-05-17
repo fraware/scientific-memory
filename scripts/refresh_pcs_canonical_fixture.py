@@ -30,9 +30,8 @@ PF_LABTRUST_RELEASE = (
 LABTRUST_GYM_SIGNED = (
     REPO_ROOT.parent / "LabTrust-Gym" / "signed_science_claim_bundle.json"
 )
-PCS_CORE_LABTRUST_RELEASE = (
-    REPO_ROOT.parent / "pcs-core" / "examples" / "labtrust-release" / "signed_science_claim_bundle.json"
-)
+PCS_CORE_RELEASE_DIR = REPO_ROOT.parent / "pcs-core" / "examples" / "labtrust-release"
+PCS_CORE_LABTRUST_RELEASE = PCS_CORE_RELEASE_DIR / "signed_science_claim_bundle.json"
 PCS_CORE_EXAMPLE = (
     REPO_ROOT / "pcs-core" / "examples" / "signed_science_claim_bundle.valid.json"
 )
@@ -41,6 +40,8 @@ PCS_CORE_EXAMPLE = (
 def _resolve_signed_source(explicit: Path | None) -> Path:
     if explicit is not None:
         return explicit.resolve()
+    if PCS_CORE_LABTRUST_RELEASE.is_file():
+        return PCS_CORE_LABTRUST_RELEASE
     if PF_LABTRUST_RELEASE.is_file():
         return PF_LABTRUST_RELEASE
     if LABTRUST_GYM_SIGNED.is_file():
@@ -89,19 +90,16 @@ def main() -> int:
     source = _resolve_signed_source(args.signed)
     if args.copy_to_fixture or args.signed is not None:
         FIXTURES.mkdir(parents=True, exist_ok=True)
-        release_dir = FIXTURES / "labtrust-release"
-        release_dir.mkdir(parents=True, exist_ok=True)
-        if source.resolve() != LABTRUST_RELEASE_FIXTURE.resolve():
-            if PF_LABTRUST_RELEASE.parent.is_dir():
-                for path in PF_LABTRUST_RELEASE.parent.iterdir():
-                    if path.is_file() and path.name != "FIXTURE_SOURCE.md":
-                        shutil.copy2(path, release_dir / path.name)
-            else:
-                shutil.copy2(source, LABTRUST_RELEASE_FIXTURE)
+        if args.signed is not None:
+            shutil.copy2(source, LABTRUST_RELEASE_FIXTURE)
+            print(f"fixture -> {LABTRUST_RELEASE_FIXTURE} (from {source})")
+        elif not LABTRUST_RELEASE_FIXTURE.is_file():
+            raise FileNotFoundError(
+                "labtrust-release signed bundle missing; run: just refresh-pcs-fixtures"
+            )
         payload = LABTRUST_RELEASE_FIXTURE.read_text(encoding="utf-8")
         PF_SIGNED_FIXTURE.write_text(payload, encoding="utf-8")
         LEGACY_ALIAS.write_text(payload, encoding="utf-8")
-        print(f"fixture -> {LABTRUST_RELEASE_FIXTURE}")
 
     bundle_path = (
         LABTRUST_RELEASE_FIXTURE if LABTRUST_RELEASE_FIXTURE.is_file() else PF_SIGNED_FIXTURE

@@ -2,7 +2,7 @@
 
 Canonical input for Scientific Memory import/render tests.
 
-**Source of truth:** `provability-fabric/tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json`
+**Source of truth:** `pcs-core/examples/labtrust-release/` (PF-signed bundle with real `provability_fabric_commit` provenance; aligned on vendor)
 
 Refresh:
 
