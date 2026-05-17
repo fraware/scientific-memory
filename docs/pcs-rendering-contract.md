@@ -8,8 +8,8 @@ Every LabTrust PCS claim page at `/pcs/claims/<claim_id>` must render the follow
 | 2 | Assumptions | `AssumptionSetView` | `read_model.assumption_set` |
 | 3 | Runtime Evidence | `RuntimeReceiptView` | `read_model.runtime_receipt` |
 | 4 | Temporal Certificate | `TraceCertificateView` | `read_model.trace_certificate` |
-| 5 | Verification Result | `VerificationResultView` | `read_model.verification_result` |
-| 6 | Artifact Hashes | `ArtifactHashTable` | `read_model.artifact_hashes` |
+| 5 | Verification Result | `VerificationResultView` | `read_model.verification_result` (Provability Fabric `VerificationResult.v0`) |
+| 6 | Artifact Hashes | `ArtifactHashTable` | `read_model.canonical_digests` + `artifact_hashes` |
 | 7 | Source Repositories | `SourceRepositories` | `read_model.source_repositories` |
 | 8 | Reproduce / Verify | `ReplayCommand` | `reproduce_commands`, `verify_commands` |
 | 9 | Limitations | `LimitationNotice` | `limitation_notice` (+ optional `limitations`) |
@@ -34,6 +34,29 @@ Every page must display the following notice verbatim (or substantively identica
 > This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory.
 
 The canonical string is defined in `sm_pipeline.pcs_import.artifact_normalizer.LIMITATION_NOTICE`.
+
+## Verification Result fields
+
+`VerificationResultView` must show:
+
+- `verification_id`
+- `status`
+- `verifier`
+- `verifier_version`
+- `checks` (each with outcome)
+- `source_repo`
+- `source_commit`
+- `signature_or_digest`
+
+## Artifact hash table
+
+`ArtifactHashTable` must show canonical digests for:
+
+- Claim artifact
+- Runtime receipt
+- Trace certificate
+- Evidence bundle (when present)
+- Signed bundle
 
 ## Status visibility
 

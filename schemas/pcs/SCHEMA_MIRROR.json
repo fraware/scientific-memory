@@ -1,0 +1,21 @@
+{
+  "source": "C:\\Users\\mateo\\pcs-core\\schemas",
+  "canonical_schemas": [
+    "SignedScienceClaimBundle.v0.schema.json",
+    "ScienceClaimBundle.v0.schema.json",
+    "VerificationResult.v0.schema.json",
+    "ClaimArtifact.v0.schema.json",
+    "AssumptionSet.v0.schema.json",
+    "RuntimeReceipt.v0.schema.json",
+    "TraceCertificate.v0.schema.json",
+    "EvidenceBundle.v0.schema.json",
+    "SourceSpan.v0.schema.json",
+    "common.defs.json"
+  ],
+  "legacy_aliases": {
+    "signed_science_claim_bundle.schema.json": "SignedScienceClaimBundle.v0.schema.json",
+    "science_claim_bundle.schema.json": "ScienceClaimBundle.v0.schema.json",
+    "verification_result.schema.json": "VerificationResult.v0.schema.json"
+  },
+  "note": "Scientific Memory mirrors pcs-core; pcs-core remains canonical."
+}

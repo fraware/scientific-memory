@@ -8,6 +8,18 @@
     },
     {
       "algorithm": "sha256",
+      "digest": "sha256:claim-artifact-001",
+      "name": "signature_or_digest",
+      "source_artifact": "labtrust-qc-release-claim-001"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:assumption-set-001",
+      "name": "signature_or_digest",
+      "source_artifact": "labtrust-qc-release-assumptions"
+    },
+    {
+      "algorithm": "sha256",
       "digest": "sha256:trace-json-qc-release",
       "name": "trace_hash",
       "source_artifact": "runtime-receipt-qc-release"
@@ -16,6 +28,12 @@
       "algorithm": "sha256",
       "digest": "sha256:events-qc-release",
       "name": "events_hash",
+      "source_artifact": "runtime-receipt-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:runtime-receipt-001",
+      "name": "signature_or_digest",
       "source_artifact": "runtime-receipt-qc-release"
     },
     {
@@ -29,6 +47,42 @@
       "digest": "sha256:qc-release-stl",
       "name": "spec_hash",
       "source_artifact": "trace-certificate-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:trace-certificate-001",
+      "name": "signature_or_digest",
+      "source_artifact": "trace-certificate-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:verification-result-001",
+      "name": "signature_or_digest",
+      "source_artifact": "verification-result-labtrust-qc-release"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:claim-artifact-001",
+      "name": "claim_artifact",
+      "source_artifact": "claim_artifact"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:runtime-receipt-001",
+      "name": "runtime_receipt",
+      "source_artifact": "runtime_receipt"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:trace-certificate-001",
+      "name": "trace_certificate",
+      "source_artifact": "trace_certificate"
+    },
+    {
+      "algorithm": "sha256",
+      "digest": "sha256:signed-bundle-labtrust-demo-001",
+      "name": "signed_bundle",
+      "source_artifact": "signed_bundle"
     }
   ],
   "assumption_set": {
@@ -57,6 +111,13 @@
     "status": "RuntimeObserved"
   },
   "bundle_signature_or_digest": "sha256:signed-bundle-labtrust-demo-001",
+  "canonical_digests": {
+    "claim_artifact": "sha256:claim-artifact-001",
+    "evidence_bundle": "",
+    "runtime_receipt": "sha256:runtime-receipt-001",
+    "signed_bundle": "sha256:signed-bundle-labtrust-demo-001",
+    "trace_certificate": "sha256:trace-certificate-001"
+  },
   "claim": {
     "created_at": "2026-05-01T11:00:00Z",
     "guarantee_types": {
@@ -75,6 +136,7 @@
     "text": "The qc-release workflow run observed protocol-compliant specimen handling and release gating in the LabTrust-Gym hospital-lab simulation."
   },
   "claim_id": "labtrust-qc-release-claim-001",
+  "evidence_bundle": {},
   "limitation_notice": "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory.",
   "limitations": [
     "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory."
@@ -159,16 +221,15 @@
         "outcome": "pass"
       }
     ],
-    "created_at": "2026-05-01T12:00:00Z",
     "id": "verification-result-labtrust-qc-release",
     "overall_outcome": "pass",
-    "producer": "provability-fabric",
-    "producer_version": "0.1.0",
-    "schema_version": "VerificationResult.v0",
     "signature_or_digest": "sha256:verification-result-001",
     "source_commit": "abc123def456",
     "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
-    "status": "ProofChecked"
+    "status": "ProofChecked",
+    "verification_id": "verification-result-labtrust-qc-release",
+    "verifier": "provability-fabric",
+    "verifier_version": "0.1.0"
   },
   "verify_commands": [
     "pf verify science-claim signed_science_claim_bundle.json",

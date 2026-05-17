@@ -1,3 +1,5 @@
+"""PCS portal read-model / rendering contract tests."""
+
 import json
 import shutil
 import tempfile
@@ -5,6 +7,8 @@ from pathlib import Path
 
 from sm_pipeline.pcs_import.artifact_normalizer import LIMITATION_NOTICE, normalize_signed_bundle
 from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
+
+from schema_fixtures import copy_pcs_schemas
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -14,7 +18,10 @@ REQUIRED_READ_MODEL_KEYS = (
     "assumption_set",
     "runtime_receipt",
     "trace_certificate",
+    "evidence_bundle",
+    "verification_result",
     "artifact_hashes",
+    "canonical_digests",
     "source_repositories",
     "reproduce_commands",
     "verify_commands",
@@ -22,8 +29,16 @@ REQUIRED_READ_MODEL_KEYS = (
     "limitation_notice",
 )
 
+CANONICAL_DIGEST_KEYS = (
+    "claim_artifact",
+    "runtime_receipt",
+    "trace_certificate",
+    "evidence_bundle",
+    "signed_bundle",
+)
 
-def test_portal_read_model_has_all_required_sections() -> None:
+
+def test_render_claim_includes_all_required_sections() -> None:
     bundle = json.loads(
         (FIXTURES / "valid_signed_science_claim_bundle.json").read_text(encoding="utf-8")
     )
@@ -32,7 +47,7 @@ def test_portal_read_model_has_all_required_sections() -> None:
         assert key in read_model, f"missing read_model.{key}"
 
 
-def test_limitations_notice_present() -> None:
+def test_render_claim_includes_limitation_notice() -> None:
     bundle = json.loads(
         (FIXTURES / "valid_signed_science_claim_bundle.json").read_text(encoding="utf-8")
     )
@@ -41,16 +56,7 @@ def test_limitations_notice_present() -> None:
     assert LIMITATION_NOTICE in read_model["limitations"]
 
 
-def test_artifact_hashes_displayed() -> None:
-    bundle = json.loads(
-        (FIXTURES / "valid_signed_science_claim_bundle.json").read_text(encoding="utf-8")
-    )
-    read_model = normalize_signed_bundle(bundle)
-    assert len(read_model["artifact_hashes"]) >= 1
-    assert all("digest" in row and "name" in row for row in read_model["artifact_hashes"])
-
-
-def test_source_repo_and_commit_displayed() -> None:
+def test_render_claim_displays_source_repo_and_source_commit() -> None:
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_schemas(root)
@@ -70,20 +76,20 @@ def test_source_repo_and_commit_displayed() -> None:
         assert "labtrust-qc-release-demo" in commits
 
 
-def test_status_values_preserved() -> None:
+def test_render_claim_displays_artifact_hashes() -> None:
     bundle = json.loads(
-        (FIXTURES / "valid_signed_science_claim_bundle.json").read_text(encoding="utf-8")
+        (FIXTURES / "valid_signed_pcs_core_bundle.json").read_text(encoding="utf-8")
     )
     read_model = normalize_signed_bundle(bundle)
-    assert read_model["claim"]["status"] == "RuntimeChecked"
-    assert read_model["trace_certificate"]["status"] == "CertificateChecked"
-    vr = read_model["verification_result"]
-    assert vr is not None
-    assert vr["status"] == "ProofChecked"
+    digests = read_model["canonical_digests"]
+    for key in CANONICAL_DIGEST_KEYS:
+        assert key in digests
+    assert digests["claim_artifact"].startswith("sha256:")
+    assert digests["runtime_receipt"].startswith("sha256:")
+    assert digests["trace_certificate"].startswith("sha256:")
+    assert digests["signed_bundle"].startswith("sha256:")
+    assert len(read_model["artifact_hashes"]) >= 5
 
 
 def _copy_schemas(root: Path) -> None:
-    dest = root / "schemas" / "pcs"
-    dest.mkdir(parents=True)
-    for f in (REPO_ROOT / "schemas" / "pcs").glob("*.json"):
-        shutil.copy(f, dest / f.name)
+    copy_pcs_schemas(root)

@@ -34,11 +34,15 @@ export type PcsVerificationCheck = {
   name: string;
   outcome: string;
   detail?: string;
-  guarantee_type?: string;
+  guarantee_type?: string | null;
 };
 
 export type PcsVerificationResult = {
+  verification_id?: string;
+  id?: string;
   status?: string;
+  verifier?: string;
+  verifier_version?: string;
   overall_outcome?: string;
   signature_or_digest?: string;
   source_repo?: string;
@@ -53,6 +57,14 @@ export type PcsHashRow = {
   source_artifact?: string;
 };
 
+export type PcsCanonicalDigests = {
+  claim_artifact: string;
+  runtime_receipt: string;
+  trace_certificate: string;
+  evidence_bundle: string;
+  signed_bundle: string;
+};
+
 export type PcsClaimReadModel = {
   schema_version: string;
   claim_id: string;
@@ -60,8 +72,10 @@ export type PcsClaimReadModel = {
   assumption_set: PcsNamedArtifact & { assumptions?: PcsAssumption[] };
   runtime_receipt: PcsNamedArtifact;
   trace_certificate: PcsNamedArtifact;
+  evidence_bundle?: PcsNamedArtifact;
   verification_result?: PcsVerificationResult | null;
   artifact_hashes: PcsHashRow[];
+  canonical_digests?: PcsCanonicalDigests;
   source_repositories: { source_repo: string; source_commit: string }[];
   reproduce_commands: string[];
   verify_commands: string[];

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/pcs/legacy/LabTrust.ScienceClaimBundle.v0.schema.json",
+  "title": "LabTrust legacy ScienceClaimBundle",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "created_at",
+    "producer",
+    "producer_version",
+    "source_repo",
+    "source_commit",
+    "status",
+    "signature_or_digest",
+    "claim",
+    "assumption_set",
+    "runtime_receipt",
+    "trace_certificate"
+  ],
+  "properties": {
+    "schema_version": { "const": "ScienceClaimBundle.v0" },
+    "claim": { "type": "object" },
+    "assumption_set": { "type": "object" },
+    "runtime_receipt": { "type": "object" },
+    "trace_certificate": { "type": "object" },
+    "evidence_bundle": { "type": "object" },
+    "limitations": { "type": "array", "items": { "type": "string" } },
+    "reproduce_commands": { "type": "array", "items": { "type": "string" } },
+    "verify_commands": { "type": "array", "items": { "type": "string" } }
+  }
+}

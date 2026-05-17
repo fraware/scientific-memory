@@ -11,6 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Checkout pcs-core (canonical PCS schemas)
+        uses: actions/checkout@v4
+        with:
+          repository: SentinelOps-CI/pcs-core
+          path: pcs-core
+        continue-on-error: true
+
       - uses: astral-sh/setup-uv@v4
 
       - name: Install Python deps
@@ -24,6 +31,9 @@ jobs:
 
       - name: Run pipeline tests
         run: uv run --project pipeline pytest
+
+      - name: Run PCS contract tests
+        run: uv run --project pipeline pytest ../tests/pcs
 
       - name: Run kernel tests (numeric witness)
         run: uv run --project kernels/adsorption pytest

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcs.sentinelops.ci/schemas/ScienceClaimBundle.v0.schema.json",
+  "title": "ScienceClaimBundle.v0",
+  "type": "object",
+  "required": [
+    "bundle_id",
+    "schema_version",
+    "claim_artifact",
+    "assumption_set",
+    "runtime_receipts",
+    "certificates",
+    "evidence_bundle",
+    "verification_policy",
+    "created_at",
+    "producer",
+    "producer_version",
+    "source_repo",
+    "source_commit",
+    "signature_or_digest"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "bundle_id": { "type": "string", "minLength": 1 },
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
+    "claim_artifact": { "$ref": "ClaimArtifact.v0.schema.json" },
+    "assumption_set": { "$ref": "AssumptionSet.v0.schema.json" },
+    "runtime_receipts": {
+      "type": "array",
+      "items": { "$ref": "RuntimeReceipt.v0.schema.json" },
+      "minItems": 1
+    },
+    "certificates": {
+      "type": "array",
+      "items": { "$ref": "TraceCertificate.v0.schema.json" }
+    },
+    "evidence_bundle": { "$ref": "EvidenceBundle.v0.schema.json" },
+    "verification_policy": {
+      "type": "object",
+      "required": ["policy_id", "required_checks"],
+      "additionalProperties": true,
+      "properties": {
+        "policy_id": { "type": "string", "minLength": 1 },
+        "required_checks": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "created_at": { "$ref": "common.defs.json#/$defs/iso8601_datetime" },
+    "producer": { "type": "string", "minLength": 1 },
+    "producer_version": { "type": "string", "minLength": 1 },
+    "source_repo": { "type": "string", "format": "uri" },
+    "source_commit": { "type": "string", "minLength": 7 },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
+  }
+}

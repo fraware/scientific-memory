@@ -38,7 +38,24 @@ for (const p of papers) {
   }
 }
 
-const searchIndex = { papers, claims };
+const pcsClaims = [];
+const pcsRoot = path.join(CORPUS, "pcs", "claims");
+if (fs.existsSync(pcsRoot)) {
+  for (const claimId of fs.readdirSync(pcsRoot)) {
+    const readModelPath = path.join(pcsRoot, claimId, "read_model.json");
+    if (!fs.existsSync(readModelPath)) continue;
+    const model = readJson(readModelPath, null);
+    if (!model?.claim_id) continue;
+    const text = String(model.claim?.text ?? "").slice(0, SNIPPET_LENGTH);
+    pcsClaims.push({
+      id: String(model.claim_id),
+      informal_text: text,
+      href: `/pcs/claims/${model.claim_id}`,
+    });
+  }
+}
+
+const searchIndex = { papers, claims, pcs_claims: pcsClaims };
 const outDir = path.join(PORTAL_ROOT, "public");
 if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(

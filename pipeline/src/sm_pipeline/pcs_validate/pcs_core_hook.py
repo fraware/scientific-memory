@@ -1,43 +1,32 @@
-"""Optional validation via pcs-core (canonical PCS protocol)."""
+"""Validation via pcs-core (canonical PCS authority)."""
 
 from __future__ import annotations
 
 from typing import Any
 
 
-def is_pcs_core_science_claim_bundle(scb: dict[str, Any]) -> bool:
-    if scb.get("schema_version") == "v0":
-        return True
-    return "claim_artifact" in scb
-
-
-def is_pcs_core_verification_result(vr: dict[str, Any]) -> bool:
-    return "verification_id" in vr and "verifier" in vr
+def pcs_core_available() -> bool:
+    try:
+        import pcs_core.validate  # noqa: F401
+    except ImportError:
+        return False
+    return True
 
 
 def validate_with_pcs_core(bundle: dict[str, Any]) -> list[str]:
-    """Run pcs-core schema + semantic validation when the package is installed."""
-    try:
-        from pcs_core.validate import ValidationError as PcsCoreValidationError
-        from pcs_core.validate import validate_artifact
-    except ImportError:
+    """Run pcs-core schema + semantic validation."""
+    if not pcs_core_available():
         return []
 
-    errors: list[str] = []
-    scb = bundle.get("science_claim_bundle")
-    if isinstance(scb, dict) and is_pcs_core_science_claim_bundle(scb):
-        try:
-            validate_artifact(scb, "ScienceClaimBundle.v0")
-        except PcsCoreValidationError as exc:
-            errors.extend(exc.errors or [str(exc)])
+    from pcs_core.validate import ValidationError as PcsCoreValidationError
+    from pcs_core.validate import detect_artifact_type, validate_artifact
 
-    vr = bundle.get("verification_result")
-    if vr is None and isinstance(scb, dict):
-        vr = scb.get("verification_result")
-    if isinstance(vr, dict) and is_pcs_core_verification_result(vr):
-        try:
-            validate_artifact(vr, "VerificationResult.v0")
-        except PcsCoreValidationError as exc:
-            errors.extend(exc.errors or [str(exc)])
+    from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
 
-    return errors
+    payload = bundle_for_validation(bundle)
+    try:
+        artifact_type = detect_artifact_type(payload) or "SignedScienceClaimBundle.v0"
+        validate_artifact(payload, artifact_type)
+    except PcsCoreValidationError as exc:
+        return list(exc.errors or [str(exc)])
+    return []

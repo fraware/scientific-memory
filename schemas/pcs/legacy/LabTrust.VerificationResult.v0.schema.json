@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/pcs/legacy/LabTrust.VerificationResult.v0.schema.json",
+  "title": "LabTrust legacy VerificationResult",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "anyOf": [{ "const": "VerificationResult.v0" }, { "const": "v0" }]
+    },
+    "id": { "type": "string" },
+    "verification_id": { "type": "string" },
+    "verifier": { "type": "string" },
+    "verifier_version": { "type": "string" },
+    "producer": { "type": "string" },
+    "producer_version": { "type": "string" },
+    "status": { "type": "string" },
+    "source_repo": { "type": "string" },
+    "source_commit": { "type": "string" },
+    "signature_or_digest": { "type": "string" },
+    "checks": { "type": "array" },
+    "overall_outcome": { "type": "string" }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "SignedScienceClaimBundle.v0",
+  "signature_or_digest": "sha256:failed-vr",
+  "verification_result": {
+    "schema_version": "VerificationResult.v0",
+    "id": "vr-failed",
+    "created_at": "2026-05-01T12:00:00Z",
+    "producer": "provability-fabric",
+    "producer_version": "0.1.0",
+    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+    "source_commit": "abc123def456",
+    "status": "failed",
+    "signature_or_digest": "sha256:vr-failed",
+    "overall_outcome": "fail",
+    "checks": [
+      {
+        "id": "check-1",
+        "name": "Bundle signature",
+        "outcome": "fail",
+        "detail": "Signature mismatch."
+      }
+    ]
+  },
+  "science_claim_bundle": {
+    "schema_version": "ScienceClaimBundle.v0",
+    "created_at": "2026-05-01T11:30:00Z",
+    "producer": "LabTrust-Gym",
+    "producer_version": "0.1.0",
+    "source_repo": "https://github.com/fraware/LabTrust-Gym",
+    "source_commit": "labtrust-demo",
+    "status": "RuntimeChecked",
+    "signature_or_digest": "sha256:bundle",
+    "claim": {
+      "schema_version": "ClaimArtifact.v0",
+      "id": "claim-failed-vr",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "labtrust-demo",
+      "status": "RuntimeChecked",
+      "signature_or_digest": "sha256:claim",
+      "claim_text": "Verification failed.",
+      "guarantee_types": {}
+    },
+    "assumption_set": {
+      "schema_version": "AssumptionSet.v0",
+      "id": "assumptions",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "labtrust-demo",
+      "status": "RuntimeObserved",
+      "signature_or_digest": "sha256:assumptions",
+      "assumptions": [{ "id": "a1", "text": "Simulation only." }]
+    },
+    "runtime_receipt": {
+      "schema_version": "RuntimeReceipt.v0",
+      "id": "receipt",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "LabTrust-Gym",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "labtrust-demo",
+      "status": "RuntimeChecked",
+      "signature_or_digest": "sha256:receipt"
+    },
+    "trace_certificate": {
+      "schema_version": "TraceCertificate.v0",
+      "id": "cert",
+      "created_at": "2026-05-01T11:00:00Z",
+      "producer": "CertifyEdge",
+      "producer_version": "0.1.0",
+      "source_repo": "https://github.com/fraware/CertifyEdge",
+      "source_commit": "cert-demo",
+      "status": "CertificateChecked",
+      "signature_or_digest": "sha256:cert"
+    }
+  }
+}

@@ -213,8 +213,15 @@ def _normalize_verification_result(vr: dict[str, Any] | None) -> dict[str, Any] 
         if status in ("ProofChecked", "CertificateChecked", "RuntimeChecked"):
             overall = "pass"
     return {
-        "id": _artifact_id(vr) or vr.get("verification_id"),
+        "verification_id": str(
+            vr.get("verification_id") or _artifact_id(vr) or vr.get("id") or ""
+        ),
+        "id": str(vr.get("verification_id") or _artifact_id(vr) or vr.get("id") or ""),
         "status": str(vr.get("status") or ""),
+        "verifier": str(vr.get("verifier") or vr.get("producer") or ""),
+        "verifier_version": str(
+            vr.get("verifier_version") or vr.get("producer_version") or ""
+        ),
         "overall_outcome": overall,
         "signature_or_digest": str(vr.get("signature_or_digest") or ""),
         "source_repo": str(vr.get("source_repo") or ""),
@@ -310,6 +317,38 @@ def normalize_signed_bundle(bundle: dict[str, Any]) -> dict[str, Any]:
         claim_raw, runtime_receipt, trace_certificate, verification_result
     )
 
+    evidence_raw = scb.get("evidence_bundle")
+    evidence_bundle = (
+        _normalize_named_artifact(evidence_raw) if isinstance(evidence_raw, dict) else {}
+    )
+    evidence_digest = ""
+    if isinstance(evidence_raw, dict):
+        evidence_digest = str(evidence_raw.get("signature_or_digest") or "")
+        if not evidence_digest:
+            ah = evidence_raw.get("artifact_hashes")
+            if isinstance(ah, dict) and ah:
+                evidence_digest = str(next(iter(ah.values())))
+
+    canonical_digests = {
+        "claim_artifact": str(claim_raw.get("signature_or_digest") or ""),
+        "runtime_receipt": str(runtime_receipt.get("signature_or_digest") or ""),
+        "trace_certificate": str(trace_certificate.get("signature_or_digest") or ""),
+        "evidence_bundle": evidence_digest,
+        "signed_bundle": str(
+            bundle.get("signature_or_digest") or bundle.get("bundle_digest") or ""
+        ),
+    }
+    for role, digest in canonical_digests.items():
+        if digest:
+            artifact_hashes.append(
+                {
+                    "name": role,
+                    "digest": digest,
+                    "algorithm": "sha256",
+                    "source_artifact": role,
+                }
+            )
+
     return {
         "schema_version": "PcsClaimReadModel.v0",
         "claim_id": claim_id,
@@ -324,8 +363,10 @@ def normalize_signed_bundle(bundle: dict[str, Any]) -> dict[str, Any]:
         "assumption_set": assumption_set,
         "runtime_receipt": runtime_receipt,
         "trace_certificate": trace_certificate,
+        "evidence_bundle": evidence_bundle,
         "verification_result": verification_result,
         "artifact_hashes": artifact_hashes,
+        "canonical_digests": canonical_digests,
         "source_repositories": sources,
         "reproduce_commands": reproduce,
         "verify_commands": verify,

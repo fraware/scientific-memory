@@ -1,48 +1,6 @@
 {
   "schema_version": "SignedScienceClaimBundle.v0",
-  "bundle_id": "scb-qc-release-v0.1",
-  "bundle_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-  "signed_at": "2026-05-16T12:25:00Z",
-  "signature_or_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-  "reproduce_commands": [
-    "labtrust run-demo qc-release",
-    "labtrust export-trace --run runs/qc-release --out trace.json",
-    "labtrust export-runtime-receipt --run runs/qc-release --out runtime_receipt.json",
-    "labtrust export-pcs --run runs/qc-release --out science_claim_bundle.pending.json"
-  ],
-  "verify_commands": [
-    "pf verify science-claim signed_science_claim_bundle.json",
-    "pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json",
-    "just pcs-validate-bundle BUNDLE=signed_science_claim_bundle.json"
-  ],
-  "verification_result": {
-    "verification_id": "verify-scb-qc-release-v0.1",
-    "schema_version": "v0",
-    "bundle_id": "scb-qc-release-v0.1",
-    "verifier": "provability-fabric",
-    "verifier_version": "0.1.0",
-    "status": "ProofChecked",
-    "checks": [
-      {
-        "check_id": "schema-valid",
-        "description": "ScienceClaimBundle conforms to ScienceClaimBundle.v0 schema",
-        "status": "passed",
-        "details": {}
-      },
-      {
-        "check_id": "trace-hash-alignment",
-        "description": "Runtime receipt trace_hash matches certificate trace_hash",
-        "status": "passed",
-        "details": {
-          "trace_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
-        }
-      }
-    ],
-    "created_at": "2026-05-16T12:20:00Z",
-    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
-    "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
-    "signature_or_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-  },
+  "signed_bundle_id": "signed-scb-qc-release-v0.1",
   "science_claim_bundle": {
     "bundle_id": "scb-qc-release-v0.1",
     "schema_version": "v0",
@@ -95,6 +53,9 @@
         "started_at": "2026-05-16T11:58:00Z",
         "ended_at": "2026-05-16T12:00:00Z",
         "status": "RuntimeObserved",
+        "run_outcome": "passed",
+        "final_reason_code": "ok",
+        "released": true,
         "events_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
         "policy_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
         "trace_hash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
@@ -157,5 +118,44 @@
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
     "signature_or_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-  }
+  },
+  "verification_result": {
+    "verification_id": "verify-scb-qc-release-v0.1",
+    "schema_version": "v0",
+    "bundle_id": "scb-qc-release-v0.1",
+    "verifier": "provability-fabric",
+    "verifier_version": "0.1.0",
+    "status": "ProofChecked",
+    "checks": [
+      {
+        "check_id": "schema-valid",
+        "description": "ScienceClaimBundle conforms to schema",
+        "status": "passed",
+        "details": {}
+      },
+      {
+        "check_id": "trace-hash-alignment",
+        "description": "Receipt trace_hash matches certificate",
+        "status": "passed",
+        "details": {}
+      }
+    ],
+    "created_at": "2026-05-16T12:20:00Z",
+    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+    "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "signature_or_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "signer": "Provability Fabric",
+  "signed_at": "2026-05-16T12:25:00Z",
+  "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+  "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "signature_or_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "reproduce_commands": [
+    "labtrust run-demo qc-release",
+    "pf verify science-claim signed_science_claim_bundle.json"
+  ],
+  "verify_commands": [
+    "pf verify science-claim signed_science_claim_bundle.json",
+    "just pcs-validate-bundle BUNDLE=signed_science_claim_bundle.json"
+  ]
 }

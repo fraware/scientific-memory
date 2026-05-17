@@ -52,7 +52,11 @@ repo-snapshot:
 # Alias for SPEC 17 contributor flow (same as validate; no nested just)
 validate-corpus: validate
 
-portal:
+# Install portal deps first (pnpm workspace; node_modules lives under portal/)
+portal-install:
+	pnpm install
+
+portal: portal-install
 	pnpm --dir portal dev
 
 test:
@@ -176,12 +180,46 @@ mcp-server:
 metrics *ARGS:
 	uv run --project pipeline python -m sm_pipeline.cli metrics {{ARGS}}
 
-# PCS LabTrust v0.1: import, validate, and render proof-carrying science claims
-pcs-import-bundle BUNDLE:
-	uv run --project pipeline python -m sm_pipeline.cli pcs-import-bundle --bundle {{BUNDLE}}
+# PCS LabTrust v0.1 (just uses positional args, not make-style VAR=value)
+#   just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
+#   just pcs-render-claim labtrust-qc-release-claim-001
+pcs-import-bundle bundle:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-bundle --bundle "{{bundle}}"
 
-pcs-validate-bundle BUNDLE:
-	uv run --project pipeline python -m sm_pipeline.cli pcs-validate-bundle --bundle {{BUNDLE}}
+pcs-validate-bundle bundle:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-validate-bundle --bundle "{{bundle}}"
 
-pcs-render-claim CLAIM_ID:
-	uv run --project pipeline python -m sm_pipeline.cli pcs-render-claim --claim-id {{CLAIM_ID}}
+pcs-render-claim claim_id:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-render-claim --claim-id "{{claim_id}}"
+
+# Optional: uv sync --project pipeline --extra pcs (requires ../../pcs-core/python)
+sync-pipeline-pcs:
+	@if [ -d "pcs-core/python" ] || [ -d "../pcs-core/python" ]; then \
+		uv sync --native-tls --project pipeline --extra pcs; \
+	else \
+		echo "pcs-core not found; using schema mirrors only (legacy import still works)"; \
+		uv sync --native-tls --project pipeline; \
+	fi
+
+# Copy canonical schemas from pcs-core (sibling ../pcs-core or repo pcs-core/)
+sync-pcs-schemas:
+	uv run python scripts/sync_pcs_schemas.py
+
+pcs-import-labtrust-demo:
+	just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
+
+pcs-import-pcs-core-demo:
+	just sync-pipeline-pcs
+	just pcs-import-bundle tests/pcs/fixtures/valid_signed_pcs_core_bundle.json
+
+pcs-refresh-demo:
+	just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
+	just sync-pipeline-pcs
+	just pcs-import-bundle tests/pcs/fixtures/valid_signed_pcs_core_bundle.json
+	just pcs-render-claim labtrust-qc-release-claim-001
+	just pcs-render-claim claim-qc-release-v0.1
+
+# Live pcs-core validation (requires: just sync-pipeline-pcs first)
+test-pcs-integration:
+	just sync-pipeline-pcs
+	bash scripts/run_pcs_integration_tests.sh

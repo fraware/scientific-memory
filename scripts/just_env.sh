@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Shared PATH bootstrap for non-interactive bash (just recipes, smoke tests).
+# Prefer OS TLS trust store for uv (Windows CRYPT_E_NO_REVOCATION_CHECK / UnknownIssuer).
+export UV_NATIVE_TLS="${UV_NATIVE_TLS:-1}"
 # Git Bash on Windows usually inherits a full PATH; WSL/bash may not (uv only).
 _winroot=""
 for r in /c /mnt/c; do

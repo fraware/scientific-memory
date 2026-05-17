@@ -1,0 +1,9 @@
+{
+  "schema_version": "v0",
+  "signed_bundle_id": "signed-scb-qc-release-pf",
+  "science_claim_bundle": {},
+  "verification_result": {},
+  "signer": "Provability Fabric",
+  "signed_at": "2026-05-16T12:30:00Z",
+  "signature_or_digest": "sha256:pf-handoff-placeholder"
+}

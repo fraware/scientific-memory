@@ -3,6 +3,7 @@ import type { PcsClaimReadModel } from "@/lib/pcsTypes";
 import { ArtifactHashTable } from "./ArtifactHashTable";
 import { AssumptionSetView } from "./AssumptionSetView";
 import { ClaimArtifactView } from "./ClaimArtifactView";
+import { EvidenceBundleView } from "./EvidenceBundleView";
 import { LimitationNotice } from "./LimitationNotice";
 import { ReplayCommand } from "./ReplayCommand";
 import { RuntimeReceiptView } from "./RuntimeReceiptView";
@@ -32,8 +33,14 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
       <AssumptionSetView assumptionSet={model.assumption_set} />
       <RuntimeReceiptView receipt={model.runtime_receipt} />
       <TraceCertificateView certificate={model.trace_certificate} />
+      {model.evidence_bundle?.id ? (
+        <EvidenceBundleView evidence={model.evidence_bundle} />
+      ) : null}
       <VerificationResultView result={model.verification_result} />
-      <ArtifactHashTable hashes={model.artifact_hashes} />
+      <ArtifactHashTable
+        hashes={model.artifact_hashes}
+        canonicalDigests={model.canonical_digests}
+      />
       <SourceRepositories sources={model.source_repositories} />
       <ReplayCommand
         reproduceCommands={model.reproduce_commands}

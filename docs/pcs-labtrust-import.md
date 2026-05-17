@@ -10,7 +10,13 @@ Scientific Memory imports **signed** `ScienceClaimBundle` artifacts produced by 
 - Optional top-level `verification_result` (`VerificationResult.v0`)
 - Top-level `signature_or_digest`
 
-Canonical artifact vocabulary is defined in [pcs-core](https://github.com/SentinelOps-CI/pcs-core). This repository validates against vendored JSON Schemas under `schemas/pcs/` and calls `pcs_core` (editable path dependency in `pipeline/pyproject.toml`) for canonical `ScienceClaimBundle.v0` and `VerificationResult.v0` shapes.
+Canonical artifact vocabulary is defined in [pcs-core](https://github.com/SentinelOps-CI/pcs-core). Scientific Memory does **not** own PCS schemas; it mirrors pcs-core under `schemas/pcs/` and calls `pcs_core` when installed:
+
+| Canonical (pcs-core) | Legacy alias (deprecated) |
+|----------------------|---------------------------|
+| `SignedScienceClaimBundle.v0.schema.json` | `signed_science_claim_bundle.schema.json` |
+| `ScienceClaimBundle.v0.schema.json` | `science_claim_bundle.schema.json` |
+| `VerificationResult.v0.schema.json` | `verification_result.schema.json` |
 
 Two bundle shapes are supported:
 
@@ -22,31 +28,65 @@ Two bundle shapes are supported:
 ## Commands
 
 ```bash
-just pcs-validate-bundle BUNDLE=path/to/signed_science_claim_bundle.json
-just pcs-import-bundle BUNDLE=path/to/signed_science_claim_bundle.json
-just pcs-render-claim CLAIM_ID=<claim_id>
+# just uses positional arguments (not make-style BUNDLE=path)
+just pcs-validate-bundle path/to/signed_science_claim_bundle.json
+just pcs-import-bundle path/to/signed_science_claim_bundle.json
+just pcs-render-claim <claim_id>
+
+# shortcuts
+just pcs-import-labtrust-demo
+just pcs-refresh-demo
 ```
+
+**Windows:** run `just` from Git Bash (configured in the justfile). For live pcs-core tests: `just test-pcs-integration`. Install pcs-core when cloned as a sibling repo: `just sync-pipeline-pcs`.
 
 `pcs-import-bundle` writes:
 
 - `corpus/pcs/claims/<claim_id>/signed_bundle.json` — preserved signed input
 - `corpus/pcs/claims/<claim_id>/read_model.json` — portal read model
-- `corpus/pcs/claims/<claim_id>/import_manifest.json` — warnings and provenance
+- `corpus/pcs/claims/<claim_id>/import_manifest.json` — warnings and provenance (legacy)
+- `corpus/pcs/claims/<claim_id>/scientific_memory_import_report.json` — import report (`claim_id`, `imported_at`, `source_bundle_path`, `verification_status`, `warnings`, `stale_artifacts`, `render_path`)
 
 `pcs-render-claim` refreshes `portal/.generated/pcs-export.json` for static portal build.
+
+```bash
+just sync-pcs-schemas    # copy canonical schemas from repo-root/pcs-core
+just pcs-refresh-demo    # re-import demo fixtures into corpus/pcs/claims/
+```
+
+Schema layout:
+
+- `schemas/pcs/*.schema.json` — mirrors synced from pcs-core (canonical)
+- `schemas/pcs/legacy/*.schema.json` — LabTrust portal legacy envelopes only
+- `schemas/pcs/SCHEMA_MIRROR.json` — provenance manifest from last sync
+
+Top-level `reproduce_commands` / `verify_commands` are Scientific Memory extensions; they are stripped before pcs-core validation and preserved in the stored signed bundle and read model.
 
 ## Import behavior
 
 | Behavior | Detail |
 |----------|--------|
 | Validation | JSON Schema + optional `pcs_core` hook |
-| Reject invalid | Default (`strict=true`) |
+| Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed verification, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
+| `strict=false` | May import without `VerificationResult` (warning only); certificate status warnings |
 | Preserve IDs | Claim, assumption set, receipt, certificate IDs unchanged |
 | Preserve provenance | `source_repo`, `source_commit`, `signature_or_digest` on each artifact |
-| Preserve checks | VerificationResult `checks` list stored verbatim |
-| Warn: no VerificationResult | Import continues; portal shows advisory |
-| Warn: certificate not checked | When `trace_certificate.status` ≠ `CertificateChecked` |
+| Preserve checks | Provability Fabric `VerificationResult.v0` `checks` stored verbatim |
 | Reject: empty assumptions | `assumption_set.assumptions` must be non-empty |
+
+### Provability Fabric handoff shape
+
+```json
+{
+  "schema_version": "v0",
+  "signed_bundle_id": "...",
+  "science_claim_bundle": {},
+  "verification_result": {},
+  "signer": "Provability Fabric",
+  "signed_at": "...",
+  "signature_or_digest": "sha256:..."
+}
+```
 
 ## End-to-end LabTrust flow (reference)
 
