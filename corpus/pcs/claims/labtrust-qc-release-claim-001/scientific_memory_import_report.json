@@ -2,7 +2,7 @@
   "allow_legacy": true,
   "bundle_shape": "legacy",
   "claim_id": "labtrust-qc-release-claim-001",
-  "imported_at": "2026-05-17T10:37:14.522711+00:00",
+  "imported_at": "2026-05-17T13:06:40.647799+00:00",
   "render_path": "/pcs/claims/labtrust-qc-release-claim-001",
   "source_bundle_path": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\valid_signed_science_claim_bundle.json",
   "stale_artifacts": [],
