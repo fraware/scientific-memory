@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import os
+import tempfile
 from pathlib import Path
 
 import pytest
@@ -17,6 +18,7 @@ pcs_core = pytest.importorskip("pcs_core")
 
 from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
 from sm_pipeline.pcs_validate.pcs_core_hook import validate_with_pcs_core
+from sm_pipeline.pcs_validate.validator import BundleValidationError, validate_signed_bundle
 
 from schema_fixtures import copy_pcs_schemas
 
@@ -51,6 +53,22 @@ def test_pcs_core_bundle_imports_end_to_end(tmp_path: Path) -> None:
         ).read_text(encoding="utf-8")
     )
     assert report["verification_status"] == "passed"
+    assert report["bundle_shape"] == "pcs_core"
+    assert report["strict"] is True
+    assert report["allow_legacy"] is False
+
+
+def test_pcs_core_strict_rejects_legacy_bundle() -> None:
+    legacy = json.loads(
+        (FIXTURES / "valid_signed_science_claim_bundle.json").read_text(encoding="utf-8")
+    )
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        with pytest.raises(BundleValidationError, match="--allow-legacy"):
+            validate_signed_bundle(
+                legacy, repo_root=root, strict=True, allow_legacy=False
+            )
 
 
 def _copy_schemas(root: Path) -> None:

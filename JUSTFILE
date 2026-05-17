@@ -77,6 +77,10 @@ test-pcs:
 	bash scripts/run_pcs_tests.sh
 	node portal/scripts/verify-pcs-read-model.mjs
 
+# Full PCS v0.1 gate: contract tests, fixture refresh check, corpus re-import
+pcs-verify: test-pcs refresh-pcs-fixtures refresh-pcs-corpus
+	uv run --project pipeline python -m sm_pipeline.cli validate-all
+
 refresh-pcs-fixtures:
 	uv run python scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
 

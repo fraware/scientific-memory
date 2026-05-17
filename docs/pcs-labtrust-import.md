@@ -73,6 +73,27 @@ Schema layout:
 
 Top-level `reproduce_commands` / `verify_commands` are Scientific Memory extensions; they are stripped before pcs-core validation and preserved in the stored signed bundle and read model.
 
+## LabTrust v0.1 definition of done
+
+| Requirement | Status |
+|-------------|--------|
+| Import canonical PCS Core signed bundle (`signed_science_claim_bundle.json`) | `just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.json` |
+| Strict mode rejects `verification_result.status: failed` | Enforced in `bundle_semantics` |
+| Strict mode rejects legacy bundles without `--allow-legacy` | `detect_bundle_shape` + validator |
+| Write `scientific_memory_import_report.json` | Every import |
+| Portal/read model renders Claim, Assumptions, Runtime Evidence, Temporal Certificate, Verification Result, Artifact Hashes, Source Repositories, Reproduce/Verify, Limitations | `tests/pcs/test_pcs_render.py`, `portal/scripts/verify-pcs-read-model.mjs` |
+| Mandatory limitation notice (verbatim) | `LIMITATION_NOTICE` in `artifact_normalizer.py` |
+
+Contract tests: `just test-pcs` (see `tests/pcs/test_pcs_import.py`, `tests/pcs/test_pcs_render.py`).
+
+Replace the canonical fixture with Provability Fabric output after schema convergence:
+
+```bash
+pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json
+just refresh-pcs-fixtures
+just refresh-pcs-corpus
+```
+
 ## Import behavior
 
 | Behavior | Detail |

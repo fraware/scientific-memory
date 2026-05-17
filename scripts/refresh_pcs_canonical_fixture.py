@@ -13,6 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = REPO_ROOT / "tests" / "pcs" / "fixtures"
 DEFAULT_SIGNED = FIXTURES / "signed_science_claim_bundle.json"
 DEFAULT_READ_MODEL = FIXTURES / "canonical_pcs_read_model.json"
+PROVENANCE = FIXTURES / "canonical_fixture_provenance.json"
 PCS_CORE_EXAMPLE = (
     REPO_ROOT / "pcs-core" / "examples" / "signed_science_claim_bundle.valid.json"
 )
@@ -74,6 +75,29 @@ def main() -> int:
         alias = FIXTURES / "valid_signed_pcs_core_bundle.json"
         alias.write_text(DEFAULT_SIGNED.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"alias -> {alias}")
+
+    from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
+
+    PROVENANCE.write_text(
+        json.dumps(
+            {
+                "fixture": DEFAULT_SIGNED.name,
+                "source_path": str(source.resolve()),
+                "bundle_shape": detect_bundle_shape(bundle),
+                "claim_id": read_model["claim_id"],
+                "refresh_command": "just refresh-pcs-fixtures",
+                "pf_sign_command": (
+                    "pf sign science-claim science_claim_bundle.certified.json "
+                    "--out signed_science_claim_bundle.json"
+                ),
+            },
+            indent=2,
+            sort_keys=True,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    print(f"provenance -> {PROVENANCE}")
 
     return 0
 

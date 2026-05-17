@@ -73,6 +73,10 @@ def test_import_legacy_bundle_requires_allow_legacy_in_strict_mode() -> None:
 
 
 def test_import_rejects_failed_verification_result() -> None:
+    failed = json.loads(
+        (FIXTURES / "failed_pcs_core_verification_result.json").read_text(encoding="utf-8")
+    )
+    assert failed["verification_result"]["status"] == "failed"
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_schemas(root)
@@ -82,6 +86,25 @@ def test_import_rejects_failed_verification_result() -> None:
                 repo_root=root,
                 write=False,
             )
+
+
+def test_import_writes_corpus_artifacts() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        _copy_schemas(root)
+        result = import_signed_bundle(
+            FIXTURES / "signed_science_claim_bundle.json",
+            repo_root=root,
+            write=True,
+        )
+        claim_dir = root / "corpus" / "pcs" / "claims" / result.claim_id
+        for name in (
+            "signed_bundle.json",
+            "read_model.json",
+            "import_manifest.json",
+            "scientific_memory_import_report.json",
+        ):
+            assert (claim_dir / name).is_file(), f"missing {name}"
 
 
 def test_import_rejects_missing_verification_result_in_strict_mode() -> None:

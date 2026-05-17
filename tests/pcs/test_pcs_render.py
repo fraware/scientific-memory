@@ -35,6 +35,22 @@ CANONICAL_DIGEST_KEYS = (
     "signed_bundle",
 )
 
+REQUIRED_SECTION_CONTENT = {
+    "Claim": lambda m: bool(str(m.get("claim", {}).get("text", "")).strip()),
+    "Assumptions": lambda m: len(m.get("assumption_set", {}).get("assumptions") or []) > 0,
+    "Runtime Evidence": lambda m: bool(str(m.get("runtime_receipt", {}).get("id", "")).strip()),
+    "Temporal Certificate": lambda m: bool(str(m.get("trace_certificate", {}).get("id", "")).strip()),
+    "Verification Result": lambda m: m.get("verification_result") is not None,
+    "Artifact Hashes": lambda m: len(m.get("artifact_hashes") or []) >= 5,
+    "Source Repositories": lambda m: len(m.get("source_repositories") or []) > 0,
+    "Reproduce / Verify": lambda m: (
+        isinstance(m.get("reproduce_commands"), list)
+        and isinstance(m.get("verify_commands"), list)
+    ),
+    "Limitations": lambda m: str(m.get("limitation_notice", "")).strip() == LIMITATION_NOTICE,
+}
+
+
 def test_render_claim_includes_all_required_sections() -> None:
     bundle = json.loads(
         (FIXTURES / "signed_science_claim_bundle.json").read_text(encoding="utf-8")
@@ -42,6 +58,8 @@ def test_render_claim_includes_all_required_sections() -> None:
     read_model = normalize_signed_bundle(bundle)
     for key in REQUIRED_READ_MODEL_KEYS:
         assert key in read_model, f"missing read_model.{key}"
+    for section, checker in REQUIRED_SECTION_CONTENT.items():
+        assert checker(read_model), f"section {section!r} has no renderable content"
 
 
 def test_render_claim_displays_limitation_notice() -> None:
