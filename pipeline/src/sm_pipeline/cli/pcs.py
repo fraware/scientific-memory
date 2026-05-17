@@ -18,6 +18,11 @@ _REPO_ROOT = Path(__file__).resolve().parents[4]
 def pcs_import_bundle(
     bundle: Path = typer.Option(..., "--bundle", "-b", help="Signed bundle JSON path"),
     strict: bool = typer.Option(True, help="Reject invalid bundles"),
+    release_mode: bool = typer.Option(
+        False,
+        "--release-mode",
+        help="Strict PCS Core release import; pin report from sibling fixture when present",
+    ),
     allow_legacy: bool = typer.Option(
         False,
         "--allow-legacy",
@@ -30,6 +35,7 @@ def pcs_import_bundle(
             bundle,
             repo_root=_REPO_ROOT,
             strict=strict,
+            release_mode=release_mode,
             allow_legacy=allow_legacy,
         )
     except BundleValidationError as exc:

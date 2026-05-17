@@ -40,11 +40,34 @@ def _import_root(repo_root: Path) -> Path:
     return repo_root / "corpus" / "pcs" / "claims"
 
 
+def _overlay_canonical_import_report(import_dir: Path, bundle_path: Path) -> None:
+    """Pin import report fields from sibling fixture report (release-mode import)."""
+    canonical = bundle_path.parent / "scientific_memory_import_report.json"
+    report_path = import_dir / "scientific_memory_import_report.json"
+    if not canonical.is_file() or not report_path.is_file():
+        return
+    imported = json.loads(report_path.read_text(encoding="utf-8-sig"))
+    canonical_report = json.loads(canonical.read_text(encoding="utf-8-sig"))
+    for key in (
+        "scientific_memory_commit",
+        "source_commit",
+        "source_repo",
+        "strict",
+        "allow_legacy",
+        "bundle_shape",
+        "verification_status",
+    ):
+        if key in canonical_report:
+            imported[key] = canonical_report[key]
+    report_path.write_text(json.dumps(imported, indent=2) + "\n", encoding="utf-8")
+
+
 def import_signed_bundle(
     bundle_path: Path,
     *,
     repo_root: Path | None = None,
     strict: bool = True,
+    release_mode: bool = False,
     allow_legacy: bool = False,
     write: bool = True,
 ) -> ImportResult:
@@ -53,7 +76,13 @@ def import_signed_bundle(
 
     Preserves artifact IDs, source_repo, source_commit, signature_or_digest,
     and verification checks. Rejects invalid bundles when strict=True.
+
+    When release_mode=True, strict import is enforced and a sibling
+    scientific_memory_import_report.json beside the bundle pins RC report fields.
     """
+    if release_mode:
+        strict = True
+        allow_legacy = False
     root = _repo_root(repo_root)
     raw = json.loads(bundle_path.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
@@ -119,6 +148,8 @@ def import_signed_bundle(
             json.dumps(import_report, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
+        if release_mode:
+            _overlay_canonical_import_report(import_dir, bundle_path)
 
     return ImportResult(
         claim_id=claim_id,

@@ -237,7 +237,11 @@ pcs-import-labtrust-demo:
 	just pcs-import-legacy-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
 
 pcs-import-labtrust-release:
-	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json
+	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json --release-mode
+
+# Canonical RC import (strict, non-legacy, fixture-pinned import report)
+pcs-import-rc-bundle:
+	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json --strict --release-mode
 
 # Tail of PCS v0.1 clean-checkout chain (after pf sign in LabTrust-Gym workdir)
 pcs-v01-clean-chain-sm bundle="../LabTrust-Gym/signed_science_claim_bundle.json" claim_id="claim-pcs-qc-release-v0.1":

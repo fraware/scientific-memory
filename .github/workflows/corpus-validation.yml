@@ -58,7 +58,16 @@ jobs:
         run: uv run --project pipeline pytest
 
       - name: Run PCS contract tests
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
         run: bash scripts/run_pcs_tests.sh
+
+      - name: Fail if labtrust-release fixtures drift from pcs-core RC
+        if: hashFiles('pcs-core/examples/labtrust-release/**') != ''
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: |
+          uv run pytest tests/pcs/test_canonical_rc.py::test_scimem_signed_bundle_fixture_matches_pcs_core_rc -q
 
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''

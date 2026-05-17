@@ -2,11 +2,28 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
+import os
 import shutil
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+
+def resolve_pcs_core_root() -> Path:
+    """pcs-core root: PCS_CORE_PATH, ./pcs-core (CI), or ../pcs-core (local sibling)."""
+    if env := os.environ.get("PCS_CORE_PATH", "").strip():
+        return Path(env).resolve()
+    in_repo = REPO_ROOT / "pcs-core"
+    if (in_repo / "examples" / "labtrust-release").is_dir():
+        return in_repo
+    return (REPO_ROOT.parent / "pcs-core").resolve()
+
+
+def file_sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 # PF release bundle: provability-fabric/tests/pcs/fixtures/labtrust-release/ (pf sign).
 LABTRUST_RELEASE_BUNDLE = FIXTURES / "labtrust-release" / "signed_science_claim_bundle.json"
@@ -19,7 +36,7 @@ SM_FIXTURE_MANIFEST = FIXTURES / "labtrust-release" / "FIXTURE_MANIFEST.json"
 EXPECTED_LABTRUST_CLAIM_ID = "claim-pcs-qc-release-v0.1"
 
 # Canonical RC chain: pcs-core/examples/labtrust-release/ (single source of truth).
-PCS_CORE_CANONICAL_RELEASE = REPO_ROOT.parent / "pcs-core" / "examples" / "labtrust-release"
+PCS_CORE_CANONICAL_RELEASE = resolve_pcs_core_root() / "examples" / "labtrust-release"
 PCS_CORE_CANONICAL_SIGNED_BUNDLE = PCS_CORE_CANONICAL_RELEASE / "signed_science_claim_bundle.json"
 CANONICAL_RC_CERTIFICATE_ID = "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a"
 CANONICAL_RC_TRACE_HASH = "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
@@ -29,7 +46,22 @@ CANONICAL_RC_CERTIFIED_BUNDLE_HASH = (
 CANONICAL_RC_LABTRUST_COMMIT = "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
 CANONICAL_RC_CERTIFYEDGE_COMMIT = "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc"
 CANONICAL_RC_PF_COMMIT = "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d"
-CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = "d49cbf78837d42883a3c73078f098669e69f5e3d"
+_CANONICAL_MANIFEST_PATH = PCS_CORE_CANONICAL_RELEASE / "RELEASE_FIXTURE_MANIFEST.json"
+_CANONICAL_REPORT_PATH = PCS_CORE_CANONICAL_RELEASE / "scientific_memory_import_report.json"
+
+
+def _canonical_manifest_value(key: str, fallback: str) -> str:
+    if not _CANONICAL_MANIFEST_PATH.is_file():
+        return fallback
+    manifest = json.loads(_CANONICAL_MANIFEST_PATH.read_text(encoding="utf-8-sig"))
+    value = manifest.get(key)
+    return value if isinstance(value, str) else fallback
+
+
+CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = _canonical_manifest_value(
+    "scientific_memory_commit",
+    "d49cbf78837d42883a3c73078f098669e69f5e3d",
+)
 
 # Canonical import/render tests use the LabTrust v0.1 release fixture (synced from pcs-core).
 PF_SIGNED_BUNDLE = LABTRUST_RELEASE_BUNDLE
