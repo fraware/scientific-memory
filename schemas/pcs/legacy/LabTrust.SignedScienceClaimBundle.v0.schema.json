@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/pcs/legacy/LabTrust.SignedScienceClaimBundle.v0.schema.json",
+  "title": "LabTrust legacy signed bundle (portal import)",
+  "description": "Legacy mirror for Scientific Memory portal imports. Canonical PCS: pcs-core SignedScienceClaimBundle.v0.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["schema_version", "science_claim_bundle", "signature_or_digest"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "anyOf": [
+        { "const": "SignedScienceClaimBundle.v0" },
+        { "const": "v0" }
+      ]
+    },
+    "science_claim_bundle": { "type": "object" },
+    "verification_result": { "type": "object" },
+    "signature_or_digest": { "type": "string", "minLength": 1 },
+    "reproduce_commands": { "type": "array", "items": { "type": "string" } },
+    "verify_commands": { "type": "array", "items": { "type": "string" } }
+  }
+}

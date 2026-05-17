@@ -86,6 +86,12 @@ def _echo_recommendations(repo_root: Path) -> None:
         print(msg, file=sys.stderr)
 
 
+def _validate_pcs_corpus(repo_root: Path) -> None:
+    from sm_pipeline.validate.pcs_corpus import validate_pcs_corpus
+
+    validate_pcs_corpus(repo_root)
+
+
 def run_all_gates(repo_root: Path) -> GateReport:
     """
     Run all validation checks in deterministic order (parity with legacy validate_repo).
@@ -107,6 +113,7 @@ def run_all_gates(repo_root: Path) -> GateReport:
         ("gate2", "reviewer_lifecycle", validate_reviewer_lifecycle),
         ("gate2", "theorem_card_reviewer", validate_theorem_card_reviewer),
         ("gate4", "coverage_integrity", validate_coverage),
+        ("gate2", "pcs_corpus", _validate_pcs_corpus),
     ]
 
     for gate_id, check_id, fn in checks:

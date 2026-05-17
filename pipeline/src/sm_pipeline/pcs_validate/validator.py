@@ -1,4 +1,4 @@
-"""Validate signed PCS bundles (pcs-core hook + vendored JSON Schema)."""
+"""Validate signed PCS bundles: pcs-core (canonical) + legacy mirrors."""
 
 from __future__ import annotations
 
@@ -10,13 +10,24 @@ from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
-from sm_pipeline.pcs_validate.pcs_core_hook import (
-    is_pcs_core_science_claim_bundle,
-    is_pcs_core_verification_result,
-    validate_with_pcs_core,
+from sm_pipeline.pcs_validate.bundle_detection import (
+    get_science_claim_bundle,
+    is_legacy_signed_bundle,
+    is_pcs_core_signed_bundle,
 )
-
-PCS_SCHEMA_BASE_URI = "https://scientific-memory.org/schemas/pcs/"
+from sm_pipeline.pcs_validate.bundle_semantics import (
+    collect_semantic_errors,
+    collect_semantic_warnings,
+    verification_result_passed,
+)
+from sm_pipeline.pcs_validate.pcs_core_hook import pcs_core_available, validate_with_pcs_core
+from sm_pipeline.pcs_validate.schema_registry import (
+    LEGACY_SCIENCE_CLAIM_BUNDLE_SCHEMA,
+    LEGACY_SIGNED_BUNDLE_SCHEMA,
+    LEGACY_VERIFICATION_RESULT_SCHEMA,
+    SCHEMA_ALIASES,
+    resolve_schema_path,
+)
 
 
 class BundleValidationError(ValueError):
@@ -38,7 +49,12 @@ def _load_json(path: Path) -> object:
 
 def _build_pcs_registry(repo_root: Path) -> Registry:
     registry = Registry()
-    for path in sorted(_pcs_schemas_dir(repo_root).glob("*.json")):
+    schemas_dir = _pcs_schemas_dir(repo_root)
+    skip = set(SCHEMA_ALIASES.keys())
+    paths = list(schemas_dir.glob("*.json")) + list(schemas_dir.glob("legacy/*.json"))
+    for path in sorted(paths):
+        if path.name in skip:
+            continue
         schema = _load_json(path)
         schema_id = schema.get("$id")
         if not isinstance(schema_id, str):
@@ -51,10 +67,45 @@ def _build_pcs_registry(repo_root: Path) -> Registry:
 
 
 def validator_for(schema_name: str, repo_root: Path) -> Draft202012Validator:
-    schema_path = _pcs_schemas_dir(repo_root) / schema_name
+    schema_path = resolve_schema_path(_pcs_schemas_dir(repo_root), schema_name)
     schema = _load_json(schema_path)
     registry = _build_pcs_registry(repo_root)
     return Draft202012Validator(schema, registry=registry)
+
+
+def _get_verification_result(bundle: dict[str, Any], scb: dict[str, Any] | None) -> dict[str, Any] | None:
+    vr = bundle.get("verification_result")
+    if isinstance(vr, dict):
+        return vr
+    if scb is not None:
+        nested = scb.get("verification_result")
+        if isinstance(nested, dict):
+            return nested
+    return None
+
+
+def _validate_legacy_bundle(bundle: dict[str, Any], repo_root: Path) -> list[str]:
+    """LabTrust portal legacy envelopes use schemas/pcs/legacy/* mirrors."""
+    errors: list[str] = []
+    signed_validator = validator_for(LEGACY_SIGNED_BUNDLE_SCHEMA, repo_root)
+    for err in sorted(signed_validator.iter_errors(bundle), key=lambda e: e.path):
+        errors.append(err.message)
+
+    scb = get_science_claim_bundle(bundle)
+    if scb is None:
+        errors.append("science_claim_bundle is required")
+    else:
+        scb_validator = validator_for(LEGACY_SCIENCE_CLAIM_BUNDLE_SCHEMA, repo_root)
+        for err in sorted(scb_validator.iter_errors(scb), key=lambda e: e.path):
+            errors.append(f"science_claim_bundle: {err.message}")
+
+    vr = _get_verification_result(bundle, scb)
+    if isinstance(vr, dict):
+        vr_validator = validator_for(LEGACY_VERIFICATION_RESULT_SCHEMA, repo_root)
+        for err in sorted(vr_validator.iter_errors(vr), key=lambda e: e.path):
+            errors.append(f"verification_result: {err.message}")
+
+    return errors
 
 
 def validate_signed_bundle(
@@ -66,81 +117,49 @@ def validate_signed_bundle(
     """
     Validate a signed science claim bundle.
 
-    Returns import warnings (non-fatal). Raises BundleValidationError when strict
-    and validation fails.
+    pcs-core bundles are validated by pcs-core when installed. Legacy LabTrust portal
+    bundles use vendored schema mirrors plus bundle_semantics.
     """
     root = (repo_root or _repo_root_from_here()).resolve()
     errors: list[str] = []
 
-    if strict:
-        errors.extend(validate_with_pcs_core(bundle))
-
-    validator = validator_for("signed_science_claim_bundle.schema.json", root)
-    for err in sorted(validator.iter_errors(bundle), key=lambda e: e.path):
-        errors.append(err.message)
-
-    scb = bundle.get("science_claim_bundle")
-    if isinstance(scb, dict) and not is_pcs_core_science_claim_bundle(scb):
-        scb_validator = validator_for("science_claim_bundle.schema.json", root)
-        for err in sorted(scb_validator.iter_errors(scb), key=lambda e: e.path):
-            errors.append(f"science_claim_bundle: {err.message}")
-
-        assumption_set = scb.get("assumption_set")
-        assumptions = (
-            assumption_set.get("assumptions")
-            if isinstance(assumption_set, dict)
-            else None
-        )
-        if not assumptions:
-            errors.append("science_claim_bundle.assumption_set.assumptions is required")
-
-    if isinstance(scb, dict) and is_pcs_core_science_claim_bundle(scb):
-        assumption_set = scb.get("assumption_set")
-        assumptions = (
-            assumption_set.get("assumptions")
-            if isinstance(assumption_set, dict)
-            else None
-        )
-        if not assumptions:
-            errors.append("science_claim_bundle.assumption_set.assumptions is required")
-
-    vr = bundle.get("verification_result")
-    if vr is None and isinstance(scb, dict):
-        vr = scb.get("verification_result")
-    if isinstance(vr, dict) and not is_pcs_core_verification_result(vr):
-        vr_validator = validator_for("verification_result.schema.json", root)
-        for err in sorted(vr_validator.iter_errors(vr), key=lambda e: e.path):
-            errors.append(f"verification_result: {err.message}")
+    if is_legacy_signed_bundle(bundle):
+        errors.extend(_validate_legacy_bundle(bundle, root))
+        errors.extend(collect_semantic_errors(bundle, strict=strict))
+    elif is_pcs_core_signed_bundle(bundle):
+        if pcs_core_available():
+            errors.extend(validate_with_pcs_core(bundle))
+        else:
+            errors.append(
+                "pcs-core SignedScienceClaimBundle requires the pcs-core package "
+                "(uv sync with pcs-core at repo-root/pcs-core)"
+            )
+    else:
+        errors.extend(_validate_legacy_bundle(bundle, root))
+        errors.extend(collect_semantic_errors(bundle, strict=strict))
 
     if errors and strict:
         raise BundleValidationError("; ".join(errors))
 
-    return collect_import_warnings(bundle) if not errors else []
+    if strict:
+        return collect_semantic_warnings(bundle)
 
-
-def collect_import_warnings(bundle: dict[str, Any]) -> list[str]:
-    """Non-fatal warnings required by the PCS import contract."""
-    warnings: list[str] = []
-    scb = bundle.get("science_claim_bundle")
-    if not isinstance(scb, dict):
-        return warnings
-
-    vr = bundle.get("verification_result")
+    warnings = collect_semantic_warnings(bundle)
+    scb = get_science_claim_bundle(bundle)
+    vr = _get_verification_result(bundle, scb)
     if vr is None:
-        vr = scb.get("verification_result")
-    if vr is None:
-        warnings.append("VerificationResult is absent; import proceeds with advisory only.")
-
-    trace_cert = scb.get("trace_certificate")
-    if not isinstance(trace_cert, dict):
-        certificates = scb.get("certificates")
-        if isinstance(certificates, list) and certificates and isinstance(certificates[0], dict):
-            trace_cert = certificates[0]
-    if isinstance(trace_cert, dict):
-        status = str(trace_cert.get("status") or "")
-        if status != "CertificateChecked":
-            warnings.append(
-                f"trace_certificate.status is {status!r}, expected CertificateChecked."
-            )
-
+        warnings.append(
+            "VerificationResult is absent; import proceeds with advisory only."
+        )
     return warnings
+
+
+def verification_status_label(bundle: dict[str, Any]) -> str:
+    """Summary status for scientific_memory_import_report.json."""
+    scb = get_science_claim_bundle(bundle)
+    vr = _get_verification_result(bundle, scb)
+    if vr is None:
+        return "absent"
+    if verification_result_passed(vr):
+        return "passed"
+    return "failed"

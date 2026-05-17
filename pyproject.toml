@@ -13,3 +13,4 @@ target-version = "py311"
 
 [tool.pytest.ini_options]
 testpaths = ["pipeline/tests", "kernels/adsorption/tests", "tests/pcs"]
+pythonpath = ["."]

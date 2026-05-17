@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcs.sentinelops.ci/schemas/SignedScienceClaimBundle.v0.schema.json",
+  "title": "SignedScienceClaimBundle.v0",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "signed_bundle_id",
+    "science_claim_bundle",
+    "verification_result",
+    "signer",
+    "signed_at",
+    "source_repo",
+    "source_commit",
+    "signature_or_digest"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": "SignedScienceClaimBundle.v0" },
+    "signed_bundle_id": { "type": "string", "minLength": 1 },
+    "science_claim_bundle": { "$ref": "ScienceClaimBundle.v0.schema.json" },
+    "verification_result": { "$ref": "VerificationResult.v0.schema.json" },
+    "signer": { "type": "string", "minLength": 1 },
+    "signed_at": { "$ref": "common.defs.json#/$defs/iso8601_datetime" },
+    "source_repo": { "type": "string", "format": "uri" },
+    "source_commit": { "type": "string", "minLength": 1 },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" },
+    "local_dev": { "type": "boolean" }
+  }
+}
