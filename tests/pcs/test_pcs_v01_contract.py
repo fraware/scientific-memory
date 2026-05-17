@@ -11,7 +11,7 @@ from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape, is_pc
 
 from schema_fixtures import PF_SIGNED_BUNDLE
 
-REQUIRED_TEST_MODULES = ("test_pcs_import", "test_pcs_render")
+REQUIRED_TEST_MODULES = ("test_pcs_import", "test_pcs_render", "test_labtrust_release_fixture")
 
 REQUIRED_TEST_NAMES = (
     "test_import_pf_signed_bundle_valid",
@@ -29,6 +29,10 @@ REQUIRED_TEST_NAMES = (
     "test_render_claim_displays_artifact_hashes",
     "test_render_claim_displays_source_repo_and_source_commit",
     "test_render_claim_displays_limitation_notice",
+    "test_render_claim_read_model_matches_committed_fixture",
+    "test_labtrust_release_fixture_manifest_is_current",
+    "test_import_read_model_matches_canonical_golden_fixture",
+    "test_pcs_corpus_claim_passes_validate_all_gate",
 )
 
 

@@ -4,7 +4,7 @@ Scientific Memory imports **signed** `ScienceClaimBundle` artifacts produced by 
 
 ## Expected input
 
-- File: `signed_science_claim_bundle.json` (PF output; vendored as `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` from `pcs-core/examples/labtrust-release/`)
+- File: `signed_science_claim_bundle.json` (PF output; vendored as `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` from `provability-fabric/tests/pcs/fixtures/labtrust-release/`)
 - Top-level `schema_version`: `SignedScienceClaimBundle.v0`
 - Nested `science_claim_bundle` with `ScienceClaimBundle.v0`
 - Optional top-level `verification_result` (`VerificationResult.v0`)
@@ -106,7 +106,7 @@ just refresh-pcs-corpus
 | Strict default | PCS Core signed bundles accepted; legacy LabTrust envelopes require `--allow-legacy` |
 | Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed or missing `verification_result`, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
 | `strict=false` | May import legacy bundles and bundles without `VerificationResult` (warning only) |
-| Canonical fixture | `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` (from `pf sign` or `pcs-core/examples/labtrust-release/` via `just refresh-pcs-fixtures`) |
+| Canonical fixture | `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` (from `provability-fabric/tests/pcs/fixtures/labtrust-release/`; hashes in `FIXTURE_MANIFEST.json`) |
 | Preserve IDs | Claim, assumption set, receipt, certificate IDs unchanged |
 | Preserve provenance | `source_repo`, `source_commit`, `signature_or_digest` on each artifact |
 | Preserve checks | Provability Fabric `VerificationResult.v0` `checks` stored verbatim |

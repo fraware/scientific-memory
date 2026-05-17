@@ -58,7 +58,7 @@ jobs:
         run: uv run --project pipeline pytest
 
       - name: Run PCS contract tests
-        run: uv run --project pipeline pytest ../tests/pcs
+        run: bash scripts/run_pcs_tests.sh
 
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''

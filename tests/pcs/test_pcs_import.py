@@ -22,13 +22,15 @@ FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 def test_import_pf_signed_bundle_valid() -> None:
     assert PF_SIGNED_BUNDLE.is_file(), (
-        "missing labtrust-release fixture; copy from pcs-core/examples/labtrust-release"
+        "missing labtrust-release fixture; copy from provability-fabric/tests/pcs/fixtures/labtrust-release"
     )
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_schemas(root)
+        bundle = json.loads(PF_SIGNED_BUNDLE.read_text(encoding="utf-8"))
+        expected_claim_id = bundle["science_claim_bundle"]["claim_artifact"]["artifact_id"]
         result = import_signed_bundle(PF_SIGNED_BUNDLE, repo_root=root, write=True)
-        assert result.claim_id == "claim-pcs-qc-release-v0.1"
+        assert result.claim_id == expected_claim_id
         read_model = json.loads(
             (root / "corpus" / "pcs" / "claims" / result.claim_id / "read_model.json").read_text(
                 encoding="utf-8"
@@ -39,11 +41,15 @@ def test_import_pf_signed_bundle_valid() -> None:
 
 
 def test_import_labtrust_release_bundle_writes_corpus_artifacts() -> None:
+    """Matches: just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json"""
     assert LABTRUST_RELEASE_BUNDLE.is_file()
+    bundle = json.loads(LABTRUST_RELEASE_BUNDLE.read_text(encoding="utf-8"))
+    expected_claim_id = bundle["science_claim_bundle"]["claim_artifact"]["artifact_id"]
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         _copy_schemas(root)
         result = import_signed_bundle(LABTRUST_RELEASE_BUNDLE, repo_root=root, write=True)
+        assert result.claim_id == expected_claim_id
         claim_dir = root / "corpus" / "pcs" / "claims" / result.claim_id
         for name in (
             "signed_bundle.json",
@@ -57,6 +63,9 @@ def test_import_labtrust_release_bundle_writes_corpus_artifacts() -> None:
         )
         assert report["render_path"] == f"/pcs/claims/{result.claim_id}"
         assert report["verification_status"] == "passed"
+        read_model = json.loads((claim_dir / "read_model.json").read_text(encoding="utf-8"))
+        assert read_model["claim_id"] == expected_claim_id
+        assert read_model["limitation_notice"]
 
 
 def test_import_legacy_bundle_rejected_in_strict_mode() -> None:

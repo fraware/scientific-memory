@@ -18,6 +18,15 @@ PF_SIGNED_FIXTURE = FIXTURES / "signed_science_claim_bundle.valid.json"
 LEGACY_ALIAS = FIXTURES / "signed_science_claim_bundle.json"
 DEFAULT_READ_MODEL = FIXTURES / "canonical_pcs_read_model.json"
 PROVENANCE = FIXTURES / "canonical_fixture_provenance.json"
+PF_LABTRUST_RELEASE = (
+    REPO_ROOT.parent
+    / "provability-fabric"
+    / "tests"
+    / "pcs"
+    / "fixtures"
+    / "labtrust-release"
+    / "signed_science_claim_bundle.json"
+)
 LABTRUST_GYM_SIGNED = (
     REPO_ROOT.parent / "LabTrust-Gym" / "signed_science_claim_bundle.json"
 )
@@ -32,6 +41,8 @@ PCS_CORE_EXAMPLE = (
 def _resolve_signed_source(explicit: Path | None) -> Path:
     if explicit is not None:
         return explicit.resolve()
+    if PF_LABTRUST_RELEASE.is_file():
+        return PF_LABTRUST_RELEASE
     if LABTRUST_GYM_SIGNED.is_file():
         return LABTRUST_GYM_SIGNED
     if LABTRUST_RELEASE_FIXTURE.is_file():
@@ -80,8 +91,14 @@ def main() -> int:
         FIXTURES.mkdir(parents=True, exist_ok=True)
         release_dir = FIXTURES / "labtrust-release"
         release_dir.mkdir(parents=True, exist_ok=True)
-        payload = source.read_text(encoding="utf-8")
-        LABTRUST_RELEASE_FIXTURE.write_text(payload, encoding="utf-8")
+        if source.resolve() != LABTRUST_RELEASE_FIXTURE.resolve():
+            if PF_LABTRUST_RELEASE.parent.is_dir():
+                for path in PF_LABTRUST_RELEASE.parent.iterdir():
+                    if path.is_file() and path.name != "FIXTURE_SOURCE.md":
+                        shutil.copy2(path, release_dir / path.name)
+            else:
+                shutil.copy2(source, LABTRUST_RELEASE_FIXTURE)
+        payload = LABTRUST_RELEASE_FIXTURE.read_text(encoding="utf-8")
         PF_SIGNED_FIXTURE.write_text(payload, encoding="utf-8")
         LEGACY_ALIAS.write_text(payload, encoding="utf-8")
         print(f"fixture -> {LABTRUST_RELEASE_FIXTURE}")
@@ -104,11 +121,22 @@ def main() -> int:
 
     from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 
+    import hashlib
+
+    signed_bytes = bundle_path.read_bytes()
+    signed_sha256 = f"sha256:{hashlib.sha256(signed_bytes).hexdigest()}"
+
     PROVENANCE.write_text(
         json.dumps(
             {
                 "fixture": "labtrust-release/signed_science_claim_bundle.json",
-                "source_path": str(source.resolve()),
+                "source": "provability-fabric/tests/pcs/fixtures/labtrust-release/",
+                "source_path": (
+                    "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json"
+                    if source.resolve() == LABTRUST_RELEASE_FIXTURE.resolve()
+                    else str(source.resolve())
+                ),
+                "signed_bundle_sha256": signed_sha256,
                 "bundle_shape": detect_bundle_shape(bundle),
                 "claim_id": read_model["claim_id"],
                 "refresh_command": "just refresh-pcs-fixtures",

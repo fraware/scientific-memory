@@ -63,16 +63,16 @@
     "bundle_id": "scb-pcs-qc-release-v0.1",
     "certificates": [
       {
-        "certificate_id": "cert-trace-a08f718b-2f06-4134-bb42-f765149a7673",
+        "certificate_id": "cert-trace-e6779edd-47fd-43e3-bfd1-dbd2a1b97dac",
         "checker": "CertifyEdge",
         "checker_version": "0.1.0",
         "counterexample_ref": null,
-        "created_at": "2026-05-17T13:30:48Z",
+        "created_at": "2026-05-17T13:47:07Z",
         "producer": "CertifyEdge",
         "producer_version": "0.1.0",
         "property_id": "hospital_lab.qc_release",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:73ed062f84243ac97cfd7b25618de8e9f6fefde9ed40aaaf096bea5bf428433d",
+        "signature_or_digest": "sha256:49d1f1baeb7baf3227ca73c2297cd4d6b8a14a5cb8aea3bba3f6384d275b8018",
         "source_commit": "9f531e5b577e0ec3bd1c79809e2232ed3b661598",
         "source_repo": "https://github.com/fraware/CertifyEdge",
         "spec_hash": "sha256:7c66dfcf640d382653d8ce7c2c700371d72ff0d6fb59156d411cf2aa9a7dfe5e",
@@ -85,7 +85,7 @@
       "artifact_type": "ClaimArtifact.v0",
       "assumption_set_ref": "as-pcs-qc-release-v0.1",
       "certificate_refs": [
-        "cert-trace-a08f718b-2f06-4134-bb42-f765149a7673"
+        "cert-trace-e6779edd-47fd-43e3-bfd1-dbd2a1b97dac"
       ],
       "claim_kind": "protocol_safety_claim",
       "claim_text": "A sample may be released only after accession, QC completion, analysis, authorization by a release-capable actor, and satisfaction of the required temporal protocol constraints.",
@@ -108,7 +108,7 @@
     "created_at": "2026-01-15T11:00:00Z",
     "evidence_bundle": {
       "artifact_hashes": {
-        "cert-trace-a08f718b-2f06-4134-bb42-f765149a7673": "sha256:73ed062f84243ac97cfd7b25618de8e9f6fefde9ed40aaaf096bea5bf428433d",
+        "cert-trace-e6779edd-47fd-43e3-bfd1-dbd2a1b97dac": "sha256:49d1f1baeb7baf3227ca73c2297cd4d6b8a14a5cb8aea3bba3f6384d275b8018",
         "claim-pcs-qc-release-v0.1": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
         "receipt-qc-release": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a"
       },
@@ -117,7 +117,7 @@
       ],
       "bundle_id": "evidence-pcs-qc-release-v0.1",
       "certificate_refs": [
-        "cert-trace-a08f718b-2f06-4134-bb42-f765149a7673"
+        "cert-trace-e6779edd-47fd-43e3-bfd1-dbd2a1b97dac"
       ],
       "claim_refs": [
         "claim-pcs-qc-release-v0.1"
@@ -168,7 +168,7 @@
       }
     ],
     "schema_version": "v0",
-    "signature_or_digest": "sha256:f8fb3a2de6a0e8d3f95ec95fb40953ecb7fee001fdd8024e93245b78f5cbe112",
+    "signature_or_digest": "sha256:903c5e19e45b61fecb7154549c3ab203d4a07bf99433d3023a2397106edfaeff",
     "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "verification_policy": {
@@ -180,9 +180,9 @@
       ]
     }
   },
-  "signature_or_digest": "sha256:1354e528f4777548121ab2dedd907e106afaa2a46bb6807d786c5b95f9b63d74",
-  "signed_at": "2026-05-17T13:30:52Z",
-  "signed_bundle_id": "signed-ab7eabb0-c0e8-424b-a9ce-f23a9a9e8856",
+  "signature_or_digest": "sha256:f2c5fac37d94f296739c8e3d70601430897e77d130a3da8b6fcf1401ec1db67e",
+  "signed_at": "2026-05-17T14:14:30Z",
+  "signed_bundle_id": "signed-27364514-9680-4844-8bbc-cfadc81553e8",
   "signer": "Provability Fabric",
   "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
   "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
@@ -286,7 +286,7 @@
             "as-pcs-qc-release-v0.1"
           ],
           "certificate_refs": [
-            "cert-trace-a08f718b-2f06-4134-bb42-f765149a7673"
+            "cert-trace-e6779edd-47fd-43e3-bfd1-dbd2a1b97dac"
           ],
           "claim_refs": [
             "claim-pcs-qc-release-v0.1"
@@ -322,13 +322,13 @@
         "status": "passed"
       }
     ],
-    "created_at": "2026-05-17T13:30:52Z",
+    "created_at": "2026-05-17T14:14:30Z",
     "schema_version": "v0",
-    "signature_or_digest": "sha256:e13cb79faff6d65cf0751083bd0dacea5e87aed443304cdc49532bcfa94030db",
+    "signature_or_digest": "sha256:39ebd0851b32c993dbd085c5d0f353c04d118d8d7b68595cf08ba775004d270d",
     "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
     "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
     "status": "ProofChecked",
-    "verification_id": "verification-41866679-98ab-4cdb-8102-150480f3b405",
+    "verification_id": "verification-fafda0bf-c194-4662-b520-4bf6e627c46b",
     "verifier": "Provability Fabric",
     "verifier_version": "0.1.0"
   }

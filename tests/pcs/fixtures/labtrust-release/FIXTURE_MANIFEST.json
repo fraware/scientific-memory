@@ -1,0 +1,21 @@
+{
+  "artifacts": {
+    "README.md": "sha256:6b8f78ff238533ca6c6f93f8a0a6e857125d0e5c36933261929355e3aaf2d377",
+    "invalid_mismatched_trace_hash.json": "sha256:f1f568114cfff9f013732725ca6aad148dd61ba9201dfa146f7eb1d0158e4dd5",
+    "invalid_missing_signature_or_digest.json": "sha256:cd454c1beec48b5035bb46e8fc90366565a08ac711b1e0bb3839f3060894323b",
+    "invalid_rejected_certificate.json": "sha256:539d17f7fe1f278959209cc82f01005d2409353e14d133fd1d879905ef1ac618",
+    "invalid_singular_runtime_receipt_bundle.json": "sha256:07adffceecd9924c3827b7fefe213bc0ee9b284b9d9f2037fb0a903959373234",
+    "invalid_stale_artifact.json": "sha256:dba53de75d26a6808a4dc0262b45046126faf4e6734263444f366566e74cdb17",
+    "invalid_trace_certificate_singular_bundle.json": "sha256:eb469f4ccb8acf0e7216764f4e512e88e11b8750e07312d9a3ac2100e0c1c8ff",
+    "invalid_zero_source_commit_release.json": "sha256:fc5012287842b2cd6553d56ae356d9fa1b87cfa903f134640ef639a584f003d5",
+    "missing_claim_signature.json": "sha256:f55761fdfd4c90eec1e2d12a144f3240fd075da9792ef415b7921dfc317dde28",
+    "missing_claim_source_commit.json": "sha256:066e3856e870edcbdfd23d9b281267a425b1dc0ce469051986c7980d9fdfe5aa",
+    "science_claim_bundle.certified.json": "sha256:60223d6de822c79ee296e73e6ce8a18ba9da4662586c01ef53a143e3e8095a89",
+    "signed_science_claim_bundle.json": "sha256:15ff926005cf3ebae8c64f070baf3d9b273ae99f03280731b72fa0f8636d4672",
+    "verification_result.json": "sha256:2a755ec12beb69b16911c21f67aa940306572d20578dbfc524f771a4f847ba3d"
+  },
+  "expected_claim_id": "claim-pcs-qc-release-v0.1",
+  "schema_version": "v0",
+  "signed_bundle_id": "signed-27364514-9680-4844-8bbc-cfadc81553e8",
+  "source": "provability-fabric/tests/pcs/fixtures/labtrust-release/"
+}

@@ -50,7 +50,7 @@ def test_render_claim_displays_runtime_receipt() -> None:
 def test_render_claim_displays_trace_certificate() -> None:
     read_model = _pf_read_model()
     cert = read_model["trace_certificate"]
-    assert cert["id"].startswith("cert-trace-")
+    assert str(cert["id"]).startswith("cert-trace-")
     assert cert["signature_or_digest"].startswith("sha256:")
     assert cert.get("status") == "CertificateChecked"
 
@@ -100,6 +100,16 @@ def test_render_claim_displays_limitation_notice() -> None:
     read_model = _pf_read_model()
     assert read_model["limitation_notice"] == LIMITATION_NOTICE
     assert LIMITATION_NOTICE in read_model["limitations"]
+
+
+def test_render_claim_read_model_matches_committed_fixture() -> None:
+    """Normalized read model equals canonical_pcs_read_model.json (golden PF fixture)."""
+    committed = json.loads(
+        (FIXTURES / "canonical_pcs_read_model.json").read_text(encoding="utf-8")
+    )
+    normalized = _pf_read_model()
+    assert normalized == committed
+    assert committed["limitation_notice"] == LIMITATION_NOTICE
 
 
 def _copy_schemas(root: Path) -> None:
