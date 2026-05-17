@@ -2,7 +2,7 @@
   "allow_legacy": false,
   "bundle_shape": "pcs_core",
   "claim_id": "claim-pcs-qc-release-v0.1",
-  "imported_at": "2026-05-17T21:28:25Z",
+  "imported_at": "2026-05-17T22:31:22Z",
   "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
   "scientific_memory_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
   "source_bundle_path": "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json",
@@ -19,6 +19,6 @@
   "release_chain_validation_id": "validation-pcs-v0.1-labtrust-qc-rc",
   "release_chain_validation_status": "ProofChecked",
   "release_chain_validator": "pcs-core",
-  "release_chain_checked_at": "2026-05-17T17:01:22Z",
-  "release_manifest_hash": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6"
+  "release_chain_checked_at": "2026-05-17T22:23:22Z",
+  "release_manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272"
 }

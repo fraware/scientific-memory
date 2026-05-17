@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
 
 
@@ -71,7 +72,19 @@ def build_artifact_dependency_graph(manifest: dict[str, Any]) -> list[dict[str, 
     return edges
 
 
-def build_release_manifest_view(manifest: dict[str, Any], manifest_path: Path | None) -> dict[str, Any]:
+def build_release_manifest_view(
+    manifest: dict[str, Any],
+    manifest_path: Path | None,
+    *,
+    repo_root: Path | None = None,
+) -> dict[str, Any]:
+    path_value = ""
+    if manifest_path is not None:
+        path_value = (
+            portable_repo_path(manifest_path, repo_root)
+            if repo_root is not None
+            else manifest_path.as_posix()
+        )
     return {
         "release_id": manifest.get("release_id"),
         "release_candidate": manifest.get("release_candidate"),
@@ -80,7 +93,7 @@ def build_release_manifest_view(manifest: dict[str, Any], manifest_path: Path | 
         "release_status": manifest.get("release_status"),
         "signature_or_digest": manifest.get("signature_or_digest"),
         "manifest_hash": canonical_hash(manifest),
-        "manifest_path": str(manifest_path.resolve()) if manifest_path else "",
+        "manifest_path": path_value,
         "producer_repos": manifest.get("producer_repos", {}),
     }
 
@@ -120,9 +133,14 @@ def enrich_read_model_with_release(
     validation: dict[str, Any],
     manifest_path: Path | None = None,
     bundle_path: Path | None = None,
+    repo_root: Path | None = None,
 ) -> dict[str, Any]:
     out = dict(read_model)
-    out["release_manifest"] = build_release_manifest_view(manifest, manifest_path)
+    out["release_manifest"] = build_release_manifest_view(
+        manifest,
+        manifest_path,
+        repo_root=repo_root,
+    )
     out["release_chain_validation"] = build_release_chain_validation_view(validation)
     out["artifact_registry"] = build_artifact_registry(manifest, validation)
     out["artifact_dependency_graph"] = build_artifact_dependency_graph(manifest)

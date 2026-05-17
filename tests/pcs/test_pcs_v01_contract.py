@@ -73,6 +73,7 @@ REQUIRED_TEST_NAMES = (
     "test_import_release_manifest_rejects_hash_mismatch",
     "test_import_release_manifest_rejects_placeholder_commit",
     "test_import_release_manifest_rejects_failed_verification",
+    "test_import_release_manifest_computes_report_without_fixture_overlay",
     "test_import_requires_release_chain_validation_result_in_release_mode",
     "test_import_rejects_rejected_release_chain_result",
     "test_import_report_records_release_chain_validation_status",

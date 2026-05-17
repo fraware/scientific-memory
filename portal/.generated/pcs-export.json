@@ -177,9 +177,7 @@
           "name": "runtime_receipt.json",
           "producer": "LabTrust-Gym",
           "schema": "RuntimeReceipt.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
@@ -190,9 +188,7 @@
           "name": "science_claim_bundle.certified.json",
           "producer": "LabTrust-Gym",
           "schema": "ScienceClaimBundle.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
@@ -203,9 +199,7 @@
           "name": "science_claim_bundle.pending.json",
           "producer": "LabTrust-Gym",
           "schema": "ScienceClaimBundle.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
@@ -216,9 +210,7 @@
           "name": "scientific_memory_import_report.json",
           "producer": "Scientific Memory",
           "schema": "scientific_memory_import_report.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
           "source_repo": "https://github.com/fraware/scientific-memory",
           "status": "Validated"
@@ -229,9 +221,7 @@
           "name": "signed_science_claim_bundle.json",
           "producer": "Provability Fabric",
           "schema": "SignedScienceClaimBundle.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
           "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
           "status": "Validated"
@@ -242,9 +232,7 @@
           "name": "trace.json",
           "producer": "LabTrust-Gym",
           "schema": "trace.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
@@ -255,9 +243,7 @@
           "name": "trace_certificate.json",
           "producer": "CertifyEdge",
           "schema": "TraceCertificate.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
           "source_repo": "https://github.com/fraware/CertifyEdge",
           "status": "Validated"
@@ -268,9 +254,7 @@
           "name": "verification_result.json",
           "producer": "Provability Fabric",
           "schema": "VerificationResult.v0.schema.json",
-          "semantic_checks_performed": [
-            "manifest hash alignment"
-          ],
+          "semantic_checks_performed": [],
           "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
           "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
           "status": "Validated"
@@ -381,19 +365,185 @@
       ],
       "release_chain_validation": {
         "artifacts_checked": 8,
-        "checked_at": "2026-05-17T17:01:22Z",
+        "checked_at": "2026-05-17T22:23:22Z",
         "checks": [
           {
-            "check_id": "certificate_id_consistency",
-            "description": "Certificate ID is identical across certificate, certified bundle, verification result, and signed bundle",
-            "details": {
-              "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a"
-            },
+            "check_id": "manifest_present",
+            "description": "RELEASE_FIXTURE_MANIFEST.json exists",
+            "details": {},
             "status": "passed"
           },
           {
-            "check_id": "manifest_hash_alignment",
-            "description": "All manifest artifact hashes match on-disk files",
+            "check_id": "artifact_files_present",
+            "description": "Every manifest-listed artifact file exists on disk",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "manifest_hashes_match",
+            "description": "Every artifact hash matches the manifest digest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "forbidden_provenance_values",
+            "description": "No local_dev, zero commits, or pattern placeholder commits in artifacts",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "runtime_receipt_labtrust_commit",
+            "description": "runtime_receipt.json source_commit matches manifest.labtrust_gym_commit",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "pending_bundle_labtrust_commits",
+            "description": "science_claim_bundle.pending.json LabTrust provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certified_bundle_labtrust_commits",
+            "description": "science_claim_bundle.certified.json LabTrust provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "signed_bundle_nested_labtrust_commits",
+            "description": "signed bundle nested science_claim_bundle LabTrust commits match manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "trace_certificate_certifyedge_commit",
+            "description": "trace_certificate.json source_commit matches manifest.certifyedge_commit",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certified_bundle_certifyedge_commits",
+            "description": "certified bundle CertifyEdge provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "signed_bundle_certifyedge_commits",
+            "description": "signed bundle CertifyEdge provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "verification_result_pf_commit",
+            "description": "verification_result.json source_commit matches manifest.provability_fabric_commit",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "signed_bundle_pf_commit",
+            "description": "signed_science_claim_bundle.json source_commit matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "verification_nested_pf_commits",
+            "description": "verification_result nested PF provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "signed_nested_pf_commits",
+            "description": "signed bundle nested PF provenance matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "scientific_memory_source_commit",
+            "description": "Scientific Memory report source_commit matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "scientific_memory_pin_commit",
+            "description": "Scientific Memory report scientific_memory_commit matches manifest",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_trace_certificate",
+            "description": "certificate_id on trace_certificate is present and consistent",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_certified_bundle",
+            "description": "certificate_id matches on certified bundle certificates",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_claim_refs",
+            "description": "certificate_id referenced from certified claim_artifact",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_evidence_refs",
+            "description": "certificate_id referenced from certified evidence_bundle",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_verification",
+            "description": "certificate_id matches verification_result.verified_input",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "certificate_id_signed_bundle",
+            "description": "certificate_id matches signed bundle embedded certificates",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "trace_hash_alignment",
+            "description": "trace_hash is identical across trace, receipt, certificate, verification, signed bundle",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "verified_input_bundle_hash",
+            "description": "verification_result.verified_input.bundle_hash matches certified bundle manifest hash",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "signed_input_bundle_hash",
+            "description": "signed_science_claim_bundle.signed_input_bundle_hash matches certified manifest hash",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "scientific_memory_import_passed",
+            "description": "scientific_memory_import_report.verification_status is passed",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "scientific_memory_strict_import",
+            "description": "scientific_memory_import_report.strict is true",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "scientific_memory_no_legacy",
+            "description": "scientific_memory_import_report.allow_legacy is false and bundle_shape is pcs_core",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "pcs_artifact_schema_validation",
+            "description": "PCS JSON artifacts pass pcs validate schema and semantics",
             "details": {},
             "status": "passed"
           }
@@ -401,7 +551,7 @@
         "failure_codes": [],
         "release_candidate": "pcs-v0.1.0-rc1",
         "release_id": "release-pcs-v0.1-labtrust-qc",
-        "signature_or_digest": "sha256:62310945234d37c9d595ccb2d92c3ce6dd3be67a80282d76c36c910eceda1251",
+        "signature_or_digest": "sha256:33e3218d6e0cee1800678d74d3f2be27fc21c42a4e5bc0c253ccb6c380bb51bd",
         "status": "ProofChecked",
         "validation_id": "validation-pcs-v0.1-labtrust-qc-rc",
         "validator": "pcs-core",
@@ -409,8 +559,8 @@
       },
       "release_manifest": {
         "generated_at": "2026-05-17T17:01:22Z",
-        "manifest_hash": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6",
-        "manifest_path": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\labtrust-release\\ReleaseManifest.v0.json",
+        "manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
+        "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
         "producer_repos": {
           "certifyedge": {
             "commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
@@ -436,10 +586,10 @@
         "release_candidate": "pcs-v0.1.0-rc1",
         "release_id": "release-pcs-v0.1-labtrust-qc",
         "release_status": "Validated",
-        "signature_or_digest": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6",
+        "signature_or_digest": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
         "validation_profile": "labtrust-v0.1-release-chain"
       },
-      "release_manifest_hash": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6",
+      "release_manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
       "reproduce_commands": [],
       "runtime_receipt": {
         "ended_at": "2026-01-15T11:00:00Z",

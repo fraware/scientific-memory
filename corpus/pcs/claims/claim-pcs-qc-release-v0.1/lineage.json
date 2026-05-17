@@ -3,7 +3,7 @@
   "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
   "claim_id": "claim-pcs-qc-release-v0.1",
   "release_id": "release-pcs-v0.1-labtrust-qc",
-  "release_manifest_hash": "sha256:e073c2d915abdaaa272894cab2b224fa37b21c85b4549a4fc4efdd714c9830d6",
+  "release_manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"

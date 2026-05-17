@@ -85,6 +85,7 @@ def import_signed_bundle(
     release_mode: bool = False,
     allow_legacy: bool = False,
     write: bool = True,
+    pin_fixture_report: bool = True,
 ) -> ImportResult:
     """
     Validate and import a signed science claim bundle.
@@ -166,8 +167,9 @@ def import_signed_bundle(
             json.dumps(import_report, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )
-        if release_mode:
+        if release_mode and pin_fixture_report:
             _overlay_canonical_import_report(import_dir, bundle_path)
+        if release_mode:
             if release_validation is not None:
                 report_path = import_dir / "scientific_memory_import_report.json"
                 finalize_release_mode_claim(

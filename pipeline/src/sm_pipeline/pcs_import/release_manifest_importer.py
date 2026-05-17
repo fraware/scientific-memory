@@ -58,6 +58,7 @@ def import_release_manifest(
         release_mode=True,
         allow_legacy=False,
         write=write,
+        pin_fixture_report=False,
     )
 
     if write:

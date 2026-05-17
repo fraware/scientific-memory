@@ -82,10 +82,25 @@ def main() -> int:
 
     _write_canonical_import_report(release_dir)
 
+    pcs_labtrust = PCS_CORE_EXAMPLES / "labtrust-release"
+    validation_aliases = (
+        ("release_chain_validation_result.v0.json", "ReleaseChainValidationResult.v0.json"),
+    )
+    for pcs_name, dest_name in validation_aliases:
+        pcs_src = pcs_labtrust / pcs_name
+        dest = release_dir / dest_name
+        if pcs_src.is_file():
+            shutil.copy2(pcs_src, dest)
+            print(f"copied pcs-core example -> {dest}")
+
     for name in PHASE2_FILES:
-        pcs_src = PCS_CORE_EXAMPLES / name
         dest = release_dir / name
-        if pcs_src.is_file() and name != "ReleaseManifest.v0.json":
+        if name == "ReleaseManifest.v0.json":
+            continue
+        pcs_src = PCS_CORE_EXAMPLES / name
+        if not pcs_src.is_file():
+            pcs_src = pcs_labtrust / name
+        if pcs_src.is_file():
             shutil.copy2(pcs_src, dest)
             print(f"copied pcs-core example -> {dest}")
 

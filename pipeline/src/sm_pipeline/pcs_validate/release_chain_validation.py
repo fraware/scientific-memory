@@ -128,7 +128,18 @@ def validate_release_chain_validation_or_raise(
 
 
 def resolve_release_chain_validation_path(release_dir: Path) -> Path:
-    return release_dir.resolve() / RELEASE_CHAIN_VALIDATION_FILENAME
+    base = release_dir.resolve()
+    primary = base / RELEASE_CHAIN_VALIDATION_FILENAME
+    if primary.is_file():
+        return primary
+    for name in (
+        "release_chain_validation_result.v0.json",
+        "ReleaseChainValidationResult.v0.json",
+    ):
+        candidate = base / name
+        if candidate.is_file():
+            return candidate
+    return primary
 
 
 def require_release_chain_validation(

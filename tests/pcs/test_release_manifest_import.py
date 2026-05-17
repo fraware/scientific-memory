@@ -52,7 +52,7 @@ def test_import_release_manifest_valid() -> None:
         assert report.get("release_chain_validation_status") == "ProofChecked"
         assert report.get("release_chain_validation_id")
         assert "\\" not in report.get("source_bundle_path", "")
-        assert report["source_bundle_path"].startswith("tests/pcs/fixtures/")
+        assert report["source_bundle_path"].endswith("signed_science_claim_bundle.json")
 
 
 def test_import_release_manifest_rejects_missing_signed_bundle() -> None:
@@ -114,6 +114,34 @@ def test_import_release_manifest_rejects_placeholder_commit() -> None:
                 write=False,
                 render=False,
             )
+
+
+def test_import_release_manifest_computes_report_without_fixture_overlay() -> None:
+    """Release manifest import must not pin import report from sibling fixture."""
+    from sm_pipeline.pcs_import.release_manifest_build import write_release_manifest
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        release_dir = _copy_labtrust_release(root)
+        report_path = release_dir / "scientific_memory_import_report.json"
+        fixture_report = json.loads(report_path.read_text(encoding="utf-8"))
+        fixture_report["release_id"] = "release-BOGUS-OVERLAY"
+        report_path.write_text(json.dumps(fixture_report, indent=2) + "\n", encoding="utf-8")
+        write_release_manifest(release_dir)
+
+        import_release_manifest(
+            release_dir / "ReleaseManifest.v0.json",
+            repo_root=root,
+            write=True,
+            render=False,
+        )
+        claim_dir = root / "corpus" / "pcs" / "claims" / EXPECTED_LABTRUST_CLAIM_ID
+        report = json.loads(
+            (claim_dir / "scientific_memory_import_report.json").read_text(encoding="utf-8"),
+        )
+        assert report.get("release_id") == "release-pcs-v0.1-labtrust-qc"
+        assert report.get("release_manifest_hash", "").startswith("sha256:")
 
 
 def test_import_release_manifest_rejects_failed_verification() -> None:

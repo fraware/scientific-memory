@@ -167,12 +167,23 @@ def _run_pcs_render_claim(*, env: dict[str, str]) -> None:
     )
 
 
-def _assert_canonical_import_report(report: dict) -> None:
+def _assert_canonical_import_report(report: dict, *, pinned_sm_commit: bool = True) -> None:
     assert report["verification_status"] == "passed"
     assert report["strict"] is True
     assert report["allow_legacy"] is False
     assert report["bundle_shape"] == "pcs_core"
-    assert report["scientific_memory_commit"] == CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT
+    sm_commit = report.get("scientific_memory_commit", "")
+    if pinned_sm_commit:
+        assert sm_commit == CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT
+    else:
+        assert isinstance(sm_commit, str) and len(sm_commit) == 40 and sm_commit != "0" * 40
+
+
+def _assert_phase2_import_report(report: dict) -> None:
+    _assert_canonical_import_report(report, pinned_sm_commit=False)
+    assert report.get("release_id") == "release-pcs-v0.1-labtrust-qc"
+    assert report.get("release_chain_validation_status") == "ProofChecked"
+    assert str(report.get("release_manifest_hash", "")).startswith("sha256:")
 
 
 def _assert_canonical_rc_identity(*, report: dict, read_model: dict) -> None:
@@ -260,7 +271,8 @@ def test_scimem_import_via_release_manifest() -> None:
     claim_dir = REPO_ROOT / "corpus" / "pcs" / "claims" / EXPECTED_LABTRUST_CLAIM_ID
     read_model = _load(claim_dir / "read_model.json")
     report = _load(claim_dir / "scientific_memory_import_report.json")
-    _assert_canonical_rc_identity(report=report, read_model=read_model)
+    _assert_phase2_import_report(report)
+    _assert_canonical_read_model(read_model)
     _assert_phase2_read_model(read_model)
     assert (claim_dir / "lineage.json").is_file()
 

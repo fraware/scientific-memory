@@ -85,8 +85,11 @@ def test_import_report_records_release_chain_validation_status() -> None:
             / EXPECTED_LABTRUST_CLAIM_ID
             / "scientific_memory_import_report.json"
         )
+        validation = json.loads(
+            (release_dir / "ReleaseChainValidationResult.v0.json").read_text(encoding="utf-8"),
+        )
         report = json.loads(report_path.read_text(encoding="utf-8"))
         assert report["release_chain_validation_status"] == "ProofChecked"
-        assert report["release_chain_validation_id"] == "validation-pcs-v0.1-labtrust-qc-rc"
-        assert report["release_chain_validator"] == "pcs-core"
-        assert report["release_chain_checked_at"] == "2026-05-17T17:01:22Z"
+        assert report["release_chain_validation_id"] == validation["validation_id"]
+        assert report["release_chain_validator"] == validation["validator"]
+        assert report["release_chain_checked_at"] == validation["checked_at"]

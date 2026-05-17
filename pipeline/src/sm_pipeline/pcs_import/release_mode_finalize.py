@@ -80,6 +80,7 @@ def finalize_release_mode_claim(
             validation=release_validation,
             manifest_path=manifest_path,
             bundle_path=bundle_path,
+            repo_root=repo_root,
         )
         read_model_path.write_text(
             json.dumps(enriched, indent=2, sort_keys=True) + "\n",
