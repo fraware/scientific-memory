@@ -69,6 +69,13 @@ test:
 test-pcs:
 	@echo "==> test-pcs"
 	uv run --project pipeline pytest ../tests/pcs
+	node portal/scripts/verify-pcs-read-model.mjs
+
+refresh-pcs-fixtures:
+	uv run python scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
+
+refresh-pcs-corpus:
+	uv run python scripts/refresh_pcs_corpus_demo.py
 
 benchmark:
 	uv run --project pipeline python -m sm_pipeline.cli benchmark
@@ -183,8 +190,11 @@ metrics *ARGS:
 # PCS LabTrust v0.1 (just uses positional args, not make-style VAR=value)
 #   just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
 #   just pcs-render-claim labtrust-qc-release-claim-001
-pcs-import-bundle bundle:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-bundle --bundle "{{bundle}}"
+pcs-import-bundle bundle *FLAGS:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-bundle --bundle "{{bundle}}" {{FLAGS}}
+
+pcs-import-legacy-bundle bundle:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-bundle --bundle "{{bundle}}" --allow-legacy
 
 pcs-validate-bundle bundle:
 	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-validate-bundle --bundle "{{bundle}}"
@@ -206,18 +216,18 @@ sync-pcs-schemas:
 	uv run python scripts/sync_pcs_schemas.py
 
 pcs-import-labtrust-demo:
-	just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
+	just pcs-import-legacy-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
 
 pcs-import-pcs-core-demo:
 	just sync-pipeline-pcs
-	just pcs-import-bundle tests/pcs/fixtures/valid_signed_pcs_core_bundle.json
+	just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.json
 
-pcs-refresh-demo:
-	just pcs-import-bundle tests/pcs/fixtures/valid_signed_science_claim_bundle.json
-	just sync-pipeline-pcs
-	just pcs-import-bundle tests/pcs/fixtures/valid_signed_pcs_core_bundle.json
+pcs-refresh-demo: refresh-pcs-fixtures refresh-pcs-corpus
 	just pcs-render-claim labtrust-qc-release-claim-001
 	just pcs-render-claim claim-qc-release-v0.1
+
+test-pcs-portal:
+	pnpm --dir portal test
 
 # Live pcs-core validation (requires: just sync-pipeline-pcs first)
 test-pcs-integration:

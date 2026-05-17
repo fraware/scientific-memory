@@ -7,6 +7,7 @@ from pathlib import Path
 
 from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
 from sm_pipeline.pcs_import.science_claim_bundle_importer import load_read_model
+from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 from sm_pipeline.pcs_validate.validator import BundleValidationError, validate_signed_bundle
 
 REQUIRED_READ_MODEL_KEYS = frozenset(
@@ -31,6 +32,9 @@ IMPORT_REPORT_KEYS = frozenset(
         "claim_id",
         "imported_at",
         "source_bundle_path",
+        "bundle_shape",
+        "strict",
+        "allow_legacy",
         "verification_status",
         "warnings",
         "stale_artifacts",
@@ -61,9 +65,13 @@ def validate_pcs_corpus(repo_root: Path) -> None:
             errors.append(f"{claim_id}: signed_bundle.json must be an object")
             continue
 
+        allow_legacy = detect_bundle_shape(bundle) == "legacy"
         try:
             validate_signed_bundle(
-                bundle_for_validation(bundle), repo_root=repo_root, strict=True
+                bundle_for_validation(bundle),
+                repo_root=repo_root,
+                strict=True,
+                allow_legacy=allow_legacy,
             )
         except BundleValidationError as exc:
             errors.append(f"{claim_id}: bundle validation failed: {exc}")

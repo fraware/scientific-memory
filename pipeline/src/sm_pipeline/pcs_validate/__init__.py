@@ -1,5 +1,6 @@
 """PCS bundle validation against pcs-core (when installed) and schema mirrors."""
 
+from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 from sm_pipeline.pcs_validate.bundle_semantics import (
     collect_semantic_errors,
     collect_semantic_warnings,
@@ -19,6 +20,7 @@ from sm_pipeline.pcs_validate.validator import (
 
 __all__ = [
     "BundleValidationError",
+    "detect_bundle_shape",
     "SCIENCE_CLAIM_BUNDLE_SCHEMA",
     "SIGNED_BUNDLE_SCHEMA",
     "VERIFICATION_RESULT_SCHEMA",

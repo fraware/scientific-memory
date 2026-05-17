@@ -11,6 +11,7 @@ from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
 from sm_pipeline.pcs_validate.bundle_detection import (
+    detect_bundle_shape,
     get_science_claim_bundle,
     is_legacy_signed_bundle,
     is_pcs_core_signed_bundle,
@@ -32,6 +33,14 @@ from sm_pipeline.pcs_validate.schema_registry import (
 
 class BundleValidationError(ValueError):
     """Raised when a PCS bundle fails validation."""
+
+
+LEGACY_STRICT_MESSAGE = (
+    "Legacy LabTrust signed bundle requires --allow-legacy in strict mode"
+)
+UNRECOGNIZED_SHAPE_MESSAGE = (
+    "Unrecognized signed bundle shape; expected PCS Core SignedScienceClaimBundle.v0"
+)
 
 
 def _repo_root_from_here() -> Path:
@@ -113,30 +122,36 @@ def validate_signed_bundle(
     *,
     repo_root: Path | None = None,
     strict: bool = True,
+    allow_legacy: bool = False,
 ) -> list[str]:
     """
     Validate a signed science claim bundle.
 
-    pcs-core bundles are validated by pcs-core when installed. Legacy LabTrust portal
-    bundles use vendored schema mirrors plus bundle_semantics.
+    Strict mode (default): PCS Core signed bundles are accepted; legacy LabTrust
+    envelopes require ``allow_legacy=True`` or ``strict=False``. Semantic import
+    rules (passed verification, non-empty assumptions, provenance) always apply
+    when ``strict=True``.
     """
     root = (repo_root or _repo_root_from_here()).resolve()
+    shape = detect_bundle_shape(bundle)
     errors: list[str] = []
 
-    if is_legacy_signed_bundle(bundle):
+    if shape == "legacy":
+        if strict and not allow_legacy:
+            raise BundleValidationError(LEGACY_STRICT_MESSAGE)
         errors.extend(_validate_legacy_bundle(bundle, root))
-        errors.extend(collect_semantic_errors(bundle, strict=strict))
-    elif is_pcs_core_signed_bundle(bundle):
+    elif shape == "pcs_core":
         if pcs_core_available():
             errors.extend(validate_with_pcs_core(bundle))
         else:
             errors.append(
                 "pcs-core SignedScienceClaimBundle requires the pcs-core package "
-                "(uv sync with pcs-core at repo-root/pcs-core)"
+                "(uv sync --project pipeline --extra pcs when pcs-core is present)"
             )
     else:
-        errors.extend(_validate_legacy_bundle(bundle, root))
-        errors.extend(collect_semantic_errors(bundle, strict=strict))
+        raise BundleValidationError(UNRECOGNIZED_SHAPE_MESSAGE)
+
+    errors.extend(collect_semantic_errors(bundle, strict=strict))
 
     if errors and strict:
         raise BundleValidationError("; ".join(errors))

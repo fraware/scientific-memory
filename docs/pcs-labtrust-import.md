@@ -31,6 +31,7 @@ Two bundle shapes are supported:
 # just uses positional arguments (not make-style BUNDLE=path)
 just pcs-validate-bundle path/to/signed_science_claim_bundle.json
 just pcs-import-bundle path/to/signed_science_claim_bundle.json
+just pcs-import-legacy-bundle path/to/legacy_signed_bundle.json
 just pcs-render-claim <claim_id>
 
 # shortcuts
@@ -50,8 +51,18 @@ just pcs-refresh-demo
 `pcs-render-claim` refreshes `portal/.generated/pcs-export.json` for static portal build.
 
 ```bash
-just sync-pcs-schemas    # copy canonical schemas from repo-root/pcs-core
-just pcs-refresh-demo    # re-import demo fixtures into corpus/pcs/claims/
+just sync-pcs-schemas       # copy canonical schemas from repo-root/pcs-core
+just refresh-pcs-fixtures   # sync signed_science_claim_bundle.json + read model from pcs-core
+just refresh-pcs-corpus     # import canonical + legacy demos into corpus/pcs/claims/
+just pcs-refresh-demo       # fixtures + corpus + portal export
+```
+
+After Provability Fabric signs a bundle:
+
+```bash
+pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json
+uv run python scripts/refresh_pcs_canonical_fixture.py --signed path/to/signed_science_claim_bundle.json --copy-to-fixture --sync-pcs-core-alias
+just refresh-pcs-corpus
 ```
 
 Schema layout:
@@ -67,8 +78,10 @@ Top-level `reproduce_commands` / `verify_commands` are Scientific Memory extensi
 | Behavior | Detail |
 |----------|--------|
 | Validation | JSON Schema + optional `pcs_core` hook |
-| Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed verification, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
-| `strict=false` | May import without `VerificationResult` (warning only); certificate status warnings |
+| Strict default | PCS Core signed bundles accepted; legacy LabTrust envelopes require `--allow-legacy` |
+| Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed or missing `verification_result`, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
+| `strict=false` | May import legacy bundles and bundles without `VerificationResult` (warning only) |
+| Canonical fixture | `tests/pcs/fixtures/signed_science_claim_bundle.json` (from pcs-core / `pf sign science-claim …`) |
 | Preserve IDs | Claim, assumption set, receipt, certificate IDs unchanged |
 | Preserve provenance | `source_repo`, `source_commit`, `signature_or_digest` on each artifact |
 | Preserve checks | Provability Fabric `VerificationResult.v0` `checks` stored verbatim |

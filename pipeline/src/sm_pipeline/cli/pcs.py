@@ -18,10 +18,20 @@ _REPO_ROOT = Path(__file__).resolve().parents[4]
 def pcs_import_bundle(
     bundle: Path = typer.Option(..., "--bundle", "-b", help="Signed bundle JSON path"),
     strict: bool = typer.Option(True, help="Reject invalid bundles"),
+    allow_legacy: bool = typer.Option(
+        False,
+        "--allow-legacy",
+        help="Accept legacy LabTrust portal signed bundles in strict mode",
+    ),
 ) -> None:
     """Import a signed LabTrust PCS bundle into corpus/pcs/claims/."""
     try:
-        result = import_signed_bundle(bundle, repo_root=_REPO_ROOT, strict=strict)
+        result = import_signed_bundle(
+            bundle,
+            repo_root=_REPO_ROOT,
+            strict=strict,
+            allow_legacy=allow_legacy,
+        )
     except BundleValidationError as exc:
         console.print(f"[red]Import rejected:[/red] {exc}")
         raise typer.Exit(code=1) from exc
@@ -35,16 +45,31 @@ def pcs_import_bundle(
 
 def pcs_validate_bundle(
     bundle: Path = typer.Option(..., "--bundle", "-b", help="Signed bundle JSON path"),
+    allow_legacy: bool = typer.Option(
+        False,
+        "--allow-legacy",
+        help="Accept legacy LabTrust portal signed bundles in strict mode",
+    ),
 ) -> None:
     """Validate a signed bundle without importing."""
     import json
+
+    from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
+    from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 
     raw = json.loads(bundle.read_text(encoding="utf-8"))
     if not isinstance(raw, dict):
         console.print("[red]Bundle must be a JSON object[/red]")
         raise typer.Exit(code=1)
+    shape = detect_bundle_shape(raw)
+    console.print(f"[dim]bundle_shape:[/dim] {shape}")
     try:
-        warnings = validate_signed_bundle(raw, repo_root=_REPO_ROOT, strict=True)
+        warnings = validate_signed_bundle(
+            bundle_for_validation(raw),
+            repo_root=_REPO_ROOT,
+            strict=True,
+            allow_legacy=allow_legacy,
+        )
     except BundleValidationError as exc:
         console.print(f"[red]Invalid bundle:[/red] {exc}")
         raise typer.Exit(code=1) from exc

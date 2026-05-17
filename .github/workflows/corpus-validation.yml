@@ -23,6 +23,34 @@ jobs:
       - name: Install Python deps
         run: uv sync --all-packages
 
+      - name: Sync PCS schemas from pcs-core
+        run: uv run python scripts/sync_pcs_schemas.py
+        continue-on-error: true
+
+      - name: Install pcs-core extra (when checked out)
+        run: |
+          if [ -d pcs-core/python ]; then
+            uv sync --project pipeline --extra pcs
+          fi
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install portal deps
+        run: pnpm install
+
+      - name: PCS portal read-model contract
+        run: pnpm --dir portal test:pcs-contract
+
+      - name: PCS portal component tests (vitest)
+        run: pnpm --dir portal test
+
       - name: Check schema migration notes (Gate 2)
         run: uv run python scripts/check_schema_migration.py --base main --head HEAD
 
@@ -34,6 +62,12 @@ jobs:
 
       - name: Run PCS contract tests
         run: uv run --project pipeline pytest ../tests/pcs
+
+      - name: Run PCS live integration (pcs-core)
+        if: hashFiles('pcs-core/python/**') != ''
+        env:
+          PCS_INTEGRATION: "1"
+        run: uv run --project pipeline pytest ../tests/pcs/test_pcs_integration.py
 
       - name: Run kernel tests (numeric witness)
         run: uv run --project kernels/adsorption pytest

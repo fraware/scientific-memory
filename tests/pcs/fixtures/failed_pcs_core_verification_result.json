@@ -1,0 +1,82 @@
+{
+  "schema_version": "v0",
+  "signed_bundle_id": "signed-scb-failed-vr",
+  "signer": "provability-fabric",
+  "signed_at": "2026-05-16T12:25:00Z",
+  "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+  "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+  "signature_or_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "science_claim_bundle": {
+    "bundle_id": "scb-failed-vr",
+    "schema_version": "v0",
+    "claim_artifact": {
+      "artifact_id": "claim-failed-vr",
+      "artifact_type": "ClaimArtifact.v0",
+      "schema_version": "v0",
+      "claim_text": "Claim with failed verification.",
+      "claim_kind": "temporal_claim",
+      "status": "CertificateChecked",
+      "assumption_set_ref": "as-failed-vr",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "signature_or_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+    },
+    "assumption_set": {
+      "assumption_set_id": "as-failed-vr",
+      "schema_version": "v0",
+      "source_repo": "https://github.com/fraware/LabTrust-Gym",
+      "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "assumptions": [
+        {
+          "assumption_id": "asm-1",
+          "text": "Simulation only.",
+          "kind": "domain",
+          "status": "HumanReviewed"
+        }
+      ],
+      "signature_or_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    },
+    "runtime_receipts": [
+      {
+        "receipt_id": "receipt-failed-vr",
+        "schema_version": "v0",
+        "run_id": "runs/failed",
+        "status": "RuntimeObserved",
+        "source_repo": "https://github.com/fraware/LabTrust-Gym",
+        "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "signature_or_digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777"
+      }
+    ],
+    "certificates": [
+      {
+        "certificate_id": "cert-failed-vr",
+        "schema_version": "v0",
+        "status": "CertificateChecked",
+        "source_repo": "https://github.com/fraware/CertifyEdge",
+        "source_commit": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "signature_or_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888"
+      }
+    ],
+    "source_repo": "https://github.com/fraware/LabTrust-Gym",
+    "source_commit": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "signature_or_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  },
+  "verification_result": {
+    "verification_id": "verify-failed",
+    "schema_version": "v0",
+    "bundle_id": "scb-failed-vr",
+    "verifier": "provability-fabric",
+    "status": "failed",
+    "checks": [
+      {
+        "check_id": "schema-valid",
+        "description": "Bundle signature",
+        "status": "failed",
+        "details": {}
+      }
+    ],
+    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+    "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+    "signature_or_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}

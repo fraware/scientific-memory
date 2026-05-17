@@ -198,10 +198,7 @@
       "limitations": [
         "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory."
       ],
-      "reproduce_commands": [
-        "labtrust run-demo qc-release",
-        "pf verify science-claim signed_science_claim_bundle.json"
-      ],
+      "reproduce_commands": [],
       "runtime_receipt": {
         "ended_at": "2026-05-16T12:00:00Z",
         "environment": {

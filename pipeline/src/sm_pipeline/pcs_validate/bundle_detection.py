@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
+
+BundleShape = Literal["pcs_core", "legacy", "unknown"]
 
 
 def get_science_claim_bundle(bundle: dict[str, Any]) -> dict[str, Any] | None:
@@ -35,3 +37,16 @@ def is_pcs_core_signed_bundle(bundle: dict[str, Any]) -> bool:
     if isinstance(scb, dict) and scb.get("schema_version") == "v0" and "claim_artifact" in scb:
         return True
     return False
+
+
+def detect_bundle_shape(bundle: dict[str, Any]) -> BundleShape:
+    """Classify signed bundle for import policy and reporting."""
+    pcs_core = is_pcs_core_signed_bundle(bundle)
+    legacy = is_legacy_signed_bundle(bundle)
+    if pcs_core and not legacy:
+        return "pcs_core"
+    if legacy and not pcs_core:
+        return "legacy"
+    if pcs_core and legacy:
+        return "pcs_core"
+    return "unknown"

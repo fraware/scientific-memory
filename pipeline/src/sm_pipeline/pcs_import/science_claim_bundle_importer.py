@@ -10,6 +10,7 @@ from typing import Any
 
 from sm_pipeline.pcs_import.artifact_normalizer import normalize_signed_bundle
 from sm_pipeline.pcs_import.bundle_utils import bundle_for_validation
+from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
 from sm_pipeline.pcs_validate.stale_checker import find_stale_artifacts
 from sm_pipeline.pcs_validate.validator import (
     BundleValidationError,
@@ -43,6 +44,7 @@ def import_signed_bundle(
     *,
     repo_root: Path | None = None,
     strict: bool = True,
+    allow_legacy: bool = False,
     write: bool = True,
 ) -> ImportResult:
     """
@@ -57,12 +59,16 @@ def import_signed_bundle(
         raise BundleValidationError("Bundle must be a JSON object")
 
     warnings = validate_signed_bundle(
-        bundle_for_validation(raw), repo_root=root, strict=strict
+        bundle_for_validation(raw),
+        repo_root=root,
+        strict=strict,
+        allow_legacy=allow_legacy,
     )
     stale = find_stale_artifacts(raw)
     if stale:
         warnings.extend(f"Stale or deprecated artifact: {p}" for p in stale)
 
+    bundle_shape = detect_bundle_shape(raw)
     read_model = normalize_signed_bundle(raw)
     claim_id = read_model["claim_id"]
     render_path = f"/pcs/claims/{claim_id}"
@@ -94,6 +100,9 @@ def import_signed_bundle(
             "claim_id": claim_id,
             "imported_at": datetime.now(timezone.utc).isoformat(),
             "source_bundle_path": str(bundle_path.resolve()),
+            "bundle_shape": bundle_shape,
+            "strict": strict,
+            "allow_legacy": allow_legacy,
             "verification_status": verification_status,
             "warnings": warnings,
             "stale_artifacts": stale,
