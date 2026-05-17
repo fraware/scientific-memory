@@ -17,6 +17,7 @@ REQUIRED_TEST_MODULES = (
     "test_labtrust_release_fixture",
     "test_release_chain_identity",
     "test_canonical_rc",
+    "test_pcs_release_negatives",
 )
 
 REQUIRED_TEST_NAMES = (
@@ -54,6 +55,11 @@ REQUIRED_TEST_NAMES = (
     "test_import_canonical_rc_signed_bundle",
     "test_render_canonical_rc_claim",
     "test_portal_read_model_contract_sections",
+    "test_import_rejects_legacy_bundle_in_release_mode",
+    "test_import_rejects_missing_verification_result",
+    "test_import_rejects_failed_verification_result",
+    "test_import_rejects_tampered_certificate_id",
+    "test_import_rejects_tampered_trace_hash",
 )
 
 

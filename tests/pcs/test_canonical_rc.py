@@ -20,7 +20,7 @@ from schema_fixtures import (
     CANONICAL_RC_CERTIFYEDGE_COMMIT,
     CANONICAL_RC_LABTRUST_COMMIT,
     CANONICAL_RC_PF_COMMIT,
-    CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT,
+    expected_scientific_memory_commit,
     CANONICAL_RC_TRACE_HASH,
     EXPECTED_LABTRUST_CLAIM_ID,
     LABTRUST_RELEASE_BUNDLE,
@@ -126,7 +126,7 @@ def _assert_canonical_import_report(report: dict) -> None:
     assert report["strict"] is True
     assert report["allow_legacy"] is False
     assert report["bundle_shape"] == "pcs_core"
-    assert report["scientific_memory_commit"] == CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT
+    assert report["scientific_memory_commit"] == expected_scientific_memory_commit()
 
 
 def _assert_canonical_read_model(read_model: dict) -> None:
@@ -169,7 +169,7 @@ def test_scimem_fixture_matches_pcs_core_rc() -> None:
     assert manifest["labtrust_gym_commit"] == CANONICAL_RC_LABTRUST_COMMIT
     assert manifest["certifyedge_commit"] == CANONICAL_RC_CERTIFYEDGE_COMMIT
     assert manifest["provability_fabric_commit"] == CANONICAL_RC_PF_COMMIT
-    assert manifest["scientific_memory_commit"] == CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT
+    assert manifest["scientific_memory_commit"] == expected_scientific_memory_commit()
     _assert_canonical_import_report(_load(LABTRUST_RELEASE_IMPORT_REPORT))
 
 

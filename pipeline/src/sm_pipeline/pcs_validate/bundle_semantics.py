@@ -145,6 +145,67 @@ def _reject_release_local_dev_flags(bundle: dict[str, Any], errors: list[str]) -
             errors.append(f"{label}.local_dev is not allowed for release import")
 
 
+def _vr_certificate_refs(vr: dict[str, Any]) -> list[str]:
+    checks = vr.get("checks")
+    if not isinstance(checks, list):
+        return []
+    for check in checks:
+        if not isinstance(check, dict) or check.get("check_id") != "evidence_refs_complete":
+            continue
+        details = check.get("details")
+        if isinstance(details, dict):
+            refs = details.get("certificate_refs")
+            if isinstance(refs, list):
+                return [r for r in refs if isinstance(r, str)]
+    return []
+
+
+def _reject_release_trace_hash_consistency(
+    scb: dict[str, Any],
+    *,
+    errors: list[str],
+) -> None:
+    trace_cert = _get_trace_certificate(scb)
+    receipt = _get_runtime_receipt(scb)
+    if not isinstance(trace_cert, dict) or not isinstance(receipt, dict):
+        return
+    cert_hash = trace_cert.get("trace_hash")
+    receipt_hash = receipt.get("trace_hash")
+    receipt_id = receipt.get("receipt_id") or receipt.get("id") or "runtime_receipt"
+    cert_id = trace_cert.get("certificate_id") or trace_cert.get("id") or "certificate"
+    if (
+        isinstance(cert_hash, str)
+        and isinstance(receipt_hash, str)
+        and cert_hash != receipt_hash
+    ):
+        errors.append(
+            "trace_hash mismatch: "
+            f"receipt {receipt_id} ({receipt_hash}) vs certificate {cert_id} ({cert_hash})"
+        )
+
+
+def _reject_release_certificate_consistency(
+    bundle: dict[str, Any],
+    scb: dict[str, Any],
+    *,
+    errors: list[str],
+) -> None:
+    """Reject when PF verification_result certificate_refs disagree with bundle certificate."""
+    vr = _get_verification_result(bundle, scb)
+    trace_cert = _get_trace_certificate(scb)
+    if not isinstance(vr, dict) or not isinstance(trace_cert, dict):
+        return
+    cert_id = trace_cert.get("certificate_id")
+    if not isinstance(cert_id, str):
+        return
+    refs = _vr_certificate_refs(vr)
+    if refs and refs[0] != cert_id:
+        errors.append(
+            "verification_result certificate_refs do not match trace certificate_id "
+            f"({refs[0]!r} != {cert_id!r})"
+        )
+
+
 def collect_semantic_errors(bundle: dict[str, Any], *, strict: bool) -> list[str]:
     """Return validation errors; empty when bundle satisfies strict import semantics."""
     errors: list[str] = []
@@ -199,6 +260,8 @@ def collect_semantic_errors(bundle: dict[str, Any], *, strict: bool) -> list[str
 
     if release_strict:
         _reject_release_local_dev_flags(bundle, errors)
+        _reject_release_trace_hash_consistency(scb, errors=errors)
+        _reject_release_certificate_consistency(bundle, scb, errors=errors)
 
     for label, artifact in (
         ("science_claim_bundle.claim_artifact", claim),
