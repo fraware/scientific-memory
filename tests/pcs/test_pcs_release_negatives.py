@@ -97,6 +97,20 @@ def test_import_rejects_tampered_certificate_id() -> None:
             )
 
 
+def test_import_rejects_placeholder_source_commit() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        with pytest.raises(BundleValidationError, match="placeholder commit"):
+            import_signed_bundle(
+                FIXTURES / "labtrust-release" / "invalid_placeholder_pf_source_commit.json",
+                repo_root=root,
+                strict=True,
+                release_mode=True,
+                write=False,
+            )
+
+
 def test_import_rejects_tampered_trace_hash() -> None:
     def tamper(bundle: dict) -> None:
         bundle["science_claim_bundle"]["runtime_receipts"][0]["trace_hash"] = (

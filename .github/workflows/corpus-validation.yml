@@ -62,11 +62,14 @@ jobs:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
         run: bash scripts/run_pcs_tests.sh
 
-      - name: PCS canonical RC gate (fixture drift + strict import + render)
+      - name: Install just
+        run: sudo apt-get update && sudo apt-get install -y just
+
+      - name: PCS RC gate (drift, strict import, render, negatives)
         if: hashFiles('pcs-core/examples/labtrust-release/**') != ''
         env:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
-        run: uv run pytest tests/pcs/test_canonical_rc.py -q
+        run: bash scripts/run_pcs_rc_ci_gate.sh
 
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''

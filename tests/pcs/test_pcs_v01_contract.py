@@ -60,6 +60,7 @@ REQUIRED_TEST_NAMES = (
     "test_import_rejects_failed_verification_result",
     "test_import_rejects_tampered_certificate_id",
     "test_import_rejects_tampered_trace_hash",
+    "test_import_rejects_placeholder_source_commit",
 )
 
 

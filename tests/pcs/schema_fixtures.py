@@ -51,24 +51,6 @@ CANONICAL_RC_PCS_CORE_COMMIT = "8caca0e2c7a20d8c8e9496e9b6d4f25d6a8faa66"
 CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
 
 
-def _manifest_commit(key: str, fallback: str) -> str:
-    path = PCS_CORE_CANONICAL_RELEASE / "RELEASE_FIXTURE_MANIFEST.json"
-    if path.is_file():
-        manifest = json.loads(path.read_text(encoding="utf-8-sig"))
-        value = manifest.get(key)
-        if isinstance(value, str) and len(value) == 40:
-            return value
-    if LABTRUST_RELEASE_MANIFEST.is_file():
-        manifest = json.loads(LABTRUST_RELEASE_MANIFEST.read_text(encoding="utf-8-sig"))
-        value = manifest.get(key)
-        if isinstance(value, str) and len(value) == 40:
-            return value
-    return fallback
-
-
-def expected_scientific_memory_commit() -> str:
-    return _manifest_commit("scientific_memory_commit", CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT)
-
 # Canonical import/render tests use the LabTrust v0.1 release fixture (synced from pcs-core).
 PF_SIGNED_BUNDLE = LABTRUST_RELEASE_BUNDLE
 LEGACY_SIGNED_BUNDLE = FIXTURES / "valid_signed_science_claim_bundle.json"
