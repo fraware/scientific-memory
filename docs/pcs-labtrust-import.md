@@ -61,7 +61,9 @@ After Provability Fabric signs a bundle:
 
 ```bash
 pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json
-uv run python scripts/refresh_pcs_canonical_fixture.py --signed path/to/signed_science_claim_bundle.json --copy-to-fixture --sync-pcs-core-alias
+just refresh-pcs-fixtures
+# Or with an explicit PF signed file:
+# bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --signed path/to/signed_science_claim_bundle.json --copy-to-fixture --sync-pcs-core-alias
 just refresh-pcs-corpus
 ```
 

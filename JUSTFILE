@@ -79,13 +79,13 @@ test-pcs:
 
 # Full PCS v0.1 gate: contract tests, fixture refresh check, corpus re-import
 pcs-verify: test-pcs refresh-pcs-fixtures refresh-pcs-corpus
-	uv run --project pipeline python -m sm_pipeline.cli validate-all
+	bash scripts/sm_python.sh -m sm_pipeline.cli validate-all
 
 refresh-pcs-fixtures:
-	uv run python scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
+	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
 
 refresh-pcs-corpus:
-	uv run python scripts/refresh_pcs_corpus_demo.py
+	bash scripts/sm_python.sh scripts/refresh_pcs_corpus_demo.py
 
 benchmark:
 	uv run --project pipeline python -m sm_pipeline.cli benchmark
