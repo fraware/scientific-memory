@@ -16,6 +16,7 @@ REQUIRED_TEST_MODULES = (
     "test_pcs_render",
     "test_labtrust_release_fixture",
     "test_release_chain_identity",
+    "test_canonical_rc",
 )
 
 REQUIRED_TEST_NAMES = (
@@ -46,6 +47,9 @@ REQUIRED_TEST_NAMES = (
     "test_release_chain_consistency_import",
     "test_fixture_release_chain_identity",
     "test_render_read_model_certificate_matches_certified_bundle",
+    "test_scimem_fixture_matches_pcs_core_rc",
+    "test_import_canonical_rc_signed_bundle",
+    "test_render_canonical_rc_claim",
 )
 
 

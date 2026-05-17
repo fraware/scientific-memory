@@ -4,10 +4,12 @@
   "claim_id": "claim-pcs-qc-release-v0.1",
   "imported_at": "2026-05-17T15:39:09Z",
   "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
-  "scientific_memory_commit": "bf8d4cae9dab8bf3e8d4076b86b5836056f032e4",
-  "source_bundle_path": "C:\\Users\\mateo\\scientific-memory\\release-run\\signed_science_claim_bundle.json",
+  "scientific_memory_commit": "d49cbf78837d42883a3c73078f098669e69f5e3d",
+  "source_bundle_path": "signed_science_claim_bundle.json",
   "stale_artifacts": [],
   "strict": true,
   "verification_status": "passed",
-  "warnings": []
+  "warnings": [],
+  "source_repo": "https://github.com/fraware/scientific-memory",
+  "source_commit": "d49cbf78837d42883a3c73078f098669e69f5e3d"
 }
