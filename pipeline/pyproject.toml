@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mcp = ["mcp>=1.0"]
+mcp = ["mcp>=1.27.1"]
 # Install when pcs-core is available: uv sync --project pipeline --extra pcs
 pcs = ["pcs-core>=0.1.0"]
 
