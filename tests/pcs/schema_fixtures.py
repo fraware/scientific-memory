@@ -6,6 +6,21 @@ import shutil
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+# Canonical PF / PCS Core signed bundle (replace via `pf sign` + `just refresh-pcs-fixtures`).
+PF_SIGNED_BUNDLE = FIXTURES / "signed_science_claim_bundle.valid.json"
+LEGACY_SIGNED_BUNDLE = FIXTURES / "valid_signed_science_claim_bundle.json"
+
+IMPORT_REPORT_REQUIRED_KEYS = frozenset(
+    {
+        "claim_id",
+        "verification_status",
+        "warnings",
+        "stale_artifacts",
+        "render_path",
+    }
+)
 
 
 def copy_pcs_schemas(root: Path) -> None:

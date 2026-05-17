@@ -15,18 +15,6 @@ if str(_PCS_TESTS) not in sys.path:
     sys.path.insert(0, str(_PCS_TESTS))
 
 
-def copy_pcs_schemas(root: Path) -> None:
-    dest = root / "schemas" / "pcs"
-    dest.mkdir(parents=True, exist_ok=True)
-    src = REPO_ROOT / "schemas" / "pcs"
-    for f in src.glob("*.json"):
-        shutil.copy(f, dest / f.name)
-    legacy_dest = dest / "legacy"
-    legacy_dest.mkdir(exist_ok=True)
-    for f in src.glob("legacy/*.json"):
-        shutil.copy(f, legacy_dest / f.name)
-
-
 @pytest.fixture(autouse=True)
 def _unit_tests_use_schema_mirrors(monkeypatch: pytest.MonkeyPatch) -> None:
     """Contract tests use vendored mirrors; set PCS_INTEGRATION=1 for live pcs-core."""

@@ -1,8 +1,8 @@
 {
   "bundle_shape": "pcs_core",
   "claim_id": "claim-qc-release-v0.1",
-  "fixture": "signed_science_claim_bundle.json",
+  "fixture": "signed_science_claim_bundle.valid.json",
   "pf_sign_command": "pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json",
   "refresh_command": "just refresh-pcs-fixtures",
-  "source_path": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\signed_science_claim_bundle.json"
+  "source_path": "C:\\Users\\mateo\\scientific-memory\\tests\\pcs\\fixtures\\signed_science_claim_bundle.valid.json"
 }

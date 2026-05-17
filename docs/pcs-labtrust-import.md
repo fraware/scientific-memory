@@ -4,7 +4,7 @@ Scientific Memory imports **signed** `ScienceClaimBundle` artifacts produced by 
 
 ## Expected input
 
-- File: `signed_science_claim_bundle.json`
+- File: `signed_science_claim_bundle.json` (PF output; vendored as `tests/pcs/fixtures/signed_science_claim_bundle.valid.json`)
 - Top-level `schema_version`: `SignedScienceClaimBundle.v0`
 - Nested `science_claim_bundle` with `ScienceClaimBundle.v0`
 - Optional top-level `verification_result` (`VerificationResult.v0`)
@@ -52,7 +52,7 @@ just pcs-refresh-demo
 
 ```bash
 just sync-pcs-schemas       # copy canonical schemas from repo-root/pcs-core
-just refresh-pcs-fixtures   # sync signed_science_claim_bundle.json + read model from pcs-core
+just refresh-pcs-fixtures   # sync signed_science_claim_bundle.valid.json + read model from pcs-core/PF
 just refresh-pcs-corpus     # import canonical + legacy demos into corpus/pcs/claims/
 just pcs-refresh-demo       # fixtures + corpus + portal export
 ```
@@ -79,7 +79,7 @@ Top-level `reproduce_commands` / `verify_commands` are Scientific Memory extensi
 
 | Requirement | Status |
 |-------------|--------|
-| Import canonical PCS Core signed bundle (`signed_science_claim_bundle.json`) | `just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.json` |
+| Import PF / PCS Core signed bundle | `just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.valid.json` |
 | Strict mode rejects `verification_result.status: failed` | Enforced in `bundle_semantics` |
 | Strict mode rejects legacy bundles without `--allow-legacy` | `detect_bundle_shape` + validator |
 | Write `scientific_memory_import_report.json` | Every import |
@@ -104,7 +104,7 @@ just refresh-pcs-corpus
 | Strict default | PCS Core signed bundles accepted; legacy LabTrust envelopes require `--allow-legacy` |
 | Reject invalid (`strict=true`, default) | Missing `science_claim_bundle`, claim, assumption set, runtime receipt, certificate (signed bundles), failed or missing `verification_result`, empty assumptions, missing `source_commit` / `signature_or_digest` on major artifacts |
 | `strict=false` | May import legacy bundles and bundles without `VerificationResult` (warning only) |
-| Canonical fixture | `tests/pcs/fixtures/signed_science_claim_bundle.json` (from pcs-core / `pf sign science-claim …`) |
+| Canonical fixture | `tests/pcs/fixtures/signed_science_claim_bundle.valid.json` (from `pf sign` or pcs-core example via `just refresh-pcs-fixtures`) |
 | Preserve IDs | Claim, assumption set, receipt, certificate IDs unchanged |
 | Preserve provenance | `source_repo`, `source_commit`, `signature_or_digest` on each artifact |
 | Preserve checks | Provability Fabric `VerificationResult.v0` `checks` stored verbatim |

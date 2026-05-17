@@ -230,7 +230,7 @@ pcs-import-labtrust-demo:
 
 pcs-import-pcs-core-demo:
 	just sync-pipeline-pcs
-	just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.json
+	just pcs-import-bundle tests/pcs/fixtures/signed_science_claim_bundle.valid.json
 
 pcs-refresh-demo: refresh-pcs-fixtures refresh-pcs-corpus
 	just pcs-render-claim labtrust-qc-release-claim-001

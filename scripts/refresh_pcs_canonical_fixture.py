@@ -11,7 +11,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = REPO_ROOT / "tests" / "pcs" / "fixtures"
-DEFAULT_SIGNED = FIXTURES / "signed_science_claim_bundle.json"
+PF_SIGNED_FIXTURE = FIXTURES / "signed_science_claim_bundle.valid.json"
+LEGACY_ALIAS = FIXTURES / "signed_science_claim_bundle.json"
 DEFAULT_READ_MODEL = FIXTURES / "canonical_pcs_read_model.json"
 PROVENANCE = FIXTURES / "canonical_fixture_provenance.json"
 PCS_CORE_EXAMPLE = (
@@ -22,8 +23,10 @@ PCS_CORE_EXAMPLE = (
 def _resolve_signed_source(explicit: Path | None) -> Path:
     if explicit is not None:
         return explicit.resolve()
-    if DEFAULT_SIGNED.is_file():
-        return DEFAULT_SIGNED
+    if PF_SIGNED_FIXTURE.is_file():
+        return PF_SIGNED_FIXTURE
+    if LEGACY_ALIAS.is_file():
+        return LEGACY_ALIAS
     if PCS_CORE_EXAMPLE.is_file():
         return PCS_CORE_EXAMPLE
     sibling = REPO_ROOT.parent / "pcs-core" / "examples" / "signed_science_claim_bundle.valid.json"
@@ -44,7 +47,7 @@ def main() -> int:
     parser.add_argument(
         "--copy-to-fixture",
         action="store_true",
-        help="Copy --signed (or pcs-core example) into tests/pcs/fixtures/signed_science_claim_bundle.json",
+        help="Copy --signed (or pcs-core example) into tests/pcs/fixtures/signed_science_claim_bundle.valid.json",
     )
     parser.add_argument(
         "--sync-pcs-core-alias",
@@ -60,10 +63,11 @@ def main() -> int:
     if args.copy_to_fixture or args.signed is not None:
         FIXTURES.mkdir(parents=True, exist_ok=True)
         payload = source.read_text(encoding="utf-8")
-        DEFAULT_SIGNED.write_text(payload, encoding="utf-8")
-        print(f"fixture -> {DEFAULT_SIGNED}")
+        PF_SIGNED_FIXTURE.write_text(payload, encoding="utf-8")
+        LEGACY_ALIAS.write_text(payload, encoding="utf-8")
+        print(f"fixture -> {PF_SIGNED_FIXTURE}")
 
-    bundle = json.loads(DEFAULT_SIGNED.read_text(encoding="utf-8"))
+    bundle = json.loads(PF_SIGNED_FIXTURE.read_text(encoding="utf-8"))
     read_model = normalize_signed_bundle(bundle)
     DEFAULT_READ_MODEL.write_text(
         json.dumps(read_model, indent=2, sort_keys=True) + "\n",
@@ -73,7 +77,7 @@ def main() -> int:
 
     if args.sync_pcs_core_alias:
         alias = FIXTURES / "valid_signed_pcs_core_bundle.json"
-        alias.write_text(DEFAULT_SIGNED.read_text(encoding="utf-8"), encoding="utf-8")
+        alias.write_text(PF_SIGNED_FIXTURE.read_text(encoding="utf-8"), encoding="utf-8")
         print(f"alias -> {alias}")
 
     from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape
@@ -81,7 +85,7 @@ def main() -> int:
     PROVENANCE.write_text(
         json.dumps(
             {
-                "fixture": DEFAULT_SIGNED.name,
+                "fixture": PF_SIGNED_FIXTURE.name,
                 "source_path": str(source.resolve()),
                 "bundle_shape": detect_bundle_shape(bundle),
                 "claim_id": read_model["claim_id"],

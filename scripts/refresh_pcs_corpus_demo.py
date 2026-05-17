@@ -15,7 +15,7 @@ def main() -> int:
     from sm_pipeline.pcs_import.portal_export import write_pcs_portal_export
     from sm_pipeline.pcs_import.science_claim_bundle_importer import import_signed_bundle
 
-    canonical = FIXTURES / "signed_science_claim_bundle.json"
+    canonical = FIXTURES / "signed_science_claim_bundle.valid.json"
     legacy = FIXTURES / "valid_signed_science_claim_bundle.json"
     if not canonical.is_file():
         raise SystemExit(f"Missing canonical fixture: {canonical}")

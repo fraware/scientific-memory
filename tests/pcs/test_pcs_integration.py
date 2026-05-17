@@ -28,7 +28,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 def test_pcs_core_validates_official_example() -> None:
     bundle = json.loads(
-        (FIXTURES / "signed_science_claim_bundle.json").read_text(encoding="utf-8")
+        (FIXTURES / "signed_science_claim_bundle.valid.json").read_text(encoding="utf-8")
     )
     errors = validate_with_pcs_core(bundle)
     assert errors == []
@@ -38,7 +38,7 @@ def test_pcs_core_bundle_imports_end_to_end(tmp_path: Path) -> None:
     root = tmp_path
     _copy_schemas(root)
     result = import_signed_bundle(
-        FIXTURES / "signed_science_claim_bundle.json",
+        FIXTURES / "signed_science_claim_bundle.valid.json",
         repo_root=root,
         write=True,
     )

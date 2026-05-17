@@ -27,18 +27,23 @@ REQUIRED_READ_MODEL_KEYS = frozenset(
     }
 )
 
-IMPORT_REPORT_KEYS = frozenset(
+IMPORT_REPORT_REQUIRED_KEYS = frozenset(
     {
         "claim_id",
+        "verification_status",
+        "warnings",
+        "stale_artifacts",
+        "render_path",
+    }
+)
+
+IMPORT_REPORT_KEYS = IMPORT_REPORT_REQUIRED_KEYS | frozenset(
+    {
         "imported_at",
         "source_bundle_path",
         "bundle_shape",
         "strict",
         "allow_legacy",
-        "verification_status",
-        "warnings",
-        "stale_artifacts",
-        "render_path",
     }
 )
 
