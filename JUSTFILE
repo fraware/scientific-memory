@@ -56,8 +56,14 @@ validate-corpus: validate
 portal-install:
 	bash scripts/portal_install.sh
 
+portal-stop:
+	bash scripts/portal_stop.sh
+
+portal-clean:
+	rm -rf portal/.next
+
 portal: portal-install
-	pnpm --dir portal dev
+	bash scripts/portal_dev.sh
 
 test:
 	@echo "==> test"
