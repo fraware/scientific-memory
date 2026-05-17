@@ -82,15 +82,16 @@ test-pcs:
 pcs-verify: test-pcs
 	bash scripts/sm_python.sh -m sm_pipeline.cli validate-all
 
-# Re-vendor PF fixtures from provability-fabric sibling (developer / release refresh)
-refresh-pcs-fixtures:
-	bash scripts/sm_python.sh scripts/vendor_labtrust_release_fixture.py
+# Atomic PCS v0.1 release-run: chain workdir -> import -> promote fixtures (+ optional pcs-core)
+refresh-pcs-release:
+	bash scripts/build_release_run_from_chain.sh
+	bash scripts/sm_python.sh scripts/import_release_run.py --promote --pcs-core
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py --write
 	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
 
-export-pcs-release-report:
-	bash scripts/sm_python.sh scripts/export_pcs_release_import_report.py
+# Legacy alias (do not vendor repo-by-repo; use refresh-pcs-release)
+refresh-pcs-fixtures: refresh-pcs-release
 
 refresh-pcs-corpus:
 	bash scripts/sm_python.sh scripts/refresh_pcs_corpus_demo.py

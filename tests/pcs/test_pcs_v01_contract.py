@@ -11,7 +11,12 @@ from sm_pipeline.pcs_validate.bundle_detection import detect_bundle_shape, is_pc
 
 from schema_fixtures import PF_SIGNED_BUNDLE
 
-REQUIRED_TEST_MODULES = ("test_pcs_import", "test_pcs_render", "test_labtrust_release_fixture")
+REQUIRED_TEST_MODULES = (
+    "test_pcs_import",
+    "test_pcs_render",
+    "test_labtrust_release_fixture",
+    "test_release_chain_identity",
+)
 
 REQUIRED_TEST_NAMES = (
     "test_import_pf_signed_bundle_valid",
@@ -38,6 +43,8 @@ REQUIRED_TEST_NAMES = (
     "test_labtrust_release_pf_provenance_matches_release_manifest",
     "test_import_read_model_matches_canonical_golden_fixture",
     "test_pcs_corpus_claim_passes_validate_all_gate",
+    "test_fixture_release_chain_identity",
+    "test_render_read_model_certificate_matches_certified_bundle",
 )
 
 

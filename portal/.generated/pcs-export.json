@@ -8,13 +8,13 @@
       "artifact_hashes": [
         {
           "algorithm": "sha256",
-          "digest": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
+          "digest": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
           "name": "signature_or_digest",
           "source_artifact": "claim-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:2142da605a7aed998a8e5bb20466fb81ebb7824d185ba2fce7e645e3d2528724",
+          "digest": "sha256:63ad4a4a6d748e45e8602cc75b5ee74ac0e1189aa2f6a0da77c11f323f571e6c",
           "name": "signature_or_digest",
           "source_artifact": "as-pcs-qc-release-v0.1"
         },
@@ -50,7 +50,7 @@
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d",
+          "digest": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a",
           "name": "signature_or_digest",
           "source_artifact": "receipt-qc-release"
         },
@@ -58,77 +58,77 @@
           "algorithm": "sha256",
           "digest": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
           "name": "trace_hash",
-          "source_artifact": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f"
+          "source_artifact": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942"
         },
         {
           "algorithm": "sha256",
           "digest": "sha256:7c66dfcf640d382653d8ce7c2c700371d72ff0d6fb59156d411cf2aa9a7dfe5e",
           "name": "spec_hash",
-          "source_artifact": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f"
+          "source_artifact": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4",
+          "digest": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e",
           "name": "signature_or_digest",
-          "source_artifact": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f"
+          "source_artifact": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:274650d43f455fc1660f0fb4130c3d2881df33253fc7d2c15505089241f36e5b",
+          "digest": "sha256:e4e529b692da529770d59a9eb39a433940d2ce71128146a74169d1ecaf5815fa",
           "name": "signature_or_digest",
           "source_artifact": "scb-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4",
-          "name": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f",
+          "digest": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e",
+          "name": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
+          "digest": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
           "name": "claim-pcs-qc-release-v0.1",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d",
+          "digest": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a",
           "name": "receipt-qc-release",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:722e9e0e8b9000720187832a0b849c3437fee970f399bca2d6aad76d510ff3d5",
+          "digest": "sha256:f099905a5247ad36de322dcff563a6f4b28ba58bcd42a9a4e984eef1d6552921",
           "name": "signature_or_digest",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
+          "digest": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
           "name": "claim_artifact",
           "source_artifact": "claim_artifact"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d",
+          "digest": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a",
           "name": "runtime_receipt",
           "source_artifact": "runtime_receipt"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4",
+          "digest": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e",
           "name": "trace_certificate",
           "source_artifact": "trace_certificate"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:722e9e0e8b9000720187832a0b849c3437fee970f399bca2d6aad76d510ff3d5",
+          "digest": "sha256:f099905a5247ad36de322dcff563a6f4b28ba58bcd42a9a4e984eef1d6552921",
           "name": "evidence_bundle",
           "source_artifact": "evidence_bundle"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:94cd484727cca3dc0f80cc3f1e5d52d386a85a2b871af5a759649acff49a81d5",
+          "digest": "sha256:eb10fd08ee13470fe9cb4bf23e1fefede30cf95171902720ceb9cc70ea08b9f9",
           "name": "signed_bundle",
           "source_artifact": "signed_bundle"
         }
@@ -173,18 +173,18 @@
         "producer": "labtrust-gym",
         "producer_version": "0.2.0",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:2142da605a7aed998a8e5bb20466fb81ebb7824d185ba2fce7e645e3d2528724",
-        "source_commit": "306000c4d160c6d9e2fc56bb0383602d1d34f15e",
+        "signature_or_digest": "sha256:63ad4a4a6d748e45e8602cc75b5ee74ac0e1189aa2f6a0da77c11f323f571e6c",
+        "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
         "source_repo": "https://github.com/fraware/LabTrust-Gym",
         "status": "HumanReviewed"
       },
-      "bundle_signature_or_digest": "sha256:94cd484727cca3dc0f80cc3f1e5d52d386a85a2b871af5a759649acff49a81d5",
+      "bundle_signature_or_digest": "sha256:eb10fd08ee13470fe9cb4bf23e1fefede30cf95171902720ceb9cc70ea08b9f9",
       "canonical_digests": {
-        "claim_artifact": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
-        "evidence_bundle": "sha256:722e9e0e8b9000720187832a0b849c3437fee970f399bca2d6aad76d510ff3d5",
-        "runtime_receipt": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d",
-        "signed_bundle": "sha256:94cd484727cca3dc0f80cc3f1e5d52d386a85a2b871af5a759649acff49a81d5",
-        "trace_certificate": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4"
+        "claim_artifact": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
+        "evidence_bundle": "sha256:f099905a5247ad36de322dcff563a6f4b28ba58bcd42a9a4e984eef1d6552921",
+        "runtime_receipt": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a",
+        "signed_bundle": "sha256:eb10fd08ee13470fe9cb4bf23e1fefede30cf95171902720ceb9cc70ea08b9f9",
+        "trace_certificate": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e"
       },
       "claim": {
         "created_at": "2026-01-15T11:00:00Z",
@@ -199,23 +199,23 @@
         "id": "claim-pcs-qc-release-v0.1",
         "producer": "labtrust-gym",
         "producer_version": "0.2.0",
-        "signature_or_digest": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
+        "signature_or_digest": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
         "status": "CertificateChecked",
         "text": "A sample may be released only after accession, QC completion, analysis, authorization by a release-capable actor, and satisfaction of the required temporal protocol constraints."
       },
       "claim_id": "claim-pcs-qc-release-v0.1",
       "evidence_bundle": {
         "artifact_hashes": {
-          "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4",
-          "claim-pcs-qc-release-v0.1": "sha256:952feaecc119585d72c93587cad9e06b9faabf9e4b2a136ee9c41e69aa64f681",
-          "receipt-qc-release": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d"
+          "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e",
+          "claim-pcs-qc-release-v0.1": "sha256:56d7a7dea87cfd272fb5b1f00b351227312c4c57337bc79f5ddc9f4b8b68238b",
+          "receipt-qc-release": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a"
         },
         "assumption_set_refs": [
           "as-pcs-qc-release-v0.1"
         ],
         "bundle_id": "evidence-pcs-qc-release-v0.1",
         "certificate_refs": [
-          "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f"
+          "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942"
         ],
         "claim_refs": [
           "claim-pcs-qc-release-v0.1"
@@ -228,8 +228,8 @@
           "receipt-qc-release"
         ],
         "schema_version": "v0",
-        "signature_or_digest": "sha256:722e9e0e8b9000720187832a0b849c3437fee970f399bca2d6aad76d510ff3d5",
-        "source_commit": "306000c4d160c6d9e2fc56bb0383602d1d34f15e",
+        "signature_or_digest": "sha256:f099905a5247ad36de322dcff563a6f4b28ba58bcd42a9a4e984eef1d6552921",
+        "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
         "source_repo": "https://github.com/fraware/LabTrust-Gym"
       },
       "limitation_notice": "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory.",
@@ -241,8 +241,8 @@
         "ended_at": "2026-01-15T11:00:00Z",
         "environment": {
           "labtrust_version": "0.2.0",
-          "platform": "Windows-11-10.0.26200-SP0",
-          "python": "3.13.11"
+          "platform": "pcs-golden-fixture",
+          "python": "3.11.0"
         },
         "events_hash": "sha256:9f8efe289424c93edef5387412fcd0ba638a146f3b2edb603c0749ca27538594",
         "final_reason_code": "ok",
@@ -261,8 +261,8 @@
         "run_id": "qc-release",
         "run_outcome": "passed",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:d1eae84657f3f319cbd4c51d715818e0d4acd8a421cb11ef43f923356114d36d",
-        "source_commit": "306000c4d160c6d9e2fc56bb0383602d1d34f15e",
+        "signature_or_digest": "sha256:569825f255d9ecc9c63570a160efdb97438fcd50d14704bbe1beb47a7e5d867a",
+        "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
         "source_repo": "https://github.com/fraware/LabTrust-Gym",
         "started_at": "2026-01-15T08:00:00Z",
         "status": "RuntimeObserved",
@@ -271,31 +271,31 @@
       "schema_version": "PcsClaimReadModel.v0",
       "source_repositories": [
         {
-          "source_commit": "306000c4d160c6d9e2fc56bb0383602d1d34f15e",
+          "source_commit": "c20139460f7e46b0fe3031e9da70a1c36e4dda33",
           "source_repo": "https://github.com/fraware/LabTrust-Gym"
         },
         {
-          "source_commit": "68b79aa47bd1cdcc02b2605aaa988078cc41952f",
+          "source_commit": "4fbfe170d7b08e148329e95b38395f02a81729ec",
           "source_repo": "https://github.com/fraware/CertifyEdge"
         },
         {
-          "source_commit": "993a0e5d1214b7c1bd6e84475d771806950965dd",
+          "source_commit": "122bfce57b05b2d64f17815a457ad0b19fbbfde8",
           "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
         }
       ],
       "trace_certificate": {
-        "certificate_id": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f",
+        "certificate_id": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942",
         "checker": "CertifyEdge",
         "checker_version": "0.1.0",
         "counterexample_ref": null,
-        "created_at": "2026-05-17T14:34:58Z",
-        "id": "cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f",
+        "created_at": "2026-05-17T15:02:09Z",
+        "id": "cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942",
         "producer": "CertifyEdge",
         "producer_version": "0.1.0",
         "property_id": "hospital_lab.qc_release",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:a934024d42797d01424f834da8a6dd9f81d22bd6e7ce8ca9d4282d7640b9c6b4",
-        "source_commit": "68b79aa47bd1cdcc02b2605aaa988078cc41952f",
+        "signature_or_digest": "sha256:94cb32c29ae89fbc3942ffae5767aa81b34839bc496c06dff201ee90e637d40e",
+        "source_commit": "4fbfe170d7b08e148329e95b38395f02a81729ec",
         "source_repo": "https://github.com/fraware/CertifyEdge",
         "spec_hash": "sha256:7c66dfcf640d382653d8ce7c2c700371d72ff0d6fb59156d411cf2aa9a7dfe5e",
         "status": "CertificateChecked",
@@ -374,7 +374,7 @@
             "outcome": "pass"
           },
           {
-            "detail": "{\"assumption_set_refs\": [\"as-pcs-qc-release-v0.1\"], \"certificate_refs\": [\"cert-trace-862f6bee-7179-49a5-b436-4aa18f4e010f\"], \"claim_refs\": [\"claim-pcs-qc-release-v0.1\"], \"runtime_receipt_refs\": [\"receipt-qc-release\"]}",
+            "detail": "{\"assumption_set_refs\": [\"as-pcs-qc-release-v0.1\"], \"certificate_refs\": [\"cert-trace-b1ab4bb5-0837-499c-8d0a-bc6adecf7942\"], \"claim_refs\": [\"claim-pcs-qc-release-v0.1\"], \"runtime_receipt_refs\": [\"receipt-qc-release\"]}",
             "guarantee_type": null,
             "id": "evidence_refs_complete",
             "name": "EvidenceBundle references claim, assumption set, receipt, and certificate",
@@ -411,8 +411,8 @@
         ],
         "id": "verification-31ac5758-9219-47cf-b832-0ca8ae07a871",
         "overall_outcome": "pass",
-        "signature_or_digest": "sha256:274650d43f455fc1660f0fb4130c3d2881df33253fc7d2c15505089241f36e5b",
-        "source_commit": "993a0e5d1214b7c1bd6e84475d771806950965dd",
+        "signature_or_digest": "sha256:e4e529b692da529770d59a9eb39a433940d2ce71128146a74169d1ecaf5815fa",
+        "source_commit": "122bfce57b05b2d64f17815a457ad0b19fbbfde8",
         "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
         "status": "ProofChecked",
         "verification_id": "verification-31ac5758-9219-47cf-b832-0ca8ae07a871",

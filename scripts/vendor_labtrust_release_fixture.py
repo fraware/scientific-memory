@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Vendor PCS v0.1 labtrust-release fixtures from pcs-core (release provenance)."""
+"""Deprecated: use build_release_run_from_chain.py + import_release_run.py --promote."""
 
 from __future__ import annotations
 
@@ -108,6 +108,10 @@ def vendor_from_release_dir(source_dir: Path, *, align_pf: bool = True) -> None:
 
 
 def main() -> int:
+    print(
+        "vendor_labtrust_release_fixture.py is deprecated; run: just refresh-pcs-release",
+        file=sys.stderr,
+    )
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--source",

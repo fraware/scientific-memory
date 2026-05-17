@@ -21,6 +21,22 @@ def main() -> int:
         copy["science_claim_bundle"]["claim_artifact"].pop(field, None)
         (BASE / name).write_text(json.dumps(copy, indent=2) + "\n", encoding="utf-8")
         print(f"wrote {name}")
+
+    placeholder = json.loads(json.dumps(src))
+    placeholder_commit = "cccccccccccccccccccccccccccccccccccccccc"
+    placeholder["verification_result"]["source_commit"] = placeholder_commit
+    placeholder["source_commit"] = placeholder_commit
+    (BASE / "invalid_placeholder_pf_source_commit.json").write_text(
+        json.dumps(placeholder, indent=2) + "\n", encoding="utf-8"
+    )
+    print("wrote invalid_placeholder_pf_source_commit.json")
+
+    local_dev = json.loads(json.dumps(src))
+    local_dev["science_claim_bundle"]["local_dev"] = True
+    (BASE / "invalid_local_dev_release.json").write_text(
+        json.dumps(local_dev, indent=2) + "\n", encoding="utf-8"
+    )
+    print("wrote invalid_local_dev_release.json")
     import subprocess
     import sys
 
