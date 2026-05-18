@@ -5,7 +5,7 @@
   "release_candidate": "pcs-v0.1.0-rc1",
   "validator": "pcs-core",
   "validator_version": "0.1.0",
-  "checked_at": "2026-05-17T22:31:25Z",
+  "checked_at": "2026-05-17T22:32:01Z",
   "status": "ProofChecked",
   "checks": [
     {
@@ -193,5 +193,5 @@
   "failure_codes": [],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
   "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
-  "signature_or_digest": "sha256:d2300d19e5d05d370b47dca00265b52a1e6cf62a45ca7310f2a3178391ad2290"
+  "signature_or_digest": "sha256:72583f17f1d47758bdc0283fc58c2e2a82fb958618ed2d6e1b106de714193ace"
 }
