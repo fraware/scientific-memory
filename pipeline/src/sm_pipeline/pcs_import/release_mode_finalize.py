@@ -86,6 +86,10 @@ def finalize_release_mode_claim(
             encoding="utf-8",
         )
 
+    from sm_pipeline.pcs_import.claim_index import write_claims_index
+
+    write_claims_index(repo_root)
+
 
 def _claim_id_from_read_model(claim_dir: Path) -> str:
     read_model = _load_json(claim_dir / "read_model.json")

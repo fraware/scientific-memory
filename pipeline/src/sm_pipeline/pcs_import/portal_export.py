@@ -46,4 +46,8 @@ def write_pcs_portal_export(repo_root: Path, claim_id: str | None = None) -> Pat
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "pcs-export.json"
     out_path.write_text(json.dumps(export, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    from sm_pipeline.pcs_import.claim_index import write_claims_index
+
+    write_claims_index(root)
     return out_path

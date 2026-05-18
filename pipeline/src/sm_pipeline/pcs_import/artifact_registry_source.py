@@ -40,8 +40,12 @@ def load_pcs_core_artifact_registry(repo_root: Path) -> tuple[dict[str, Any], st
             version = str(data.get("registry_version") or data.get("schema_version") or "0.1.0")
             return entries, version
 
-    vendored = repo_root / "schemas" / "pcs" / "artifact_registry.valid.json"
-    if vendored.is_file():
+    for vendored in (
+        repo_root / "schemas" / "pcs" / "artifact_registry.valid.json",
+        repo_root / "schemas" / "pcs" / "ArtifactRegistry.v0.json",
+    ):
+        if not vendored.is_file():
+            continue
         data = json.loads(vendored.read_text(encoding="utf-8-sig"))
         if isinstance(data, dict) and isinstance(data.get("entries"), dict):
             version = str(data.get("registry_version") or "0.1.0")

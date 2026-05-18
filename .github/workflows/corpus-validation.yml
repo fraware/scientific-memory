@@ -48,6 +48,9 @@ jobs:
       - name: PCS portal read-model contract
         run: pnpm --dir portal test:pcs-contract
 
+      - name: PCS portal Phase 2 read-model contract
+        run: pnpm --dir portal test:pcs-phase2-contract
+
       - name: Ensure PCS Phase 2 fixtures
         if: hashFiles('pcs-core/examples/**') != '' || hashFiles('tests/pcs/fixtures/labtrust-release/**') != ''
         run: uv run python scripts/ensure_labtrust_phase2_fixtures.py

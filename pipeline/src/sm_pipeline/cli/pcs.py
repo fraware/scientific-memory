@@ -8,11 +8,16 @@ import typer
 from rich.console import Console
 
 from sm_pipeline.pcs_import.claim_lineage import update_lineage_stale_flags
+from sm_pipeline.pcs_import.claim_index import load_claims_index, query_claims_index
 from sm_pipeline.pcs_import.claim_query import (
     list_claim_ids,
     list_claims_by_certificate,
+    list_claims_by_release_id,
     list_claims_by_source_commit,
+    list_claims_by_trace_hash,
+    list_stale_claims,
     load_claim_bundle,
+    refresh_all_stale_flags,
 )
 from sm_pipeline.pcs_import.portal_export import write_pcs_portal_export
 from sm_pipeline.pcs_import.release_manifest_importer import import_release_manifest
@@ -174,6 +179,64 @@ def pcs_list_claims_by_source_commit(
 ) -> None:
     for claim_id in list_claims_by_source_commit(_REPO_ROOT, commit):
         console.print(claim_id)
+
+
+def pcs_list_claims_by_release(
+    release_id: str = typer.Option(..., "--release-id", help="PCS release_id"),
+) -> None:
+    for claim_id in list_claims_by_release_id(_REPO_ROOT, release_id):
+        console.print(claim_id)
+
+
+def pcs_list_claims_by_trace_hash(
+    trace_hash: str = typer.Option(..., "--trace-hash", help="Trace hash digest"),
+) -> None:
+    for claim_id in list_claims_by_trace_hash(_REPO_ROOT, trace_hash):
+        console.print(claim_id)
+
+
+def pcs_list_stale_claims() -> None:
+    """List claim IDs marked stale in lineage."""
+    ids = list_stale_claims(_REPO_ROOT)
+    if not ids:
+        console.print("[dim]No stale PCS claims.[/dim]")
+        return
+    for claim_id in ids:
+        console.print(claim_id)
+
+
+def pcs_refresh_stale() -> None:
+    """Recompute stale flags for all claims and refresh claims_index.json."""
+    results = refresh_all_stale_flags(_REPO_ROOT)
+    stale = sum(1 for row in results if row.get("lineage", {}).get("stale"))
+    console.print(f"[green]Refreshed[/green] {len(results)} claim(s); {stale} stale")
+    write_pcs_portal_export(_REPO_ROOT)
+
+
+def pcs_query_lineage(
+    release_id: str | None = typer.Option(None, "--release-id"),
+    certificate_id: str | None = typer.Option(None, "--certificate-id"),
+    trace_hash: str | None = typer.Option(None, "--trace-hash"),
+    commit: str | None = typer.Option(None, "--commit"),
+    stale_only: bool = typer.Option(False, "--stale-only"),
+) -> None:
+    """Query corpus/pcs/claims_index.json (JSON lines to stdout)."""
+    import json
+
+    if not any((release_id, certificate_id, trace_hash, commit, stale_only)):
+        index = load_claims_index(_REPO_ROOT)
+        console.print(json.dumps(index, indent=2))
+        return
+    matches = query_claims_index(
+        _REPO_ROOT,
+        release_id=release_id,
+        certificate_id=certificate_id,
+        trace_hash=trace_hash,
+        source_commit=commit,
+        stale_only=stale_only,
+    )
+    for entry in matches:
+        console.print(json.dumps(entry, sort_keys=True))
 
 
 def pcs_render_claim(

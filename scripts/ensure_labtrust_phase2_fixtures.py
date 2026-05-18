@@ -10,7 +10,10 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = REPO_ROOT / "tests" / "pcs" / "fixtures" / "labtrust-release"
+RC_PINNED_SM_COMMIT = "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
 PCS_CORE_EXAMPLES = REPO_ROOT.parent / "pcs-core" / "examples"
+PCS_CORE_REGISTRY = PCS_CORE_EXAMPLES / "artifact_registry.valid.json"
+VENDORED_REGISTRY = REPO_ROOT / "schemas" / "pcs" / "artifact_registry.valid.json"
 
 PHASE2_FILES = (
     "ReleaseManifest.v0.json",
@@ -42,6 +45,35 @@ IMPORT_REPORT_TEMPLATE = {
 }
 
 
+def _pin_rc_fixture_commits(release_dir: Path) -> None:
+    """Keep labtrust-release fixtures aligned with canonical RC pins."""
+    if release_dir.resolve() != DEFAULT_DIR.resolve():
+        return
+    import json
+
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if legacy_path.is_file():
+        legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+        legacy["scientific_memory_commit"] = RC_PINNED_SM_COMMIT
+        legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+
+
+def _pin_scientific_memory_commit_in_legacy(release_dir: Path) -> None:
+    import json
+
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_import.provenance import git_head_commit
+
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if not legacy_path.is_file():
+        return
+    legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+    head = git_head_commit(REPO_ROOT)
+    if head:
+        legacy["scientific_memory_commit"] = head
+        legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+
+
 def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
     import json
 
@@ -61,9 +93,18 @@ def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
 def _write_canonical_import_report(release_dir: Path) -> None:
     import json
 
+    report = dict(IMPORT_REPORT_TEMPLATE)
+    if release_dir.resolve() == (REPO_ROOT / "release-run").resolve():
+        sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+        from sm_pipeline.pcs_import.provenance import git_head_commit
+
+        head = git_head_commit(REPO_ROOT)
+        if head:
+            report["scientific_memory_commit"] = head
+            report["source_commit"] = head
     report_path = release_dir / "scientific_memory_import_report.json"
     # release_manifest_hash is added during live import only (not part of manifest artifact hash).
-    report_path.write_text(json.dumps(IMPORT_REPORT_TEMPLATE, indent=2) + "\n", encoding="utf-8")
+    report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -80,7 +121,17 @@ def main() -> int:
     from sm_pipeline.pcs_validate.release_chain_validation import validate_release_chain_validation
     from sm_pipeline.pcs_validate.release_manifest import validate_release_manifest
 
+    release_run = (REPO_ROOT / "release-run").resolve()
+    if release_dir.resolve() == release_run:
+        _pin_scientific_memory_commit_in_legacy(release_dir)
+    else:
+        _pin_rc_fixture_commits(release_dir)
     _write_canonical_import_report(release_dir)
+
+    if PCS_CORE_REGISTRY.is_file():
+        VENDORED_REGISTRY.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(PCS_CORE_REGISTRY, VENDORED_REGISTRY)
+        print(f"copied pcs-core registry -> {VENDORED_REGISTRY}")
 
     pcs_labtrust = PCS_CORE_EXAMPLES / "labtrust-release"
     validation_aliases = (

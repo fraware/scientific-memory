@@ -1,22 +1,23 @@
-# pcs-sm Phase 2 — release protocol consumer
+# pcs-sm Phase 2 — release evidence interface
 
-Scientific Memory consumes PCS Phase 2 protocol artifacts defined in **pcs-core** (no local schema variants). Phase 2 makes the LabTrust RC chain importable and reviewable as a single release unit.
+Scientific Memory is the **human-facing evidence layer** for PCS releases: it imports `ReleaseManifest.v0`, requires `ReleaseChainValidationResult.v0`, renders protocol metadata, tracks lineage, and exposes cross-claim queries.
 
 ## Protocol artifacts (pcs-core canonical)
 
 | Artifact | Role in Scientific Memory |
 |----------|---------------------------|
-| `ReleaseManifest.v0` | Entry point for release import; artifact registry metadata |
+| `ReleaseManifest.v0` | Primary import entry; artifact registry metadata |
 | `ReleaseChainValidationResult.v0` | Required proof that the chain passed (`ProofChecked`) |
+| `artifact_registry.valid.json` | Vendored from pcs-core; enriches registry rows |
 | `HandoffManifest.v0` | Schema mirrored; produced upstream between repos |
-| SignedScienceClaimBundle.v0 | Imported claim payload (unchanged from v0.1) |
-
-Registry rows are derived from `ReleaseManifest.v0` artifact entries plus chain validation checks until `ArtifactRegistry.v0` ships in pcs-core.
+| `SignedScienceClaimBundle.v0` | Claim payload |
 
 ## Import (primary)
 
 ```bash
 just pcs-import-release
+# or
+just pcs-import-release RELEASE_MANIFEST=tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json
 ```
 
 Requires in the same directory:
@@ -25,63 +26,72 @@ Requires in the same directory:
 - `ReleaseChainValidationResult.v0.json`
 - All artifacts listed in the manifest (including `signed_science_claim_bundle.json`)
 
-Equivalent:
+Python module entry:
 
 ```bash
-just pcs-import-release-manifest tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json
+python -m sm_pipeline.pcs_import.release_manifest_importer \
+  --manifest tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json
 ```
 
-## Import report (Phase 2 fields)
+Release imports **never** overlay `scientific_memory_import_report.json` from sibling fixtures. Bundle-only `--release-mode` on fixture paths may still overlay for legacy RC tests.
 
-After import, `scientific_memory_import_report.json` includes:
+## Import report (protocol-computed)
+
+`scientific_memory_import_report.json` includes:
 
 - `release_id`, `release_candidate`, `release_manifest_hash`, `validation_profile`
-- `release_chain_validation_id`
-- `release_chain_validation_status` (`ProofChecked`)
-- `release_chain_validator`
-- `release_chain_checked_at`
+- `release_chain_validation_id`, `release_chain_validation_status`, `release_chain_validator`, `release_chain_checked_at`
+- `signed_bundle_hash`, `certificate_id`, `trace_hash`, `artifact_registry_version`
 
 ## Corpus layout
 
 ```text
-corpus/pcs/claims/<claim_id>/
-  signed_bundle.json
-  read_model.json
-  release_manifest.json
-  release_chain_validation.json
-  lineage.json
-  scientific_memory_import_report.json
+corpus/pcs/
+  claims_index.json          # cross-claim lineage index
+  claims/<claim_id>/
+    signed_bundle.json
+    read_model.json
+    release_manifest.json
+    release_chain_validation.json
+    lineage.json
+    scientific_memory_import_report.json
 ```
 
 ## Portal sections
 
-`read_model.json` and `/pcs/claims/<id>` render:
+`/pcs/claims/<id>` renders:
 
 - Claim, Assumptions, Runtime Evidence, Temporal Certificate, Verification Result
-- **Release Manifest**, **Release Chain Validation**, **Artifact Registry**, Artifact Dependency Graph
+- Release Manifest, Release Chain Validation, Artifact Registry, Artifact Dependency Graph
+- **Lineage**, **Staleness**
 - Artifact Hashes, Source Repositories, Reproduce / Verify, Limitations
 
-## Claim queries
+`/pcs` lists claims with release ID and fresh/stale badges.
+
+## Cross-claim queries
 
 ```bash
 just pcs-list-claims
 just pcs-show-claim claim-pcs-qc-release-v0.1
 just pcs-check-stale claim-pcs-qc-release-v0.1
-just pcs-list-claims-by-certificate cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a
-just pcs-list-claims-by-source-commit 5b4b81049b430d1b59ff5b51f688eb0feaeef76c
+just pcs-refresh-stale                    # recompute all stale flags + index
+just pcs-list-stale-claims
+just pcs-list-claims-by-certificate CERTIFICATE_ID=cert-trace-...
+just pcs-list-claims-by-source-commit COMMIT=...
+just pcs-list-claims-by-release RELEASE_ID=release-pcs-v0.1-labtrust-qc
+just pcs-list-claims-by-trace-hash TRACE_HASH=sha256:...
+just pcs-query-lineage                    # full claims_index.json
+just pcs-query-lineage --stale-only
 ```
-
-## Stale tracking
-
-`lineage.json` records certificate ID, trace hash, signed bundle hash, release manifest hash, and producer commits. `pcs-check-stale` compares on-disk artifacts to lineage and sets `stale` / `stale_reasons`.
 
 ## CI gate
 
 ```bash
-just pcs-rc-gate
+just pcs-rc-gate          # Linux / Git Bash
+just pcs-rc-gate-py       # cross-platform Python gate
 ```
 
-Runs full `tests/pcs`, `pcs-import-release`, render, import-report Phase 2 assertions, and portal contracts (`test:pcs-contract`, `test:pcs-phase2-contract`).
+Runs `tests/pcs`, `pcs-import-release`, import-report assertions, portal contracts, and `claims_index.json` presence.
 
 ## Refresh fixtures
 
@@ -89,4 +99,4 @@ Runs full `tests/pcs`, `pcs-import-release`, render, import-report Phase 2 asser
 just refresh-pcs-release
 ```
 
-Syncs from `pcs-core/examples/labtrust-release/`, ensures Phase 2 manifests (`scripts/ensure_labtrust_phase2_fixtures.py`), and re-validates the chain.
+Syncs from `pcs-core/examples/labtrust-release/`, ensures Phase 2 manifests, copies `artifact_registry.valid.json` into `schemas/pcs/`.

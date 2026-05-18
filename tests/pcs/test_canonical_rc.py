@@ -55,15 +55,20 @@ PORTAL_SECTIONS_PHASE2: tuple[tuple[str, str], ...] = (
     ("Release Manifest", "release_manifest"),
     ("Release Chain Validation", "release_chain_validation"),
     ("Artifact Registry", "artifact_registry"),
+    ("Lineage", "lineage"),
+    ("Staleness", "staleness"),
 )
 
 PHASE2_READ_MODEL_KEYS = (
     "release_manifest",
     "release_chain_validation",
     "artifact_registry",
+    "artifact_registry_version",
     "artifact_dependency_graph",
     "release_manifest_hash",
     "signed_bundle_hash",
+    "lineage",
+    "staleness",
 )
 
 READ_MODEL_SECTION_KEYS = tuple(

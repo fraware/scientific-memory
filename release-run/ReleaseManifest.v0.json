@@ -2,7 +2,7 @@
   "schema_version": "v0",
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_candidate": "pcs-v0.1.0-rc1",
-  "generated_at": "2026-05-17T17:01:22Z",
+  "generated_at": "2026-05-17T22:32:01Z",
   "validation_profile": "labtrust-v0.1-release-chain",
   "chain_root": {
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
@@ -23,7 +23,7 @@
   "producer_repos": {
     "pcs_core": {
       "repo": "https://github.com/SentinelOps-CI/pcs-core",
-      "commit": "b492937e1b1128f88a77689dde611f4314650e44"
+      "commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c"
     },
     "labtrust_gym": {
       "repo": "https://github.com/fraware/LabTrust-Gym",
@@ -39,7 +39,7 @@
     },
     "scientific_memory": {
       "repo": "https://github.com/fraware/scientific-memory",
-      "commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
+      "commit": "31dce1ba02252dd54a972f941eccae5ec63dc33a"
     }
   },
   "artifacts": {
@@ -104,10 +104,10 @@
       "schema": "scientific_memory_import_report.json",
       "producer": "Scientific Memory",
       "source_repo": "https://github.com/fraware/scientific-memory",
-      "source_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
-      "sha256": "sha256:d84091bb872b5ccc5210f5f1ea6f457f862c2a078be72f9e531fba0e6a6ad400"
+      "source_commit": "31dce1ba02252dd54a972f941eccae5ec63dc33a",
+      "sha256": "sha256:a9175d51b19e3d7c2d05cc9e62c7452f5169124402cb9508d2ce12a4ff9ea835"
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3"
+  "signature_or_digest": "sha256:376f100afe64b6e36448f06b4b643356bf980573662fb12fbc1be01b6f723650"
 }

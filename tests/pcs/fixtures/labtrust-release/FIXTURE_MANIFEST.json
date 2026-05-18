@@ -1,7 +1,7 @@
 {
   "artifacts": {
     "ReleaseChainValidationResult.v0.json": "sha256:b84c40f97a4cc9e3a85e4c4a74f043359a30fc4ff18f1022a2c86d98cb4fd594",
-    "ReleaseManifest.v0.json": "sha256:110e630ad7d986b0a95ce12f1ef933b74154359969e8852ce37824e935e284fe",
+    "ReleaseManifest.v0.json": "sha256:3569041ebd992ec81d0cde001bc246e0d476cfd973150148e4c9899c67a8cdd1",
     "invalid_local_dev_release.json": "sha256:d60bbc7934af72a840bdba068abcd68ec1f8516ef3d1db1a4ecf87ac423bc991",
     "invalid_placeholder_pf_source_commit.json": "sha256:427a9fd29fc93d2b3fc3595573e76afdb1a5a1578506629442bd03527710a5b6",
     "missing_claim_signature.json": "sha256:627f16b6a4d39eed85f784589f1cf90503be857c71cd97a0f5ab03e01db54195",

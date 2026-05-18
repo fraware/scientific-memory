@@ -624,7 +624,7 @@
         "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
         "claim_id": "claim-pcs-qc-release-v0.1",
         "release_id": "release-pcs-v0.1-labtrust-qc",
-        "release_manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
+        "release_manifest_hash": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
         "schema_versions": {
           "science_claim_bundle": "v0",
           "signed_bundle": "v0"
@@ -633,7 +633,7 @@
         "source_commits": {
           "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
           "labtrust_gym": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
-          "pcs_core": "b492937e1b1128f88a77689dde611f4314650e44",
+          "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
           "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
           "scientific_memory": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
         },
@@ -836,8 +836,8 @@
         "validator_version": "0.1.0"
       },
       "release_manifest": {
-        "generated_at": "2026-05-17T17:01:22Z",
-        "manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
+        "generated_at": "2026-05-17T22:32:01Z",
+        "manifest_hash": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
         "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
         "producer_repos": {
           "certifyedge": {
@@ -849,7 +849,7 @@
             "repo": "https://github.com/fraware/LabTrust-Gym"
           },
           "pcs_core": {
-            "commit": "b492937e1b1128f88a77689dde611f4314650e44",
+            "commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
             "repo": "https://github.com/SentinelOps-CI/pcs-core"
           },
           "provability_fabric": {
@@ -864,10 +864,10 @@
         "release_candidate": "pcs-v0.1.0-rc1",
         "release_id": "release-pcs-v0.1-labtrust-qc",
         "release_status": "Validated",
-        "signature_or_digest": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
+        "signature_or_digest": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
         "validation_profile": "labtrust-v0.1-release-chain"
       },
-      "release_manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
+      "release_manifest_hash": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
       "reproduce_commands": [],
       "runtime_receipt": {
         "ended_at": "2026-01-15T11:00:00Z",

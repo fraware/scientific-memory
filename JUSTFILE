@@ -77,6 +77,7 @@ test-pcs:
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py
 	bash scripts/run_pcs_tests.sh
 	node portal/scripts/verify-pcs-read-model.mjs
+	pnpm --dir portal test:pcs-phase2-contract
 
 # PCS v0.1 gate: contract tests + corpus validation (fixtures are committed; no refresh)
 pcs-verify: test-pcs
@@ -215,6 +216,10 @@ metrics *ARGS:
 pcs-rc-gate:
 	bash scripts/run_pcs_rc_ci_gate.sh
 
+# Cross-platform PCS gate (Windows-friendly)
+pcs-rc-gate-py:
+	python scripts/run_pcs_rc_gate.py
+
 pcs-phase2-gate: pcs-rc-gate
 
 # PCS LabTrust v0.1 (positional args; optional defaults on pcs-v01-clean-chain-sm)
@@ -276,6 +281,21 @@ pcs-list-claims-by-certificate certificate_id:
 
 pcs-list-claims-by-source-commit commit:
 	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-source-commit --commit "{{commit}}"
+
+pcs-list-claims-by-release release_id:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-release --release-id "{{release_id}}"
+
+pcs-list-claims-by-trace-hash trace_hash:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-trace-hash --trace-hash "{{trace_hash}}"
+
+pcs-list-stale-claims:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-stale-claims
+
+pcs-refresh-stale:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-refresh-stale
+
+pcs-query-lineage *FLAGS:
+	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-query-lineage {{FLAGS}}
 
 # Tail of PCS v0.1 clean-checkout chain (after pf sign in LabTrust-Gym workdir)
 pcs-v01-clean-chain-sm bundle="../LabTrust-Gym/signed_science_claim_bundle.json" claim_id="claim-pcs-qc-release-v0.1":

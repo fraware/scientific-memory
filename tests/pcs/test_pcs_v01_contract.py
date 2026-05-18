@@ -26,6 +26,7 @@ REQUIRED_TEST_MODULES = (
     "test_pcs_portal_contract",
     "test_promote_release_run_phase2",
     "test_pcs_evidence_interface",
+    "test_claim_index",
 )
 
 REQUIRED_TEST_NAMES = (
@@ -101,6 +102,10 @@ REQUIRED_TEST_NAMES = (
     "test_release_manifest_import_does_not_overlay_fixture_report",
     "test_pcs_check_stale_detects_signed_bundle_hash_change",
     "test_pcs_list_claims_by_certificate",
+    "test_claims_index_written_on_import",
+    "test_query_claims_by_release_id",
+    "test_query_claims_by_trace_hash",
+    "test_refresh_stale_updates_index",
 )
 
 
