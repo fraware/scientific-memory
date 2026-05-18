@@ -101,6 +101,8 @@ export type PcsArtifactRegistryEntry = {
   artifact_type: string;
   producer: string;
   schema: string;
+  schema_owner?: string;
+  runtime_producer?: string;
   status: string;
   allowed_statuses?: string[];
   actual_status?: string;
@@ -115,6 +117,35 @@ export type PcsArtifactRegistryEntry = {
   canonical_hash_required?: boolean;
   release_mode_required?: boolean;
   registry_admission_result?: string;
+};
+
+export type PcsHandoffArtifactRef = {
+  name: string;
+  artifact_type?: string;
+  sha256?: string;
+};
+
+export type PcsHandoffManifestView = {
+  handoff_id?: string;
+  handoff_kind?: string;
+  from_component?: string;
+  to_component?: string;
+  created_at?: string;
+  source_repo?: string;
+  source_commit?: string;
+  status?: string;
+  signature_or_digest?: string;
+  input_artifacts?: PcsHandoffArtifactRef[];
+  expected_outputs?: PcsHandoffArtifactRef[];
+  invariants?: Record<string, string>;
+  manifest_path?: string;
+};
+
+export type PcsArtifactRegistryArtifactView = {
+  registry_id?: string;
+  registry_version?: string;
+  schema_version?: string;
+  signature_or_digest?: string;
 };
 
 export type PcsLineageView = {
@@ -155,6 +186,9 @@ export type PcsClaimReadModel = {
   release_chain_validation?: PcsReleaseChainValidationView;
   artifact_registry?: PcsArtifactRegistryEntry[];
   artifact_registry_version?: string;
+  artifact_registry_source?: string;
+  artifact_registry_artifact?: PcsArtifactRegistryArtifactView;
+  handoff_manifests?: PcsHandoffManifestView[];
   artifact_dependency_graph?: PcsArtifactDependencyEdge[];
   lineage?: PcsLineageView;
   staleness?: PcsStalenessView;

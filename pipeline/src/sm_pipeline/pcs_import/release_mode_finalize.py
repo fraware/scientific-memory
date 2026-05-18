@@ -6,7 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from sm_pipeline.pcs_import.artifact_registry_source import load_pcs_core_artifact_registry
+from sm_pipeline.pcs_import.artifact_registry_source import load_artifact_registry_v0
+from sm_pipeline.pcs_import.handoff_manifest import load_release_handoffs
 from sm_pipeline.pcs_import.claim_lineage import build_lineage, update_lineage_stale_flags, write_lineage
 from sm_pipeline.pcs_import.import_report_enrichment import enrich_import_report_from_protocol
 from sm_pipeline.pcs_import.release_context import enrich_read_model_with_release
@@ -54,7 +55,23 @@ def finalize_release_mode_claim(
     write_lineage(claim_dir, lineage)
     lineage = update_lineage_stale_flags(claim_dir, bundle_path=bundle_path)
 
-    _, registry_version = load_pcs_core_artifact_registry(repo_root)
+    registry_artifact, registry_version, _ = load_artifact_registry_v0(
+        repo_root,
+        release_dir=release_dir,
+        validate=True,
+    )
+    if registry_artifact is not None:
+        (claim_dir / "artifact_registry.json").write_text(
+            json.dumps(registry_artifact, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+
+    handoffs = load_release_handoffs(release_dir, repo_root=repo_root)
+    if handoffs:
+        (claim_dir / "handoff_manifests.json").write_text(
+            json.dumps(handoffs, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
     if import_report_path.is_file():
         report = _load_json(import_report_path)
         if report is not None:

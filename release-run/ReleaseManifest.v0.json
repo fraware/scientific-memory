@@ -39,7 +39,7 @@
     },
     "scientific_memory": {
       "repo": "https://github.com/fraware/scientific-memory",
-      "commit": "31dce1ba02252dd54a972f941eccae5ec63dc33a"
+      "commit": "a64e5e76f3d734ac5c14396a9ffa39bff3f7b304"
     }
   },
   "artifacts": {
@@ -104,10 +104,10 @@
       "schema": "scientific_memory_import_report.json",
       "producer": "Scientific Memory",
       "source_repo": "https://github.com/fraware/scientific-memory",
-      "source_commit": "31dce1ba02252dd54a972f941eccae5ec63dc33a",
-      "sha256": "sha256:a9175d51b19e3d7c2d05cc9e62c7452f5169124402cb9508d2ce12a4ff9ea835"
+      "source_commit": "a64e5e76f3d734ac5c14396a9ffa39bff3f7b304",
+      "sha256": "sha256:e00da0bdc6d2b21ce40f466cc51b787edb3a29b61d58d588a13d458055c0419e"
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:376f100afe64b6e36448f06b4b643356bf980573662fb12fbc1be01b6f723650"
+  "signature_or_digest": "sha256:2ef74ddfba9f74d897760d494481cbeb68dcda6a7a20b2957932434c388d4bc0"
 }

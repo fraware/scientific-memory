@@ -1,6 +1,7 @@
 import type { PcsClaimReadModel } from "@/lib/pcsTypes";
 
 import { ArtifactDependencyGraph } from "./ArtifactDependencyGraph";
+import { HandoffManifestView } from "./HandoffManifestView";
 import { ArtifactHashTable } from "./ArtifactHashTable";
 import { ArtifactRegistryView } from "./ArtifactRegistryView";
 import { AssumptionSetView } from "./AssumptionSetView";
@@ -51,6 +52,9 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
       ) : null}
       {model.artifact_registry?.length ? (
         <ArtifactRegistryView entries={model.artifact_registry} />
+      ) : null}
+      {model.handoff_manifests?.length ? (
+        <HandoffManifestView handoffs={model.handoff_manifests} />
       ) : null}
       {model.artifact_dependency_graph?.length ? (
         <ArtifactDependencyGraph edges={model.artifact_dependency_graph} />

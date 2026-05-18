@@ -1,0 +1,27 @@
+{
+  "schema_version": "v0",
+  "handoff_id": "handoff-certifyedge-to-labtrust-bundle-rc",
+  "handoff_kind": "certificate_to_bundle",
+  "from_component": "CertifyEdge",
+  "to_component": "LabTrust-Gym",
+  "created_at": "2026-05-17T17:01:22Z",
+  "source_repo": "https://github.com/fraware/CertifyEdge",
+  "source_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+  "input_artifacts": {
+    "trace_certificate.json": {
+      "artifact_type": "TraceCertificate.v0",
+      "sha256": "sha256:c0e09949aaa8441a2adc5a0be05e6827a7ab6a12c3e0c85d77f0554f191d1a28"
+    }
+  },
+  "expected_outputs": {
+    "science_claim_bundle.certified.json": {
+      "artifact_type": "ScienceClaimBundle.v0"
+    }
+  },
+  "invariants": {
+    "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+    "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
+  },
+  "status": "Validated",
+  "signature_or_digest": "sha256:d14ddd8e7f6c5d5339e020b97f6b4e718a81e0d856e661a47bad224e4f50afa3"
+}

@@ -7,7 +7,14 @@ from typing import Any
 
 from sm_pipeline.pcs_import.artifact_registry_source import (
     DERIVED_REGISTRY_VERSION,
-    load_pcs_core_artifact_registry,
+    REGISTRY_SOURCE_DERIVED,
+    load_artifact_registry_v0,
+    registry_entries_by_type,
+    semantic_check_labels,
+)
+from sm_pipeline.pcs_import.handoff_manifest import (
+    build_handoff_dependency_edges,
+    load_release_handoffs,
 )
 from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
@@ -28,11 +35,17 @@ def build_artifact_registry(
     validation: dict[str, Any],
     *,
     repo_root: Path | None = None,
+    release_dir: Path | None = None,
 ) -> list[dict[str, Any]]:
-    """Registry rows from ReleaseManifest.v0 artifacts, chain checks, and pcs-core registry."""
+    """Registry rows from ReleaseManifest.v0 artifacts, chain checks, and ArtifactRegistry.v0."""
     registry_specs: dict[str, Any] = {}
     if repo_root is not None:
-        registry_specs, _ = load_pcs_core_artifact_registry(repo_root.resolve())
+        registry_artifact, _, _ = load_artifact_registry_v0(
+            repo_root.resolve(),
+            release_dir=release_dir,
+            validate=False,
+        )
+        registry_specs = registry_entries_by_type(registry_artifact)
     checks_by_artifact: dict[str, list[str]] = {}
     for check in validation.get("checks") or []:
         if not isinstance(check, dict):
@@ -63,12 +76,15 @@ def build_artifact_registry(
         required_fields = spec.get("required_release_fields") or []
         present = [field for field in required_fields if entry.get(field)]
         missing = [field for field in required_fields if field not in present]
+        spec_semantic = semantic_check_labels(spec.get("semantic_checks"))
         registry.append(
             {
                 "name": name,
                 "artifact_type": artifact_type,
-                "producer": entry.get("producer", ""),
-                "schema": entry.get("schema", ""),
+                "producer": entry.get("producer", "") or spec.get("producer", ""),
+                "schema": entry.get("schema", "") or spec.get("schema", ""),
+                "schema_owner": spec.get("schema_owner", ""),
+                "runtime_producer": spec.get("runtime_producer", ""),
                 "allowed_statuses": spec.get("allowed_statuses", []),
                 "status": manifest.get("release_status", "Validated"),
                 "actual_status": entry.get("status") or manifest.get("release_status", "Validated"),
@@ -76,7 +92,7 @@ def build_artifact_registry(
                 "source_commit": entry.get("source_commit", ""),
                 "hash": entry.get("sha256", ""),
                 "semantic_checks_performed": semantic_checks,
-                "semantic_checks": spec.get("semantic_checks", []),
+                "semantic_checks": spec_semantic,
                 "required_release_fields_present": present,
                 "required_release_fields_missing": missing,
                 "consumer_repos": spec.get("consumer_repos", []),
@@ -88,7 +104,11 @@ def build_artifact_registry(
     return registry
 
 
-def build_artifact_dependency_graph(manifest: dict[str, Any]) -> list[dict[str, str]]:
+def build_artifact_dependency_graph(
+    manifest: dict[str, Any],
+    *,
+    handoffs: list[dict[str, Any]] | None = None,
+) -> list[dict[str, str]]:
     """Linear release-chain edges derived from manifest artifact ordering."""
     artifacts = manifest.get("artifacts")
     if not isinstance(artifacts, dict):
@@ -97,6 +117,8 @@ def build_artifact_dependency_graph(manifest: dict[str, Any]) -> list[dict[str, 
     edges: list[dict[str, str]] = []
     for index in range(1, len(names)):
         edges.append({"from": names[index - 1], "to": names[index], "kind": "release_chain"})
+    if handoffs:
+        edges.extend(build_handoff_dependency_edges(handoffs))
     return edges
 
 
@@ -171,17 +193,41 @@ def enrich_read_model_with_release(
         repo_root=repo_root,
     )
     out["release_chain_validation"] = build_release_chain_validation_view(validation)
+    release_dir = manifest_path.parent if manifest_path is not None else None
     registry_version = DERIVED_REGISTRY_VERSION
+    registry_source = REGISTRY_SOURCE_DERIVED
+    registry_artifact: dict[str, Any] | None = None
     if repo_root is not None:
-        _, registry_version = load_pcs_core_artifact_registry(repo_root.resolve())
+        registry_artifact, registry_version, registry_source = load_artifact_registry_v0(
+            repo_root.resolve(),
+            release_dir=release_dir,
+            validate=False,
+        )
+
+    handoffs: list[dict[str, Any]] = []
+    if release_dir is not None and repo_root is not None:
+        handoffs = load_release_handoffs(release_dir, repo_root=repo_root.resolve())
 
     out["artifact_registry"] = build_artifact_registry(
         manifest,
         validation,
         repo_root=repo_root,
+        release_dir=release_dir,
     )
     out["artifact_registry_version"] = registry_version
-    out["artifact_dependency_graph"] = build_artifact_dependency_graph(manifest)
+    out["artifact_registry_source"] = registry_source
+    if registry_artifact is not None:
+        out["artifact_registry_artifact"] = {
+            "registry_id": registry_artifact.get("registry_id"),
+            "registry_version": registry_artifact.get("registry_version"),
+            "schema_version": registry_artifact.get("schema_version"),
+            "signature_or_digest": registry_artifact.get("signature_or_digest"),
+        }
+    out["handoff_manifests"] = handoffs
+    out["artifact_dependency_graph"] = build_artifact_dependency_graph(
+        manifest,
+        handoffs=handoffs or None,
+    )
     if bundle_path is not None and bundle_path.is_file():
         out["signed_bundle_hash"] = file_sha256_digest(bundle_path)
     out["release_manifest_hash"] = canonical_hash(manifest)

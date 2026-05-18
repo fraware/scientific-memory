@@ -1,7 +1,12 @@
 {
   "artifacts": {
+    "ArtifactRegistry.v0.json": "sha256:6a0e7e1b80dd01e141d6fce52bfc66b302517bdff3fe12540d98338c5ef0835f",
     "ReleaseChainValidationResult.v0.json": "sha256:b84c40f97a4cc9e3a85e4c4a74f043359a30fc4ff18f1022a2c86d98cb4fd594",
-    "ReleaseManifest.v0.json": "sha256:3569041ebd992ec81d0cde001bc246e0d476cfd973150148e4c9899c67a8cdd1",
+    "ReleaseManifest.v0.json": "sha256:deacd874058c5c67d8cf53e81e323a29d44a69d7653f18c4b9836725875a9102",
+    "handoff_manifest.bundle_to_verifier.v0.json": "sha256:f7168a620e1ce0dec2345326de7d5dc9d6f8b824d623ad2a48e9b30d622cb840",
+    "handoff_manifest.certificate_to_bundle.v0.json": "sha256:c5b40fd8e81d5cde8e62299b25e34a4ef76bd2c86001296ed287f70b306f251c",
+    "handoff_manifest.runtime_to_certificate.v0.json": "sha256:65a2aac4f9cd07bc88970f326448c6171cda5e6542fab3d3b366f8be20af7bb5",
+    "handoff_manifest.signed_bundle_to_memory.v0.json": "sha256:6bb528edd6396e35513ba92f753a58432bca1f39ca273c90a59768a6e62d2d27",
     "invalid_local_dev_release.json": "sha256:d60bbc7934af72a840bdba068abcd68ec1f8516ef3d1db1a4ecf87ac423bc991",
     "invalid_placeholder_pf_source_commit.json": "sha256:427a9fd29fc93d2b3fc3595573e76afdb1a5a1578506629442bd03527710a5b6",
     "missing_claim_signature.json": "sha256:627f16b6a4d39eed85f784589f1cf90503be857c71cd97a0f5ab03e01db54195",
@@ -9,7 +14,7 @@
     "runtime_receipt.json": "sha256:8e642b59657d70b408be354323006421b963bb0c9fc9514f6abc7aab305345b6",
     "science_claim_bundle.certified.json": "sha256:9b42d792199eb6f358d26f822699f0ed65bb4366eee306d4958d42121c656833",
     "science_claim_bundle.pending.json": "sha256:677e0171743c4c129ad4b1931c62ba3fa0323f10c7d6d8d76290f8a4aabae45e",
-    "scientific_memory_import_report.json": "sha256:d84091bb872b5ccc5210f5f1ea6f457f862c2a078be72f9e531fba0e6a6ad400",
+    "scientific_memory_import_report.json": "sha256:5f4c331e804be13971bbae2f9562915c3d8a279901d8ac6489c356146899c611",
     "signed_science_claim_bundle.json": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
     "trace.json": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
     "trace_certificate.json": "sha256:c0e09949aaa8441a2adc5a0be05e6827a7ab6a12c3e0c85d77f0554f191d1a28",

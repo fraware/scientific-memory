@@ -28,8 +28,8 @@
       "artifact_type": "ScientificMemory.ImportReport.v0",
       "producer": "Scientific Memory",
       "schema": "scientific_memory_import_report.json",
-      "sha256": "sha256:d84091bb872b5ccc5210f5f1ea6f457f862c2a078be72f9e531fba0e6a6ad400",
-      "source_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
+      "sha256": "sha256:5f4c331e804be13971bbae2f9562915c3d8a279901d8ac6489c356146899c611",
+      "source_commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
       "source_repo": "https://github.com/fraware/scientific-memory"
     },
     "signed_science_claim_bundle.json": {
@@ -96,7 +96,7 @@
       "repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
     "scientific_memory": {
-      "commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
+      "commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
       "repo": "https://github.com/fraware/scientific-memory"
     }
   },
@@ -108,6 +108,6 @@
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
+  "signature_or_digest": "sha256:3b4e93b3ad605d8fc4a15f22c6c55c0cced84fefeef73883673e3fe10ce2e1b4",
   "validation_profile": "labtrust-v0.1-release-chain"
 }

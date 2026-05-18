@@ -4,16 +4,19 @@
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = REPO_ROOT / "tests" / "pcs" / "fixtures" / "labtrust-release"
-RC_PINNED_SM_COMMIT = "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
 PCS_CORE_EXAMPLES = REPO_ROOT.parent / "pcs-core" / "examples"
+PCS_CORE_LABTRUST = PCS_CORE_EXAMPLES / "labtrust-release"
 PCS_CORE_REGISTRY = PCS_CORE_EXAMPLES / "artifact_registry.valid.json"
-VENDORED_REGISTRY = REPO_ROOT / "schemas" / "pcs" / "artifact_registry.valid.json"
+VENDORED_REGISTRY_VALID = REPO_ROOT / "schemas" / "pcs" / "artifact_registry.valid.json"
+VENDORED_REGISTRY_V0 = REPO_ROOT / "schemas" / "pcs" / "ArtifactRegistry.v0.json"
+HANDOFF_GLOB = "handoff_manifest.*.v0.json"
 
 PHASE2_FILES = (
     "ReleaseManifest.v0.json",
@@ -26,14 +29,14 @@ IMPORT_REPORT_TEMPLATE = {
     "claim_id": "claim-pcs-qc-release-v0.1",
     "imported_at": "2026-05-17T15:39:09Z",
     "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
-    "scientific_memory_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
+    "scientific_memory_commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
     "source_bundle_path": "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json",
     "stale_artifacts": [],
     "strict": True,
     "verification_status": "passed",
     "warnings": [],
     "source_repo": "https://github.com/fraware/scientific-memory",
-    "source_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
+    "source_commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
     "release_id": "release-pcs-v0.1-labtrust-qc",
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
@@ -46,16 +49,13 @@ IMPORT_REPORT_TEMPLATE = {
 
 
 def _pin_rc_fixture_commits(release_dir: Path) -> None:
-    """Keep labtrust-release fixtures aligned with canonical RC pins."""
+    """Keep labtrust-release fixtures aligned with pcs-core published SM commit."""
     if release_dir.resolve() != DEFAULT_DIR.resolve():
         return
-    import json
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_import.pcs_core_release_align import align_legacy_fixture_scientific_memory_commit
 
-    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
-    if legacy_path.is_file():
-        legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
-        legacy["scientific_memory_commit"] = RC_PINNED_SM_COMMIT
-        legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+    align_legacy_fixture_scientific_memory_commit(release_dir, repo_root=REPO_ROOT)
 
 
 def _pin_scientific_memory_commit_in_legacy(release_dir: Path) -> None:
@@ -129,11 +129,19 @@ def main() -> int:
     _write_canonical_import_report(release_dir)
 
     if PCS_CORE_REGISTRY.is_file():
-        VENDORED_REGISTRY.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(PCS_CORE_REGISTRY, VENDORED_REGISTRY)
-        print(f"copied pcs-core registry -> {VENDORED_REGISTRY}")
+        VENDORED_REGISTRY_VALID.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(PCS_CORE_REGISTRY, VENDORED_REGISTRY_VALID)
+        shutil.copy2(PCS_CORE_REGISTRY, VENDORED_REGISTRY_V0)
+        shutil.copy2(PCS_CORE_REGISTRY, release_dir / "ArtifactRegistry.v0.json")
+        print(f"copied pcs-core registry -> {VENDORED_REGISTRY_VALID}")
 
-    pcs_labtrust = PCS_CORE_EXAMPLES / "labtrust-release"
+    if PCS_CORE_LABTRUST.is_dir():
+        for handoff in sorted(PCS_CORE_LABTRUST.glob(HANDOFF_GLOB)):
+            dest = release_dir / handoff.name
+            shutil.copy2(handoff, dest)
+            print(f"copied pcs-core handoff -> {dest}")
+
+    pcs_labtrust = PCS_CORE_LABTRUST
     validation_aliases = (
         ("release_chain_validation_result.v0.json", "ReleaseChainValidationResult.v0.json"),
     )
@@ -159,6 +167,25 @@ def main() -> int:
     print(f"generated {out}")
 
     _sync_legacy_manifest_artifact_hashes(release_dir)
+
+    manifest_path = release_dir / "ReleaseManifest.v0.json"
+    if release_dir.resolve() != release_run:
+        from sm_pipeline.pcs_import.pcs_core_release_align import align_scientific_memory_producer_repos
+        from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
+
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+        aligned = align_scientific_memory_producer_repos(manifest, repo_root=REPO_ROOT)
+        import_report_path = release_dir / "scientific_memory_import_report.json"
+        artifacts = aligned.get("artifacts")
+        if isinstance(artifacts, dict) and import_report_path.is_file():
+            entry = dict(artifacts.get("scientific_memory_import_report.json") or {})
+            entry["sha256"] = file_sha256_digest(import_report_path)
+            artifacts["scientific_memory_import_report.json"] = entry
+            aligned["artifacts"] = artifacts
+        aligned["signature_or_digest"] = canonical_hash(
+            {key: value for key, value in aligned.items() if key != "signature_or_digest"},
+        )
+        manifest_path.write_text(json.dumps(aligned, indent=2) + "\n", encoding="utf-8")
 
     manifest_path = release_dir / "ReleaseManifest.v0.json"
     validation_path = release_dir / "ReleaseChainValidationResult.v0.json"

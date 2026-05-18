@@ -53,7 +53,7 @@ CANONICAL_RC_CERTIFYEDGE_COMMIT = "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc"
 CANONICAL_RC_PF_COMMIT = "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d"
 CANONICAL_RC_PCS_CORE_COMMIT = "8caca0e2c7a20d8c8e9496e9b6d4f25d6a8faa66"
 # Pinned RC Scientific Memory commit (must match pcs-core manifest after `just refresh-pcs-release`).
-CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
+CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = "c4259a4cb79fe7b195fd156feb346c08fc334d33"
 
 
 # Canonical import/render tests use the LabTrust v0.1 release fixture (synced from pcs-core).

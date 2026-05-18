@@ -265,7 +265,7 @@ pcs-import-release RELEASE_MANIFEST="tests/pcs/fixtures/labtrust-release/Release
 	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
 
 pcs-import-release-manifest release_manifest:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"
 
 pcs-list-claims:
 	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims

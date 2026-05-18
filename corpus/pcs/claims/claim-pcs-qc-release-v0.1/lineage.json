@@ -3,7 +3,7 @@
   "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
   "claim_id": "claim-pcs-qc-release-v0.1",
   "release_id": "release-pcs-v0.1-labtrust-qc",
-  "release_manifest_hash": "sha256:dcdf09f8406155ccb204bf529fafc9cabab9cd48d4134f713f95a01f90d8580d",
+  "release_manifest_hash": "sha256:3b4e93b3ad605d8fc4a15f22c6c55c0cced84fefeef73883673e3fe10ce2e1b4",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"
@@ -14,7 +14,7 @@
     "labtrust_gym": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
     "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
     "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-    "scientific_memory": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
+    "scientific_memory": "c4259a4cb79fe7b195fd156feb346c08fc334d33"
   },
   "stale": false,
   "stale_reasons": [],

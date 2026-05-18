@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcs.sentinelops.ci/schemas/ArtifactRegistry.v0.schema.json",
+  "title": "ArtifactRegistry.v0",
+  "type": "object",
+  "required": ["schema_version", "registry_id", "registry_version", "entries", "signature_or_digest"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
+    "registry_id": { "type": "string", "minLength": 1 },
+    "registry_version": { "type": "string", "minLength": 1 },
+    "entries": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/registry_entry" }
+    },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
+  },
+  "$defs": {
+    "registry_entry": {
+      "type": "object",
+      "required": [
+        "artifact_type",
+        "schema",
+        "schema_owner",
+        "runtime_producer",
+        "allowed_runtime_producers",
+        "allowed_statuses",
+        "required_release_fields",
+        "semantic_checks",
+        "consumer_repos",
+        "canonical_hash_required",
+        "release_mode_required"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "artifact_type": { "type": "string", "minLength": 1 },
+        "schema": { "type": "string", "minLength": 1 },
+        "schema_owner": { "type": "string", "minLength": 1 },
+        "runtime_producer": { "type": "string", "minLength": 1 },
+        "allowed_runtime_producers": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Deprecated alias for runtime_producer on emitted artifacts."
+        },
+        "allowed_statuses": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "required_release_fields": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "semantic_checks": {
+          "type": "array",
+          "items": { "$ref": "common.defs.json#/$defs/registry_semantic_check" }
+        },
+        "consumer_repos": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "canonical_hash_required": { "type": "boolean" },
+        "release_mode_required": { "type": "boolean" }
+      }
+    }
+  }
+}

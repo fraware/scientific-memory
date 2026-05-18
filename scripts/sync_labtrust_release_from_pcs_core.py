@@ -26,7 +26,9 @@ MANIFEST_ARTIFACTS = (
 PHASE2_ARTIFACTS = (
     "ReleaseManifest.v0.json",
     "ReleaseChainValidationResult.v0.json",
+    "ArtifactRegistry.v0.json",
 )
+HANDOFF_GLOB = "handoff_manifest.*.v0.json"
 CLAIM_ID = "claim-pcs-qc-release-v0.1"
 
 
@@ -73,6 +75,17 @@ def sync_from_pcs_core(
         if src.is_file():
             shutil.copy2(src, run_dir / name)
             shutil.copy2(src, fixture_dir / name)
+
+    for handoff in sorted(pcs_core_dir.glob(HANDOFF_GLOB)):
+        shutil.copy2(handoff, run_dir / handoff.name)
+        shutil.copy2(handoff, fixture_dir / handoff.name)
+
+    registry_src = pcs_core_dir / "ArtifactRegistry.v0.json"
+    if not registry_src.is_file():
+        registry_src = pcs_core_dir.parent / "artifact_registry.valid.json"
+    if registry_src.is_file():
+        for target_dir in (run_dir, fixture_dir):
+            shutil.copy2(registry_src, target_dir / "ArtifactRegistry.v0.json")
 
     import subprocess
 

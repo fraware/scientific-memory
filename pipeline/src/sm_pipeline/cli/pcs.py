@@ -1,7 +1,5 @@
 """CLI: PCS LabTrust bundle import, validate, and portal render."""
 
-from __future__ import annotations
-
 from pathlib import Path
 
 import typer
@@ -214,10 +212,10 @@ def pcs_refresh_stale() -> None:
 
 
 def pcs_query_lineage(
-    release_id: str | None = typer.Option(None, "--release-id"),
-    certificate_id: str | None = typer.Option(None, "--certificate-id"),
-    trace_hash: str | None = typer.Option(None, "--trace-hash"),
-    commit: str | None = typer.Option(None, "--commit"),
+    release_id: str = typer.Option(None, "--release-id"),  # type: ignore[assignment]
+    certificate_id: str = typer.Option(None, "--certificate-id"),  # type: ignore[assignment]
+    trace_hash: str = typer.Option(None, "--trace-hash"),  # type: ignore[assignment]
+    commit: str = typer.Option(None, "--commit"),  # type: ignore[assignment]
     stale_only: bool = typer.Option(False, "--stale-only"),
 ) -> None:
     """Query corpus/pcs/claims_index.json (JSON lines to stdout)."""

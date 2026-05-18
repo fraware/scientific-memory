@@ -12,6 +12,11 @@
     "producer_repos",
     "artifacts",
     "release_status",
+    "chain_root",
+    "release_chain_validation_result",
+    "canonical_signed_bundle",
+    "canonical_claim_id",
+    "limitations_notice",
     "signature_or_digest"
   ],
   "additionalProperties": false,
@@ -59,22 +64,5 @@
       "$ref": "common.defs.json#/$defs/limitations_notice"
     },
     "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": { "release_status": { "const": "Validated" } },
-        "required": ["release_status"]
-      },
-      "then": {
-        "required": [
-          "chain_root",
-          "release_chain_validation_result",
-          "canonical_signed_bundle",
-          "canonical_claim_id",
-          "limitations_notice"
-        ]
-      }
-    }
-  ]
+  }
 }
