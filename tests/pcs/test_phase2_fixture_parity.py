@@ -27,7 +27,9 @@ def test_release_manifest_validates_against_pcs_core_example() -> None:
     from sm_pipeline.pcs_validate.release_manifest import validate_release_manifest
 
     sm = json.loads(LABTRUST_RELEASE_MANIFEST_V0.read_text(encoding="utf-8-sig"))
-    pcs_example = PCS_EXAMPLES / "release_manifest.valid.json"
+    pcs_example = PCS_LABTRUST / "release_manifest.v0.json"
+    if not pcs_example.is_file():
+        pcs_example = PCS_EXAMPLES / "release_manifest.valid.json"
     if pcs_example.is_file():
         pcs = json.loads(pcs_example.read_text(encoding="utf-8-sig"))
         assert sm["release_id"] == pcs["release_id"]

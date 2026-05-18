@@ -1,0 +1,106 @@
+{
+  "schema_version": "v0",
+  "release_id": "release-pcs-v0.1-tool-use-safety",
+  "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+  "generated_at": "2026-05-18T12:00:00Z",
+  "validation_profile": "agent_tool_use.safety_v0",
+  "workflow_profile_id": "agent_tool_use.safety_v0",
+  "chain_root": {
+    "trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4",
+    "certificate_id": "cert-tool-use-safety-v0",
+    "certified_bundle_hash": "sha256:e80f0303f26408c4ee7eba2be4dce097794a7ac8837b2d967e83fa50b7dd17cd",
+    "signed_bundle_hash": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a"
+  },
+  "release_chain_validation_result": {
+    "path": "release_chain_validation_result.v0.json",
+    "sha256": "sha256:9fc8a1618e5c15f226907900b958944b8babd283cd4a9344856fa623368fc987"
+  },
+  "canonical_signed_bundle": {
+    "path": "signed_science_claim_bundle.json",
+    "sha256": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a"
+  },
+  "canonical_claim_id": "claim-qc-release-v0.1",
+  "limitations_notice": "This artifact is a proof-carrying tool-use simulation result. It is not a guarantee that a real deployed agent is safe.",
+  "producer_repos": {
+    "pcs_core": {
+      "repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c"
+    },
+    "agent_runtime": {
+      "repo": "https://github.com/example/agent-runtime",
+      "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
+    },
+    "certifyedge": {
+      "repo": "https://github.com/fraware/CertifyEdge",
+      "commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc"
+    },
+    "provability_fabric": {
+      "repo": "https://github.com/SentinelOps-CI/provability-fabric",
+      "commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d"
+    },
+    "scientific_memory": {
+      "repo": "https://github.com/fraware/scientific-memory",
+      "commit": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+    }
+  },
+  "artifacts": {
+    "tool_use_trace.valid.json": {
+      "artifact_type": "ToolUseTrace.v0",
+      "schema": "schemas/ToolUseTrace.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+      "sha256": "sha256:b31313785703270d7cc5402c694c5eb88e71535490506d0785cebe30f4e3e585"
+    },
+    "tool_use_certificate.valid.json": {
+      "artifact_type": "ToolUseCertificate.v0",
+      "schema": "schemas/ToolUseCertificate.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+      "sha256": "sha256:1b8fb66898980e0868927b8e62400aa8c992a0d6a9f193c755fbe1656e404a68"
+    },
+    "runtime_receipt.json": {
+      "artifact_type": "RuntimeReceipt.v0",
+      "schema": "schemas/RuntimeReceipt.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+      "sha256": "sha256:eddf1ad1446050bb029ac1bf31b6755c247e631a44c51d245041e41d1f362e3d"
+    },
+    "science_claim_bundle.certified.json": {
+      "artifact_type": "ScienceClaimBundle.v0",
+      "schema": "schemas/ScienceClaimBundle.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+      "sha256": "sha256:08b07170dd8406bfe0cee6cedbe2e02b9f280f4fc81858f8dad36431a40d54d6"
+    },
+    "workflow_profile.v0.json": {
+      "artifact_type": "WorkflowProfile.v0",
+      "schema": "schemas/WorkflowProfile.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+      "sha256": "sha256:0f54c947169f2733cf05ae8486b73afbc7bd82ec51275448f72d18ad29783e66"
+    },
+    "verification_result.json": {
+      "artifact_type": "VerificationResult.v0",
+      "schema": "schemas/VerificationResult.v0.schema.json",
+      "producer": "Provability Fabric",
+      "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+      "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+      "sha256": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724"
+    },
+    "signed_science_claim_bundle.json": {
+      "artifact_type": "SignedScienceClaimBundle.v0",
+      "schema": "schemas/SignedScienceClaimBundle.v0.schema.json",
+      "producer": "Provability Fabric",
+      "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+      "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+      "sha256": "sha256:f1a857b7751594d0df4461224555a16f0a6ab3e632e09be95fc64b4e4388102d"
+    }
+  },
+  "release_status": "Validated",
+  "signature_or_digest": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd"
+}

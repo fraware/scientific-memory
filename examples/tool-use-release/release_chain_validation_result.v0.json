@@ -1,0 +1,141 @@
+{
+  "schema_version": "v0",
+  "validation_id": "validation-pcs-v0.1-tool-use-safety",
+  "release_id": "release-pcs-v0.1-tool-use-safety",
+  "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+  "workflow_profile_id": "agent_tool_use.safety_v0",
+  "validator": "pcs-core",
+  "validator_version": "0.1.0",
+  "checked_at": "2026-05-18T12:00:00Z",
+  "status": "ProofChecked",
+  "checks": [
+    {
+      "check_id": "tool_trace_hash_alignment",
+      "description": "ToolUseCertificate trace_hash matches ToolUseTrace",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.tool_trace_hash_matches_certificate"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "tool_policy_hash_alignment",
+      "description": "ToolUseCertificate policy_hash matches trace policy_id",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.policy_hash_matches_certificate"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "tool_certificate_status_checked",
+      "description": "ToolUseCertificate status is CertificateChecked",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.certificate_status_checked_for_release"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "tool_no_unauthorized_calls",
+      "description": "All tool calls are authorized for release",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.no_unauthorized_tool_calls",
+        "ToolUseTrace.v0.no_unknown_authorization_status",
+        "ToolUseTrace.v0.trace_hash_present"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "tool_certifyedge_commit",
+      "description": "ToolUseCertificate source_commit matches release manifest",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.source_commit_matches_release_manifest"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "tool_certificate_signature_valid",
+      "description": "ToolUseCertificate signature_or_digest is canonical",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ToolUseCertificate.v0.signature_or_digest_valid"
+      ],
+      "responsible_component": "CertifyEdge"
+    },
+    {
+      "check_id": "release_manifest_integrity",
+      "description": "Release manifest hashes and commit policy",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ReleaseManifest.v0.artifact_hashes_match_files",
+        "ReleaseManifest.v0.release_mode_commit_policy"
+      ],
+      "responsible_component": "pcs-core"
+    },
+    {
+      "check_id": "runtime_receipt_commit",
+      "description": "RuntimeReceipt trace hash and manifest commit alignment",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "RuntimeReceipt.v0.source_commit_matches_release_manifest",
+        "RuntimeReceipt.v0.trace_hash_present"
+      ],
+      "responsible_component": "AgentRuntime"
+    },
+    {
+      "check_id": "science_claim_bundle_semantics",
+      "description": "Certified science claim bundle structure",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "ScienceClaimBundle.v0.non_empty_runtime_receipts",
+        "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
+      ],
+      "responsible_component": "LabTrust-Gym"
+    },
+    {
+      "check_id": "verification_and_signed_bundle_hashes",
+      "description": "Verification and signed bundle hash alignment",
+      "status": "passed",
+      "details": {},
+      "registry_check_refs": [
+        "VerificationResult.v0.verified_input_bundle_hash_matches_certified",
+        "VerificationResult.v0.failed_checks_block_import_ready_status",
+        "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
+      ],
+      "responsible_component": "Provability Fabric"
+    }
+  ],
+  "artifacts_checked": 7,
+  "failure_codes": [],
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "d444444444444444444444444444444444444444",
+  "signature_or_digest": "sha256:9bd3f3582693cd7eac52ca1e1052fa547e72d3990265f189e4d5647a8158f4a3",
+  "deferred_registry_checks": [
+    {
+      "registry_ref": "HandoffManifest.v0.handoff_input_hashes_when_validated",
+      "status": "deferred",
+      "enforcement_location": "artifact_validate",
+      "responsible_component": "pcs-core",
+      "reason": "Executed via pcs conformance run --suite handoff-manifest during release qualification."
+    },
+    {
+      "registry_ref": "TraceCertificate.v0.trace_hash_matches_runtime_receipt",
+      "status": "deferred",
+      "enforcement_location": "artifact_validate",
+      "responsible_component": "CertifyEdge",
+      "reason": "Verified during per-artifact validation of TraceCertificate against RuntimeReceipt."
+    }
+  ]
+}

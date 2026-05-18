@@ -39,6 +39,14 @@ def _import_release_read_model() -> dict:
         return json.loads(path.read_text(encoding="utf-8"))
 
 
+def test_render_workflow_profile_section() -> None:
+    model = _import_release_read_model()
+    profile = model.get("workflow_profile")
+    assert isinstance(profile, dict)
+    assert profile.get("workflow_id") == "labtrust.qc_release_v0.1"
+    assert profile.get("domain")
+
+
 def test_render_release_manifest_section() -> None:
     model = _import_release_read_model()
     manifest = model.get("release_manifest")
@@ -92,3 +100,49 @@ def test_render_artifact_dependency_graph() -> None:
     assert graph[0]["from"]
     assert graph[0]["to"]
     assert graph[0]["kind"] == "release_chain"
+
+
+def test_render_handoff_manifest_section() -> None:
+    model = _import_release_read_model()
+    handoffs = model.get("handoff_manifests")
+    assert isinstance(handoffs, list) and len(handoffs) >= 1
+    assert handoffs[0].get("handoff_id")
+    assert handoffs[0].get("from_component")
+    assert handoffs[0].get("to_component")
+
+
+def test_render_artifact_registry_section() -> None:
+    model = _import_release_read_model()
+    registry = model.get("artifact_registry")
+    assert isinstance(registry, list) and registry
+    row = next(r for r in registry if r["name"] == "signed_science_claim_bundle.json")
+    for key in (
+        "artifact_type",
+        "schema",
+        "schema_owner",
+        "runtime_producer",
+        "allowed_runtime_producers",
+        "producer",
+        "source_repo",
+        "source_commit",
+        "hash",
+        "registry_admission_result",
+        "admission_status",
+        "semantic_checks_performed",
+    ):
+        assert key in row
+    assert row["admission_status"] in ("passed", "warning", "failed", "deferred", "not_applicable")
+
+
+def test_render_lineage_and_staleness_sections() -> None:
+    model = _import_release_read_model()
+    lineage = model.get("lineage")
+    staleness = model.get("staleness")
+    assert isinstance(lineage, dict)
+    assert lineage.get("claim_id")
+    assert str(lineage.get("signed_bundle_hash", "")).startswith("sha256:")
+    assert isinstance(staleness, dict)
+    assert "stale" in staleness
+    assert isinstance(staleness.get("stale_reasons"), list)
+    assert staleness.get("claim_state") in ("current", "stale", "superseded", "withdrawn", "revalidated")
+    assert lineage.get("recommended_action")

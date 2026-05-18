@@ -1,0 +1,29 @@
+{
+  "artifacts": {
+    ".phase2-read-model.json": "sha256:0c6569b915f0123ad84119cfdbed9b04fd75936313c9fa52f226c8e2fe17ff81",
+    "ArtifactRegistry.v0.json": "sha256:d29c33327ac77417bb0aee7906c01a27cc80f99f7d0646387d2851380183e921",
+    "ReleaseChainValidationResult.v0.json": "sha256:6519f99f5d74e235ab6d2f4c1b9884250c52cb8e0d09bb27c127c8379ef62fc8",
+    "ReleaseManifest.v0.json": "sha256:047691fd71b9f5479325e0c369d6233e766f6a3fdfa78a61657cbc411e96f755",
+    "handoff_manifest.bundle_to_verifier.v0.json": "sha256:471107f782239db9868d82907f9e1e13340f8ecc10dae87191ef4b4719a2299a",
+    "handoff_manifest.certificate_to_bundle.v0.json": "sha256:18e5d2979e582cf431a7aaa6af4a52125d85120a1ab52317849474c6f576e5e4",
+    "handoff_manifest.runtime_to_certificate.v0.json": "sha256:352f2aff44707b6a98a6b0fdc765fb7ca6ebc24fdf26a4b63e59b06c2117d012",
+    "handoff_manifest.signed_bundle_to_memory.v0.json": "sha256:dc59516d267b77e517e9f27ffe35ec6b106c7650ee52d5920b53532e330296f9",
+    "invalid_local_dev_release.json": "sha256:d60bbc7934af72a840bdba068abcd68ec1f8516ef3d1db1a4ecf87ac423bc991",
+    "invalid_placeholder_pf_source_commit.json": "sha256:427a9fd29fc93d2b3fc3595573e76afdb1a5a1578506629442bd03527710a5b6",
+    "missing_claim_signature.json": "sha256:627f16b6a4d39eed85f784589f1cf90503be857c71cd97a0f5ab03e01db54195",
+    "missing_claim_source_commit.json": "sha256:5b3cc78d2dbf7b62af066473a13bce3e0bcbe55030a9507d8a0949cf70ffd901",
+    "runtime_receipt.json": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
+    "science_claim_bundle.certified.json": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
+    "science_claim_bundle.pending.json": "sha256:406d376c6d26eb949c32f2b6c6f6578aa877f24c9ea0cb0a8b87bd377c72cfe0",
+    "scientific_memory_import_report.json": "sha256:5f4c331e804be13971bbae2f9562915c3d8a279901d8ac6489c356146899c611",
+    "signed_science_claim_bundle.json": "sha256:ece9554a3edbe1d310144f443995f618c8648c258c6cb7e90376446e8dfb6a64",
+    "trace.json": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
+    "trace_certificate.json": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575",
+    "verification_result.json": "sha256:2d16bb868550f1c5879e660ad69761314c0ca9d954bc98f7141ab78ac8c6a5e9"
+  },
+  "expected_claim_id": "claim-pcs-qc-release-v0.1",
+  "provability_fabric_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+  "schema_version": "v0",
+  "signed_bundle_id": "signed-bc8f7124-3571-4397-ae01-b7af1e9f5b6d",
+  "source": "pcs-core/examples/labtrust-release/"
+}

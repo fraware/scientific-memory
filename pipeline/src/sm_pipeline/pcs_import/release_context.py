@@ -16,7 +16,17 @@ from sm_pipeline.pcs_import.handoff_manifest import (
     build_handoff_dependency_edges,
     load_release_handoffs,
 )
+from sm_pipeline.pcs_import.lineage_ops import (
+    build_operational_lineage_view,
+    build_operational_staleness_view,
+)
+from sm_pipeline.pcs_import.registry_admission import enrich_registry_row
 from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
+from sm_pipeline.pcs_import.supplemental_protocol import (
+    attach_domain_artifacts,
+    load_supplemental_protocol_artifacts,
+)
+from sm_pipeline.pcs_import.workflow_context import apply_workflow_context
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
 
 
@@ -77,7 +87,13 @@ def build_artifact_registry(
         present = [field for field in required_fields if entry.get(field)]
         missing = [field for field in required_fields if field not in present]
         spec_semantic = semantic_check_labels(spec.get("semantic_checks"))
-        registry.append(
+        allowed_runtime = spec.get("allowed_runtime_producers")
+        if not isinstance(allowed_runtime, list):
+            allowed_runtime = []
+            runtime = spec.get("runtime_producer")
+            if isinstance(runtime, str) and runtime:
+                allowed_runtime = [runtime]
+        row = enrich_registry_row(
             {
                 "name": name,
                 "artifact_type": artifact_type,
@@ -85,6 +101,7 @@ def build_artifact_registry(
                 "schema": entry.get("schema", "") or spec.get("schema", ""),
                 "schema_owner": spec.get("schema_owner", ""),
                 "runtime_producer": spec.get("runtime_producer", ""),
+                "allowed_runtime_producers": allowed_runtime,
                 "allowed_statuses": spec.get("allowed_statuses", []),
                 "status": manifest.get("release_status", "Validated"),
                 "actual_status": entry.get("status") or manifest.get("release_status", "Validated"),
@@ -100,7 +117,9 @@ def build_artifact_registry(
                 "release_mode_required": spec.get("release_mode_required", False),
                 "registry_admission_result": "admitted" if not missing else "incomplete",
             },
+            checks_for_artifact=semantic_checks,
         )
+        registry.append(row)
     return registry
 
 
@@ -231,10 +250,39 @@ def enrich_read_model_with_release(
     if bundle_path is not None and bundle_path.is_file():
         out["signed_bundle_hash"] = file_sha256_digest(bundle_path)
     out["release_manifest_hash"] = canonical_hash(manifest)
-    if lineage is not None:
+    if lineage is not None and repo_root is not None:
+        claim_id = str(lineage.get("claim_id") or out.get("claim_id") or "")
+        out["lineage"] = build_operational_lineage_view(
+            lineage,
+            repo_root=repo_root.resolve(),
+            claim_id=claim_id,
+            release_manifest=manifest,
+            validation=validation,
+        )
+        out["staleness"] = build_operational_staleness_view(
+            lineage,
+            repo_root=repo_root.resolve(),
+            claim_id=claim_id,
+            release_manifest=manifest,
+            validation=validation,
+        )
+    elif lineage is not None:
         out["lineage"] = lineage
         out["staleness"] = {
             "stale": bool(lineage.get("stale")),
             "stale_reasons": list(lineage.get("stale_reasons") or []),
         }
-    return out
+
+    if release_dir is not None:
+        supplemental = load_supplemental_protocol_artifacts(manifest, release_dir)
+        if supplemental:
+            out = attach_domain_artifacts(out, supplemental)
+
+    return apply_workflow_context(
+        out,
+        repo_root=repo_root,
+        validation=validation,
+        lineage=lineage,
+        release_dir=release_dir,
+        manifest=manifest,
+    )

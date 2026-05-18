@@ -12,6 +12,7 @@ RELEASE_MANIFEST_FILENAME = "ReleaseManifest.v0.json"
 RELEASE_CHAIN_VALIDATION_FILENAME = "ReleaseChainValidationResult.v0.json"
 LEGACY_MANIFEST_FILENAME = "RELEASE_FIXTURE_MANIFEST.json"
 CANONICAL_CLAIM_ID = "claim-pcs-qc-release-v0.1"
+LABTRUST_WORKFLOW_PROFILE_ID = "labtrust.qc_release_v0.1"
 LIMITATIONS_NOTICE = (
     "PCS v0.1 demonstrates a proof-carrying simulated lab workflow; "
     "it does not claim clinical validity or production certification."
@@ -145,6 +146,7 @@ def build_release_manifest_from_release_dir(release_dir: Path) -> dict[str, Any]
         "release_candidate": legacy.get("release_candidate", "pcs-v0.1.0-rc1"),
         "generated_at": legacy.get("generated_at", ""),
         "validation_profile": "labtrust-v0.1-release-chain",
+        "workflow_profile_id": LABTRUST_WORKFLOW_PROFILE_ID,
         "chain_root": {
             "trace_hash": trace_hash,
             "certificate_id": certificate_id,

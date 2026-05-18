@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -12,7 +13,7 @@ app = typer.Typer()
 
 @app.command("validate-all")
 def validate_all(
-    report_json: str | None = typer.Option(
+    report_json: Optional[str] = typer.Option(
         None,
         "--report-json",
         help="Write machine-readable gate report to this path (after successful validation)",

@@ -75,9 +75,11 @@ test:
 test-pcs:
 	@echo "==> test-pcs"
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py
+	python scripts/verify_tool_use_release_fixture.py
 	bash scripts/run_pcs_tests.sh
 	node portal/scripts/verify-pcs-read-model.mjs
 	pnpm --dir portal test:pcs-phase2-contract
+	pnpm --dir portal test:pcs-tool-use-phase2-contract
 
 # PCS v0.1 gate: contract tests + corpus validation (fixtures are committed; no refresh)
 pcs-verify: test-pcs
@@ -87,6 +89,7 @@ pcs-verify: test-pcs
 refresh-pcs-release:
 	bash scripts/sm_python.sh scripts/sync_pcs_schemas.py
 	bash scripts/sm_python.sh scripts/sync_labtrust_release_from_pcs_core.py
+	python scripts/sync_tool_use_release_from_pcs_core.py --ensure
 	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py
 	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py --release-dir release-run
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
@@ -264,38 +267,53 @@ pcs-import-rc-bundle:
 pcs-import-release RELEASE_MANIFEST="tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json":
 	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
 
+sync-labtrust-release:
+	python scripts/sync_labtrust_release_from_pcs_core.py --no-corpus
+
+pcs-import-tool-use-release RELEASE_MANIFEST="tests/pcs/fixtures/tool-use-release/release_manifest.v0.json":
+	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
+
+sync-tool-use-release:
+	python scripts/sync_tool_use_release_from_pcs_core.py --ensure
+
 pcs-import-release-manifest release_manifest:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"
 
 pcs-list-claims:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims
 
-pcs-show-claim claim_id:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-show-claim --claim-id "{{claim_id}}"
+pcs-show-claim claim_id="claim-pcs-qc-release-v0.1":
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-show-claim --claim-id "{{claim_id}}"
 
-pcs-check-stale claim_id:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-check-stale --claim-id "{{claim_id}}"
+pcs-check-stale claim_id="claim-pcs-qc-release-v0.1":
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-check-stale --claim-id "{{claim_id}}"
 
 pcs-list-claims-by-certificate certificate_id:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-certificate --certificate-id "{{certificate_id}}"
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-certificate --certificate-id "{{certificate_id}}"
 
 pcs-list-claims-by-source-commit commit:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-source-commit --commit "{{commit}}"
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-source-commit --commit "{{commit}}"
 
 pcs-list-claims-by-release release_id:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-release --release-id "{{release_id}}"
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-release --release-id "{{release_id}}"
+
+pcs-list-claims-by-workflow workflow_id:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-workflow --workflow-id "{{workflow_id}}"
+
+pcs-compare-releases old_release new_release:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-compare-releases --old-release "{{old_release}}" --new-release "{{new_release}}"
 
 pcs-list-claims-by-trace-hash trace_hash:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-trace-hash --trace-hash "{{trace_hash}}"
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-trace-hash --trace-hash "{{trace_hash}}"
 
 pcs-list-stale-claims:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-stale-claims
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-stale-claims
 
 pcs-refresh-stale:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-refresh-stale
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-refresh-stale
 
 pcs-query-lineage *FLAGS:
-	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-query-lineage {{FLAGS}}
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-query-lineage {{FLAGS}}
 
 # Tail of PCS v0.1 clean-checkout chain (after pf sign in LabTrust-Gym workdir)
 pcs-v01-clean-chain-sm bundle="../LabTrust-Gym/signed_science_claim_bundle.json" claim_id="claim-pcs-qc-release-v0.1":

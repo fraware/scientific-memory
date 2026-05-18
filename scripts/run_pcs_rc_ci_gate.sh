@@ -22,22 +22,29 @@ git diff --exit-code tests/pcs/fixtures/labtrust-release/signed_science_claim_bu
   exit 1
 }
 
-_pcs_examples="${PCS_CORE_PATH:-}/examples"
-if [ -f "$_pcs_examples/release_manifest.valid.json" ]; then
+_pcs_labtrust="${PCS_CORE_PATH:-}/examples/labtrust-release"
+_pcs_manifest=""
+for _name in release_manifest.v0.json ReleaseManifest.v0.json; do
+  if [ -f "$_pcs_labtrust/$_name" ]; then
+    _pcs_manifest="$_pcs_labtrust/$_name"
+    break
+  fi
+done
+if [ -n "$_pcs_manifest" ]; then
   echo "==> PCS RC: ReleaseManifest artifact hash parity (signed bundle entry)"
-  python - "$_pcs_examples" <<'PY'
+  python - "$_pcs_manifest" <<'PY'
 import json
 import sys
 from pathlib import Path
 
 repo = Path(".")
 sm = json.loads((repo / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json").read_text())
-pcs = json.loads((Path(sys.argv[1]) / "release_manifest.valid.json").read_text())
+pcs = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8-sig"))
 key = "signed_science_claim_bundle.json"
 if sm["artifacts"][key]["sha256"] != pcs["artifacts"][key]["sha256"]:
-    print("ReleaseManifest signed bundle hash mismatch vs pcs-core example", file=sys.stderr)
+    print("ReleaseManifest signed bundle hash mismatch vs pcs-core labtrust release", file=sys.stderr)
     raise SystemExit(1)
-print("OK: ReleaseManifest signed bundle hash matches pcs-core example")
+print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release")
 PY
 fi
 
@@ -82,7 +89,21 @@ print("OK: import report Phase 2 fields present")
 PY
 
 echo "==> PCS: portal read-model contracts"
-pnpm --dir "$_root/portal" test:pcs-contract
-pnpm --dir "$_root/portal" test:pcs-phase2-contract
+_portal="$_root/portal"
+if [ ! -d "$_portal/node_modules/zod" ]; then
+  echo "error: portal node_modules missing; run: cd portal && npm install" >&2
+  exit 1
+fi
+if command -v pnpm >/dev/null 2>&1; then
+  pnpm --dir "$_portal" test:pcs-contract
+  pnpm --dir "$_portal" test:pcs-phase2-contract
+  pnpm --dir "$_portal" test:pcs-tool-use-phase2-contract
+else
+  node "$_portal/scripts/verify-pcs-read-model.mjs"
+  node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
+    "$_root/corpus/pcs/claims/claim-pcs-qc-release-v0.1/read_model.json"
+  node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
+    "$_root/tests/pcs/fixtures/tool-use-release/.phase2-read-model.json"
+fi
 
 echo "OK: PCS RC + Phase 2 gate passed"

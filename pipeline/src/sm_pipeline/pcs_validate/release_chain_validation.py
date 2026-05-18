@@ -128,18 +128,9 @@ def validate_release_chain_validation_or_raise(
 
 
 def resolve_release_chain_validation_path(release_dir: Path) -> Path:
-    base = release_dir.resolve()
-    primary = base / RELEASE_CHAIN_VALIDATION_FILENAME
-    if primary.is_file():
-        return primary
-    for name in (
-        "release_chain_validation_result.v0.json",
-        "ReleaseChainValidationResult.v0.json",
-    ):
-        candidate = base / name
-        if candidate.is_file():
-            return candidate
-    return primary
+    from sm_pipeline.pcs_validate.release_paths import resolve_release_chain_validation_path as _resolve
+
+    return _resolve(release_dir)
 
 
 def require_release_chain_validation(

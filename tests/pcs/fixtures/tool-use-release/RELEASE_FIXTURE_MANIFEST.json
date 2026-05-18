@@ -1,0 +1,20 @@
+{
+  "schema_version": "v0",
+  "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+  "generated_at": "2026-05-18T12:00:00Z",
+  "workflow_profile_id": "agent_tool_use.safety_v0",
+  "pcs_core_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+  "agent_runtime_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "certifyedge_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+  "provability_fabric_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+  "scientific_memory_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+  "artifacts": {
+    "tool_use_trace.valid.json": "sha256:7d0a726c657c31db20294206c0207a34365a573c3103f447f3b3cca38190d507",
+    "runtime_receipt.json": "sha256:33fddcdd864435cffbf8febb9c405d0ad81a7ba90b446f7d86729c5d46eaf5a8",
+    "tool_use_certificate.valid.json": "sha256:145f884300ad795444e06e9916a2a720d33a10d960f1015bd2781ace5b8dbdf4",
+    "science_claim_bundle.certified.json": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30",
+    "verification_result.json": "sha256:62a27aa4a2378a8a1462a583e9e2aae350c8252b29e3450fe9a63034f90f6b31",
+    "signed_science_claim_bundle.json": "sha256:c1ecda744f3d3a7e55724d5555f8d97121fb8e46f6b6d83d871bab0b11985b15",
+    "scientific_memory_import_report.json": "sha256:0f2119a05d66e94418b7833969bfe23e5977ada5b0b9a85673001d4a58965d23"
+  }
+}

@@ -1,34 +1,62 @@
 {
-  "claim_count": 2,
+  "claim_count": 3,
   "claims": [
     {
       "bundle_id": "scb-pcs-qc-release-v0.1",
-      "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+      "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
       "claim_dir": "claim-pcs-qc-release-v0.1",
       "claim_id": "claim-pcs-qc-release-v0.1",
-      "imported_at": "2026-05-18T10:26:43Z",
+      "claim_state": "current",
+      "imported_at": "2026-05-18T22:21:41Z",
       "release_candidate": "pcs-v0.1.0-rc1",
       "release_id": "release-pcs-v0.1-labtrust-qc",
-      "release_manifest_hash": "sha256:3b4e93b3ad605d8fc4a15f22c6c55c0cced84fefeef73883673e3fe10ce2e1b4",
+      "release_manifest_hash": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777",
       "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
-      "signed_bundle_hash": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
+      "signed_bundle_hash": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e",
       "source_commits": {
-        "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
-        "labtrust_gym": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
-        "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
-        "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-        "scientific_memory": "c4259a4cb79fe7b195fd156feb346c08fc334d33"
+        "certifyedge": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
+        "labtrust_gym": "17ed831acfd775889ab497d11004cceb083a9c2d",
+        "pcs_core": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
+        "provability_fabric": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
+        "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
       },
       "stale": false,
       "stale_reasons": [],
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
-      "verification_status": "passed"
+      "verification_status": "passed",
+      "workflow_profile_id": "labtrust.qc_release_v0.1"
+    },
+    {
+      "bundle_id": "scb-qc-release-v0.1",
+      "certificate_id": "cert-tool-use-safety-v0",
+      "claim_dir": "claim-qc-release-v0.1",
+      "claim_id": "claim-qc-release-v0.1",
+      "claim_state": "current",
+      "imported_at": "2026-05-18T22:09:50Z",
+      "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+      "release_id": "release-pcs-v0.1-tool-use-safety",
+      "release_manifest_hash": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+      "render_path": "/pcs/claims/claim-qc-release-v0.1",
+      "signed_bundle_hash": "sha256:af460dd9e8c0f17520ca41a72883b4e5eaa43c362c84e21dee6246ebbf9af8fb",
+      "source_commits": {
+        "agent_runtime": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+        "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+        "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+        "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+      },
+      "stale": false,
+      "stale_reasons": [],
+      "trace_hash": "sha256:efcafc5447b36d4fde727befc949e4877b983b1a7ac4737b34304d2fc9f9e648",
+      "verification_status": "passed",
+      "workflow_profile_id": "agent_tool_use.safety_v0"
     },
     {
       "bundle_id": null,
       "certificate_id": null,
       "claim_dir": "labtrust-qc-release-claim-001",
       "claim_id": "labtrust-qc-release-claim-001",
+      "claim_state": "current",
       "imported_at": "2026-05-17T14:36:53Z",
       "release_candidate": null,
       "release_id": null,
@@ -39,7 +67,8 @@
       "stale": false,
       "stale_reasons": [],
       "trace_hash": null,
-      "verification_status": "passed"
+      "verification_status": "passed",
+      "workflow_profile_id": null
     }
   ],
   "schema_version": "PcsClaimsIndex.v0"

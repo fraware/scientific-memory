@@ -31,7 +31,9 @@
         {
           "check_id": "source_commit_not_placeholder",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -67,7 +69,9 @@
         {
           "check_id": "source_commit_not_placeholder",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -106,7 +110,9 @@
         {
           "check_id": "assumption_set_ref_present",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -144,12 +150,16 @@
         {
           "check_id": "trace_hash_present",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "source_commit_matches_release_manifest",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -189,17 +199,23 @@
         {
           "check_id": "trace_hash_matches_runtime_receipt",
           "severity": "release_blocking",
-          "responsible_component": "CertifyEdge"
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "status_is_certificate_checked_for_release",
           "severity": "release_blocking",
-          "responsible_component": "CertifyEdge"
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "source_commit_matches_release_manifest",
           "severity": "release_blocking",
-          "responsible_component": "CertifyEdge"
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -238,7 +254,9 @@
         {
           "check_id": "certificate_refs_resolve",
           "severity": "producer_responsible",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -279,12 +297,16 @@
         {
           "check_id": "non_empty_runtime_receipts",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "certified_bundle_has_certificate_when_checked",
           "severity": "release_blocking",
-          "responsible_component": "LabTrust-Gym"
+          "responsible_component": "LabTrust-Gym",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -322,12 +344,16 @@
         {
           "check_id": "verified_input_bundle_hash_matches_certified",
           "severity": "release_blocking",
-          "responsible_component": "Provability Fabric"
+          "responsible_component": "Provability Fabric",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "failed_checks_block_import_ready_status",
           "severity": "release_blocking",
-          "responsible_component": "Provability Fabric"
+          "responsible_component": "Provability Fabric",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -365,12 +391,16 @@
         {
           "check_id": "signed_input_bundle_hash_matches_certified",
           "severity": "release_blocking",
-          "responsible_component": "Provability Fabric"
+          "responsible_component": "Provability Fabric",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "embedded_bundle_passes_science_claim_semantics",
           "severity": "producer_responsible",
-          "responsible_component": "Provability Fabric"
+          "responsible_component": "Provability Fabric",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -415,12 +445,16 @@
         {
           "check_id": "release_mode_commit_policy",
           "severity": "release_blocking",
-          "responsible_component": "pcs-core"
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         },
         {
           "check_id": "artifact_hashes_match_files",
           "severity": "release_blocking",
-          "responsible_component": "pcs-core"
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -466,7 +500,9 @@
         {
           "check_id": "handoff_input_hashes_when_validated",
           "severity": "release_blocking",
-          "responsible_component": "pcs-core"
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -509,7 +545,9 @@
         {
           "check_id": "component_artifacts_match_release_pins",
           "severity": "release_blocking",
-          "responsible_component": "pcs-core"
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -546,8 +584,10 @@
       "semantic_checks": [
         {
           "check_id": "status_matches_check_outcomes",
-          "severity": "release_blocking",
-          "responsible_component": "pcs-core"
+          "severity": "validator_responsible",
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -556,6 +596,215 @@
       ],
       "canonical_hash_required": true,
       "release_mode_required": true
+    },
+    "ToolUseTrace.v0": {
+      "artifact_type": "ToolUseTrace.v0",
+      "schema": "schemas/ToolUseTrace.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "agent-tool-use demo producer",
+      "allowed_runtime_producers": [
+        "agent-tool-use demo producer"
+      ],
+      "producer": "agent-tool-use demo producer",
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "Rejected",
+        "Stale"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "trace_id",
+        "workflow_id",
+        "agent_id",
+        "policy_id",
+        "policy_hash",
+        "started_at",
+        "completed_at",
+        "tool_calls",
+        "trace_hash",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [
+        {
+          "check_id": "trace_hash_present",
+          "severity": "release_blocking",
+          "responsible_component": "agent-tool-use demo producer",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "no_unknown_authorization_status",
+          "severity": "release_blocking",
+          "responsible_component": "agent-tool-use demo producer",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        }
+      ],
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": true
+    },
+    "ToolUseCertificate.v0": {
+      "artifact_type": "ToolUseCertificate.v0",
+      "schema": "schemas/ToolUseCertificate.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "CertifyEdge",
+      "allowed_runtime_producers": [
+        "CertifyEdge"
+      ],
+      "producer": "CertifyEdge",
+      "allowed_statuses": [
+        "CertificateChecked",
+        "Rejected",
+        "Stale"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "certificate_id",
+        "trace_hash",
+        "policy_hash",
+        "property_id",
+        "checker",
+        "checker_version",
+        "status",
+        "violations",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [
+        {
+          "check_id": "tool_trace_hash_matches_certificate",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "policy_hash_matches_certificate",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "certificate_status_checked_for_release",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "no_unauthorized_tool_calls",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "source_commit_matches_release_manifest",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "signature_or_digest_valid",
+          "severity": "release_blocking",
+          "responsible_component": "CertifyEdge",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        }
+      ],
+      "consumer_repos": [
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": true
+    },
+    "WorkflowProfile.v0": {
+      "artifact_type": "WorkflowProfile.v0",
+      "schema": "schemas/WorkflowProfile.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "workflow_id",
+        "domain",
+        "description",
+        "runtime_artifacts",
+        "certificate_artifacts",
+        "handoff_sequence",
+        "required_registry_entries",
+        "required_admission_profile",
+        "status_policy",
+        "failure_modes",
+        "limitations_notice",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [
+        {
+          "check_id": "required_registry_entries_registered",
+          "severity": "required",
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        }
+      ],
+      "consumer_repos": [
+        "pcs-core",
+        "LabTrust-Gym",
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "AgentRuntime"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "ComputationWitness.v0": {
+      "artifact_type": "ComputationWitness.v0",
+      "schema": "schemas/ComputationWitness.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "Provability Fabric",
+      "allowed_runtime_producers": [
+        "Provability Fabric"
+      ],
+      "producer": "Provability Fabric",
+      "allowed_statuses": [
+        "Draft",
+        "Rejected",
+        "Stale"
+      ],
+      "required_release_fields": [
+        "schema_version"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "Provability Fabric",
+        "pcs-core"
+      ],
+      "canonical_hash_required": false,
+      "release_mode_required": false
     },
     "ArtifactRegistry.v0": {
       "artifact_type": "ArtifactRegistry.v0",
@@ -582,7 +831,9 @@
         {
           "check_id": "entries_cover_required_artifact_types",
           "severity": "required",
-          "responsible_component": "pcs-core"
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
         }
       ],
       "consumer_repos": [
@@ -596,5 +847,5 @@
       "release_mode_required": false
     }
   },
-  "signature_or_digest": "sha256:9707d9922e3dd881f9d133e27e12f746d1d9b6a4ca8e81265e0c0af963d302dd"
+  "signature_or_digest": "sha256:daa958cdc73a161c70f1132c4e4e0f6441efbac3dacc76635cc94748616a8b19"
 }

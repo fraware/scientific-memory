@@ -1,6 +1,7 @@
 """Metrics commands: compute corpus metrics, run benchmarks."""
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -79,7 +80,7 @@ def metrics_cmd(
         "--reviewer-report",
         help="Reviewer lifecycle report: claims by status, disputed with/without notes",
     ),
-    output: str | None = typer.Option(None, "--output", "-o", help="Write JSON report to path"),
+    output: Optional[str] = typer.Option(None, "--output", "-o", help="Write JSON report to path"),
 ) -> None:
     """Compute metrics from corpus (SPEC 12). Default: run all; use flags to run specific metrics."""
     from sm_pipeline.metrics import (
@@ -277,7 +278,7 @@ def metrics_cmd(
 
 @app.command("benchmark")
 def benchmark(
-    output: str | None = typer.Option(None, "--output", "-o", help="Write report JSON to path"),
+    output: Optional[str] = typer.Option(None, "--output", "-o", help="Write report JSON to path"),
     check_regression: bool = typer.Option(
         True,
         "--check-regression/--no-check-regression",

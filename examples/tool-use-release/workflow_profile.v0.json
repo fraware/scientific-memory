@@ -1,0 +1,55 @@
+{
+  "schema_version": "v0",
+  "workflow_id": "agent_tool_use.safety_v0",
+  "domain": "agent_tool_use",
+  "description": "Proof-carrying tool-use safety workflow for agent traces.",
+  "runtime_artifacts": [
+    "ToolUseTrace.v0",
+    "RuntimeReceipt.v0"
+  ],
+  "certificate_artifacts": [
+    "ToolUseCertificate.v0"
+  ],
+  "handoff_sequence": [
+    "runtime_to_certificate",
+    "certificate_to_bundle",
+    "bundle_to_verifier",
+    "signed_bundle_to_memory"
+  ],
+  "required_registry_entries": [
+    "ToolUseTrace.v0",
+    "ToolUseCertificate.v0",
+    "RuntimeReceipt.v0",
+    "ScienceClaimBundle.v0",
+    "VerificationResult.v0",
+    "SignedScienceClaimBundle.v0",
+    "ReleaseManifest.v0",
+    "HandoffManifest.v0",
+    "ReleaseChainValidationResult.v0",
+    "WorkflowProfile.v0"
+  ],
+  "required_admission_profile": "agent_tool_use_safety",
+  "status_policy": {
+    "policy_id": "pcs-v0.1-tool-use-lifecycle",
+    "description": "Tool traces require authorized calls before CertificateChecked export.",
+    "allowed_terminal_statuses": [
+      "Rejected",
+      "Stale"
+    ],
+    "forbidden_transitions": [
+      {
+        "from_status": "Rejected",
+        "to_status": "ProofChecked"
+      }
+    ]
+  },
+  "failure_modes": [
+    "unauthorized_tool_call",
+    "missing_policy_hash",
+    "tool_output_hash_mismatch",
+    "unapproved_network_call",
+    "unknown_authorization_status"
+  ],
+  "limitations_notice": "This artifact is a proof-carrying tool-use simulation result. It is not a guarantee that a real deployed agent is safe.",
+  "signature_or_digest": "sha256:39ea95403f2f7065eaa7cda0084f8f68865bdb9054882e10f016e6d255bc0a49"
+}

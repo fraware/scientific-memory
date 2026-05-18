@@ -6,11 +6,11 @@
   "to_component": "Scientific Memory",
   "created_at": "2026-05-17T17:01:22Z",
   "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
-  "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+  "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
   "input_artifacts": {
     "signed_science_claim_bundle.json": {
       "artifact_type": "SignedScienceClaimBundle.v0",
-      "sha256": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43"
+      "sha256": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e"
     }
   },
   "expected_outputs": {
@@ -23,5 +23,5 @@
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
   },
   "status": "Validated",
-  "signature_or_digest": "sha256:065deb850558de1dd303fd7f500d00a537a5aaf4cc2fc1a4f491106525feae87"
+  "signature_or_digest": "sha256:c15567dbde19c0968204543ef513671ec14227f2e4012882a4283dba2e0bc8fc"
 }

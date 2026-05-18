@@ -38,10 +38,27 @@ def build_claim_index_entry(claim_dir: Path) -> dict[str, Any] | None:
             "stale_reasons": lineage.get("stale_reasons") or [],
         }
 
+    claim_state = "current"
+    if isinstance(staleness, dict):
+        if staleness.get("stale"):
+            claim_state = str(staleness.get("claim_state") or "stale")
+        else:
+            claim_state = str(staleness.get("claim_state") or "current")
+    elif isinstance(lineage, dict) and lineage.get("stale"):
+        claim_state = "stale"
+
+    workflow_profile_id = (lineage or {}).get("workflow_profile_id")
+    if not workflow_profile_id:
+        workflow_profile = (read_model or {}).get("workflow_profile")
+        if isinstance(workflow_profile, dict):
+            workflow_profile_id = workflow_profile.get("workflow_id")
+
     entry: dict[str, Any] = {
         "claim_id": claim_id,
         "claim_dir": claim_dir.name,
+        "claim_state": claim_state,
         "release_id": (lineage or {}).get("release_id") or (report or {}).get("release_id"),
+        "workflow_profile_id": workflow_profile_id,
         "release_candidate": (report or {}).get("release_candidate"),
         "certificate_id": (lineage or {}).get("certificate_id"),
         "trace_hash": (lineage or {}).get("trace_hash"),
@@ -103,6 +120,8 @@ def query_claims_index(
     source_commit: str | None = None,
     release_manifest_hash: str | None = None,
     stale_only: bool = False,
+    claim_state: str | None = None,
+    workflow_profile_id: str | None = None,
 ) -> list[dict[str, Any]]:
     index = load_claims_index(repo_root)
     claims = index.get("claims")
@@ -115,7 +134,11 @@ def query_claims_index(
             continue
         if stale_only and not entry.get("stale"):
             continue
+        if claim_state is not None and entry.get("claim_state") != claim_state:
+            continue
         if release_id is not None and entry.get("release_id") != release_id:
+            continue
+        if workflow_profile_id is not None and entry.get("workflow_profile_id") != workflow_profile_id:
             continue
         if certificate_id is not None and entry.get("certificate_id") != certificate_id:
             continue

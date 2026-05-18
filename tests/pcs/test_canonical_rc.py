@@ -30,6 +30,8 @@ from schema_fixtures import (
     PCS_CORE_CANONICAL_SIGNED_BUNDLE,
     REPO_ROOT,
     file_sha256,
+    pcs_cli_env,
+    pcs_subprocess_python,
     resolve_pcs_core_root,
 )
 
@@ -83,14 +85,7 @@ def _load(path: Path) -> dict:
 
 
 def _cli_env() -> dict[str, str]:
-    env = os.environ.copy()
-    env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src") + (
-        os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else ""
-    )
-    pcs_root = resolve_pcs_core_root()
-    if pcs_root.is_dir():
-        env["PCS_CORE_PATH"] = str(pcs_root)
-    return env
+    return pcs_cli_env(repo_root=REPO_ROOT)
 
 
 def _run_pcs_import_release(*, env: dict[str, str]) -> None:
@@ -107,7 +102,7 @@ def _run_pcs_import_release(*, env: dict[str, str]) -> None:
         return
     subprocess.run(
         [
-            sys.executable,
+            pcs_subprocess_python(),
             "-m",
             "sm_pipeline.cli",
             "pcs-import-release",
@@ -132,7 +127,7 @@ def _run_pcs_import_bundle(*, env: dict[str, str]) -> None:
         return
     subprocess.run(
         [
-            sys.executable,
+            pcs_subprocess_python(),
             "-m",
             "sm_pipeline.cli",
             "pcs-import-bundle",
@@ -159,7 +154,7 @@ def _run_pcs_render_claim(*, env: dict[str, str]) -> None:
         return
     subprocess.run(
         [
-            sys.executable,
+            pcs_subprocess_python(),
             "-m",
             "sm_pipeline.cli",
             "pcs-render-claim",

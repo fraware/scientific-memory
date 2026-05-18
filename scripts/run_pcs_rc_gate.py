@@ -5,12 +5,56 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 PIPELINE_SRC = REPO_ROOT / "pipeline" / "src"
+
+
+def _python() -> str:
+    for candidate in (
+        REPO_ROOT / ".venv" / "Scripts" / "python.exe",
+        REPO_ROOT / ".venv" / "bin" / "python",
+    ):
+        if candidate.is_file():
+            return str(candidate)
+    return sys.executable
+
+
+def _node() -> str:
+    env_node = os.environ.get("NODE", "").strip()
+    if env_node:
+        return env_node
+    found = shutil.which("node")
+    return found if found else "node"
+
+
+def _run_portal_pcs_contracts() -> None:
+    """Run portal zod contract scripts (no pnpm required)."""
+    portal = REPO_ROOT / "portal"
+    if not (portal / "node_modules" / "zod").is_dir():
+        print(
+            "error: portal node_modules missing; run: cd portal && npm install",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
+    node = _node()
+    contract_runs = (
+        ["scripts/verify-pcs-read-model.mjs"],
+        [
+            "scripts/verify-pcs-phase2-read-model.mjs",
+            "../corpus/pcs/claims/claim-pcs-qc-release-v0.1/read_model.json",
+        ],
+        [
+            "scripts/verify-pcs-phase2-read-model.mjs",
+            "../tests/pcs/fixtures/tool-use-release/.phase2-read-model.json",
+        ],
+    )
+    for parts in contract_runs:
+        _run([node, *parts], cwd=portal)
 
 
 def _run(cmd: list[str], *, cwd: Path | None = None, env: dict[str, str] | None = None) -> None:
@@ -21,6 +65,8 @@ def _run(cmd: list[str], *, cwd: Path | None = None, env: dict[str, str] | None 
         os.pathsep + merged["PYTHONPATH"] if merged.get("PYTHONPATH") else ""
     )
     print("==>", " ".join(cmd))
+    if cmd and cmd[0] == sys.executable:
+        cmd = [_python(), *cmd[1:]]
     subprocess.run(cmd, cwd=cwd or REPO_ROOT, env=merged, check=True)
 
 
@@ -45,8 +91,14 @@ def main() -> int:
         print("error: signed bundle drifted from pcs-core", file=sys.stderr)
         return 1
 
-    manifest_example = pcs_core / "examples/release_manifest.valid.json"
-    if manifest_example.is_file():
+    pcs_labtrust = pcs_core / "examples/labtrust-release"
+    manifest_example = None
+    for name in ("release_manifest.v0.json", "ReleaseManifest.v0.json"):
+        candidate = pcs_labtrust / name
+        if candidate.is_file():
+            manifest_example = candidate
+            break
+    if manifest_example is not None:
         sm_manifest = json.loads(
             (REPO_ROOT / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json").read_text(
                 encoding="utf-8-sig",
@@ -57,7 +109,7 @@ def main() -> int:
         if sm_manifest["artifacts"][key]["sha256"] != pcs_manifest["artifacts"][key]["sha256"]:
             print("ReleaseManifest signed bundle hash mismatch vs pcs-core", file=sys.stderr)
             return 1
-        print("OK: ReleaseManifest signed bundle hash matches pcs-core example")
+        print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release")
 
     _run([sys.executable, "-m", "pytest", str(REPO_ROOT / "tests/pcs"), "-q"], env=env)
 
@@ -109,8 +161,9 @@ def main() -> int:
         print("expected ProofChecked release chain status", file=sys.stderr)
         return 1
 
-    _run(["pnpm", "--dir", str(REPO_ROOT / "portal"), "test:pcs-contract"])
-    _run(["pnpm", "--dir", str(REPO_ROOT / "portal"), "test:pcs-phase2-contract"])
+    _run([sys.executable, str(REPO_ROOT / "scripts" / "verify_tool_use_release_fixture.py")], env=env)
+
+    _run_portal_pcs_contracts()
 
     index_path = REPO_ROOT / "corpus/pcs/claims_index.json"
     if not index_path.is_file():

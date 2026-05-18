@@ -14,12 +14,6 @@ const defaultPath = path.resolve(
 );
 const modelPath = process.argv[2] ? path.resolve(process.argv[2]) : defaultPath;
 
-const LIMITATION_NOTICE =
-  "This artifact is a proof-carrying simulation result. It demonstrates " +
-  "protocol-level and runtime-evidence verification inside LabTrust-Gym. It is " +
-  "not a clinical validation, production medical certification, or guarantee " +
-  "about a real hospital laboratory.";
-
 const namedArtifact = z.object({
   signature_or_digest: z.string().min(1),
 });
@@ -27,7 +21,7 @@ const namedArtifact = z.object({
 const readModelSchema = z.object({
   schema_version: z.string().min(1),
   claim_id: z.string().min(1),
-  limitation_notice: z.literal(LIMITATION_NOTICE),
+  limitation_notice: z.string().min(40),
   limitations: z.array(z.string()).min(1),
   claim: namedArtifact,
   assumption_set: z.object({

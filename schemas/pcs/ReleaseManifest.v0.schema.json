@@ -28,20 +28,16 @@
     "validation_profile": { "type": "string", "minLength": 1 },
     "producer_repos": {
       "type": "object",
-      "required": [
-        "pcs_core",
-        "labtrust_gym",
-        "certifyedge",
-        "provability_fabric",
-        "scientific_memory"
-      ],
-      "additionalProperties": false,
+      "required": ["pcs_core"],
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
       "properties": {
         "pcs_core": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
         "labtrust_gym": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
         "certifyedge": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
         "provability_fabric": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
-        "scientific_memory": { "$ref": "common.defs.json#/$defs/producer_repo_pin" }
+        "scientific_memory": { "$ref": "common.defs.json#/$defs/producer_repo_pin" },
+        "agent_runtime": { "$ref": "common.defs.json#/$defs/producer_repo_pin" }
       }
     },
     "artifacts": {

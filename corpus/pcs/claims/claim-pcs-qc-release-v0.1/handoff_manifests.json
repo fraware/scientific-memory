@@ -20,17 +20,17 @@
       {
         "artifact_type": "ScienceClaimBundle.v0",
         "name": "science_claim_bundle.certified.json",
-        "sha256": "sha256:9b42d792199eb6f358d26f822699f0ed65bb4366eee306d4958d42121c656833"
+        "sha256": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536"
       }
     ],
     "invariants": {
       "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
-      "certified_bundle_hash": "sha256:9b42d792199eb6f358d26f822699f0ed65bb4366eee306d4958d42121c656833",
+      "certified_bundle_hash": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536",
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
-    "signature_or_digest": "sha256:5cbd31d499aa1a9d50183a449278e5fd9344343f53e8f9b81e0fe98bfa652702",
-    "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+    "signature_or_digest": "sha256:70d44fd475511bf7678b7efcccab9dafd1900ab73c9e80b39b32af8891b198c8",
+    "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "status": "Validated",
     "to_component": "Provability Fabric"
@@ -51,7 +51,7 @@
       {
         "artifact_type": "TraceCertificate.v0",
         "name": "trace_certificate.json",
-        "sha256": "sha256:c0e09949aaa8441a2adc5a0be05e6827a7ab6a12c3e0c85d77f0554f191d1a28"
+        "sha256": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575"
       }
     ],
     "invariants": {
@@ -59,8 +59,8 @@
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.certificate_to_bundle.v0.json",
-    "signature_or_digest": "sha256:d14ddd8e7f6c5d5339e020b97f6b4e718a81e0d856e661a47bad224e4f50afa3",
-    "source_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+    "signature_or_digest": "sha256:98b3bb18df632763e6fe440d702877c9a4e7c8bf3b7e73ad964fb1b1b68c4718",
+    "source_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
     "source_repo": "https://github.com/fraware/CertifyEdge",
     "status": "Validated",
     "to_component": "LabTrust-Gym"
@@ -81,7 +81,7 @@
       {
         "artifact_type": "RuntimeReceipt.v0",
         "name": "runtime_receipt.json",
-        "sha256": "sha256:8e642b59657d70b408be354323006421b963bb0c9fc9514f6abc7aab305345b6"
+        "sha256": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60"
       },
       {
         "artifact_type": "LabTrust.Trace.v0",
@@ -93,8 +93,8 @@
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.runtime_to_certificate.v0.json",
-    "signature_or_digest": "sha256:0dd6361cd144ea36c91c19aa8ed9c5f6a533a59cabadf1abd899d861fb96e11d",
-    "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+    "signature_or_digest": "sha256:8b4b0079c8f43e37b178fcb67977e3e3d1047c0d4b3738774818eab979820879",
+    "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "status": "Validated",
     "to_component": "CertifyEdge"
@@ -115,7 +115,7 @@
       {
         "artifact_type": "SignedScienceClaimBundle.v0",
         "name": "signed_science_claim_bundle.json",
-        "sha256": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43"
+        "sha256": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e"
       }
     ],
     "invariants": {
@@ -123,8 +123,8 @@
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.signed_bundle_to_memory.v0.json",
-    "signature_or_digest": "sha256:065deb850558de1dd303fd7f500d00a537a5aaf4cc2fc1a4f491106525feae87",
-    "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+    "signature_or_digest": "sha256:c15567dbde19c0968204543ef513671ec14227f2e4012882a4283dba2e0bc8fc",
+    "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
     "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
     "status": "Validated",
     "to_component": "Scientific Memory"

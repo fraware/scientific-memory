@@ -12,6 +12,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PCS_CORE = REPO_ROOT.parent / "pcs-core" / "examples" / "labtrust-release"
 DEFAULT_RUN = REPO_ROOT / "release-run"
 FIXTURE_DIR = REPO_ROOT / "tests" / "pcs" / "fixtures" / "labtrust-release"
+EXAMPLES_DIR = REPO_ROOT / "examples" / "labtrust-release"
+RELEASE_MANIFEST_CANDIDATES = ("ReleaseManifest.v0.json", "release_manifest.v0.json")
 MANIFEST_ARTIFACTS = (
     "trace.json",
     "runtime_receipt.json",
@@ -30,6 +32,48 @@ PHASE2_ARTIFACTS = (
 )
 HANDOFF_GLOB = "handoff_manifest.*.v0.json"
 CLAIM_ID = "claim-pcs-qc-release-v0.1"
+
+
+def _resolve_pcs_core_manifest_src(pcs_core_dir: Path, pcs_examples: Path, phase2_name: str) -> Path | None:
+    if phase2_name == "ReleaseManifest.v0.json":
+        for candidate_name in RELEASE_MANIFEST_CANDIDATES:
+            candidate = pcs_core_dir / candidate_name
+            if candidate.is_file():
+                return candidate
+        valid = pcs_examples / "release_manifest.valid.json"
+        return valid if valid.is_file() else None
+    if phase2_name == "ReleaseChainValidationResult.v0.json":
+        for candidate_name in (
+            "ReleaseChainValidationResult.v0.json",
+            "release_chain_validation_result.v0.json",
+        ):
+            candidate = pcs_core_dir / candidate_name
+            if candidate.is_file():
+                return candidate
+        valid = pcs_examples / "release_chain_validation_result.valid.json"
+        return valid if valid.is_file() else None
+    src = pcs_core_dir / phase2_name
+    return src if src.is_file() else None
+
+
+def _publish_examples_release(fixture_dir: Path, examples_dir: Path) -> None:
+    """Copy importable labtrust release tree for `just pcs-import-release` examples path."""
+    examples_dir.mkdir(parents=True, exist_ok=True)
+    allowed_names = set(MANIFEST_ARTIFACTS) | set(PHASE2_ARTIFACTS) | {
+        "ArtifactRegistry.v0.json",
+        "workflow_profile.v0.json",
+    }
+    for path in sorted(fixture_dir.iterdir()):
+        if not path.is_file() or path.name.startswith("."):
+            continue
+        if path.name not in allowed_names and not path.name.startswith("handoff_manifest."):
+            continue
+        shutil.copy2(path, examples_dir / path.name)
+    manifest = fixture_dir / "ReleaseManifest.v0.json"
+    if manifest.is_file():
+        shutil.copy2(manifest, examples_dir / "release_manifest.v0.json")
+        shutil.copy2(manifest, examples_dir / "ReleaseManifest.v0.json")
+    print(f"synced labtrust release -> {examples_dir}")
 
 
 def sync_from_pcs_core(
@@ -59,20 +103,11 @@ def sync_from_pcs_core(
     if not pcs_examples.is_dir():
         pcs_examples = REPO_ROOT.parent / "pcs-core" / "examples"
     for name in PHASE2_ARTIFACTS:
-        src = pcs_core_dir / name
-        if not src.is_file() and pcs_examples.is_dir():
+        src = _resolve_pcs_core_manifest_src(pcs_core_dir, pcs_examples, name)
+        if src is None and pcs_examples.is_dir():
             alt = pcs_examples / name
-            if alt.is_file():
-                src = alt
-            elif name == "ReleaseChainValidationResult.v0.json":
-                valid = pcs_examples / "release_chain_validation_result.valid.json"
-                if valid.is_file():
-                    src = valid
-            elif name == "ReleaseManifest.v0.json":
-                valid = pcs_examples / "release_manifest.valid.json"
-                if valid.is_file():
-                    src = valid
-        if src.is_file():
+            src = alt if alt.is_file() else None
+        if src is not None and src.is_file():
             shutil.copy2(src, run_dir / name)
             shutil.copy2(src, fixture_dir / name)
 
@@ -107,6 +142,7 @@ def sync_from_pcs_core(
 
     print(f"synced {pcs_core_dir} -> {run_dir}")
     print(f"synced {pcs_core_dir} -> {fixture_dir}")
+    _publish_examples_release(fixture_dir, EXAMPLES_DIR)
 
     sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
     from sm_pipeline.pcs_validate.release_chain import validate_release_chain

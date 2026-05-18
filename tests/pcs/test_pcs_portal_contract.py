@@ -16,13 +16,17 @@ PCS_COMPONENTS = REPO_ROOT / "portal" / "components" / "pcs"
 
 PCS_UI_SECTION_TESTIDS = (
     "pcs-section-claim",
+    "pcs-section-workflow-profile",
     "pcs-section-assumptions",
     "pcs-section-runtime-evidence",
+    "pcs-section-tool-use-trace",
+    "pcs-section-tool-use-certificate",
     "pcs-section-temporal-certificate",
     "pcs-section-verification-result",
     "pcs-section-release-manifest",
     "pcs-section-release-chain-validation",
     "pcs-section-artifact-registry",
+    "pcs-section-handoff-manifests",
     "pcs-section-artifact-dependency-graph",
     "pcs-section-lineage",
     "pcs-section-staleness",
@@ -38,7 +42,8 @@ def test_pcs_portal_components_define_section_testids() -> None:
         p.read_text(encoding="utf-8") for p in PCS_COMPONENTS.glob("*.tsx")
     )
     for testid in PCS_UI_SECTION_TESTIDS:
-        assert f'data-testid="{testid}"' in sources, f"missing portal hook {testid}"
+        present = f'data-testid="{testid}"' in sources or f'testId="{testid}"' in sources
+        assert present, f"missing portal hook {testid}"
 
 
 def test_canonical_read_model_matches_portal_contract() -> None:
@@ -49,6 +54,22 @@ def test_canonical_read_model_matches_portal_contract() -> None:
     assert read_model["verification_result"] is not None
     assert len(read_model["artifact_hashes"]) >= 5
     assert read_model["canonical_digests"]["signed_bundle"].startswith("sha256:")
+
+
+def test_tool_use_phase2_read_model_fixture_passes_portal_contract() -> None:
+    script = REPO_ROOT / "portal" / "scripts" / "verify-pcs-phase2-read-model.mjs"
+    read_model = REPO_ROOT / "tests" / "pcs" / "fixtures" / "tool-use-release" / ".phase2-read-model.json"
+    if not read_model.is_file():
+        pytest.skip("tool-use .phase2-read-model.json missing; run: just sync-tool-use-release")
+
+    result = subprocess.run(
+        ["node", str(script), str(read_model)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_pcs_portal_phase2_read_model_script_passes() -> None:

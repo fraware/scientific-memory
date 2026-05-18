@@ -15,10 +15,10 @@ GUARANTEE_KEYS = (
 )
 
 LIMITATION_NOTICE = (
-    "This artifact is a proof-carrying simulation result. It demonstrates "
-    "protocol-level and runtime-evidence verification inside LabTrust-Gym. It is "
-    "not a clinical validation, production medical certification, or guarantee "
-    "about a real hospital laboratory."
+    "This artifact is a proof-carrying scientific release. It demonstrates "
+    "protocol-level validation and runtime evidence for the cited workflow. It is "
+    "not production certification, clinical validation, or a guarantee about "
+    "real-world deployment outside the stated workflow profile."
 )
 
 _CHECK_OUTCOME_MAP = {

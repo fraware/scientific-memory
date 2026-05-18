@@ -1,6 +1,7 @@
 """Agentic commands: proof repair proposals and application."""
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -9,8 +10,8 @@ app = typer.Typer()
 
 @app.command("proof-repair-proposals")
 def proof_repair_proposals(
-    paper_id: str | None = typer.Option(None, "--paper-id", help="Limit to one paper"),
-    output: str | None = typer.Option(
+    paper_id: Optional[str] = typer.Option(None, "--paper-id", help="Limit to one paper"),
+    output: Optional[str] = typer.Option(
         None, "--output", "-o", help="Write proposal artifact to path"
     ),
 ) -> None:
@@ -45,7 +46,7 @@ def proof_repair_apply(
         "--i-understand-human-reviewed",
         help="Required with --apply; confirms a human reviewed the patch bundle",
     ),
-    review_record: str | None = typer.Option(
+    review_record: Optional[str] = typer.Option(
         None,
         "--review-record",
         help="Optional path to review record JSON (must match bundle.review_record_path if set)",

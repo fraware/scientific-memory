@@ -23,20 +23,20 @@ PHASE2_FILES = (
     "ReleaseChainValidationResult.v0.json",
 )
 
+LABTRUST_WORKFLOW_PROFILE_ID = "labtrust.qc_release_v0.1"
+
 IMPORT_REPORT_TEMPLATE = {
     "allow_legacy": False,
     "bundle_shape": "pcs_core",
     "claim_id": "claim-pcs-qc-release-v0.1",
     "imported_at": "2026-05-17T15:39:09Z",
     "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
-    "scientific_memory_commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
     "source_bundle_path": "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json",
     "stale_artifacts": [],
     "strict": True,
     "verification_status": "passed",
     "warnings": [],
     "source_repo": "https://github.com/fraware/scientific-memory",
-    "source_commit": "c4259a4cb79fe7b195fd156feb346c08fc334d33",
     "release_id": "release-pcs-v0.1-labtrust-qc",
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
@@ -90,18 +90,121 @@ def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
     legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
 
 
+def _build_profile_scoped_deferred_checks(
+    chain_checks: list[dict],
+    workflow_profile_id: str | None,
+) -> list[dict]:
+    from pcs_core.registry_semantics import (
+        PCS_CORE_COMPONENT,
+        collect_chain_registry_refs,
+        deferral_reason,
+        enforcement_layer,
+        lookup_registry_check,
+    )
+    from pcs_core.workflow_profiles import required_release_blocking_refs_for_profile
+
+    cited = collect_chain_registry_refs(chain_checks)
+    required = required_release_blocking_refs_for_profile(workflow_profile_id)
+    deferred: list[dict] = []
+    for ref in sorted(required - cited):
+        found = lookup_registry_check(ref)
+        if found is None:
+            continue
+        _artifact_type, check = found
+        check_id = str(check.get("check_id"))
+        layer = enforcement_layer(check)
+        if layer == "release_chain":
+            continue
+        deferred.append(
+            {
+                "registry_ref": ref,
+                "status": "deferred",
+                "enforcement_location": layer,
+                "responsible_component": str(
+                    check.get("responsible_component") or PCS_CORE_COMPONENT,
+                ),
+                "reason": deferral_reason(check_id),
+            },
+        )
+    return deferred
+
+
+def _align_release_chain_validation(validation_path: Path) -> bool:
+    """Add pcs-core required fields (responsible_component, deferred_registry_checks)."""
+    try:
+        from pcs_core.registry_semantics import responsible_component_for_registry_refs
+    except ImportError:
+        return False
+
+    data = json.loads(validation_path.read_text(encoding="utf-8-sig"))
+    if not isinstance(data, dict):
+        return False
+    checks = data.get("checks")
+    if not isinstance(checks, list):
+        return False
+
+    changed = False
+    for check in checks:
+        if not isinstance(check, dict):
+            continue
+        refs = check.get("registry_check_refs")
+        if refs is None:
+            check["registry_check_refs"] = []
+            refs = []
+            changed = True
+        if not isinstance(refs, list):
+            continue
+        if not check.get("responsible_component"):
+            frozen = frozenset(ref for ref in refs if isinstance(ref, str))
+            check["responsible_component"] = responsible_component_for_registry_refs(frozen)
+            changed = True
+
+    if not data.get("workflow_profile_id"):
+        data["workflow_profile_id"] = LABTRUST_WORKFLOW_PROFILE_ID
+        changed = True
+
+    profile_id = str(data.get("workflow_profile_id") or LABTRUST_WORKFLOW_PROFILE_ID)
+    deferred = _build_profile_scoped_deferred_checks(checks, profile_id)
+    if data.get("deferred_registry_checks") != deferred:
+        data["deferred_registry_checks"] = deferred
+        changed = True
+
+    if changed:
+        sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+        from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
+
+        data["signature_or_digest"] = canonical_hash(data)
+        validation_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+    return changed
+
+
+def _resolve_scientific_memory_commit(release_dir: Path) -> str | None:
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_import.pcs_core_release_align import pcs_core_scientific_memory_commit
+    from sm_pipeline.pcs_import.provenance import git_head_commit
+
+    if release_dir.resolve() == (REPO_ROOT / "release-run").resolve():
+        return git_head_commit(REPO_ROOT) or pcs_core_scientific_memory_commit(REPO_ROOT)
+    commit = pcs_core_scientific_memory_commit(REPO_ROOT)
+    if commit:
+        return commit
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if legacy_path.is_file():
+        legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+        legacy_commit = legacy.get("scientific_memory_commit")
+        if isinstance(legacy_commit, str) and legacy_commit:
+            return legacy_commit
+    return None
+
+
 def _write_canonical_import_report(release_dir: Path) -> None:
     import json
 
     report = dict(IMPORT_REPORT_TEMPLATE)
-    if release_dir.resolve() == (REPO_ROOT / "release-run").resolve():
-        sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
-        from sm_pipeline.pcs_import.provenance import git_head_commit
-
-        head = git_head_commit(REPO_ROOT)
-        if head:
-            report["scientific_memory_commit"] = head
-            report["source_commit"] = head
+    commit = _resolve_scientific_memory_commit(release_dir)
+    if commit:
+        report["scientific_memory_commit"] = commit
+        report["source_commit"] = commit
     report_path = release_dir / "scientific_memory_import_report.json"
     # release_manifest_hash is added during live import only (not part of manifest artifact hash).
     report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
@@ -142,33 +245,13 @@ def main() -> int:
             print(f"copied pcs-core handoff -> {dest}")
 
     pcs_labtrust = PCS_CORE_LABTRUST
-    validation_aliases = (
-        ("release_chain_validation_result.v0.json", "ReleaseChainValidationResult.v0.json"),
-    )
-    for pcs_name, dest_name in validation_aliases:
-        pcs_src = pcs_labtrust / pcs_name
-        dest = release_dir / dest_name
-        if pcs_src.is_file():
-            shutil.copy2(pcs_src, dest)
-            print(f"copied pcs-core example -> {dest}")
-
-    for name in PHASE2_FILES:
-        dest = release_dir / name
-        if name == "ReleaseManifest.v0.json":
-            continue
-        pcs_src = PCS_CORE_EXAMPLES / name
-        if not pcs_src.is_file():
-            pcs_src = pcs_labtrust / name
-        if pcs_src.is_file():
-            shutil.copy2(pcs_src, dest)
-            print(f"copied pcs-core example -> {dest}")
+    _sync_legacy_manifest_artifact_hashes(release_dir)
 
     out = write_release_manifest(release_dir)
     print(f"generated {out}")
 
-    _sync_legacy_manifest_artifact_hashes(release_dir)
-
     manifest_path = release_dir / "ReleaseManifest.v0.json"
+    validation_path = release_dir / "ReleaseChainValidationResult.v0.json"
     if release_dir.resolve() != release_run:
         from sm_pipeline.pcs_import.pcs_core_release_align import align_scientific_memory_producer_repos
         from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
@@ -187,20 +270,12 @@ def main() -> int:
         )
         manifest_path.write_text(json.dumps(aligned, indent=2) + "\n", encoding="utf-8")
 
-    manifest_path = release_dir / "ReleaseManifest.v0.json"
-    validation_path = release_dir / "ReleaseChainValidationResult.v0.json"
     if not validation_path.is_file():
-        for candidate in (
-            PCS_CORE_EXAMPLES / "release_chain_validation_result.valid.json",
-            PCS_CORE_EXAMPLES / "ReleaseChainValidationResult.v0.json",
-        ):
-            if candidate.is_file():
-                shutil.copy2(candidate, validation_path)
-                print(f"copied pcs-core example -> {validation_path}")
-                break
-        if not validation_path.is_file():
-            print(f"error: missing {validation_path}", file=sys.stderr)
-            return 1
+        print(f"error: missing {validation_path}", file=sys.stderr)
+        return 1
+
+    if _align_release_chain_validation(validation_path):
+        print(f"aligned release chain validation -> {validation_path}")
 
     manifest_errors = validate_release_manifest(manifest_path, repo_root=REPO_ROOT)
     if manifest_errors:
@@ -218,6 +293,13 @@ def main() -> int:
         for err in validation_errors:
             print(f"error: validation: {err}", file=sys.stderr)
         return 1
+
+    verify = REPO_ROOT / "scripts" / "verify_labtrust_release_fixture.py"
+    if release_dir.resolve() == DEFAULT_DIR.resolve() and verify.is_file():
+        import subprocess
+
+        subprocess.run([sys.executable, str(verify), "--write"], cwd=REPO_ROOT, check=True)
+        print(f"updated SM fixture manifest -> {release_dir / 'FIXTURE_MANIFEST.json'}")
 
     print(f"OK: Phase 2 fixtures valid in {release_dir}")
     return 0

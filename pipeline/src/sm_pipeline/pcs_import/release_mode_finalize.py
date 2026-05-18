@@ -12,7 +12,7 @@ from sm_pipeline.pcs_import.claim_lineage import build_lineage, update_lineage_s
 from sm_pipeline.pcs_import.import_report_enrichment import enrich_import_report_from_protocol
 from sm_pipeline.pcs_import.release_context import enrich_read_model_with_release
 from sm_pipeline.pcs_validate.release_chain_validation import require_release_chain_validation
-from sm_pipeline.pcs_import.release_manifest_build import RELEASE_MANIFEST_FILENAME
+from sm_pipeline.pcs_validate.release_paths import resolve_release_manifest_path
 
 def _load_json(path: Path) -> dict[str, Any] | None:
     if not path.is_file():
@@ -30,7 +30,7 @@ def finalize_release_mode_claim(
     import_report_path: Path,
 ) -> None:
     release_dir = bundle_path.resolve().parent
-    manifest_path = release_dir / RELEASE_MANIFEST_FILENAME
+    manifest_path = resolve_release_manifest_path(release_dir)
     manifest = _load_json(manifest_path)
     if manifest is None:
         return
@@ -44,16 +44,30 @@ def finalize_release_mode_claim(
         encoding="utf-8",
     )
 
-    bundle = json.loads(bundle_path.read_text(encoding="utf-8-sig"))
+    signed_in_claim = claim_dir / "signed_bundle.json"
+    lineage_bundle_path = signed_in_claim if signed_in_claim.is_file() else bundle_path
+    bundle = json.loads(lineage_bundle_path.read_text(encoding="utf-8-sig"))
     claim_id = _claim_id_from_read_model(claim_dir) or claim_dir.name
+    workflow_profile_id = str(release_validation.get("workflow_profile_id") or "")
     lineage = build_lineage(
         claim_id=claim_id,
         bundle=bundle,
-        signed_bundle_path=bundle_path,
+        signed_bundle_path=lineage_bundle_path,
         release_manifest=manifest,
+        workflow_profile_id=workflow_profile_id or None,
     )
     write_lineage(claim_dir, lineage)
-    lineage = update_lineage_stale_flags(claim_dir, bundle_path=bundle_path)
+    lineage = update_lineage_stale_flags(claim_dir, bundle_path=lineage_bundle_path)
+
+    if workflow_profile_id:
+        from sm_pipeline.pcs_import.workflow_profile import load_workflow_profile
+
+        profile = load_workflow_profile(workflow_profile_id, repo_root=repo_root)
+        if profile is not None:
+            (claim_dir / "workflow_profile.json").write_text(
+                json.dumps(profile, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
 
     registry_artifact, registry_version, _ = load_artifact_registry_v0(
         repo_root,

@@ -1,0 +1,14 @@
+{
+  "schema_version": "v0",
+  "certificate_id": "cert-tool-use-safety-v0",
+  "trace_hash": "sha256:efcafc5447b36d4fde727befc949e4877b983b1a7ac4737b34304d2fc9f9e648",
+  "policy_hash": "sha256:76d4443f09c6fb0d6cc7bebc5c80eae53bd008e4a212ab61d0d1844ac773b5cd",
+  "property_id": "agent_tool_use.policy_adherence",
+  "checker": "certifyedge",
+  "checker_version": "0.1.0",
+  "status": "CertificateChecked",
+  "violations": [],
+  "source_repo": "https://github.com/fraware/CertifyEdge",
+  "source_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+  "signature_or_digest": "sha256:4d1f7c88fad9ac678e80c8efc780758fd16b7f4e1e3b3e9a443b98138ea65bc1"
+}

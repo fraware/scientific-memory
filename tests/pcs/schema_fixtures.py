@@ -6,10 +6,36 @@ import hashlib
 import json
 import os
 import shutil
+import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
+
+
+def pcs_subprocess_python() -> str:
+    """Prefer project venv Python (typer>=0.12) over bare system interpreters."""
+    for candidate in (
+        REPO_ROOT / ".venv" / "Scripts" / "python.exe",
+        REPO_ROOT / ".venv" / "bin" / "python",
+    ):
+        if candidate.is_file():
+            return str(candidate)
+    return sys.executable
+
+
+def pcs_cli_env(*, repo_root: Path | None = None) -> dict[str, str]:
+    env = os.environ.copy()
+    root = (repo_root or REPO_ROOT).resolve()
+    env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src")
+    prefix = env.get("PYTHONPATH", "")
+    if prefix and str(REPO_ROOT / "pipeline" / "src") not in prefix.split(os.pathsep):
+        env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src") + os.pathsep + prefix
+    env["SCIENTIFIC_MEMORY_REPO_ROOT"] = str(root)
+    pcs_core = resolve_pcs_core_root()
+    if pcs_core.is_dir():
+        env["PCS_CORE_PATH"] = str(pcs_core)
+    return env
 
 
 def resolve_pcs_core_root() -> Path:
@@ -37,23 +63,82 @@ LABTRUST_RELEASE_CHAIN_VALIDATION = (
     FIXTURES / "labtrust-release" / "ReleaseChainValidationResult.v0.json"
 )
 LABTRUST_RELEASE_DIR = FIXTURES / "labtrust-release"
+TOOL_USE_RELEASE_DIR = FIXTURES / "tool-use-release"
+TOOL_USE_RELEASE_MANIFEST = TOOL_USE_RELEASE_DIR / "release_manifest.v0.json"
+TOOL_USE_WORKFLOW_ID = "agent_tool_use.safety_v0"
+TOOL_USE_RELEASE_ID = "release-pcs-v0.1-tool-use-safety"
 SM_FIXTURE_MANIFEST = FIXTURES / "labtrust-release" / "FIXTURE_MANIFEST.json"
 EXPECTED_LABTRUST_CLAIM_ID = "claim-pcs-qc-release-v0.1"
 
 # Canonical RC chain: pcs-core/examples/labtrust-release/ (single source of truth).
 PCS_CORE_CANONICAL_RELEASE = resolve_pcs_core_root() / "examples" / "labtrust-release"
 PCS_CORE_CANONICAL_SIGNED_BUNDLE = PCS_CORE_CANONICAL_RELEASE / "signed_science_claim_bundle.json"
-CANONICAL_RC_CERTIFICATE_ID = "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a"
-CANONICAL_RC_TRACE_HASH = "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
-CANONICAL_RC_CERTIFIED_BUNDLE_HASH = (
-    "sha256:9b42d792199eb6f358d26f822699f0ed65bb4366eee306d4958d42121c656833"
-)
-CANONICAL_RC_LABTRUST_COMMIT = "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
-CANONICAL_RC_CERTIFYEDGE_COMMIT = "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc"
-CANONICAL_RC_PF_COMMIT = "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d"
-CANONICAL_RC_PCS_CORE_COMMIT = "8caca0e2c7a20d8c8e9496e9b6d4f25d6a8faa66"
-# Pinned RC Scientific Memory commit (must match pcs-core manifest after `just refresh-pcs-release`).
-CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = "c4259a4cb79fe7b195fd156feb346c08fc334d33"
+
+
+def _labtrust_fixture_rc_chain_ids() -> tuple[str, str, str]:
+    """certificate_id, trace_hash, certified_bundle manifest hash from committed labtrust fixture."""
+    fixture_dir = FIXTURES / "labtrust-release"
+    signed_path = fixture_dir / "signed_science_claim_bundle.json"
+    trace_path = fixture_dir / "trace.json"
+    manifest_path = fixture_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if not (signed_path.is_file() and trace_path.is_file() and manifest_path.is_file()):
+        return (
+            "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+            "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
+            "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
+        )
+    signed = json.loads(signed_path.read_text(encoding="utf-8"))
+    trace = json.loads(trace_path.read_text(encoding="utf-8"))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    cert_id = signed["science_claim_bundle"]["certificates"][0]["certificate_id"]
+    trace_hash = trace["trace_hash"]
+    certified_hash = manifest["artifacts"]["science_claim_bundle.certified.json"]
+    return cert_id, trace_hash, certified_hash
+
+
+(
+    CANONICAL_RC_CERTIFICATE_ID,
+    CANONICAL_RC_TRACE_HASH,
+    CANONICAL_RC_CERTIFIED_BUNDLE_HASH,
+) = _labtrust_fixture_rc_chain_ids()
+def _labtrust_fixture_producer_commits() -> tuple[str, str, str, str]:
+    """labtrust_gym, certifyedge, provability_fabric, pcs_core from committed legacy manifest."""
+    manifest_path = FIXTURES / "labtrust-release" / "RELEASE_FIXTURE_MANIFEST.json"
+    if not manifest_path.is_file():
+        return (
+            "17ed831acfd775889ab497d11004cceb083a9c2d",
+            "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
+            "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+            "17e414501b3e1c58e8fbde1fe89a828440a945d9",
+        )
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+    return (
+        manifest["labtrust_gym_commit"],
+        manifest["certifyedge_commit"],
+        manifest["provability_fabric_commit"],
+        manifest["pcs_core_commit"],
+    )
+
+
+(
+    CANONICAL_RC_LABTRUST_COMMIT,
+    CANONICAL_RC_CERTIFYEDGE_COMMIT,
+    CANONICAL_RC_PF_COMMIT,
+    CANONICAL_RC_PCS_CORE_COMMIT,
+) = _labtrust_fixture_producer_commits()
+# Scientific Memory commit published in pcs-core labtrust release manifest (fallback when pcs-core absent).
+_CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT_FALLBACK = "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+
+
+def canonical_rc_scientific_memory_commit() -> str:
+    """Match pcs-core/examples/labtrust-release release_manifest.v0.json when available."""
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_import.pcs_core_release_align import pcs_core_scientific_memory_commit
+
+    return pcs_core_scientific_memory_commit(REPO_ROOT) or _CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT_FALLBACK
+
+
+CANONICAL_RC_SCIENTIFIC_MEMORY_COMMIT = canonical_rc_scientific_memory_commit()
 
 
 # Canonical import/render tests use the LabTrust v0.1 release fixture (synced from pcs-core).

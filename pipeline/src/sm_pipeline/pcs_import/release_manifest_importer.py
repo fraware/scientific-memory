@@ -12,6 +12,7 @@ from sm_pipeline.pcs_validate.release_manifest import (
     signed_bundle_path_for_manifest,
     validate_release_manifest_or_raise,
 )
+from sm_pipeline.pcs_validate.release_paths import resolve_release_manifest_path
 
 def _repo_root(repo_root: Path | None) -> Path:
     if repo_root is not None:
@@ -21,6 +22,20 @@ def _repo_root(repo_root: Path | None) -> Path:
 
 def _import_root(repo_root: Path) -> Path:
     return repo_root / "corpus" / "pcs" / "claims"
+
+
+def _resolve_manifest_input(manifest_path: Path) -> Path:
+    resolved = manifest_path.resolve()
+    if resolved.is_dir():
+        return resolve_release_manifest_path(resolved)
+    if resolved.is_file():
+        return resolved
+    parent = resolved.parent
+    if parent.is_dir():
+        candidate = resolve_release_manifest_path(parent)
+        if candidate.is_file():
+            return candidate
+    return resolved
 
 
 def import_release_manifest(
@@ -37,7 +52,7 @@ def import_release_manifest(
     strict release mode, writes import report, and optionally renders portal export.
     """
     root = _repo_root(repo_root)
-    manifest_file = manifest_path.resolve()
+    manifest_file = _resolve_manifest_input(manifest_path)
     manifest = validate_release_manifest_or_raise(manifest_file, repo_root=root)
     release_dir = manifest_file.parent
     validation = require_release_chain_validation(
@@ -78,13 +93,44 @@ def main() -> int:
     import argparse
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", "-m", type=Path, required=True)
-    parser.add_argument("--no-render", action="store_true")
+    parser.add_argument(
+        "--manifest",
+        "-m",
+        type=Path,
+        required=True,
+        help="ReleaseManifest.v0 JSON path",
+    )
+    parser.add_argument(
+        "--repo-root",
+        type=Path,
+        default=None,
+        help="Scientific Memory repo root (default: parent of pipeline package)",
+    )
+    parser.add_argument(
+        "--release-mode",
+        action="store_true",
+        default=True,
+        help="Strict release import (always enabled; accepted for CLI compatibility)",
+    )
+    parser.add_argument(
+        "--render",
+        dest="render",
+        action="store_true",
+        default=True,
+        help="Write portal PCS export after import",
+    )
+    parser.add_argument(
+        "--no-render",
+        dest="render",
+        action="store_false",
+        help="Skip portal export",
+    )
     args = parser.parse_args()
     import_release_manifest(
         args.manifest,
+        repo_root=args.repo_root,
         write=True,
-        render=not args.no_render,
+        render=args.render,
     )
     return 0
 

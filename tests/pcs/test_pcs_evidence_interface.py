@@ -20,6 +20,8 @@ from schema_fixtures import (
     LABTRUST_RELEASE_DIR,
     REPO_ROOT,
     copy_pcs_schemas,
+    pcs_cli_env,
+    pcs_subprocess_python,
 )
 
 
@@ -31,12 +33,14 @@ def _copy_release(tmp: Path) -> Path:
     return dest
 
 
+def _cli_env(root: Path | None = None) -> dict[str, str]:
+    return pcs_cli_env(repo_root=root or REPO_ROOT)
+
+
 def test_pcs_import_release_command() -> None:
     manifest = (
         LABTRUST_RELEASE_DIR / "ReleaseManifest.v0.json"
     ).relative_to(REPO_ROOT).as_posix()
-    env = os.environ.copy()
-    env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src")
     result = subprocess.run(
         [
             sys.executable,
@@ -47,21 +51,118 @@ def test_pcs_import_release_command() -> None:
             manifest,
         ],
         cwd=REPO_ROOT,
-        env=env,
+        env=_cli_env(),
         capture_output=True,
         text=True,
         check=False,
     )
     assert result.returncode == 0, result.stdout + result.stderr
-    report_path = (
-        REPO_ROOT
-        / "corpus"
-        / "pcs"
-        / "claims"
-        / EXPECTED_LABTRUST_CLAIM_ID
-        / "scientific_memory_import_report.json"
-    )
-    assert report_path.is_file()
+    claim_dir = REPO_ROOT / "corpus" / "pcs" / "claims" / EXPECTED_LABTRUST_CLAIM_ID
+    for name in (
+        "signed_bundle.json",
+        "read_model.json",
+        "import_manifest.json",
+        "scientific_memory_import_report.json",
+        "lineage.json",
+        "release_manifest.json",
+        "release_chain_validation.json",
+        "artifact_registry.json",
+        "handoff_manifests.json",
+    ):
+        assert (claim_dir / name).is_file(), f"missing {name}"
+    assert (REPO_ROOT / "portal" / ".generated" / "pcs-export.json").is_file()
+
+
+def test_pcs_import_release_module_entrypoint() -> None:
+    manifest = LABTRUST_RELEASE_DIR / "ReleaseManifest.v0.json"
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        release_dir = _copy_release(root)
+        manifest_path = release_dir / "ReleaseManifest.v0.json"
+        result = subprocess.run(
+            [
+                pcs_subprocess_python(),
+                "-m",
+                "sm_pipeline.pcs_import.release_manifest_importer",
+                "--manifest",
+                str(manifest_path),
+                "--repo-root",
+                str(root),
+                "--release-mode",
+                "--render",
+            ],
+            cwd=root,
+            env=_cli_env(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0, result.stdout + result.stderr
+        claim_dir = root / "corpus" / "pcs" / "claims" / EXPECTED_LABTRUST_CLAIM_ID
+        for name in (
+            "read_model.json",
+            "import_manifest.json",
+            "lineage.json",
+            "scientific_memory_import_report.json",
+        ):
+            assert (claim_dir / name).is_file(), f"missing {name}"
+
+
+def test_pcs_list_claims() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        release_dir = _copy_release(root)
+        import_release_manifest(
+            release_dir / "ReleaseManifest.v0.json",
+            repo_root=root,
+            write=True,
+            render=False,
+        )
+        result = subprocess.run(
+            [sys.executable, "-m", "sm_pipeline.cli", "pcs-list-claims"],
+            cwd=root,
+            env=_cli_env(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0
+        assert EXPECTED_LABTRUST_CLAIM_ID in result.stdout
+
+
+def test_pcs_show_claim() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        release_dir = _copy_release(root)
+        import_release_manifest(
+            release_dir / "ReleaseManifest.v0.json",
+            repo_root=root,
+            write=True,
+            render=False,
+        )
+        result = subprocess.run(
+            [
+                pcs_subprocess_python(),
+                "-m",
+                "sm_pipeline.cli",
+                "pcs-show-claim",
+                "--claim-id",
+                EXPECTED_LABTRUST_CLAIM_ID,
+            ],
+            cwd=root,
+            env=_cli_env(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0
+        payload = json.loads(result.stdout)
+        assert payload["claim_id"] == EXPECTED_LABTRUST_CLAIM_ID
+        assert isinstance(payload.get("read_model"), dict)
+        assert payload["read_model"].get("release_manifest")
 
 
 def test_import_report_contains_release_chain_validation_id() -> None:
@@ -128,6 +229,10 @@ def test_render_artifact_registry_section() -> None:
     assert row.get("registry_admission_result") in ("admitted", "incomplete")
 
 
+def test_release_import_does_not_use_fixture_overlay() -> None:
+    test_release_manifest_import_does_not_overlay_fixture_report()
+
+
 def test_release_manifest_import_does_not_overlay_fixture_report() -> None:
     from sm_pipeline.pcs_import.release_manifest_build import write_release_manifest
 
@@ -168,15 +273,11 @@ def test_pcs_check_stale_detects_signed_bundle_hash_change() -> None:
         )
         claim_dir = root / "corpus" / "pcs" / "claims" / EXPECTED_LABTRUST_CLAIM_ID
         bundle_path = claim_dir / "signed_bundle.json"
-        bundle = json.loads(bundle_path.read_text(encoding="utf-8-sig"))
-        bundle["signature_or_digest"] = "sha256:" + "a" * 64
-        bundle_path.write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
+        bundle_path.write_bytes(bundle_path.read_bytes() + b"\n")
 
-        env = os.environ.copy()
-        env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src")
         result = subprocess.run(
             [
-                sys.executable,
+                pcs_subprocess_python(),
                 "-m",
                 "sm_pipeline.cli",
                 "pcs-check-stale",
@@ -184,13 +285,48 @@ def test_pcs_check_stale_detects_signed_bundle_hash_change() -> None:
                 EXPECTED_LABTRUST_CLAIM_ID,
             ],
             cwd=root,
-            env=env,
+            env=_cli_env(root),
             capture_output=True,
             text=True,
             check=False,
         )
         assert result.returncode == 0
-        assert "Stale" in result.stdout
+        payload = json.loads(result.stdout)
+        assert payload["claim_id"] == EXPECTED_LABTRUST_CLAIM_ID
+        assert payload["stale"] is True
+        assert payload.get("claim_state") == "stale"
+        assert any("signed_bundle_hash" in reason for reason in payload["stale_reasons"])
+        assert "Re-import the current release manifest" in payload["repair_hint"]
+
+
+def test_pcs_list_claims_by_workflow() -> None:
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        copy_pcs_schemas(root)
+        release_dir = _copy_release(root)
+        import_release_manifest(
+            release_dir / "ReleaseManifest.v0.json",
+            repo_root=root,
+            write=True,
+            render=False,
+        )
+        result = subprocess.run(
+            [
+                pcs_subprocess_python(),
+                "-m",
+                "sm_pipeline.cli",
+                "pcs-list-claims-by-workflow",
+                "--workflow-id",
+                "labtrust.qc_release_v0.1",
+            ],
+            cwd=root,
+            env=_cli_env(root),
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        assert result.returncode == 0
+        assert EXPECTED_LABTRUST_CLAIM_ID in result.stdout
 
 
 def test_pcs_list_claims_by_certificate() -> None:
@@ -204,11 +340,9 @@ def test_pcs_list_claims_by_certificate() -> None:
             write=True,
             render=False,
         )
-        env = os.environ.copy()
-        env["PYTHONPATH"] = str(REPO_ROOT / "pipeline" / "src")
         result = subprocess.run(
             [
-                sys.executable,
+                pcs_subprocess_python(),
                 "-m",
                 "sm_pipeline.cli",
                 "pcs-list-claims-by-certificate",
@@ -216,7 +350,7 @@ def test_pcs_list_claims_by_certificate() -> None:
                 CANONICAL_RC_CERTIFICATE_ID,
             ],
             cwd=root,
-            env=env,
+            env=_cli_env(root),
             capture_output=True,
             text=True,
             check=False,

@@ -3,9 +3,10 @@
   "validation_id": "validation-pcs-v0.1-labtrust-qc-rc",
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_candidate": "pcs-v0.1.0-rc1",
+  "workflow_profile_id": "labtrust.qc_release_v0.1",
   "validator": "pcs-core",
   "validator_version": "0.1.0",
-  "checked_at": "2026-05-17T22:32:01Z",
+  "checked_at": "2026-05-18T21:29:17Z",
   "status": "ProofChecked",
   "checks": [
     {
@@ -13,7 +14,8 @@
       "description": "RELEASE_FIXTURE_MANIFEST.json exists",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "artifact_files_present",
@@ -22,7 +24,8 @@
       "details": {},
       "registry_check_refs": [
         "ReleaseManifest.v0.artifact_hashes_match_files"
-      ]
+      ],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "manifest_hashes_match",
@@ -31,7 +34,8 @@
       "details": {},
       "registry_check_refs": [
         "ReleaseManifest.v0.artifact_hashes_match_files"
-      ]
+      ],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "forbidden_provenance_values",
@@ -40,7 +44,8 @@
       "details": {},
       "registry_check_refs": [
         "ReleaseManifest.v0.release_mode_commit_policy"
-      ]
+      ],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "runtime_receipt_labtrust_commit",
@@ -49,7 +54,8 @@
       "details": {},
       "registry_check_refs": [
         "RuntimeReceipt.v0.source_commit_matches_release_manifest"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "pending_bundle_labtrust_commits",
@@ -58,7 +64,8 @@
       "details": {},
       "registry_check_refs": [
         "ScienceClaimBundle.v0.non_empty_runtime_receipts"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "certified_bundle_labtrust_commits",
@@ -67,7 +74,8 @@
       "details": {},
       "registry_check_refs": [
         "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "signed_bundle_nested_labtrust_commits",
@@ -76,7 +84,8 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.embedded_bundle_passes_science_claim_semantics"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "trace_certificate_certifyedge_commit",
@@ -85,7 +94,8 @@
       "details": {},
       "registry_check_refs": [
         "TraceCertificate.v0.source_commit_matches_release_manifest"
-      ]
+      ],
+      "responsible_component": "CertifyEdge"
     },
     {
       "check_id": "certified_bundle_certifyedge_commits",
@@ -94,7 +104,8 @@
       "details": {},
       "registry_check_refs": [
         "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "signed_bundle_certifyedge_commits",
@@ -103,7 +114,8 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.embedded_bundle_passes_science_claim_semantics"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "verification_result_pf_commit",
@@ -112,7 +124,8 @@
       "details": {},
       "registry_check_refs": [
         "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "signed_bundle_pf_commit",
@@ -121,7 +134,8 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "verification_nested_pf_commits",
@@ -130,7 +144,8 @@
       "details": {},
       "registry_check_refs": [
         "VerificationResult.v0.failed_checks_block_import_ready_status"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "signed_nested_pf_commits",
@@ -139,21 +154,24 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "scientific_memory_source_commit",
       "description": "Scientific Memory report source_commit matches manifest",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "scientific_memory_pin_commit",
       "description": "Scientific Memory report scientific_memory_commit matches manifest",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "certificate_id_trace_certificate",
@@ -162,7 +180,8 @@
       "details": {},
       "registry_check_refs": [
         "TraceCertificate.v0.status_is_certificate_checked_for_release"
-      ]
+      ],
+      "responsible_component": "CertifyEdge"
     },
     {
       "check_id": "certificate_id_certified_bundle",
@@ -171,7 +190,8 @@
       "details": {},
       "registry_check_refs": [
         "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "certificate_id_claim_refs",
@@ -180,7 +200,8 @@
       "details": {},
       "registry_check_refs": [
         "EvidenceBundle.v0.certificate_refs_resolve"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "certificate_id_evidence_refs",
@@ -189,7 +210,8 @@
       "details": {},
       "registry_check_refs": [
         "EvidenceBundle.v0.certificate_refs_resolve"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "certificate_id_verification",
@@ -198,7 +220,8 @@
       "details": {},
       "registry_check_refs": [
         "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "certificate_id_signed_bundle",
@@ -207,7 +230,8 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "trace_hash_alignment",
@@ -217,7 +241,8 @@
       "registry_check_refs": [
         "RuntimeReceipt.v0.trace_hash_present",
         "TraceCertificate.v0.trace_hash_matches_runtime_receipt"
-      ]
+      ],
+      "responsible_component": "LabTrust-Gym"
     },
     {
       "check_id": "verified_input_bundle_hash",
@@ -226,7 +251,8 @@
       "details": {},
       "registry_check_refs": [
         "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "signed_input_bundle_hash",
@@ -235,28 +261,32 @@
       "details": {},
       "registry_check_refs": [
         "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
-      ]
+      ],
+      "responsible_component": "Provability Fabric"
     },
     {
       "check_id": "scientific_memory_import_passed",
       "description": "scientific_memory_import_report.verification_status is passed",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "scientific_memory_strict_import",
       "description": "scientific_memory_import_report.strict is true",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "scientific_memory_no_legacy",
       "description": "scientific_memory_import_report.allow_legacy is false and bundle_shape is pcs_core",
       "status": "passed",
       "details": {},
-      "registry_check_refs": []
+      "registry_check_refs": [],
+      "responsible_component": "pcs-core"
     },
     {
       "check_id": "pcs_artifact_schema_validation",
@@ -265,12 +295,22 @@
       "details": {},
       "registry_check_refs": [
         "ArtifactRegistry.v0.entries_cover_required_artifact_types"
-      ]
+      ],
+      "responsible_component": "pcs-core"
+    }
+  ],
+  "deferred_registry_checks": [
+    {
+      "registry_ref": "HandoffManifest.v0.handoff_input_hashes_when_validated",
+      "status": "deferred",
+      "enforcement_location": "artifact_validate",
+      "responsible_component": "pcs-core",
+      "reason": "Executed via pcs conformance run --suite handoff-manifest during release qualification."
     }
   ],
   "artifacts_checked": 8,
   "failure_codes": [],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
-  "signature_or_digest": "sha256:c178e30b86d066ff6364c1b5e21cb4be02787f6685fbe8d4abf70d840a024a18"
+  "source_commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
+  "signature_or_digest": "sha256:36225aa613aae49684d8d575fd95bfb31de49a9b41128226d66da9210290c715"
 }

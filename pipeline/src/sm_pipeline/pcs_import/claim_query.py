@@ -94,6 +94,16 @@ def list_claims_by_trace_hash(repo_root: Path, trace_hash: str) -> list[str]:
     ]
 
 
+def list_claims_by_workflow(repo_root: Path, workflow_id: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, workflow_profile_id=workflow_id)
+        if entry.get("claim_id")
+    ]
+
+
 def list_stale_claims(repo_root: Path) -> list[str]:
     from sm_pipeline.pcs_import.claim_index import query_claims_index
 
@@ -108,26 +118,51 @@ def refresh_all_stale_flags(repo_root: Path) -> list[dict[str, Any]]:
     """Recompute stale flags for every imported claim and rebuild the corpus index."""
     from sm_pipeline.pcs_import.claim_lineage import update_lineage_stale_flags
     from sm_pipeline.pcs_import.claim_index import write_claims_index
+    from sm_pipeline.pcs_import.lineage_ops import (
+        build_operational_lineage_view,
+        build_operational_staleness_view,
+    )
 
+    root = repo_root.resolve()
     results: list[dict[str, Any]] = []
-    for claim_id in list_claim_ids(repo_root):
-        claim_dir = claims_root(repo_root) / claim_id
+    for claim_id in list_claim_ids(root):
+        claim_dir = claims_root(root) / claim_id
         bundle_path = claim_dir / "signed_bundle.json"
         if not bundle_path.is_file():
             continue
         lineage = update_lineage_stale_flags(claim_dir, bundle_path=bundle_path)
+        manifest = _load_json(claim_dir / "release_manifest.json")
+        validation = _load_json(claim_dir / "release_chain_validation.json")
+        operational_lineage = build_operational_lineage_view(
+            lineage,
+            repo_root=root,
+            claim_id=claim_id,
+            release_manifest=manifest,
+            validation=validation,
+        )
+        staleness = build_operational_staleness_view(
+            lineage,
+            repo_root=root,
+            claim_id=claim_id,
+            release_manifest=manifest,
+            validation=validation,
+        )
         read_model_path = claim_dir / "read_model.json"
         if read_model_path.is_file():
             read_model = _load_json(read_model_path)
             if read_model is not None:
-                read_model["staleness"] = {
-                    "stale": bool(lineage.get("stale")),
-                    "stale_reasons": list(lineage.get("stale_reasons") or []),
-                }
+                read_model["lineage"] = operational_lineage
+                read_model["staleness"] = staleness
                 read_model_path.write_text(
                     json.dumps(read_model, indent=2, sort_keys=True) + "\n",
                     encoding="utf-8",
                 )
-        results.append({"claim_id": claim_id, "lineage": lineage})
-    write_claims_index(repo_root)
+        results.append(
+            {
+                "claim_id": claim_id,
+                "lineage": operational_lineage,
+                "staleness": staleness,
+            },
+        )
+    write_claims_index(root)
     return results

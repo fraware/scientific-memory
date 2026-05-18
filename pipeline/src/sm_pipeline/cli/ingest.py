@@ -1,6 +1,7 @@
 """Ingest commands: admit papers, build index, hash sources."""
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -45,7 +46,7 @@ def build_index_cmd() -> None:
 
 @app.command("hash-source")
 def hash_source_cmd(
-    paper_id: str | None = typer.Option(
+    paper_id: Optional[str] = typer.Option(
         None, "--paper-id", help="Paper ID (if omitted: all papers)"
     ),
 ) -> None:

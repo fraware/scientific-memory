@@ -5,6 +5,7 @@ from __future__ import annotations
 import difflib
 import json
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -24,7 +25,7 @@ from sm_pipeline.settings import LLMSettings, load_repo_env
 
 def llm_claim_proposals(
     paper_id: str = typer.Option(..., "--paper-id"),
-    output: str | None = typer.Option(
+    output: Optional[str] = typer.Option(
         None,
         "--output",
         "-o",
@@ -57,7 +58,7 @@ def llm_claim_proposals(
 
 def llm_mapping_proposals(
     paper_id: str = typer.Option(..., "--paper-id"),
-    output: str | None = typer.Option(
+    output: Optional[str] = typer.Option(
         None,
         "--output",
         "-o",
@@ -86,12 +87,12 @@ def llm_mapping_proposals(
 
 def llm_lean_proposals(
     paper_id: str = typer.Option(..., "--paper-id"),
-    decl: str | None = typer.Option(
+    decl: Optional[str] = typer.Option(
         None,
         "--decl",
         help="Optional short declaration name or claim focus hint",
     ),
-    output: str | None = typer.Option(
+    output: Optional[str] = typer.Option(
         None,
         "--output",
         "-o",
@@ -128,7 +129,7 @@ def llm_lean_proposals_to_apply_bundle(
         "-o",
         help="Write proof_repair_apply_bundle JSON",
     ),
-    review_record_path: str | None = typer.Option(
+    review_record_path: Optional[str] = typer.Option(
         None,
         "--review-record-path",
         help="Optional path recorded in bundle for audit",

@@ -76,6 +76,13 @@ def main() -> int:
         encoding="utf-8",
     )
 
+    profile_src = src.parent / "examples" / "workflow_profiles"
+    profile_dest = dest / "workflow_profiles"
+    if profile_src.is_dir():
+        profile_dest.mkdir(parents=True, exist_ok=True)
+        for path in profile_src.glob("*.json"):
+            shutil.copy2(path, profile_dest / path.name)
+
     print(f"Synced {len(copied)} schemas from {src} -> {dest}")
     return 0
 

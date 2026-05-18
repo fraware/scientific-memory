@@ -1,6 +1,7 @@
 """Publish commands: manifest generation, portal export, diff baselines."""
 
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -31,7 +32,7 @@ def export_portal_data_cmd() -> None:
 
 @app.command("export-diff-baseline")
 def export_diff_baseline_cmd(
-    snapshot_at: str | None = typer.Option(
+    snapshot_at: Optional[str] = typer.Option(
         None, "--snapshot-at", help="ISO timestamp for baseline; default now"
     ),
     baseline_id: str = typer.Option(
@@ -39,13 +40,13 @@ def export_diff_baseline_cmd(
         "--baseline-id",
         help="Baseline file id under corpus/snapshots (without .json)",
     ),
-    title: str | None = typer.Option(
+    title: Optional[str] = typer.Option(
         None, "--title", help="Optional baseline title shown on portal diff page"
     ),
-    narrative: str | None = typer.Option(
+    narrative: Optional[str] = typer.Option(
         None, "--narrative", help="Optional narrative summary shown on portal diff page"
     ),
-    highlight: list[str] | None = typer.Option(
+    highlight: Optional[list[str]] = typer.Option(
         None,
         "--highlight",
         help="Repeatable: one bullet for highlights (release baselines require >=1)",

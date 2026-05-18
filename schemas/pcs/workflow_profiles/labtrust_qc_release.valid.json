@@ -1,0 +1,57 @@
+{
+  "schema_version": "v0",
+  "workflow_id": "labtrust.qc_release_v0.1",
+  "domain": "lab_science_simulation",
+  "description": "Simulated hospital QC release chain using runtime receipts and trace certificates.",
+  "runtime_artifacts": [
+    "RuntimeReceipt.v0",
+    "ScienceClaimBundle.v0"
+  ],
+  "certificate_artifacts": [
+    "TraceCertificate.v0"
+  ],
+  "handoff_sequence": [
+    "runtime_to_certificate",
+    "certificate_to_bundle",
+    "bundle_to_verifier",
+    "signed_bundle_to_memory"
+  ],
+  "required_registry_entries": [
+    "RuntimeReceipt.v0",
+    "TraceCertificate.v0",
+    "ScienceClaimBundle.v0",
+    "VerificationResult.v0",
+    "SignedScienceClaimBundle.v0",
+    "ReleaseManifest.v0",
+    "HandoffManifest.v0",
+    "ReleaseChainValidationResult.v0",
+    "WorkflowProfile.v0"
+  ],
+  "status_policy": {
+    "policy_id": "pcs-v0.1-default-lifecycle",
+    "description": "RuntimeObserved through ProofChecked with terminal Rejected and Stale.",
+    "allowed_terminal_statuses": [
+      "Rejected",
+      "Stale",
+      "Deprecated"
+    ],
+    "forbidden_transitions": [
+      {
+        "from_status": "Rejected",
+        "to_status": "ProofChecked"
+      },
+      {
+        "from_status": "Stale",
+        "to_status": "ProofChecked"
+      }
+    ]
+  },
+  "failure_modes": [
+    "trace_hash_mismatch",
+    "certificate_rejected",
+    "verification_failed",
+    "manifest_hash_mismatch"
+  ],
+  "limitations_notice": "LabTrust QC release demonstrates a proof-carrying simulated workflow; not clinical certification.",
+  "signature_or_digest": "sha256:cb646ac26c2d4c44453c3fce83ca3208a6fc34742bc1cde9075f602d25fccbfd"
+}

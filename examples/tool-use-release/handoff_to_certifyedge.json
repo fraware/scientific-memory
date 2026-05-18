@@ -1,0 +1,30 @@
+{
+  "schema_version": "v0",
+  "handoff_id": "handoff-tool-use-runtime-to-certifyedge",
+  "handoff_kind": "runtime_to_certificate",
+  "from_component": "agent-tool-use demo producer",
+  "to_component": "CertifyEdge",
+  "created_at": "2026-05-18T12:00:00Z",
+  "source_repo": "https://github.com/example/agent-runtime",
+  "source_commit": "a111111111111111111111111111111111111111",
+  "input_artifacts": {
+    "tool_use_trace.valid.json": {
+      "artifact_type": "ToolUseTrace.v0",
+      "sha256": "sha256:7d0a726c657c31db20294206c0207a34365a573c3103f447f3b3cca38190d507"
+    },
+    "runtime_receipt.json": {
+      "artifact_type": "RuntimeReceipt.v0",
+      "sha256": "sha256:33fddcdd864435cffbf8febb9c405d0ad81a7ba90b446f7d86729c5d46eaf5a8"
+    }
+  },
+  "expected_outputs": {
+    "tool_use_certificate.valid.json": {
+      "artifact_type": "ToolUseCertificate.v0"
+    }
+  },
+  "invariants": {
+    "trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4"
+  },
+  "status": "Validated",
+  "signature_or_digest": "sha256:9a9560510a730face7c628faad2cd638c6178045380aee260042d20a21d55aa8"
+}

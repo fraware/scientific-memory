@@ -117,6 +117,8 @@ export type PcsArtifactRegistryEntry = {
   canonical_hash_required?: boolean;
   release_mode_required?: boolean;
   registry_admission_result?: string;
+  allowed_runtime_producers?: string[];
+  admission_status?: string;
 };
 
 export type PcsHandoffArtifactRef = {
@@ -160,11 +162,47 @@ export type PcsLineageView = {
   schema_versions?: Record<string, string>;
   stale?: boolean;
   stale_reasons?: string[];
+  claim_state?: string;
+  previous_release_id?: string | null;
+  newer_release_ids?: string[];
+  changed_artifacts?: string[];
+  changed_hashes?: { artifact: string; previous: string; current: string }[];
+  recommended_action?: string;
+};
+
+export type PcsWorkflowProfileView = {
+  workflow_id?: string;
+  domain?: string;
+  description?: string;
+  runtime_artifacts?: string[];
+  certificate_artifacts?: string[];
+  handoff_sequence?: string[];
+  required_registry_entries?: string[];
+  limitations_notice?: string;
+  signature_or_digest?: string;
+  schema_version?: string;
+};
+
+export type PcsProtocolArtifact = {
+  name: string;
+  artifact_type: string;
+  id?: string;
+  schema_version?: string;
+  status?: string;
+  source_repo?: string;
+  source_commit?: string;
+  hash?: string;
+  signature_or_digest?: string;
+  path?: string;
+  payload?: Record<string, unknown> | null;
 };
 
 export type PcsStalenessView = {
   stale: boolean;
   stale_reasons: string[];
+  claim_state?: string;
+  repair_hint?: string;
+  recommended_action?: string;
 };
 
 export type PcsArtifactDependencyEdge = {
@@ -176,14 +214,22 @@ export type PcsArtifactDependencyEdge = {
 export type PcsClaimReadModel = {
   schema_version: string;
   claim_id: string;
+  workflow_id?: string;
+  domain?: string;
+  runtime_artifact_types?: string[];
+  certificate_artifact_types?: string[];
   claim: PcsClaimSection;
   assumption_set: PcsNamedArtifact & { assumptions?: PcsAssumption[] };
   runtime_receipt: PcsNamedArtifact;
   trace_certificate: PcsNamedArtifact;
   evidence_bundle?: PcsNamedArtifact;
   verification_result?: PcsVerificationResult | null;
+  workflow_profile?: PcsWorkflowProfileView;
+  tool_use_trace?: PcsNamedArtifact;
+  tool_use_certificate?: PcsNamedArtifact;
   release_manifest?: PcsReleaseManifestView;
   release_chain_validation?: PcsReleaseChainValidationView;
+  protocol_artifacts?: PcsProtocolArtifact[];
   artifact_registry?: PcsArtifactRegistryEntry[];
   artifact_registry_version?: string;
   artifact_registry_source?: string;
