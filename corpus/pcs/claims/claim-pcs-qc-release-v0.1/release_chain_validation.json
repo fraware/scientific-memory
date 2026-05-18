@@ -1,185 +1,264 @@
 {
   "artifacts_checked": 8,
-  "checked_at": "2026-05-17T22:23:22Z",
+  "checked_at": "2026-05-17T22:32:01Z",
   "checks": [
     {
       "check_id": "manifest_present",
       "description": "RELEASE_FIXTURE_MANIFEST.json exists",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "artifact_files_present",
       "description": "Every manifest-listed artifact file exists on disk",
       "details": {},
+      "registry_check_refs": [
+        "ReleaseManifest.v0.artifact_hashes_match_files"
+      ],
       "status": "passed"
     },
     {
       "check_id": "manifest_hashes_match",
       "description": "Every artifact hash matches the manifest digest",
       "details": {},
+      "registry_check_refs": [
+        "ReleaseManifest.v0.artifact_hashes_match_files"
+      ],
       "status": "passed"
     },
     {
       "check_id": "forbidden_provenance_values",
       "description": "No local_dev, zero commits, or pattern placeholder commits in artifacts",
       "details": {},
+      "registry_check_refs": [
+        "ReleaseManifest.v0.release_mode_commit_policy"
+      ],
       "status": "passed"
     },
     {
       "check_id": "runtime_receipt_labtrust_commit",
       "description": "runtime_receipt.json source_commit matches manifest.labtrust_gym_commit",
       "details": {},
+      "registry_check_refs": [
+        "RuntimeReceipt.v0.source_commit_matches_release_manifest"
+      ],
       "status": "passed"
     },
     {
       "check_id": "pending_bundle_labtrust_commits",
       "description": "science_claim_bundle.pending.json LabTrust provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "ScienceClaimBundle.v0.non_empty_runtime_receipts"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certified_bundle_labtrust_commits",
       "description": "science_claim_bundle.certified.json LabTrust provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
+      ],
       "status": "passed"
     },
     {
       "check_id": "signed_bundle_nested_labtrust_commits",
       "description": "signed bundle nested science_claim_bundle LabTrust commits match manifest",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.embedded_bundle_passes_science_claim_semantics"
+      ],
       "status": "passed"
     },
     {
       "check_id": "trace_certificate_certifyedge_commit",
       "description": "trace_certificate.json source_commit matches manifest.certifyedge_commit",
       "details": {},
+      "registry_check_refs": [
+        "TraceCertificate.v0.source_commit_matches_release_manifest"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certified_bundle_certifyedge_commits",
       "description": "certified bundle CertifyEdge provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
+      ],
       "status": "passed"
     },
     {
       "check_id": "signed_bundle_certifyedge_commits",
       "description": "signed bundle CertifyEdge provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.embedded_bundle_passes_science_claim_semantics"
+      ],
       "status": "passed"
     },
     {
       "check_id": "verification_result_pf_commit",
       "description": "verification_result.json source_commit matches manifest.provability_fabric_commit",
       "details": {},
+      "registry_check_refs": [
+        "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "signed_bundle_pf_commit",
       "description": "signed_science_claim_bundle.json source_commit matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "verification_nested_pf_commits",
       "description": "verification_result nested PF provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "VerificationResult.v0.failed_checks_block_import_ready_status"
+      ],
       "status": "passed"
     },
     {
       "check_id": "signed_nested_pf_commits",
       "description": "signed bundle nested PF provenance matches manifest",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "scientific_memory_source_commit",
       "description": "Scientific Memory report source_commit matches manifest",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "scientific_memory_pin_commit",
       "description": "Scientific Memory report scientific_memory_commit matches manifest",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_trace_certificate",
       "description": "certificate_id on trace_certificate is present and consistent",
       "details": {},
+      "registry_check_refs": [
+        "TraceCertificate.v0.status_is_certificate_checked_for_release"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_certified_bundle",
       "description": "certificate_id matches on certified bundle certificates",
       "details": {},
+      "registry_check_refs": [
+        "ScienceClaimBundle.v0.certified_bundle_has_certificate_when_checked"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_claim_refs",
       "description": "certificate_id referenced from certified claim_artifact",
       "details": {},
+      "registry_check_refs": [
+        "EvidenceBundle.v0.certificate_refs_resolve"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_evidence_refs",
       "description": "certificate_id referenced from certified evidence_bundle",
       "details": {},
+      "registry_check_refs": [
+        "EvidenceBundle.v0.certificate_refs_resolve"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_verification",
       "description": "certificate_id matches verification_result.verified_input",
       "details": {},
+      "registry_check_refs": [
+        "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "certificate_id_signed_bundle",
       "description": "certificate_id matches signed bundle embedded certificates",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "trace_hash_alignment",
       "description": "trace_hash is identical across trace, receipt, certificate, verification, signed bundle",
       "details": {},
+      "registry_check_refs": [
+        "RuntimeReceipt.v0.trace_hash_present",
+        "TraceCertificate.v0.trace_hash_matches_runtime_receipt"
+      ],
       "status": "passed"
     },
     {
       "check_id": "verified_input_bundle_hash",
       "description": "verification_result.verified_input.bundle_hash matches certified bundle manifest hash",
       "details": {},
+      "registry_check_refs": [
+        "VerificationResult.v0.verified_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "signed_input_bundle_hash",
       "description": "signed_science_claim_bundle.signed_input_bundle_hash matches certified manifest hash",
       "details": {},
+      "registry_check_refs": [
+        "SignedScienceClaimBundle.v0.signed_input_bundle_hash_matches_certified"
+      ],
       "status": "passed"
     },
     {
       "check_id": "scientific_memory_import_passed",
       "description": "scientific_memory_import_report.verification_status is passed",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "scientific_memory_strict_import",
       "description": "scientific_memory_import_report.strict is true",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "scientific_memory_no_legacy",
       "description": "scientific_memory_import_report.allow_legacy is false and bundle_shape is pcs_core",
       "details": {},
+      "registry_check_refs": [],
       "status": "passed"
     },
     {
       "check_id": "pcs_artifact_schema_validation",
       "description": "PCS JSON artifacts pass pcs validate schema and semantics",
       "details": {},
+      "registry_check_refs": [
+        "ArtifactRegistry.v0.entries_cover_required_artifact_types"
+      ],
       "status": "passed"
     }
   ],
@@ -187,8 +266,8 @@
   "release_candidate": "pcs-v0.1.0-rc1",
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:33e3218d6e0cee1800678d74d3f2be27fc21c42a4e5bc0c253ccb6c380bb51bd",
-  "source_commit": "b133c2ed32293b02c4e28971da7b3a7fffcedc2a",
+  "signature_or_digest": "sha256:c178e30b86d066ff6364c1b5e21cb4be02787f6685fbe8d4abf70d840a024a18",
+  "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
   "status": "ProofChecked",
   "validation_id": "validation-pcs-v0.1-labtrust-qc-rc",

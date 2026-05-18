@@ -6,17 +6,12 @@ import json
 from pathlib import Path
 from typing import Any
 
-from sm_pipeline.pcs_import.claim_lineage import build_lineage, write_lineage
-from sm_pipeline.pcs_import.release_context import (
-    enrich_import_report_with_release_chain,
-    enrich_read_model_with_release,
-)
+from sm_pipeline.pcs_import.artifact_registry_source import load_pcs_core_artifact_registry
+from sm_pipeline.pcs_import.claim_lineage import build_lineage, update_lineage_stale_flags, write_lineage
+from sm_pipeline.pcs_import.import_report_enrichment import enrich_import_report_from_protocol
+from sm_pipeline.pcs_import.release_context import enrich_read_model_with_release
 from sm_pipeline.pcs_validate.release_chain_validation import require_release_chain_validation
 from sm_pipeline.pcs_import.release_manifest_build import RELEASE_MANIFEST_FILENAME
-
-from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
-from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
-
 
 def _load_json(path: Path) -> dict[str, Any] | None:
     if not path.is_file():
@@ -50,25 +45,28 @@ def finalize_release_mode_claim(
 
     bundle = json.loads(bundle_path.read_text(encoding="utf-8-sig"))
     claim_id = _claim_id_from_read_model(claim_dir) or claim_dir.name
-    write_lineage(
-        claim_dir,
-        build_lineage(
-            claim_id=claim_id,
-            bundle=bundle,
-            signed_bundle_path=bundle_path,
-            release_manifest=manifest,
-        ),
+    lineage = build_lineage(
+        claim_id=claim_id,
+        bundle=bundle,
+        signed_bundle_path=bundle_path,
+        release_manifest=manifest,
     )
+    write_lineage(claim_dir, lineage)
+    lineage = update_lineage_stale_flags(claim_dir, bundle_path=bundle_path)
 
+    _, registry_version = load_pcs_core_artifact_registry(repo_root)
     if import_report_path.is_file():
         report = _load_json(import_report_path)
         if report is not None:
-            report["release_id"] = manifest.get("release_id")
-            report["release_candidate"] = manifest.get("release_candidate")
-            report["release_manifest_path"] = portable_repo_path(manifest_path, repo_root)
-            report["release_manifest_hash"] = canonical_hash(manifest)
-            report["validation_profile"] = manifest.get("validation_profile")
-            enrich_import_report_with_release_chain(report, release_validation)
+            enrich_import_report_from_protocol(
+                report,
+                manifest=manifest,
+                validation=release_validation,
+                manifest_path=manifest_path,
+                bundle_path=bundle_path,
+                repo_root=repo_root,
+                artifact_registry_version=registry_version,
+            )
             import_report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
     read_model_path = claim_dir / "read_model.json"
@@ -81,6 +79,7 @@ def finalize_release_mode_claim(
             manifest_path=manifest_path,
             bundle_path=bundle_path,
             repo_root=repo_root,
+            lineage=lineage,
         )
         read_model_path.write_text(
             json.dumps(enriched, indent=2, sort_keys=True) + "\n",

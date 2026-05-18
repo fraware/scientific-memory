@@ -25,6 +25,7 @@ REQUIRED_TEST_MODULES = (
     "test_phase2_fixture_parity",
     "test_pcs_portal_contract",
     "test_promote_release_run_phase2",
+    "test_pcs_evidence_interface",
 )
 
 REQUIRED_TEST_NAMES = (
@@ -92,6 +93,14 @@ REQUIRED_TEST_NAMES = (
     "test_pcs_portal_components_define_section_testids",
     "test_pcs_portal_phase2_read_model_script_passes",
     "test_promote_then_ensure_preserves_phase2_import_report",
+    "test_pcs_import_release_command",
+    "test_import_report_contains_release_chain_validation_id",
+    "test_import_report_contains_signed_bundle_hash",
+    "test_render_lineage_section",
+    "test_render_artifact_registry_section",
+    "test_release_manifest_import_does_not_overlay_fixture_report",
+    "test_pcs_check_stale_detects_signed_bundle_hash_change",
+    "test_pcs_list_claims_by_certificate",
 )
 
 

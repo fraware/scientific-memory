@@ -24,6 +24,8 @@ PCS_UI_SECTION_TESTIDS = (
     "pcs-section-release-chain-validation",
     "pcs-section-artifact-registry",
     "pcs-section-artifact-dependency-graph",
+    "pcs-section-lineage",
+    "pcs-section-staleness",
     "pcs-section-artifact-hashes",
     "pcs-section-source-repos",
     "pcs-section-reproduce-verify",

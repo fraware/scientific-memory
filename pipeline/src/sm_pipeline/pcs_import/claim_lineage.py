@@ -16,6 +16,14 @@ def _artifact_id_from_bundle(bundle: dict[str, Any]) -> str:
     return str(claim.get("id") or claim.get("artifact_id") or "")
 
 
+def certificate_id_from_bundle(bundle: dict[str, Any]) -> str:
+    return _certificate_id(bundle)
+
+
+def trace_hash_from_bundle(bundle: dict[str, Any]) -> str:
+    return _trace_hash(bundle)
+
+
 def _certificate_id(bundle: dict[str, Any]) -> str:
     scb = bundle.get("science_claim_bundle") or {}
     cert = scb.get("trace_certificate")

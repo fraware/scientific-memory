@@ -7,8 +7,10 @@ import { AssumptionSetView } from "./AssumptionSetView";
 import { ClaimArtifactView } from "./ClaimArtifactView";
 import { EvidenceBundleView } from "./EvidenceBundleView";
 import { LimitationNotice } from "./LimitationNotice";
+import { LineageView } from "./LineageView";
 import { ReleaseChainValidationView } from "./ReleaseChainValidationView";
 import { ReleaseManifestView } from "./ReleaseManifestView";
+import { StalenessView } from "./StalenessView";
 import { ReplayCommand } from "./ReplayCommand";
 import { RuntimeReceiptView } from "./RuntimeReceiptView";
 import { SourceRepositories } from "./SourceRepositories";
@@ -53,6 +55,8 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
       {model.artifact_dependency_graph?.length ? (
         <ArtifactDependencyGraph edges={model.artifact_dependency_graph} />
       ) : null}
+      {model.lineage ? <LineageView lineage={model.lineage} /> : null}
+      {model.staleness ? <StalenessView staleness={model.staleness} /> : null}
       <ArtifactHashTable
         hashes={model.artifact_hashes}
         canonicalDigests={model.canonical_digests}

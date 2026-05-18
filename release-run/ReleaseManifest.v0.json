@@ -12,7 +12,7 @@
   },
   "release_chain_validation_result": {
     "path": "ReleaseChainValidationResult.v0.json",
-    "sha256": "sha256:49b30dd856a9a03e5aa386c7aa2eee8ff374a41e278706028bf5397b6fd5fd3f"
+    "sha256": "sha256:b84c40f97a4cc9e3a85e4c4a74f043359a30fc4ff18f1022a2c86d98cb4fd594"
   },
   "canonical_signed_bundle": {
     "path": "signed_science_claim_bundle.json",
@@ -109,5 +109,5 @@
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:ac73c17683404a5d51900cb4916afab082bcc76351e09bfdc817ff4bce19c286"
+  "signature_or_digest": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3"
 }

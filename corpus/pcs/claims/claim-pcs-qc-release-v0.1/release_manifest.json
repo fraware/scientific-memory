@@ -103,11 +103,11 @@
   "release_candidate": "pcs-v0.1.0-rc1",
   "release_chain_validation_result": {
     "path": "ReleaseChainValidationResult.v0.json",
-    "sha256": "sha256:d114f017841b485b439c5d72f9d1aff1a70c7c7cdbd2eb317e4440c88ddda2dc"
+    "sha256": "sha256:b84c40f97a4cc9e3a85e4c4a74f043359a30fc4ff18f1022a2c86d98cb4fd594"
   },
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
+  "signature_or_digest": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
   "validation_profile": "labtrust-v0.1-release-chain"
 }

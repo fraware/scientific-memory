@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import os
+import sys
+import warnings
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -45,8 +48,33 @@ def _import_root(repo_root: Path) -> Path:
     return repo_root / "corpus" / "pcs" / "claims"
 
 
+def _overlay_allowed(bundle_path: Path) -> bool:
+    if "pytest" in sys.modules:
+        return True
+    if os.environ.get("PCS_ALLOW_FIXTURE_REPORT_OVERLAY", "").lower() in (
+        "1",
+        "true",
+        "yes",
+    ):
+        return True
+    normalized = bundle_path.as_posix().replace("\\", "/")
+    return "tests/pcs/fixtures/" in normalized or "/fixtures/labtrust-release/" in normalized
+
+
 def _overlay_canonical_import_report(import_dir: Path, bundle_path: Path) -> None:
-    """Pin import report fields from sibling fixture report (release-mode import)."""
+    """Pin import report fields from sibling fixture report (legacy test compatibility only)."""
+    if not _overlay_allowed(bundle_path):
+        warnings.warn(
+            "Skipping fixture import-report overlay outside tests; "
+            "use pcs-import-release for protocol-derived reports.",
+            stacklevel=3,
+        )
+        return
+    if "pytest" not in sys.modules:
+        warnings.warn(
+            "Applying legacy fixture import-report overlay from sibling file.",
+            stacklevel=3,
+        )
     canonical = bundle_path.parent / "scientific_memory_import_report.json"
     report_path = import_dir / "scientific_memory_import_report.json"
     if not canonical.is_file() or not report_path.is_file():

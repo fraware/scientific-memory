@@ -70,6 +70,21 @@ def test_render_artifact_registry_metadata() -> None:
     assert signed["source_commit"]
 
 
+def test_render_lineage_section() -> None:
+    model = _import_release_read_model()
+    lineage = model.get("lineage")
+    assert isinstance(lineage, dict)
+    assert lineage.get("claim_id")
+    assert str(lineage.get("signed_bundle_hash", "")).startswith("sha256:")
+
+
+def test_render_staleness_section() -> None:
+    model = _import_release_read_model()
+    staleness = model.get("staleness")
+    assert isinstance(staleness, dict)
+    assert "stale" in staleness
+
+
 def test_render_artifact_dependency_graph() -> None:
     model = _import_release_read_model()
     graph = model.get("artifact_dependency_graph")

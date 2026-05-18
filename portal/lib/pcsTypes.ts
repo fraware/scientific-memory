@@ -102,10 +102,38 @@ export type PcsArtifactRegistryEntry = {
   producer: string;
   schema: string;
   status: string;
+  allowed_statuses?: string[];
+  actual_status?: string;
   source_repo: string;
   source_commit: string;
   hash: string;
   semantic_checks_performed: string[];
+  semantic_checks?: string[];
+  required_release_fields_present?: string[];
+  required_release_fields_missing?: string[];
+  consumer_repos?: string[];
+  canonical_hash_required?: boolean;
+  release_mode_required?: boolean;
+  registry_admission_result?: string;
+};
+
+export type PcsLineageView = {
+  claim_id?: string;
+  bundle_id?: string;
+  certificate_id?: string;
+  trace_hash?: string;
+  signed_bundle_hash?: string;
+  release_id?: string;
+  release_manifest_hash?: string;
+  source_commits?: Record<string, string>;
+  schema_versions?: Record<string, string>;
+  stale?: boolean;
+  stale_reasons?: string[];
+};
+
+export type PcsStalenessView = {
+  stale: boolean;
+  stale_reasons: string[];
 };
 
 export type PcsArtifactDependencyEdge = {
@@ -126,7 +154,10 @@ export type PcsClaimReadModel = {
   release_manifest?: PcsReleaseManifestView;
   release_chain_validation?: PcsReleaseChainValidationView;
   artifact_registry?: PcsArtifactRegistryEntry[];
+  artifact_registry_version?: string;
   artifact_dependency_graph?: PcsArtifactDependencyEdge[];
+  lineage?: PcsLineageView;
+  staleness?: PcsStalenessView;
   release_manifest_hash?: string;
   signed_bundle_hash?: string;
   artifact_hashes: PcsHashRow[];

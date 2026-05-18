@@ -256,8 +256,8 @@ pcs-import-rc-bundle:
 	just pcs-import-bundle tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json --strict --release-mode
 
 # Phase 2: import from ReleaseManifest.v0 (strict release mode)
-pcs-import-release release_manifest="tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json":
-	just pcs-import-release-manifest "{{release_manifest}}"
+pcs-import-release RELEASE_MANIFEST="tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json":
+	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
 
 pcs-import-release-manifest release_manifest:
 	bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"

@@ -39,6 +39,16 @@ const phase2Schema = z.object({
     .min(1),
   release_manifest_hash: z.string().startsWith("sha256:"),
   signed_bundle_hash: z.string().startsWith("sha256:"),
+  artifact_registry_version: z.string().min(1),
+  lineage: z.object({
+    claim_id: z.string().min(1),
+    certificate_id: z.string().min(1),
+    signed_bundle_hash: z.string().startsWith("sha256:"),
+  }),
+  staleness: z.object({
+    stale: z.boolean(),
+    stale_reasons: z.array(z.string()),
+  }),
 });
 
 const modelPath = process.argv[2]

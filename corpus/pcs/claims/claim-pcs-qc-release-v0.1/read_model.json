@@ -166,94 +166,350 @@
   ],
   "artifact_registry": [
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "RuntimeObserved",
+        "RuntimeChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "RuntimeReceipt.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "LabTrust-Gym",
+        "CertifyEdge",
+        "Provability Fabric"
+      ],
       "hash": "sha256:8e642b59657d70b408be354323006421b963bb0c9fc9514f6abc7aab305345b6",
       "name": "runtime_receipt.json",
       "producer": "LabTrust-Gym",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "receipt_id",
+        "trace_hash",
+        "status",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "RuntimeReceipt.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "trace_hash_present",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "source_commit_matches_release_manifest",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "CertificateChecked",
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "ScienceClaimBundle.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "LabTrust-Gym",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
       "hash": "sha256:9b42d792199eb6f358d26f822699f0ed65bb4366eee306d4958d42121c656833",
       "name": "science_claim_bundle.certified.json",
       "producer": "LabTrust-Gym",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "bundle_id",
+        "assumption_set",
+        "runtime_receipts",
+        "status",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "ScienceClaimBundle.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "non_empty_runtime_receipts",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "certified_bundle_has_certificate_when_checked",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "CertificateChecked",
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "ScienceClaimBundle.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "LabTrust-Gym",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
       "hash": "sha256:677e0171743c4c129ad4b1931c62ba3fa0323f10c7d6d8d76290f8a4aabae45e",
       "name": "science_claim_bundle.pending.json",
       "producer": "LabTrust-Gym",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "bundle_id",
+        "assumption_set",
+        "runtime_receipts",
+        "status",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "ScienceClaimBundle.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "non_empty_runtime_receipts",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "certified_bundle_has_certificate_when_checked",
+          "responsible_component": "LabTrust-Gym",
+          "severity": "release_blocking"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [],
       "artifact_type": "ScientificMemory.ImportReport.v0",
+      "canonical_hash_required": false,
+      "consumer_repos": [],
       "hash": "sha256:d84091bb872b5ccc5210f5f1ea6f457f862c2a078be72f9e531fba0e6a6ad400",
       "name": "scientific_memory_import_report.json",
       "producer": "Scientific Memory",
+      "registry_admission_result": "admitted",
+      "release_mode_required": false,
+      "required_release_fields_missing": [],
+      "required_release_fields_present": [],
       "schema": "scientific_memory_import_report.json",
+      "semantic_checks": [],
       "semantic_checks_performed": [],
       "source_commit": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c",
       "source_repo": "https://github.com/fraware/scientific-memory",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "SignedScienceClaimBundle.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
       "hash": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
       "name": "signed_science_claim_bundle.json",
       "producer": "Provability Fabric",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "signed_bundle_id",
+        "signed_input_bundle_hash",
+        "science_claim_bundle",
+        "verification_result",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "SignedScienceClaimBundle.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "signed_input_bundle_hash_matches_certified",
+          "responsible_component": "Provability Fabric",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "embedded_bundle_passes_science_claim_semantics",
+          "responsible_component": "Provability Fabric",
+          "severity": "producer_responsible"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [],
       "artifact_type": "LabTrust.Trace.v0",
+      "canonical_hash_required": false,
+      "consumer_repos": [],
       "hash": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
       "name": "trace.json",
       "producer": "LabTrust-Gym",
+      "registry_admission_result": "admitted",
+      "release_mode_required": false,
+      "required_release_fields_missing": [],
+      "required_release_fields_present": [],
       "schema": "trace.json",
+      "semantic_checks": [],
       "semantic_checks_performed": [],
       "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "CertificatePending",
+        "CertificateChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "TraceCertificate.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
       "hash": "sha256:c0e09949aaa8441a2adc5a0be05e6827a7ab6a12c3e0c85d77f0554f191d1a28",
       "name": "trace_certificate.json",
       "producer": "CertifyEdge",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "certificate_id",
+        "trace_hash",
+        "spec_hash",
+        "status",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "TraceCertificate.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "trace_hash_matches_runtime_receipt",
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "status_is_certificate_checked_for_release",
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "source_commit_matches_release_manifest",
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
       "source_repo": "https://github.com/fraware/CertifyEdge",
       "status": "Validated"
     },
     {
+      "actual_status": "Validated",
+      "allowed_statuses": [
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
       "artifact_type": "VerificationResult.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
       "hash": "sha256:3b4b1215b4be6a945c3b99bb548e33a08527981290e7be1ab1da52b67ad8ba14",
       "name": "verification_result.json",
       "producer": "Provability Fabric",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": true,
+      "required_release_fields_missing": [
+        "schema_version",
+        "verification_id",
+        "status",
+        "verified_input",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
       "schema": "VerificationResult.v0.schema.json",
+      "semantic_checks": [
+        {
+          "check_id": "verified_input_bundle_hash_matches_certified",
+          "responsible_component": "Provability Fabric",
+          "severity": "release_blocking"
+        },
+        {
+          "check_id": "failed_checks_block_import_ready_status",
+          "responsible_component": "Provability Fabric",
+          "severity": "release_blocking"
+        }
+      ],
       "semantic_checks_performed": [],
       "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
       "status": "Validated"
     }
   ],
+  "artifact_registry_version": "0.1.0",
   "assumption_set": {
     "assumption_set_id": "as-pcs-qc-release-v0.1",
     "assumptions": [
@@ -357,9 +613,31 @@
   "limitations": [
     "This artifact is a proof-carrying simulation result. It demonstrates protocol-level and runtime-evidence verification inside LabTrust-Gym. It is not a clinical validation, production medical certification, or guarantee about a real hospital laboratory."
   ],
+  "lineage": {
+    "bundle_id": "scb-pcs-qc-release-v0.1",
+    "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+    "claim_id": "claim-pcs-qc-release-v0.1",
+    "release_id": "release-pcs-v0.1-labtrust-qc",
+    "release_manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
+    "schema_versions": {
+      "science_claim_bundle": "v0",
+      "signed_bundle": "v0"
+    },
+    "signed_bundle_hash": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
+    "source_commits": {
+      "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+      "labtrust_gym": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+      "pcs_core": "b492937e1b1128f88a77689dde611f4314650e44",
+      "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+      "scientific_memory": "5b4b81049b430d1b59ff5b51f688eb0feaeef76c"
+    },
+    "stale": false,
+    "stale_reasons": [],
+    "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
+  },
   "release_chain_validation": {
     "artifacts_checked": 8,
-    "checked_at": "2026-05-17T22:23:22Z",
+    "checked_at": "2026-05-17T22:32:01Z",
     "checks": [
       {
         "check_id": "manifest_present",
@@ -545,7 +823,7 @@
     "failure_codes": [],
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_id": "release-pcs-v0.1-labtrust-qc",
-    "signature_or_digest": "sha256:33e3218d6e0cee1800678d74d3f2be27fc21c42a4e5bc0c253ccb6c380bb51bd",
+    "signature_or_digest": "sha256:c178e30b86d066ff6364c1b5e21cb4be02787f6685fbe8d4abf70d840a024a18",
     "status": "ProofChecked",
     "validation_id": "validation-pcs-v0.1-labtrust-qc-rc",
     "validator": "pcs-core",
@@ -553,7 +831,7 @@
   },
   "release_manifest": {
     "generated_at": "2026-05-17T17:01:22Z",
-    "manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
+    "manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
     "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
     "producer_repos": {
       "certifyedge": {
@@ -580,10 +858,10 @@
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_id": "release-pcs-v0.1-labtrust-qc",
     "release_status": "Validated",
-    "signature_or_digest": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
+    "signature_or_digest": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
     "validation_profile": "labtrust-v0.1-release-chain"
   },
-  "release_manifest_hash": "sha256:6bd3915b496839c2beb0ceee136881f18afa81d426ab63d6743d7ec8a5280272",
+  "release_manifest_hash": "sha256:37b92eff39559f21d38921934b02e3f0172bfadd965310c681a8ae42fd04fcc3",
   "reproduce_commands": [],
   "runtime_receipt": {
     "ended_at": "2026-01-15T11:00:00Z",
@@ -632,6 +910,10 @@
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
     }
   ],
+  "staleness": {
+    "stale": false,
+    "stale_reasons": []
+  },
   "trace_certificate": {
     "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
     "checker": "CertifyEdge",

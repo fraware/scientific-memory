@@ -5,6 +5,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from sm_pipeline.pcs_import.artifact_registry_source import (
+    DERIVED_REGISTRY_VERSION,
+    load_pcs_core_artifact_registry,
+)
 from sm_pipeline.pcs_import.import_report_paths import portable_repo_path
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
 
@@ -19,8 +23,16 @@ def enrich_import_report_with_release_chain(
     report["release_chain_checked_at"] = validation.get("checked_at")
 
 
-def build_artifact_registry(manifest: dict[str, Any], validation: dict[str, Any]) -> list[dict[str, Any]]:
-    """Registry rows from ReleaseManifest.v0 artifacts + chain validation checks."""
+def build_artifact_registry(
+    manifest: dict[str, Any],
+    validation: dict[str, Any],
+    *,
+    repo_root: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Registry rows from ReleaseManifest.v0 artifacts, chain checks, and pcs-core registry."""
+    registry_specs: dict[str, Any] = {}
+    if repo_root is not None:
+        registry_specs, _ = load_pcs_core_artifact_registry(repo_root.resolve())
     checks_by_artifact: dict[str, list[str]] = {}
     for check in validation.get("checks") or []:
         if not isinstance(check, dict):
@@ -44,17 +56,33 @@ def build_artifact_registry(manifest: dict[str, Any], validation: dict[str, Any]
         semantic_checks = list(checks_by_artifact.get(name, []))
         if "manifest_hash_alignment" in checks_by_artifact:
             semantic_checks.append("manifest hash alignment")
+        artifact_type = str(entry.get("artifact_type") or "")
+        spec = registry_specs.get(artifact_type, {})
+        if not isinstance(spec, dict):
+            spec = {}
+        required_fields = spec.get("required_release_fields") or []
+        present = [field for field in required_fields if entry.get(field)]
+        missing = [field for field in required_fields if field not in present]
         registry.append(
             {
                 "name": name,
-                "artifact_type": entry.get("artifact_type", ""),
+                "artifact_type": artifact_type,
                 "producer": entry.get("producer", ""),
                 "schema": entry.get("schema", ""),
+                "allowed_statuses": spec.get("allowed_statuses", []),
                 "status": manifest.get("release_status", "Validated"),
+                "actual_status": entry.get("status") or manifest.get("release_status", "Validated"),
                 "source_repo": entry.get("source_repo", ""),
                 "source_commit": entry.get("source_commit", ""),
                 "hash": entry.get("sha256", ""),
                 "semantic_checks_performed": semantic_checks,
+                "semantic_checks": spec.get("semantic_checks", []),
+                "required_release_fields_present": present,
+                "required_release_fields_missing": missing,
+                "consumer_repos": spec.get("consumer_repos", []),
+                "canonical_hash_required": spec.get("canonical_hash_required", False),
+                "release_mode_required": spec.get("release_mode_required", False),
+                "registry_admission_result": "admitted" if not missing else "incomplete",
             },
         )
     return registry
@@ -134,6 +162,7 @@ def enrich_read_model_with_release(
     manifest_path: Path | None = None,
     bundle_path: Path | None = None,
     repo_root: Path | None = None,
+    lineage: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     out = dict(read_model)
     out["release_manifest"] = build_release_manifest_view(
@@ -142,9 +171,24 @@ def enrich_read_model_with_release(
         repo_root=repo_root,
     )
     out["release_chain_validation"] = build_release_chain_validation_view(validation)
-    out["artifact_registry"] = build_artifact_registry(manifest, validation)
+    registry_version = DERIVED_REGISTRY_VERSION
+    if repo_root is not None:
+        _, registry_version = load_pcs_core_artifact_registry(repo_root.resolve())
+
+    out["artifact_registry"] = build_artifact_registry(
+        manifest,
+        validation,
+        repo_root=repo_root,
+    )
+    out["artifact_registry_version"] = registry_version
     out["artifact_dependency_graph"] = build_artifact_dependency_graph(manifest)
     if bundle_path is not None and bundle_path.is_file():
         out["signed_bundle_hash"] = file_sha256_digest(bundle_path)
     out["release_manifest_hash"] = canonical_hash(manifest)
+    if lineage is not None:
+        out["lineage"] = lineage
+        out["staleness"] = {
+            "stale": bool(lineage.get("stale")),
+            "stale_reasons": list(lineage.get("stale_reasons") or []),
+        }
     return out
