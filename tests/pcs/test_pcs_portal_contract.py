@@ -29,6 +29,9 @@ PCS_UI_SECTION_TESTIDS = (
     "pcs-section-tool-use-certificate",
     "pcs-section-temporal-certificate",
     "pcs-section-verification-result",
+    "pcs-section-formal-trust-kernel",
+    "pcs-formal-non-claims",
+    "pcs-formal-check-failures",
     "pcs-section-release-manifest",
     "pcs-section-release-chain-validation",
     "pcs-section-artifact-registry",
@@ -60,6 +63,10 @@ def test_canonical_read_model_matches_portal_contract() -> None:
     assert read_model["verification_result"] is not None
     assert len(read_model["artifact_hashes"]) >= 5
     assert read_model["canonical_digests"]["signed_bundle"].startswith("sha256:")
+    kernel = read_model.get("formal_trust_kernel")
+    assert isinstance(kernel, dict)
+    assert kernel.get("formal_non_claims")
+    assert len(kernel.get("lean_check_results") or []) >= 5
 
 
 def test_computation_phase2_read_model_fixture_passes_portal_contract() -> None:

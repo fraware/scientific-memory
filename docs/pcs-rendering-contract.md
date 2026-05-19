@@ -19,18 +19,19 @@ Every PCS claim page at `/pcs/claims/<claim_id>` must render release evidence in
 | 11 | Tool-Use Certificate | `ToolUseCertificateView` | `read_model.tool_use_certificate` (when present) |
 | 12 | Temporal Certificate | `TraceCertificateView` | `read_model.trace_certificate` (when profile lists `TraceCertificate.v0`) |
 | 13 | Verification Result | `VerificationResultView` | `read_model.verification_result` |
-| 14 | Release Manifest | `ReleaseManifestView` | `read_model.release_manifest` |
-| 15 | Release Chain Validation | `ReleaseChainValidationView` | `read_model.release_chain_validation` |
-| 16 | Artifact Registry | `ArtifactRegistryView` | `read_model.artifact_registry` |
-| 17 | Handoff Manifests | `HandoffManifestView` | `read_model.handoff_manifests` |
-| 18 | Protocol artifacts | `ProtocolArtifactsSection` | `read_model.protocol_artifacts` (generic fallback) |
-| 19 | Artifact Dependency Graph | `ArtifactDependencyGraph` | `read_model.artifact_dependency_graph` |
-| 20 | Lineage | `LineageView` | `read_model.lineage` |
-| 21 | Staleness | `StalenessView` | `read_model.staleness` |
-| 22 | Artifact Hashes | `ArtifactHashTable` | `read_model.artifact_hashes`, `canonical_digests` |
-| 23 | Source Repositories | `SourceRepositories` | `read_model.source_repositories` |
-| 24 | Reproduce / Verify | `ReplayCommand` | `reproduce_commands`, `verify_commands` |
-| 25 | Limitations | `LimitationNotice` | `limitation_notice`, `limitations` |
+| 14 | Formal Trust Kernel | `FormalTrustKernelView` | `read_model.formal_trust_kernel` (when workflow requires formal trust) |
+| 15 | Release Manifest | `ReleaseManifestView` | `read_model.release_manifest` |
+| 16 | Release Chain Validation | `ReleaseChainValidationView` | `read_model.release_chain_validation` |
+| 17 | Artifact Registry | `ArtifactRegistryView` | `read_model.artifact_registry` |
+| 18 | Handoff Manifests | `HandoffManifestView` | `read_model.handoff_manifests` |
+| 19 | Protocol artifacts | `ProtocolArtifactsSection` | `read_model.protocol_artifacts` (generic fallback) |
+| 20 | Artifact Dependency Graph | `ArtifactDependencyGraph` | `read_model.artifact_dependency_graph` |
+| 21 | Lineage | `LineageView` | `read_model.lineage` |
+| 22 | Staleness | `StalenessView` | `read_model.staleness` |
+| 23 | Artifact Hashes | `ArtifactHashTable` | `read_model.artifact_hashes`, `canonical_digests` |
+| 24 | Source Repositories | `SourceRepositories` | `read_model.source_repositories` |
+| 25 | Reproduce / Verify | `ReplayCommand` | `reproduce_commands`, `verify_commands` |
+| 26 | Limitations | `LimitationNotice` | `limitation_notice`, `limitations` |
 
 ## Workflow-aware read model (top level)
 
@@ -39,6 +40,7 @@ Release imports must populate (in addition to nested `workflow_profile`):
 - `workflow_id`, `domain`
 - `runtime_artifact_types`, `certificate_artifact_types`
 - `tool_use_trace`, `tool_use_certificate` when listed in `ReleaseManifest.v0`
+- `formal_trust_kernel` when `ProofObligation.v0` and `LeanCheckResult.v0` are present (workflows with `formal_trust_required` on the profile)
 - Computation receipts when `workflow_id` is `scientific_computation.reproducibility_v0`:
   - `dataset_receipt`, `environment_receipt`, `computation_run_receipt`, `result_artifact`, `computation_witness`
   - `runtime_artifact_types`: `DatasetReceipt.v0`, `EnvironmentReceipt.v0`, `ComputationRunReceipt.v0`, `ResultArtifact.v0`
@@ -59,6 +61,31 @@ When `domain === scientific_computation` (or workflow `scientific_computation.re
 **Limitations (required on every computation release page):** `COMPUTATION_LIMITATION_NOTICE` from `sm_pipeline.pcs_import.computation_protocol` — states that the release verifies declared computational provenance and hash consistency only; it does not prove dataset fairness, model validity, or generalization.
 
 **Rejected witnesses:** When `computation_witness.payload.status === "Rejected"`, `ComputationWitnessView` renders a failure panel (`pcs-computation-witness-failures`) with failed check, violating artifact, expected/actual hash, responsible component, and repair hint per violation.
+
+## Formal Trust Kernel (PCS Phase 5)
+
+When `read_model.formal_trust_kernel` is present (strict release import with `ProofObligation.v0` + `LeanCheckResult.v0`):
+
+| Subsection | Fields surfaced |
+|------------|-----------------|
+| Summary | `what_was_checked`, `overall_status`, `lean_version`, `checked_at`, `checker`, `theorems_checked`, `artifacts_used` |
+| Trust-boundary invariants | `trust_boundary_invariants` (one per milestone obligation) |
+| Proof obligations | `obligation_id`, `predicate`, `lean_theorem`, `trust_boundary_invariant`, `source_artifacts` |
+| Lean check results | per-theorem `result`, `status`, `checked_at`, `lean_version` |
+| Formal scope | `formal_scope` (what the Lean package covers) |
+| Formal non-claims | `formal_non_claims` (required disclaimers; see below) |
+| Failed checks | when `result === "failed"` or `status === "Rejected"`: theorem, obligation, source artifacts, expected/actual, `responsible_component`, `repair_hint`, optional `pf_explain` |
+
+**Required formal non-claims (always shown):**
+
+- The Lean check does not prove the scientific claim is true.
+- The Lean check does not prove the dataset is unbiased.
+- The Lean check does not prove the model is valid.
+- The Lean check proves only the declared PCS trust-envelope invariant.
+
+**Milestone theorems (LabTrust / tool-use / computation profiles):** `PCS.CertificateMatchesRuntime`, `PCS.VerificationAdmitsBundle`, `PCS.SignedBundleAdmissible`, `PCS.RejectedCertificateNotAdmissible`, `PCS.StaleCertificateNotAdmissible`.
+
+Strict import rejects: missing proof/lean artifacts when required, `LeanCheckResult` status other than `ProofChecked`, release/obligation ID mismatch, or any failed obligation result.
 
 ## Generic protocol artifact fallback
 
@@ -105,6 +132,7 @@ The canonical string is `sm_pipeline.pcs_import.artifact_normalizer.LIMITATION_N
 - `pcs-section-workflow-profile`, `pcs-section-tool-use-trace`, `pcs-section-tool-use-certificate`
 - `pcs-section-dataset-receipt`, `pcs-section-environment-receipt`, `pcs-section-computation-run-receipt`, `pcs-section-result-artifact`, `pcs-section-computation-witness`, `pcs-computation-witness-failures`
 - `pcs-section-protocol-artifacts`, `pcs-protocol-artifact-<ArtifactType>`
+- `pcs-section-formal-trust-kernel`, `pcs-formal-non-claims`, `pcs-formal-check-failures`
 - `pcs-section-release-manifest`, `pcs-section-artifact-registry`, `pcs-section-lineage`, `pcs-section-staleness`
 - See `tests/pcs/test_pcs_portal_contract.py` for the full list.
 

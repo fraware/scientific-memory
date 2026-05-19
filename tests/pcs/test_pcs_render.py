@@ -119,6 +119,10 @@ def test_render_claim_read_model_matches_committed_fixture() -> None:
     normalized = json.loads(corpus_model.read_text(encoding="utf-8"))
     assert normalized == committed
     assert committed["limitation_notice"] == LIMITATION_NOTICE
+    kernel = committed.get("formal_trust_kernel")
+    assert isinstance(kernel, dict)
+    assert kernel.get("title") == "Formal Trust Kernel"
+    assert kernel.get("formal_non_claims")
 
 
 def _copy_schemas(root: Path) -> None:

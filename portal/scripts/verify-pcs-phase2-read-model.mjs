@@ -37,6 +37,55 @@ const namedArtifact = z.object({
   signature_or_digest: z.string().nullish(),
 });
 
+const formalCheckView = z.object({
+  obligation_id: z.string().min(1),
+  predicate: z.string().min(1).nullish(),
+  lean_theorem: z.string().min(1),
+  status: z.string().nullish(),
+  source_artifacts: z.array(z.string()).nullish(),
+  checked_at: z.string().nullish(),
+  lean_version: z.string().nullish(),
+  result: z.string().nullish(),
+  trust_boundary_invariant: z.string().nullish(),
+  formal_scope: z.string().nullish(),
+  expected: z.string().nullish(),
+  actual: z.string().nullish(),
+  responsible_component: z.string().nullish(),
+  repair_hint: z.string().nullish(),
+  pf_explain: z.string().nullish(),
+});
+
+const formalTrustKernel = z.object({
+  title: z.string().min(1),
+  what_was_checked: z.string().min(1),
+  overall_status: z.string().min(1),
+  formal_scope: z.string().min(1),
+  formal_non_claims: z.array(z.string()).min(4),
+  proof_obligations: z.array(formalCheckView).min(1),
+  lean_check_results: z.array(formalCheckView).min(1),
+  theorems_checked: z.array(z.string()).optional(),
+  artifacts_used: z.array(z.string()).optional(),
+  trust_boundary_invariants: z.array(z.string()).optional(),
+  lean_version: z.string().optional(),
+  checked_at: z.string().optional(),
+  pf_explain: z.string().nullish(),
+});
+
+const REQUIRED_FORMAL_NON_CLAIM_SNIPPETS = [
+  "does not prove the scientific claim is true",
+  "does not prove the dataset is unbiased",
+  "does not prove the model is valid",
+  "proves only the declared PCS trust-envelope invariant",
+];
+
+function workflowRequiresFormalTrust(data) {
+  return (
+    data.workflow_id === "labtrust.qc_release_v0.1" ||
+    data.workflow_id.startsWith("agent_tool_use") ||
+    data.workflow_id.startsWith("scientific_computation")
+  );
+}
+
 const phase2Schema = z
   .object({
     claim_id: z.string().min(1),
@@ -74,6 +123,7 @@ const phase2Schema = z
     computation_run_receipt: namedArtifact.optional(),
     result_artifact: namedArtifact.optional(),
     computation_witness: namedArtifact.optional(),
+    formal_trust_kernel: formalTrustKernel.optional(),
     lineage: z.object({
       claim_id: z.string().min(1),
       certificate_id: z.string().min(1),
@@ -174,6 +224,43 @@ const phase2Schema = z
         message: "handoff_manifests required for release workflows with producer handoffs",
         path: ["handoff_manifests"],
       });
+    }
+
+    if (workflowRequiresFormalTrust(data)) {
+      if (!data.formal_trust_kernel) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "formal_trust_kernel required for formal-trust workflows",
+          path: ["formal_trust_kernel"],
+        });
+        return;
+      }
+      const kernel = data.formal_trust_kernel;
+      if (kernel.overall_status !== "ProofChecked") {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "formal_trust_kernel.overall_status must be ProofChecked for passed releases",
+          path: ["formal_trust_kernel", "overall_status"],
+        });
+      }
+      for (const snippet of REQUIRED_FORMAL_NON_CLAIM_SNIPPETS) {
+        const found = (kernel.formal_non_claims ?? []).some((line) => line.includes(snippet));
+        if (!found) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `formal_non_claims must include: ${snippet}`,
+            path: ["formal_trust_kernel", "formal_non_claims"],
+          });
+        }
+      }
+      const theoremCount = kernel.lean_check_results?.length ?? 0;
+      if (theoremCount < 1) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "lean_check_results must list at least one theorem",
+          path: ["formal_trust_kernel", "lean_check_results"],
+        });
+      }
     }
   });
 

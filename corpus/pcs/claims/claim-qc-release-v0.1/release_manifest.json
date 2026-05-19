@@ -1,5 +1,21 @@
 {
   "artifacts": {
+    "lean_check_result.v0.json": {
+      "artifact_type": "LeanCheckResult.v0",
+      "producer": "pcs-core",
+      "schema": "lean_check_result.v0.schema.json",
+      "sha256": "sha256:bc92f8a8fffccbc6f0e3508396ef30f29dda37c5590deb3c6fc40409eed01f17",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
+    },
+    "proof_obligation.v0.json": {
+      "artifact_type": "ProofObligation.v0",
+      "producer": "pcs-core",
+      "schema": "proof_obligation.v0.schema.json",
+      "sha256": "sha256:66b4d8fe3f6f1464d772fcb0fc7b71df516b6358779fed355f042b9c52c8a042",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
+    },
     "runtime_receipt.json": {
       "artifact_type": "RuntimeReceipt.v0",
       "producer": "pcs-core",
@@ -44,7 +60,7 @@
       "artifact_type": "VerificationResult.v0",
       "producer": "Provability Fabric",
       "schema": "schemas/VerificationResult.v0.schema.json",
-      "sha256": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+      "sha256": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
       "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
@@ -60,12 +76,12 @@
   "canonical_claim_id": "claim-qc-release-v0.1",
   "canonical_signed_bundle": {
     "path": "signed_science_claim_bundle.json",
-    "sha256": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a"
+    "sha256": "sha256:c1ecda744f3d3a7e55724d5555f8d97121fb8e46f6b6d83d871bab0b11985b15"
   },
   "chain_root": {
     "certificate_id": "cert-tool-use-safety-v0",
-    "certified_bundle_hash": "sha256:e80f0303f26408c4ee7eba2be4dce097794a7ac8837b2d967e83fa50b7dd17cd",
-    "signed_bundle_hash": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+    "certified_bundle_hash": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30",
+    "signed_bundle_hash": "sha256:c1ecda744f3d3a7e55724d5555f8d97121fb8e46f6b6d83d871bab0b11985b15",
     "trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4"
   },
   "generated_at": "2026-05-18T12:00:00Z",
@@ -88,7 +104,7 @@
       "repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
     "scientific_memory": {
-      "commit": "796bb99e5c86687a5142bd3a8aa802650722036f",
+      "commit": "9cfbcaa3df3ef1d1c9820c670c4fd3f82b124b9c",
       "repo": "https://github.com/fraware/scientific-memory"
     }
   },
@@ -100,7 +116,7 @@
   "release_id": "release-pcs-v0.1-tool-use-safety",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
+  "signature_or_digest": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
   "validation_profile": "agent_tool_use.safety_v0",
   "workflow_profile_id": "agent_tool_use.safety_v0"
 }

@@ -22,7 +22,7 @@ RELEASES = (
     ),
     (
         "tool-use",
-        REPO_ROOT / "tests/pcs/fixtures/tool-use-release/release_manifest.v0.json",
+        REPO_ROOT / "tests/pcs/fixtures/tool-use-release/ReleaseManifest.v0.json",
         "claim-qc-release-v0.1",
         "agent_tool_use.safety_v0",
     ),

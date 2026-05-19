@@ -1101,6 +1101,101 @@
       "canonical_hash_required": true,
       "release_mode_required": true
     },
+    "ProofObligation.v0": {
+      "artifact_type": "ProofObligation.v0",
+      "schema": "schemas/ProofObligation.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "obligation_id",
+        "release_id",
+        "workflow_id",
+        "obligations",
+        "source_artifacts",
+        "lean_module",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [
+        {
+          "check_id": "obligations_reference_known_kinds",
+          "severity": "required",
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        }
+      ],
+      "consumer_repos": [
+        "pcs-core",
+        "LabTrust-Gym",
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "LeanCheckResult.v0": {
+      "artifact_type": "LeanCheckResult.v0",
+      "schema": "schemas/LeanCheckResult.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "check_id",
+        "proof_obligation_id",
+        "lean_module",
+        "lean_theorem",
+        "status",
+        "checked_at",
+        "lean_version",
+        "source_repo",
+        "source_commit",
+        "failure_reason",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [
+        {
+          "check_id": "obligation_results_match_proof_obligation",
+          "severity": "release_blocking",
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        },
+        {
+          "check_id": "lean_theorem_in_catalog",
+          "severity": "required",
+          "responsible_component": "pcs-core",
+          "execution_required_in_release_mode": true,
+          "allowed_to_skip": false
+        }
+      ],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
     "ArtifactRegistry.v0": {
       "artifact_type": "ArtifactRegistry.v0",
       "schema": "schemas/ArtifactRegistry.v0.schema.json",
@@ -1142,5 +1237,5 @@
       "release_mode_required": false
     }
   },
-  "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
+  "signature_or_digest": "sha256:cee659a6ed8df62d188374619e62477f6fd3f5fafff804d8dc9d3d67bd729e72"
 }

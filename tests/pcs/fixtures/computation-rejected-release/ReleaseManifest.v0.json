@@ -106,7 +106,7 @@
       "producer": "pcs-core",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
-      "sha256": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724"
+      "sha256": "sha256:95965ee03f24ff41236ee4dd2d284a253717b3369a465a3718d3fa6916ef4967"
     },
     "signed_science_claim_bundle.json": {
       "artifact_type": "SignedScienceClaimBundle.v0",
@@ -115,8 +115,24 @@
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "sha256": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c"
+    },
+    "proof_obligation.v0.json": {
+      "artifact_type": "ProofObligation.v0",
+      "schema": "proof_obligation.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:1b191f8d110b25a06b4c4f6af84e9656ce00abe1a41a2d5f51b7514d45d51c1e"
+    },
+    "lean_check_result.v0.json": {
+      "artifact_type": "LeanCheckResult.v0",
+      "schema": "lean_check_result.v0.schema.json",
+      "producer": "pcs-core",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:64d21ccf61376710b9fd305bb16666edcf27498b6c1a3ad4645e39f9f4fef3d8"
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:87fd1d55e23b9fadb8dee689f7d7b4e664de06af83be7b6f1f1d7024bfe1c153"
+  "signature_or_digest": "sha256:da38d05a4cef85ad3c9b9663740e794589e9774ea50d8e528eeee649059a7465"
 }

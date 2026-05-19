@@ -1,18 +1,32 @@
 {
   "artifact_hashes": {
+    "lean_check_result.v0.json": "sha256:bc92f8a8fffccbc6f0e3508396ef30f29dda37c5590deb3c6fc40409eed01f17",
+    "proof_obligation.v0.json": "sha256:66b4d8fe3f6f1464d772fcb0fc7b71df516b6358779fed355f042b9c52c8a042",
     "runtime_receipt.json": "sha256:eddf1ad1446050bb029ac1bf31b6755c247e631a44c51d245041e41d1f362e3d",
     "science_claim_bundle.certified.json": "sha256:08b07170dd8406bfe0cee6cedbe2e02b9f280f4fc81858f8dad36431a40d54d6",
     "signed_science_claim_bundle.json": "sha256:f1a857b7751594d0df4461224555a16f0a6ab3e632e09be95fc64b4e4388102d",
     "tool_use_certificate.valid.json": "sha256:1b8fb66898980e0868927b8e62400aa8c992a0d6a9f193c755fbe1656e404a68",
     "tool_use_trace.valid.json": "sha256:b31313785703270d7cc5402c694c5eb88e71535490506d0785cebe30f4e3e585",
-    "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+    "verification_result.json": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
     "workflow_profile.v0.json": "sha256:0f54c947169f2733cf05ae8486b73afbc7bd82ec51275448f72d18ad29783e66"
   },
   "bundle_id": "scb-qc-release-v0.1",
   "certificate_id": "cert-tool-use-safety-v0",
   "claim_id": "claim-qc-release-v0.1",
+  "formal_trust": {
+    "lean_check_result_id": "lean-check-release-pcs-v0.1-tool-use-safety",
+    "lean_check_status": "ProofChecked",
+    "lean_theorems": [
+      "PCS.CertificateMatchesRuntime",
+      "PCS.RejectedCertificateNotAdmissible",
+      "PCS.SignedBundleAdmissible",
+      "PCS.StaleCertificateNotAdmissible",
+      "PCS.VerificationAdmitsBundle"
+    ],
+    "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety"
+  },
   "release_id": "release-pcs-v0.1-tool-use-safety",
-  "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
+  "release_manifest_hash": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"
@@ -23,7 +37,7 @@
     "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
     "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
     "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-    "scientific_memory": "796bb99e5c86687a5142bd3a8aa802650722036f"
+    "scientific_memory": "9cfbcaa3df3ef1d1c9820c670c4fd3f82b124b9c"
   },
   "stale": false,
   "stale_reasons": [],

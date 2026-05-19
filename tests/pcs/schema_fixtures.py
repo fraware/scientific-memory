@@ -166,3 +166,9 @@ def copy_pcs_schemas(root: Path) -> None:
     legacy_dest.mkdir(exist_ok=True)
     for f in src.glob("legacy/*.json"):
         shutil.copy(f, legacy_dest / f.name)
+    profiles_src = src / "workflow_profiles"
+    if profiles_src.is_dir():
+        profiles_dest = dest / "workflow_profiles"
+        profiles_dest.mkdir(exist_ok=True)
+        for f in profiles_src.glob("*.json"):
+            shutil.copy(f, profiles_dest / f.name)

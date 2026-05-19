@@ -59,6 +59,7 @@ def build_lineage(
     release_manifest: dict[str, Any] | None = None,
     workflow_profile_id: str | None = None,
     computation_fields: dict[str, Any] | None = None,
+    formal_trust_fields: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     scb = bundle_for_validation(bundle)
     producer_repos = {}
@@ -105,6 +106,8 @@ def build_lineage(
             lineage["certificate_id"] = str(computation_fields["witness_id"])
         if computation_fields.get("dataset_aggregate_hash"):
             lineage["trace_hash"] = str(computation_fields["dataset_aggregate_hash"])
+    if formal_trust_fields:
+        lineage["formal_trust"] = dict(formal_trust_fields)
     return lineage
 
 

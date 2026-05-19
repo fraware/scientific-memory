@@ -43,9 +43,9 @@ def test_load_tool_use_trace_from_release_dir(tmp_path: Path) -> None:
         "status": "RuntimeObserved",
     }
     supplemental = load_supplemental_protocol_artifacts(manifest, release_dir)
-    assert len(supplemental) == 1
-    assert supplemental[0]["artifact_type"] == "ToolUseTrace.v0"
-    assert supplemental[0]["payload"]["trace_id"] == "trace-tool-use-demo"
+    tool_traces = [a for a in supplemental if a["artifact_type"] == "ToolUseTrace.v0"]
+    assert len(tool_traces) == 1
+    assert tool_traces[0]["payload"]["trace_id"] == "trace-tool-use-demo"
 
 
 def test_enrich_read_model_includes_protocol_artifacts(tmp_path: Path) -> None:

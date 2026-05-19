@@ -1,0 +1,44 @@
+{
+  "schema_version": "v0",
+  "check_id": "lean-check-proof-obligation-release-pcs-v0.1-tool-use-safety",
+  "proof_obligation_id": "proof-obligation-release-pcs-v0.1-tool-use-safety",
+  "lean_module": "PCS.Theorems",
+  "lean_theorem": "ReleaseChainAdmissible",
+  "status": "ProofChecked",
+  "checked_at": "2026-05-19T08:46:08Z",
+  "lean_version": "leanprover/lean4:stable",
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "d444444444444444444444444444444444444444",
+  "failure_reason": "",
+  "obligation_results": [
+    {
+      "obligation_id": "tool_trace_hash_alignment",
+      "kind": "ToolTraceHashMatchesCertificate",
+      "status": "passed",
+      "lean_theorem": "tool_trace_hash_matches_certificate",
+      "failure_reason": ""
+    },
+    {
+      "obligation_id": "trace_hash_alignment",
+      "kind": "CertificateMatchesRuntime",
+      "status": "passed",
+      "lean_theorem": "admissible_release_has_matching_trace_hash",
+      "failure_reason": ""
+    },
+    {
+      "obligation_id": "verification_admits_bundle",
+      "kind": "VerificationAdmitsBundle",
+      "status": "passed",
+      "lean_theorem": "admissible_release_has_verified_input_hash_equal_to_bundle_hash",
+      "failure_reason": ""
+    },
+    {
+      "obligation_id": "signed_bundle_admissible",
+      "kind": "SignedBundleAdmissible",
+      "status": "passed",
+      "lean_theorem": "admissible_release_has_signed_input_hash_equal_to_verified_input_hash",
+      "failure_reason": ""
+    }
+  ],
+  "signature_or_digest": "sha256:98e4a29889b5a5f4a7285bffae2291361894625653f28fe6a16d8a54b334394e"
+}

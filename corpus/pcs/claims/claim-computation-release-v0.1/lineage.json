@@ -4,10 +4,12 @@
     "computation_witness.json": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e",
     "dataset_receipt.json": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
     "environment_receipt.json": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+    "lean_check_result.v0.json": "sha256:9d859b78f1bea5cba667ef82f04c1cfcad5d07aab868fd42f746c3e13af8674f",
+    "proof_obligation.v0.json": "sha256:ef48b253e9ccd2c67e15dbdbe55555055dc62a1821a6713894572e61b35a2c30",
     "result_artifact.json": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
     "science_claim_bundle.certified.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
     "signed_science_claim_bundle.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
-    "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+    "verification_result.json": "sha256:95965ee03f24ff41236ee4dd2d284a253717b3369a465a3718d3fa6916ef4967",
     "workflow_profile.v0.json": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8"
   },
   "bundle_id": "scb-qc-release-v0.1",
@@ -32,8 +34,20 @@
     "witness_id": "witness-computation-demo-v0.1",
     "witness_status": "CertificateChecked"
   },
+  "formal_trust": {
+    "lean_check_result_id": "lean-check-release-pcs-v0.1-scientific-computation-reproducibility",
+    "lean_check_status": "ProofChecked",
+    "lean_theorems": [
+      "PCS.CertificateMatchesRuntime",
+      "PCS.RejectedCertificateNotAdmissible",
+      "PCS.SignedBundleAdmissible",
+      "PCS.StaleCertificateNotAdmissible",
+      "PCS.VerificationAdmitsBundle"
+    ],
+    "obligation_set_id": "obl-set-release-pcs-v0.1-scientific-computation-reproducibility"
+  },
   "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
-  "release_manifest_hash": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+  "release_manifest_hash": "sha256:555be4c4c88887458e8a7d82bb9df23befa1a0d46dda01713e1bdd9deb94f432",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"

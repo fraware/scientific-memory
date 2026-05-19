@@ -54,5 +54,10 @@
     "manifest_hash_mismatch"
   ],
   "limitations_notice": "LabTrust QC release demonstrates a proof-carrying simulated workflow; not clinical certification.",
+  "formal_trust_required": true,
+  "formal_trust_artifacts": [
+    "ProofObligation.v0",
+    "LeanCheckResult.v0"
+  ],
   "signature_or_digest": "sha256:ef46e42e500f839727fa814df0f95f81aab7ad8f6259c6c6a70f24d861a92f8d"
 }

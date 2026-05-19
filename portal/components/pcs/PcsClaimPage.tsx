@@ -24,6 +24,7 @@ import { EnvironmentReceiptView } from "./EnvironmentReceiptView";
 import { ResultArtifactView } from "./ResultArtifactView";
 import { ToolUseCertificateView } from "./ToolUseCertificateView";
 import { ToolUseTraceView } from "./ToolUseTraceView";
+import { FormalTrustKernelView } from "./FormalTrustKernelView";
 import { TraceCertificateView } from "./TraceCertificateView";
 import { VerificationResultView } from "./VerificationResultView";
 
@@ -88,6 +89,9 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
         <EvidenceBundleView evidence={model.evidence_bundle} />
       ) : null}
       <VerificationResultView result={model.verification_result} />
+      {model.formal_trust_kernel ? (
+        <FormalTrustKernelView kernel={model.formal_trust_kernel} />
+      ) : null}
       {model.release_manifest ? (
         <ReleaseManifestView manifest={model.release_manifest} />
       ) : null}

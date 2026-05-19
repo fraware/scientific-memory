@@ -50,8 +50,13 @@ def _pcs_core_labtrust_release_chain_valid() -> bool:
     return not validate_release_chain(PCS_CORE_CANONICAL_RELEASE)
 
 
+def _sm_labtrust_has_formal_trust_extensions() -> bool:
+    formal = REPO_ROOT / "tests" / "pcs" / "fixtures" / "labtrust-release" / "proof_obligation.v0.json"
+    return formal.is_file()
+
+
 pcs_core_parity = pytest.mark.skipif(
-    not _pcs_core_labtrust_release_chain_valid(),
+    not _pcs_core_labtrust_release_chain_valid() or _sm_labtrust_has_formal_trust_extensions(),
     reason=(
         "pcs-core labtrust-release fails release-chain validation; "
         "SM fixtures are locally realigned via ensure_labtrust_phase2_fixtures"

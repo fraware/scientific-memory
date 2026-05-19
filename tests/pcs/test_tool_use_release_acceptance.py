@@ -26,9 +26,9 @@ def tool_use_release_dir() -> Path:
     return TOOL_USE_FIXTURE
 
 
-def test_tool_use_manifest_resolves_lowercase_name(tool_use_release_dir: Path) -> None:
+def test_tool_use_manifest_resolves_release_manifest(tool_use_release_dir: Path) -> None:
     path = resolve_release_manifest_path(tool_use_release_dir)
-    assert path.name == "release_manifest.v0.json"
+    assert path.name in ("release_manifest.v0.json", "ReleaseManifest.v0.json")
 
 
 def test_tool_use_release_import_read_model(tmp_path: Path, tool_use_release_dir: Path) -> None:
@@ -60,6 +60,10 @@ def test_tool_use_release_import_read_model(tmp_path: Path, tool_use_release_dir
     assert read_model.get("release_manifest")
     assert read_model.get("release_chain_validation")
     assert read_model.get("workflow_profile")
+    kernel = read_model.get("formal_trust_kernel")
+    assert isinstance(kernel, dict)
+    assert kernel.get("overall_status") == "ProofChecked"
+    assert len(kernel.get("lean_check_results") or []) >= 5
 
     for name in (
         "signed_bundle.json",

@@ -70,6 +70,10 @@ def test_computation_import_promotes_protocol_artifacts(temp_repo: Path) -> None
         "CertificateChecked"
     )
     assert "computational provenance" in read_model.get("limitation_notice", "")
+    kernel = read_model.get("formal_trust_kernel")
+    assert isinstance(kernel, dict)
+    assert kernel.get("overall_status") == "ProofChecked"
+    assert len(kernel.get("lean_check_results") or []) >= 5
 
 
 def test_computation_rejected_witness_renders_failure_evidence() -> None:

@@ -19,7 +19,11 @@ from sm_pipeline.pcs_import.claim_query import (
     list_claims_by_source_commit,
     list_claims_by_trace_hash,
     list_claims_by_workflow,
+    list_claims_by_lean_theorem,
+    list_claims_with_failed_formal_checks,
+    list_claims_with_formal_checks,
     list_stale_claims,
+    show_formal_checks,
     load_claim_bundle,
     refresh_all_stale_flags,
 )
@@ -295,6 +299,44 @@ def pcs_list_claims_by_trace_hash(
     trace_hash: str = typer.Option(..., "--trace-hash", help="Trace hash digest"),
 ) -> None:
     for claim_id in list_claims_by_trace_hash(_repo_root(), trace_hash):
+        console.print(claim_id)
+
+
+def pcs_list_claims_with_formal_checks() -> None:
+    ids = list_claims_with_formal_checks(_repo_root())
+    if not ids:
+        console.print("[dim]No claims with formal trust checks.[/dim]")
+        return
+    for claim_id in ids:
+        console.print(claim_id)
+
+
+def pcs_show_formal_checks(
+    claim_id: str = typer.Option(..., "--claim-id", help="PCS claim artifact id"),
+) -> None:
+    import json
+
+    try:
+        payload = show_formal_checks(_repo_root(), claim_id)
+    except FileNotFoundError as exc:
+        console.print(f"[red]{exc}[/red]")
+        raise typer.Exit(code=1) from exc
+    typer.echo(json.dumps(payload, indent=2, ensure_ascii=False))
+
+
+def pcs_list_claims_by_lean_theorem(
+    theorem: str = typer.Option(..., "--theorem", help="Lean theorem name (e.g. PCS.CertificateMatchesRuntime)"),
+) -> None:
+    for claim_id in list_claims_by_lean_theorem(_repo_root(), theorem):
+        console.print(claim_id)
+
+
+def pcs_list_claims_with_failed_formal_checks() -> None:
+    ids = list_claims_with_failed_formal_checks(_repo_root())
+    if not ids:
+        console.print("[dim]No claims with failed formal trust checks.[/dim]")
+        return
+    for claim_id in ids:
         console.print(claim_id)
 
 

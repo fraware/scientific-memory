@@ -60,6 +60,23 @@ def import_release_manifest(
         repo_root=root,
         expected_release_id=str(manifest.get("release_id") or ""),
     )
+
+    workflow_profile_id = str(validation.get("workflow_profile_id") or manifest.get("workflow_profile_id") or "")
+    workflow_profile = None
+    if workflow_profile_id:
+        from sm_pipeline.pcs_import.workflow_profile import load_workflow_profile
+
+        workflow_profile = load_workflow_profile(workflow_profile_id, repo_root=root)
+
+    from sm_pipeline.pcs_validate.formal_trust_validation import require_formal_trust_artifacts
+
+    require_formal_trust_artifacts(
+        release_dir,
+        manifest,
+        repo_root=root,
+        workflow_profile=workflow_profile,
+    )
+
     bundle_path = signed_bundle_path_for_manifest(manifest_file)
 
     result = import_signed_bundle(

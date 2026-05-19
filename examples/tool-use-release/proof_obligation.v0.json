@@ -1,0 +1,73 @@
+{
+  "schema_version": "v0",
+  "obligation_id": "proof-obligation-release-pcs-v0.1-tool-use-safety",
+  "release_id": "release-pcs-v0.1-tool-use-safety",
+  "workflow_id": "agent_tool_use.safety_v0",
+  "obligations": [
+    {
+      "obligation_id": "tool_trace_hash_alignment",
+      "kind": "ToolTraceHashMatchesCertificate",
+      "inputs": {
+        "certificate_id": "cert-tool-use-safety-v0",
+        "certificate_trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4",
+        "trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4",
+        "certificate_policy_hash": "sha256:76d4443f09c6fb0d6cc7bebc5c80eae53bd008e4a212ab61d0d1844ac773b5cd",
+        "trace_policy_hash": "sha256:76d4443f09c6fb0d6cc7bebc5c80eae53bd008e4a212ab61d0d1844ac773b5cd"
+      }
+    },
+    {
+      "obligation_id": "trace_hash_alignment",
+      "kind": "CertificateMatchesRuntime",
+      "inputs": {
+        "certificate_id": "cert-tool-use-safety-v0",
+        "certificate_trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4",
+        "runtime_trace_hash": "sha256:42ce47fca8ec10a9c65c8d9b9384c8be52094c93d46aa9705ce7c2fa2b8c89e4",
+        "certificate_status": "CertificateChecked"
+      }
+    },
+    {
+      "obligation_id": "verification_admits_bundle",
+      "kind": "VerificationAdmitsBundle",
+      "inputs": {
+        "verification_status": "ProofChecked",
+        "verified_input_bundle_hash": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30",
+        "certified_bundle_hash": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30",
+        "release_blocking_checks_passed": true
+      }
+    },
+    {
+      "obligation_id": "signed_bundle_admissible",
+      "kind": "SignedBundleAdmissible",
+      "inputs": {
+        "signed_input_bundle_hash": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30",
+        "verified_input_bundle_hash": "sha256:21adad1e4817811766d484422d68ac13a056849b04e9143dcb583a87b70a9e30"
+      }
+    }
+  ],
+  "source_artifacts": {
+    "tool_use_trace.valid.json": {
+      "path": "tool_use_trace.valid.json",
+      "artifact_type": "ToolUseTrace.v0"
+    },
+    "tool_use_certificate.valid.json": {
+      "path": "tool_use_certificate.valid.json",
+      "artifact_type": "ToolUseCertificate.v0"
+    },
+    "runtime_receipt.json": {
+      "path": "runtime_receipt.json",
+      "artifact_type": "RuntimeReceipt.v0"
+    },
+    "verification_result.json": {
+      "path": "verification_result.json",
+      "artifact_type": "VerificationResult.v0"
+    },
+    "signed_science_claim_bundle.json": {
+      "path": "signed_science_claim_bundle.json",
+      "artifact_type": "SignedScienceClaimBundle.v0"
+    }
+  },
+  "lean_module": "PCS.Theorems",
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "d444444444444444444444444444444444444444",
+  "signature_or_digest": "sha256:98012907fe12b4bfdf4e2a299cfac98dfb0d2302382b7062a9de3e18fb9fa889"
+}

@@ -27,6 +27,14 @@ COMMIT_REPLACEMENTS = {
 }
 
 
+def _refresh_release_manifest_alias(release_dir: Path) -> None:
+    """Prefer pcs-core `release_manifest.v0.json` over a stale `ReleaseManifest.v0.json`."""
+    src = release_dir / "release_manifest.v0.json"
+    dest = release_dir / "ReleaseManifest.v0.json"
+    if src.is_file():
+        shutil.copy2(src, dest)
+
+
 def _replace_commits_in_file(path: Path) -> bool:
     text = path.read_text(encoding="utf-8")
     updated = text
@@ -104,6 +112,67 @@ def _pin_scientific_memory_commit(release_dir: Path) -> None:
                 entry["source_commit"] = head
         manifest["artifacts"] = artifacts
         path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+
+def _ensure_formal_trust_artifacts(release_dir: Path) -> None:
+    script = REPO_ROOT / "scripts" / "bootstrap_formal_trust_release.py"
+    if not script.is_file():
+        return
+    import subprocess
+
+    subprocess.run(
+        [sys.executable, str(script), "--release-dir", str(release_dir)],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if legacy_path.is_file():
+        sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+        from sm_pipeline.pcs_import.formal_trust_protocol import strip_formal_trust_from_legacy_manifest
+        from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
+        from sm_pipeline.pcs_validate.release_paths import resolve_release_manifest_path
+
+        legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+        if strip_formal_trust_from_legacy_manifest(legacy):
+            legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+
+        manifest_path = resolve_release_manifest_path(release_dir)
+        if manifest_path.is_file():
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+            artifacts = dict(manifest.get("artifacts") or {})
+            pcs_commit = str(
+                (manifest.get("producer_repos") or {}).get("pcs_core", {}).get("commit")
+                or legacy.get("pcs_core_commit")
+                or "",
+            )
+            for name, artifact_type in (
+                ("proof_obligation.v0.json", "ProofObligation.v0"),
+                ("lean_check_result.v0.json", "LeanCheckResult.v0"),
+            ):
+                path = release_dir / name
+                if not path.is_file():
+                    continue
+                doc = json.loads(path.read_text(encoding="utf-8-sig"))
+                artifacts[name] = {
+                    "artifact_type": artifact_type,
+                    "schema": name.replace(".json", ".schema.json"),
+                    "producer": "pcs-core",
+                    "source_repo": str(
+                        doc.get("source_repo") or "https://github.com/SentinelOps-CI/pcs-core",
+                    ),
+                    "source_commit": str(doc.get("source_commit") or pcs_commit),
+                    "sha256": file_sha256_digest(path),
+                }
+            manifest["artifacts"] = artifacts
+            manifest.pop("proof_obligation", None)
+            manifest.pop("lean_check_result", None)
+            manifest["signature_or_digest"] = canonical_hash(
+                {key: value for key, value in manifest.items() if key != "signature_or_digest"},
+            )
+            manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+            lower = release_dir / "release_manifest.v0.json"
+            if lower != manifest_path:
+                lower.write_text(manifest_path.read_text(encoding="utf-8"), encoding="utf-8")
 
 
 def _sync_manifest_hashes(release_dir: Path) -> None:
@@ -204,6 +273,8 @@ def main() -> int:
         print(f"error: missing release dir {release_dir}", file=sys.stderr)
         return 1
 
+    _refresh_release_manifest_alias(release_dir)
+
     sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
     from sm_pipeline.pcs_validate.release_paths import (
         resolve_release_chain_validation_path,
@@ -230,7 +301,13 @@ def main() -> int:
         if _align_release_chain_validation(validation_path):
             print(f"aligned validation -> {validation_path}")
 
+    _ensure_formal_trust_artifacts(release_dir)
+    _refresh_release_manifest_alias(release_dir)
     _sync_manifest_hashes(release_dir)
+    lower = release_dir / "release_manifest.v0.json"
+    upper = release_dir / "ReleaseManifest.v0.json"
+    if upper.is_file():
+        shutil.copy2(upper, lower)
 
     manifest_path = resolve_release_manifest_path(release_dir)
     manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))

@@ -197,6 +197,45 @@ export type PcsProtocolArtifact = {
   payload?: Record<string, unknown> | null;
 };
 
+export type PcsFormalCheckView = {
+  obligation_id?: string;
+  predicate?: string;
+  lean_theorem?: string;
+  status?: string;
+  source_artifacts?: string[];
+  checked_at?: string;
+  lean_version?: string;
+  result?: string;
+  trust_boundary_invariant?: string;
+  formal_scope?: string;
+  expected?: string;
+  actual?: string;
+  responsible_component?: string;
+  repair_hint?: string;
+  pf_explain?: string;
+};
+
+export type PcsFormalTrustKernelView = {
+  title?: string;
+  release_id?: string;
+  obligation_set_id?: string;
+  overall_status?: string;
+  lean_version?: string;
+  checked_at?: string;
+  checker?: string;
+  checker_version?: string;
+  trust_boundary?: string;
+  what_was_checked?: string;
+  trust_boundary_invariants?: string[];
+  artifacts_used?: string[];
+  theorems_checked?: string[];
+  proof_obligations?: PcsFormalCheckView[];
+  lean_check_results?: PcsFormalCheckView[];
+  formal_scope?: string;
+  formal_non_claims?: string[];
+  pf_explain?: string | null;
+};
+
 export type PcsStalenessView = {
   stale: boolean;
   stale_reasons: string[];
@@ -232,6 +271,9 @@ export type PcsClaimReadModel = {
   computation_run_receipt?: PcsNamedArtifact;
   result_artifact?: PcsNamedArtifact;
   computation_witness?: PcsNamedArtifact;
+  formal_trust_kernel?: PcsFormalTrustKernelView;
+  proof_obligation?: PcsNamedArtifact;
+  lean_check_result?: PcsNamedArtifact;
   release_manifest?: PcsReleaseManifestView;
   release_chain_validation?: PcsReleaseChainValidationView;
   protocol_artifacts?: PcsProtocolArtifact[];

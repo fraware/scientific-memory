@@ -144,6 +144,52 @@ def list_claims_by_result_hash(repo_root: Path, result_hash: str) -> list[str]:
     ]
 
 
+def list_claims_with_formal_checks(repo_root: Path) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, has_formal_checks=True)
+        if entry.get("claim_id")
+    ]
+
+
+def list_claims_with_failed_formal_checks(repo_root: Path) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, failed_formal_checks=True)
+        if entry.get("claim_id")
+    ]
+
+
+def list_claims_by_lean_theorem(repo_root: Path, theorem: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, lean_theorem=theorem)
+        if entry.get("claim_id")
+    ]
+
+
+def show_formal_checks(repo_root: Path, claim_id: str) -> dict[str, Any]:
+    bundle = load_claim_bundle(repo_root, claim_id)
+    read_model = bundle.get("read_model")
+    if not isinstance(read_model, dict):
+        raise FileNotFoundError(f"read model missing for claim: {claim_id}")
+    kernel = read_model.get("formal_trust_kernel")
+    if not isinstance(kernel, dict):
+        raise FileNotFoundError(f"formal trust kernel missing for claim: {claim_id}")
+    return {
+        "claim_id": claim_id,
+        "formal_trust_kernel": kernel,
+        "proof_obligation": read_model.get("proof_obligation"),
+        "lean_check_result": read_model.get("lean_check_result"),
+    }
+
+
 def list_stale_claims(repo_root: Path) -> list[str]:
     from sm_pipeline.pcs_import.claim_index import query_claims_index
 

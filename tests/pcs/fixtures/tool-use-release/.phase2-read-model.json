@@ -31,6 +31,16 @@
       "to": "signed_science_claim_bundle.json"
     },
     {
+      "from": "signed_science_claim_bundle.json",
+      "kind": "release_chain",
+      "to": "proof_obligation.v0.json"
+    },
+    {
+      "from": "proof_obligation.v0.json",
+      "kind": "release_chain",
+      "to": "lean_check_result.v0.json"
+    },
+    {
       "from": "CertifyEdge",
       "handoff_id": "handoff-tool-use-to-pf",
       "kind": "bundle_to_verifier",
@@ -172,6 +182,105 @@
     }
   ],
   "artifact_registry": [
+    {
+      "actual_status": "Validated",
+      "admission_status": "failed",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "allowed_statuses": [
+        "ProofChecked",
+        "Rejected",
+        "Stale"
+      ],
+      "artifact_type": "LeanCheckResult.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "hash": "sha256:bc92f8a8fffccbc6f0e3508396ef30f29dda37c5590deb3c6fc40409eed01f17",
+      "name": "lean_check_result.v0.json",
+      "producer": "pcs-core",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": false,
+      "required_release_fields_missing": [
+        "schema_version",
+        "check_id",
+        "proof_obligation_id",
+        "lean_module",
+        "lean_theorem",
+        "status",
+        "checked_at",
+        "lean_version",
+        "failure_reason",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "lean_check_result.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        "obligation_results_match_proof_obligation",
+        "lean_theorem_in_catalog"
+      ],
+      "semantic_checks_performed": [],
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "status": "Validated"
+    },
+    {
+      "actual_status": "Validated",
+      "admission_status": "failed",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "ProofObligation.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "LabTrust-Gym",
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
+      "hash": "sha256:66b4d8fe3f6f1464d772fcb0fc7b71df516b6358779fed355f042b9c52c8a042",
+      "name": "proof_obligation.v0.json",
+      "producer": "pcs-core",
+      "registry_admission_result": "incomplete",
+      "release_mode_required": false,
+      "required_release_fields_missing": [
+        "schema_version",
+        "obligation_id",
+        "release_id",
+        "workflow_id",
+        "obligations",
+        "source_artifacts",
+        "lean_module",
+        "signature_or_digest"
+      ],
+      "required_release_fields_present": [
+        "source_repo",
+        "source_commit"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "proof_obligation.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        "obligations_reference_known_kinds"
+      ],
+      "semantic_checks_performed": [],
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "status": "Validated"
+    },
     {
       "actual_status": "Validated",
       "admission_status": "failed",
@@ -441,7 +550,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+      "hash": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
       "name": "verification_result.json",
       "producer": "Provability Fabric",
       "registry_admission_result": "incomplete",
@@ -527,7 +636,7 @@
     "registry_id": "pcs-artifact-registry-v0.1",
     "registry_version": "0.1.0",
     "schema_version": "v0",
-    "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
+    "signature_or_digest": "sha256:cee659a6ed8df62d188374619e62477f6fd3f5fafff804d8dc9d3d67bd729e72"
   },
   "artifact_registry_source": "ArtifactRegistry.v0",
   "artifact_registry_version": "0.1.0",
@@ -607,6 +716,247 @@
     "signature_or_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
     "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
     "source_repo": "https://github.com/fraware/LabTrust-Gym"
+  },
+  "formal_trust_kernel": {
+    "artifacts_used": [
+      "runtime_receipt.json",
+      "science_claim_bundle.certified.json",
+      "signed_science_claim_bundle.json",
+      "trace_certificate.json",
+      "verification_result.json"
+    ],
+    "checked_at": "2026-05-19T08:59:49Z",
+    "checker": "pcs-core",
+    "checker_version": "0.1.0",
+    "formal_non_claims": [
+      "The Lean check does not prove the scientific claim is true.",
+      "The Lean check does not prove the dataset is unbiased.",
+      "The Lean check does not prove the model is valid.",
+      "The Lean check proves only the declared PCS trust-envelope invariant."
+    ],
+    "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+    "lean_check_results": [
+      {
+        "actual": null,
+        "checked_at": "2026-05-19T08:59:49Z",
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.CertificateMatchesRuntime",
+        "lean_version": "leanprover/lean4:v4.24.0",
+        "obligation_id": "obl-certificate-matches-runtime",
+        "pf_explain": null,
+        "predicate": "CertificateMatchesRuntime",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": "passed",
+        "source_artifacts": [
+          "trace_certificate.json",
+          "runtime_receipt.json"
+        ],
+        "status": "ProofChecked",
+        "trust_boundary_invariant": "The temporal certificate trace hash matches the runtime receipt trace hash and the certificate is CertificateChecked."
+      },
+      {
+        "actual": null,
+        "checked_at": "2026-05-19T08:59:49Z",
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.VerificationAdmitsBundle",
+        "lean_version": "leanprover/lean4:v4.24.0",
+        "obligation_id": "obl-verification-admits-bundle",
+        "pf_explain": null,
+        "predicate": "VerificationAdmitsBundle",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": "passed",
+        "source_artifacts": [
+          "verification_result.json",
+          "science_claim_bundle.certified.json"
+        ],
+        "status": "ProofChecked",
+        "trust_boundary_invariant": "Provability Fabric verification is ProofChecked and admits the certified bundle hash."
+      },
+      {
+        "actual": null,
+        "checked_at": "2026-05-19T08:59:49Z",
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.SignedBundleAdmissible",
+        "lean_version": "leanprover/lean4:v4.24.0",
+        "obligation_id": "obl-signed-bundle-admissible",
+        "pf_explain": null,
+        "predicate": "SignedBundleAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": "passed",
+        "source_artifacts": [
+          "signed_science_claim_bundle.json",
+          "science_claim_bundle.certified.json"
+        ],
+        "status": "ProofChecked",
+        "trust_boundary_invariant": "The signed bundle input hash matches the PF verified certified bundle hash."
+      },
+      {
+        "actual": null,
+        "checked_at": "2026-05-19T08:59:49Z",
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+        "lean_version": "leanprover/lean4:v4.24.0",
+        "obligation_id": "obl-rejected-certificate-not-admissible",
+        "pf_explain": null,
+        "predicate": "RejectedCertificateNotAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": "passed",
+        "source_artifacts": [
+          "trace_certificate.json"
+        ],
+        "status": "ProofChecked",
+        "trust_boundary_invariant": "A Rejected temporal certificate cannot satisfy an admissible release chain."
+      },
+      {
+        "actual": null,
+        "checked_at": "2026-05-19T08:59:49Z",
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+        "lean_version": "leanprover/lean4:v4.24.0",
+        "obligation_id": "obl-stale-certificate-not-admissible",
+        "pf_explain": null,
+        "predicate": "StaleCertificateNotAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": "passed",
+        "source_artifacts": [
+          "trace_certificate.json"
+        ],
+        "status": "ProofChecked",
+        "trust_boundary_invariant": "A Stale temporal certificate cannot satisfy an admissible release chain."
+      }
+    ],
+    "lean_version": "leanprover/lean4:v4.24.0",
+    "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
+    "overall_status": "ProofChecked",
+    "pf_explain": null,
+    "proof_obligations": [
+      {
+        "actual": null,
+        "checked_at": null,
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.CertificateMatchesRuntime",
+        "lean_version": null,
+        "obligation_id": "obl-certificate-matches-runtime",
+        "pf_explain": null,
+        "predicate": "CertificateMatchesRuntime",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": null,
+        "source_artifacts": [
+          "trace_certificate.json",
+          "runtime_receipt.json"
+        ],
+        "status": null,
+        "trust_boundary_invariant": "The temporal certificate trace hash matches the runtime receipt trace hash and the certificate is CertificateChecked."
+      },
+      {
+        "actual": null,
+        "checked_at": null,
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.VerificationAdmitsBundle",
+        "lean_version": null,
+        "obligation_id": "obl-verification-admits-bundle",
+        "pf_explain": null,
+        "predicate": "VerificationAdmitsBundle",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": null,
+        "source_artifacts": [
+          "verification_result.json",
+          "science_claim_bundle.certified.json"
+        ],
+        "status": null,
+        "trust_boundary_invariant": "Provability Fabric verification is ProofChecked and admits the certified bundle hash."
+      },
+      {
+        "actual": null,
+        "checked_at": null,
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.SignedBundleAdmissible",
+        "lean_version": null,
+        "obligation_id": "obl-signed-bundle-admissible",
+        "pf_explain": null,
+        "predicate": "SignedBundleAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": null,
+        "source_artifacts": [
+          "signed_science_claim_bundle.json",
+          "science_claim_bundle.certified.json"
+        ],
+        "status": null,
+        "trust_boundary_invariant": "The signed bundle input hash matches the PF verified certified bundle hash."
+      },
+      {
+        "actual": null,
+        "checked_at": null,
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+        "lean_version": null,
+        "obligation_id": "obl-rejected-certificate-not-admissible",
+        "pf_explain": null,
+        "predicate": "RejectedCertificateNotAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": null,
+        "source_artifacts": [
+          "trace_certificate.json"
+        ],
+        "status": null,
+        "trust_boundary_invariant": "A Rejected temporal certificate cannot satisfy an admissible release chain."
+      },
+      {
+        "actual": null,
+        "checked_at": null,
+        "expected": null,
+        "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+        "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+        "lean_version": null,
+        "obligation_id": "obl-stale-certificate-not-admissible",
+        "pf_explain": null,
+        "predicate": "StaleCertificateNotAdmissible",
+        "repair_hint": null,
+        "responsible_component": null,
+        "result": null,
+        "source_artifacts": [
+          "trace_certificate.json"
+        ],
+        "status": null,
+        "trust_boundary_invariant": "A Stale temporal certificate cannot satisfy an admissible release chain."
+      }
+    ],
+    "release_id": "release-pcs-v0.1-tool-use-safety",
+    "theorems_checked": [
+      "PCS.CertificateMatchesRuntime",
+      "PCS.RejectedCertificateNotAdmissible",
+      "PCS.SignedBundleAdmissible",
+      "PCS.StaleCertificateNotAdmissible",
+      "PCS.VerificationAdmitsBundle"
+    ],
+    "title": "Formal Trust Kernel",
+    "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
+    "trust_boundary_invariants": [
+      "The temporal certificate trace hash matches the runtime receipt trace hash and the certificate is CertificateChecked.",
+      "Provability Fabric verification is ProofChecked and admits the certified bundle hash.",
+      "The signed bundle input hash matches the PF verified certified bundle hash.",
+      "A Rejected temporal certificate cannot satisfy an admissible release chain.",
+      "A Stale temporal certificate cannot satisfy an admissible release chain."
+    ],
+    "what_was_checked": "Lean-checked PCS trust-envelope obligations for this release: PCS.CertificateMatchesRuntime, PCS.RejectedCertificateNotAdmissible, PCS.SignedBundleAdmissible, PCS.StaleCertificateNotAdmissible, PCS.VerificationAdmitsBundle"
   },
   "handoff_manifests": [
     {
@@ -740,19 +1090,110 @@
       "to_component": "Scientific Memory"
     }
   ],
+  "lean_check_result": {
+    "artifact_type": "LeanCheckResult.v0",
+    "id": "obl-set-release-pcs-v0.1-tool-use-safety",
+    "payload": {
+      "check_result_id": "lean-check-release-pcs-v0.1-tool-use-safety",
+      "checked_at": "2026-05-19T08:59:49Z",
+      "checker": "pcs-core",
+      "checker_version": "0.1.0",
+      "lean_version": "leanprover/lean4:v4.24.0",
+      "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
+      "pf_explain": null,
+      "release_id": "release-pcs-v0.1-tool-use-safety",
+      "results": [
+        {
+          "checked_at": "2026-05-19T08:59:49Z",
+          "lean_theorem": "PCS.CertificateMatchesRuntime",
+          "lean_version": "leanprover/lean4:v4.24.0",
+          "obligation_id": "obl-certificate-matches-runtime",
+          "result": "passed",
+          "source_artifacts": [
+            "trace_certificate.json",
+            "runtime_receipt.json"
+          ],
+          "status": "ProofChecked"
+        },
+        {
+          "checked_at": "2026-05-19T08:59:49Z",
+          "lean_theorem": "PCS.VerificationAdmitsBundle",
+          "lean_version": "leanprover/lean4:v4.24.0",
+          "obligation_id": "obl-verification-admits-bundle",
+          "result": "passed",
+          "source_artifacts": [
+            "verification_result.json",
+            "science_claim_bundle.certified.json"
+          ],
+          "status": "ProofChecked"
+        },
+        {
+          "checked_at": "2026-05-19T08:59:49Z",
+          "lean_theorem": "PCS.SignedBundleAdmissible",
+          "lean_version": "leanprover/lean4:v4.24.0",
+          "obligation_id": "obl-signed-bundle-admissible",
+          "result": "passed",
+          "source_artifacts": [
+            "signed_science_claim_bundle.json",
+            "science_claim_bundle.certified.json"
+          ],
+          "status": "ProofChecked"
+        },
+        {
+          "checked_at": "2026-05-19T08:59:49Z",
+          "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+          "lean_version": "leanprover/lean4:v4.24.0",
+          "obligation_id": "obl-rejected-certificate-not-admissible",
+          "result": "passed",
+          "source_artifacts": [
+            "trace_certificate.json"
+          ],
+          "status": "ProofChecked"
+        },
+        {
+          "checked_at": "2026-05-19T08:59:49Z",
+          "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+          "lean_version": "leanprover/lean4:v4.24.0",
+          "obligation_id": "obl-stale-certificate-not-admissible",
+          "result": "passed",
+          "source_artifacts": [
+            "trace_certificate.json"
+          ],
+          "status": "ProofChecked"
+        }
+      ],
+      "schema_version": "v0",
+      "signature_or_digest": "sha256:49a3b9cf50962367031466233fbc285e7b4391b1531fec6892fdc508f6796e21",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "status": "ProofChecked"
+    },
+    "schema_version": "v0",
+    "signature_or_digest": "sha256:49a3b9cf50962367031466233fbc285e7b4391b1531fec6892fdc508f6796e21",
+    "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+    "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+    "status": "ProofChecked",
+    "summary": "LeanCheckResult.v0"
+  },
   "limitation_notice": "This artifact is a proof-carrying scientific release. It demonstrates protocol-level validation and runtime evidence for the cited workflow. It is not production certification, clinical validation, or a guarantee about real-world deployment outside the stated workflow profile.",
   "limitations": [
     "This artifact is a proof-carrying scientific release. It demonstrates protocol-level validation and runtime evidence for the cited workflow. It is not production certification, clinical validation, or a guarantee about real-world deployment outside the stated workflow profile.",
+    "The Lean check does not prove the scientific claim is true.",
+    "The Lean check does not prove the dataset is unbiased.",
+    "The Lean check does not prove the model is valid.",
+    "The Lean check proves only the declared PCS trust-envelope invariant.",
     "This artifact is a proof-carrying tool-use simulation result. It is not a guarantee that a real deployed agent is safe."
   ],
   "lineage": {
     "artifact_hashes": {
+      "lean_check_result.v0.json": "sha256:bc92f8a8fffccbc6f0e3508396ef30f29dda37c5590deb3c6fc40409eed01f17",
+      "proof_obligation.v0.json": "sha256:66b4d8fe3f6f1464d772fcb0fc7b71df516b6358779fed355f042b9c52c8a042",
       "runtime_receipt.json": "sha256:eddf1ad1446050bb029ac1bf31b6755c247e631a44c51d245041e41d1f362e3d",
       "science_claim_bundle.certified.json": "sha256:08b07170dd8406bfe0cee6cedbe2e02b9f280f4fc81858f8dad36431a40d54d6",
       "signed_science_claim_bundle.json": "sha256:f1a857b7751594d0df4461224555a16f0a6ab3e632e09be95fc64b4e4388102d",
       "tool_use_certificate.valid.json": "sha256:1b8fb66898980e0868927b8e62400aa8c992a0d6a9f193c755fbe1656e404a68",
       "tool_use_trace.valid.json": "sha256:b31313785703270d7cc5402c694c5eb88e71535490506d0785cebe30f4e3e585",
-      "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+      "verification_result.json": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
       "workflow_profile.v0.json": "sha256:0f54c947169f2733cf05ae8486b73afbc7bd82ec51275448f72d18ad29783e66"
     },
     "bundle_id": "scb-qc-release-v0.1",
@@ -761,11 +1202,23 @@
     "changed_hashes": [],
     "claim_id": "claim-qc-release-v0.1",
     "claim_state": "current",
+    "formal_trust": {
+      "lean_check_result_id": "lean-check-release-pcs-v0.1-tool-use-safety",
+      "lean_check_status": "ProofChecked",
+      "lean_theorems": [
+        "PCS.CertificateMatchesRuntime",
+        "PCS.RejectedCertificateNotAdmissible",
+        "PCS.SignedBundleAdmissible",
+        "PCS.StaleCertificateNotAdmissible",
+        "PCS.VerificationAdmitsBundle"
+      ],
+      "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety"
+    },
     "newer_release_ids": [],
     "previous_release_id": null,
     "recommended_action": "No action required; claim matches imported release artifacts.",
     "release_id": "release-pcs-v0.1-tool-use-safety",
-    "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
+    "release_manifest_hash": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
     "schema_versions": {
       "science_claim_bundle": "v0",
       "signed_bundle": "v0"
@@ -776,12 +1229,88 @@
       "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
       "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-      "scientific_memory": "796bb99e5c86687a5142bd3a8aa802650722036f"
+      "scientific_memory": "9cfbcaa3df3ef1d1c9820c670c4fd3f82b124b9c"
     },
     "stale": false,
     "stale_reasons": [],
     "trace_hash": "sha256:efcafc5447b36d4fde727befc949e4877b983b1a7ac4737b34304d2fc9f9e648",
     "workflow_profile_id": "agent_tool_use.safety_v0"
+  },
+  "proof_obligation": {
+    "artifact_type": "ProofObligation.v0",
+    "id": "obl-set-release-pcs-v0.1-tool-use-safety",
+    "payload": {
+      "generated_at": "2026-05-19T08:59:49Z",
+      "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
+      "obligations": [
+        {
+          "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+          "lean_theorem": "PCS.CertificateMatchesRuntime",
+          "obligation_id": "obl-certificate-matches-runtime",
+          "predicate": "CertificateMatchesRuntime",
+          "source_artifacts": [
+            "trace_certificate.json",
+            "runtime_receipt.json"
+          ],
+          "trust_boundary_invariant": "The temporal certificate trace hash matches the runtime receipt trace hash and the certificate is CertificateChecked."
+        },
+        {
+          "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+          "lean_theorem": "PCS.VerificationAdmitsBundle",
+          "obligation_id": "obl-verification-admits-bundle",
+          "predicate": "VerificationAdmitsBundle",
+          "source_artifacts": [
+            "verification_result.json",
+            "science_claim_bundle.certified.json"
+          ],
+          "trust_boundary_invariant": "Provability Fabric verification is ProofChecked and admits the certified bundle hash."
+        },
+        {
+          "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+          "lean_theorem": "PCS.SignedBundleAdmissible",
+          "obligation_id": "obl-signed-bundle-admissible",
+          "predicate": "SignedBundleAdmissible",
+          "source_artifacts": [
+            "signed_science_claim_bundle.json",
+            "science_claim_bundle.certified.json"
+          ],
+          "trust_boundary_invariant": "The signed bundle input hash matches the PF verified certified bundle hash."
+        },
+        {
+          "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+          "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+          "obligation_id": "obl-rejected-certificate-not-admissible",
+          "predicate": "RejectedCertificateNotAdmissible",
+          "source_artifacts": [
+            "trace_certificate.json"
+          ],
+          "trust_boundary_invariant": "A Rejected temporal certificate cannot satisfy an admissible release chain."
+        },
+        {
+          "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+          "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+          "obligation_id": "obl-stale-certificate-not-admissible",
+          "predicate": "StaleCertificateNotAdmissible",
+          "source_artifacts": [
+            "trace_certificate.json"
+          ],
+          "trust_boundary_invariant": "A Stale temporal certificate cannot satisfy an admissible release chain."
+        }
+      ],
+      "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+      "release_id": "release-pcs-v0.1-tool-use-safety",
+      "schema_version": "v0",
+      "signature_or_digest": "sha256:32b414602012de004c41d0e79376cb1559d646912a18bb7301b2b05376af7a7f",
+      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+      "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)"
+    },
+    "schema_version": "v0",
+    "signature_or_digest": "sha256:32b414602012de004c41d0e79376cb1559d646912a18bb7301b2b05376af7a7f",
+    "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+    "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+    "status": null,
+    "summary": "ProofObligation.v0"
   },
   "release_chain_validation": {
     "artifacts_checked": 7,
@@ -859,8 +1388,8 @@
   },
   "release_manifest": {
     "generated_at": "2026-05-18T12:00:00Z",
-    "manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
-    "manifest_path": "release/release_manifest.v0.json",
+    "manifest_hash": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
+    "manifest_path": "release/ReleaseManifest.v0.json",
     "producer_repos": {
       "agent_runtime": {
         "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
@@ -879,17 +1408,17 @@
         "repo": "https://github.com/SentinelOps-CI/provability-fabric"
       },
       "scientific_memory": {
-        "commit": "796bb99e5c86687a5142bd3a8aa802650722036f",
+        "commit": "9cfbcaa3df3ef1d1c9820c670c4fd3f82b124b9c",
         "repo": "https://github.com/fraware/scientific-memory"
       }
     },
     "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
     "release_id": "release-pcs-v0.1-tool-use-safety",
     "release_status": "Validated",
-    "signature_or_digest": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
+    "signature_or_digest": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
     "validation_profile": "agent_tool_use.safety_v0"
   },
-  "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
+  "release_manifest_hash": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
   "reproduce_commands": [],
   "runtime_artifact_types": [
     "ToolUseTrace.v0",

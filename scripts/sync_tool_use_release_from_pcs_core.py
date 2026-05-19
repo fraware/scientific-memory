@@ -24,6 +24,9 @@ def sync_from_pcs_core(pcs_core_dir: Path, *, fixture_dir: Path, examples_dir: P
         for path in sorted(pcs_core_dir.iterdir()):
             if path.is_file():
                 shutil.copy2(path, target / path.name)
+        manifest_src = target / "release_manifest.v0.json"
+        if manifest_src.is_file():
+            shutil.copy2(manifest_src, target / "ReleaseManifest.v0.json")
         print(f"synced tool-use release -> {target}")
 
 

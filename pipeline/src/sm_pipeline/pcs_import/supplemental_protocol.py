@@ -9,6 +9,7 @@ from typing import Any
 from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
 
 from sm_pipeline.pcs_import.computation_protocol import COMPUTATION_SUPPLEMENTAL_TYPES
+from sm_pipeline.pcs_import.formal_trust_protocol import FORMAL_TRUST_SUPPLEMENTAL_TYPES
 
 SUPPLEMENTAL_ARTIFACT_TYPES = frozenset(
     {
@@ -16,6 +17,7 @@ SUPPLEMENTAL_ARTIFACT_TYPES = frozenset(
         "ToolUseCertificate.v0",
         "WorkflowProfile.v0",
         *COMPUTATION_SUPPLEMENTAL_TYPES,
+        *FORMAL_TRUST_SUPPLEMENTAL_TYPES,
     },
 )
 
@@ -46,6 +48,8 @@ def _artifact_id(data: dict[str, Any]) -> str:
         "trace_id",
         "certificate_id",
         "witness_id",
+        "obligation_set_id",
+        "check_result_id",
         "dataset_id",
         "environment_id",
         "run_id",
@@ -131,6 +135,10 @@ def supplemental_by_type(
 def attach_domain_artifacts(read_model: dict[str, Any], supplemental: list[dict[str, Any]]) -> dict[str, Any]:
     """Promote domain protocol artifacts to first-class read-model fields."""
     from sm_pipeline.pcs_import.computation_protocol import attach_computation_artifacts
+    from sm_pipeline.pcs_import.formal_trust_protocol import (
+        FORMAL_TRUST_SUPPLEMENTAL_TYPES,
+        attach_formal_trust_artifacts,
+    )
 
     out = dict(read_model)
     by_type = supplemental_by_type(supplemental)
@@ -146,16 +154,25 @@ def attach_domain_artifacts(read_model: dict[str, Any], supplemental: list[dict[
     )
     if has_computation:
         out = attach_computation_artifacts(out, supplemental)
+
+    has_formal = any(
+        str(row.get("artifact_type") or "") in FORMAL_TRUST_SUPPLEMENTAL_TYPES for row in supplemental
+    )
+    if has_formal:
+        out = attach_formal_trust_artifacts(out, supplemental)
+
+    promoted_types = {
+        "ToolUseTrace.v0",
+        "ToolUseCertificate.v0",
+        "WorkflowProfile.v0",
+        *COMPUTATION_SUPPLEMENTAL_TYPES,
+        *FORMAL_TRUST_SUPPLEMENTAL_TYPES,
+    }
+    if has_computation or has_formal:
         remaining = [
             row
             for row in supplemental
-            if str(row.get("artifact_type") or "")
-            not in {
-                "ToolUseTrace.v0",
-                "ToolUseCertificate.v0",
-                "WorkflowProfile.v0",
-                *COMPUTATION_SUPPLEMENTAL_TYPES,
-            }
+            if str(row.get("artifact_type") or "") not in promoted_types
         ]
         if remaining:
             out["protocol_artifacts"] = remaining
@@ -165,7 +182,7 @@ def attach_domain_artifacts(read_model: dict[str, Any], supplemental: list[dict[
         row
         for row in supplemental
         if str(row.get("artifact_type") or "")
-        not in {"ToolUseTrace.v0", "ToolUseCertificate.v0", "WorkflowProfile.v0"}
+        not in {"ToolUseTrace.v0", "ToolUseCertificate.v0", "WorkflowProfile.v0", *FORMAL_TRUST_SUPPLEMENTAL_TYPES}
     ]
     if remaining:
         out["protocol_artifacts"] = remaining

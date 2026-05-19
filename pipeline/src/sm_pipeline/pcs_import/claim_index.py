@@ -56,6 +56,9 @@ def build_claim_index_entry(claim_dir: Path) -> dict[str, Any] | None:
     computation = (lineage or {}).get("computation")
     if not isinstance(computation, dict):
         computation = {}
+    formal = (lineage or {}).get("formal_trust")
+    if not isinstance(formal, dict):
+        formal = {}
 
     entry: dict[str, Any] = {
         "claim_id": claim_id,
@@ -73,6 +76,11 @@ def build_claim_index_entry(claim_dir: Path) -> dict[str, Any] | None:
         "result_hash": computation.get("result_hash"),
         "witness_id": computation.get("witness_id"),
         "witness_status": computation.get("witness_status"),
+        "obligation_set_id": formal.get("obligation_set_id"),
+        "lean_check_status": formal.get("lean_check_status"),
+        "lean_check_result_id": formal.get("lean_check_result_id"),
+        "lean_theorems": formal.get("lean_theorems"),
+        "failed_lean_theorems": formal.get("failed_lean_theorems"),
         "bundle_id": (lineage or {}).get("bundle_id"),
         "signed_bundle_hash": (lineage or {}).get("signed_bundle_hash")
         or (read_model or {}).get("signed_bundle_hash"),
@@ -137,6 +145,10 @@ def query_claims_index(
     environment_id: str | None = None,
     code_commit: str | None = None,
     result_hash: str | None = None,
+    lean_theorem: str | None = None,
+    lean_check_status: str | None = None,
+    has_formal_checks: bool | None = None,
+    failed_formal_checks: bool | None = None,
 ) -> list[dict[str, Any]]:
     index = load_claims_index(repo_root)
     claims = index.get("claims")
@@ -176,5 +188,17 @@ def query_claims_index(
             continue
         if result_hash is not None and entry.get("result_hash") != result_hash:
             continue
+        if lean_check_status is not None and entry.get("lean_check_status") != lean_check_status:
+            continue
+        if lean_theorem is not None:
+            theorems = entry.get("lean_theorems")
+            if not isinstance(theorems, list) or lean_theorem not in theorems:
+                continue
+        if has_formal_checks is True and not entry.get("lean_check_status"):
+            continue
+        if failed_formal_checks is True:
+            failed = entry.get("failed_lean_theorems")
+            if not isinstance(failed, list) or not failed:
+                continue
         matches.append(entry)
     return matches

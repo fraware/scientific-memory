@@ -1,0 +1,66 @@
+{
+  "schema_version": "v0",
+  "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
+  "release_id": "release-pcs-v0.1-tool-use-safety",
+  "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
+  "generated_at": "2026-05-19T08:59:49Z",
+  "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
+  "obligations": [
+    {
+      "obligation_id": "obl-certificate-matches-runtime",
+      "predicate": "CertificateMatchesRuntime",
+      "lean_theorem": "PCS.CertificateMatchesRuntime",
+      "trust_boundary_invariant": "The temporal certificate trace hash matches the runtime receipt trace hash and the certificate is CertificateChecked.",
+      "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+      "source_artifacts": [
+        "trace_certificate.json",
+        "runtime_receipt.json"
+      ]
+    },
+    {
+      "obligation_id": "obl-verification-admits-bundle",
+      "predicate": "VerificationAdmitsBundle",
+      "lean_theorem": "PCS.VerificationAdmitsBundle",
+      "trust_boundary_invariant": "Provability Fabric verification is ProofChecked and admits the certified bundle hash.",
+      "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+      "source_artifacts": [
+        "verification_result.json",
+        "science_claim_bundle.certified.json"
+      ]
+    },
+    {
+      "obligation_id": "obl-signed-bundle-admissible",
+      "predicate": "SignedBundleAdmissible",
+      "lean_theorem": "PCS.SignedBundleAdmissible",
+      "trust_boundary_invariant": "The signed bundle input hash matches the PF verified certified bundle hash.",
+      "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+      "source_artifacts": [
+        "signed_science_claim_bundle.json",
+        "science_claim_bundle.certified.json"
+      ]
+    },
+    {
+      "obligation_id": "obl-rejected-certificate-not-admissible",
+      "predicate": "RejectedCertificateNotAdmissible",
+      "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+      "trust_boundary_invariant": "A Rejected temporal certificate cannot satisfy an admissible release chain.",
+      "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+      "source_artifacts": [
+        "trace_certificate.json"
+      ]
+    },
+    {
+      "obligation_id": "obl-stale-certificate-not-admissible",
+      "predicate": "StaleCertificateNotAdmissible",
+      "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+      "trust_boundary_invariant": "A Stale temporal certificate cannot satisfy an admissible release chain.",
+      "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
+      "source_artifacts": [
+        "trace_certificate.json"
+      ]
+    }
+  ],
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+  "signature_or_digest": "sha256:32b414602012de004c41d0e79376cb1559d646912a18bb7301b2b05376af7a7f"
+}

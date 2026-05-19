@@ -14,6 +14,7 @@ Scientific Memory is the **human-facing evidence layer** for PCS releases: it im
 | `SignedScienceClaimBundle.v0` | Claim payload |
 | `ToolUseTrace.v0` / `ToolUseCertificate.v0` | Rendered via dedicated portal views when listed in manifest |
 | `DatasetReceipt.v0` / `EnvironmentReceipt.v0` / `ComputationRunReceipt.v0` / `ResultArtifact.v0` / `ComputationWitness.v0` | Computation reproducibility chain; promoted to top-level read-model fields |
+| `ProofObligation.v0` / `LeanCheckResult.v0` | Formal Trust Kernel (Lean-checked PCS trust-envelope); required in strict release mode when `formal_trust_required` on the workflow profile |
 
 ## Import (primary)
 
@@ -117,6 +118,11 @@ just pcs-list-claims-by-source-commit COMMIT=...
 just pcs-list-claims-by-release release_id=release-pcs-v0.1-labtrust-qc
 just pcs-list-claims-by-workflow workflow_id=labtrust.qc_release_v0.1
 just pcs-list-claims-by-trace-hash trace_hash=sha256:...
+just pcs-list-claims-with-formal-checks
+just pcs-show-formal-checks CLAIM_ID=claim-pcs-qc-release-v0.1
+just pcs-list-claims-by-lean-theorem THEOREM=PCS.CertificateMatchesRuntime
+just pcs-list-claims-with-failed-formal-checks
+just bootstrap-formal-trust-release RELEASE_DIR=tests/pcs/fixtures/labtrust-release
 just pcs-list-claims-by-dataset DATASET_ID=dataset-demo-measurements-v0.1
 just pcs-list-claims-by-code-commit COMMIT=4c5439ae358733f9a4c4a58e33fdaed1ab0d29de
 just pcs-list-claims-by-result-hash HASH=sha256:...
@@ -142,6 +148,36 @@ just pcs-compare-releases release-pcs-v0.1-labtrust-qc release-pcs-v0.1-scientif
 ```
 
 Requires both `release_id` values in `claims_index.json` (from prior imports).
+
+## Formal Trust Kernel (PCS Phase 5)
+
+Scientific Memory imports `ProofObligation.v0` and `LeanCheckResult.v0` from `ReleaseManifest.v0` when the workflow profile sets `formal_trust_required`. The portal renders a **Formal Trust Kernel** section after verification and before release manifest metadata.
+
+Cross-repo flow (pcs-core + PF + SM):
+
+```bash
+# pcs-core
+pcs extract-proof-obligations --release examples/labtrust-release --out proof_obligation.v0.json
+pcs lean-check --obligations proof_obligation.v0.json --out lean_check_result.v0.json
+
+# PF (release mode)
+pf verify science-claim science_claim_bundle.certified.json \
+  --proof-obligations proof_obligation.v0.json \
+  --lean-check-result lean_check_result.v0.json \
+  --release-mode
+
+# Scientific Memory
+just pcs-import-release
+just pcs-show-formal-checks CLAIM_ID=claim-pcs-qc-release-v0.1
+```
+
+Local fixture bootstrap (conformance / CI without a full Lean build):
+
+```bash
+just bootstrap-formal-trust-release
+```
+
+Formal artifacts are listed on `ReleaseManifest.v0` only (not `RELEASE_FIXTURE_MANIFEST.json`) so pcs-core atomic chain validation stays compatible.
 
 ## Staleness
 

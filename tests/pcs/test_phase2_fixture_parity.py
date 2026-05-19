@@ -31,6 +31,18 @@ def _pcs_core_labtrust_release_chain_valid() -> bool:
     return not validate_release_chain(PCS_LABTRUST)
 
 
+def _sm_labtrust_has_formal_trust_extensions() -> bool:
+    formal = (
+        Path(__file__).resolve().parents[2]
+        / "tests"
+        / "pcs"
+        / "fixtures"
+        / "labtrust-release"
+        / "proof_obligation.v0.json"
+    )
+    return formal.is_file()
+
+
 def test_release_manifest_validates_against_pcs_core_example() -> None:
     from sm_pipeline.pcs_validate.release_manifest import validate_release_manifest
 
@@ -41,7 +53,7 @@ def test_release_manifest_validates_against_pcs_core_example() -> None:
     if pcs_example.is_file():
         pcs = json.loads(pcs_example.read_text(encoding="utf-8-sig"))
         assert sm["release_id"] == pcs["release_id"]
-        if _pcs_core_labtrust_release_chain_valid():
+        if _pcs_core_labtrust_release_chain_valid() and not _sm_labtrust_has_formal_trust_extensions():
             assert sm["artifacts"]["signed_science_claim_bundle.json"]["sha256"] == (
                 pcs["artifacts"]["signed_science_claim_bundle.json"]["sha256"]
             )

@@ -541,6 +541,30 @@ def _write_dir(target: Path, *, rejected: bool) -> None:
         encoding="utf-8",
     )
     manifest["release_chain_validation_result"]["sha256"] = file_sha256_digest(validation_path)
+    import subprocess
+
+    subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "bootstrap_formal_trust_release.py"),
+            "--release-dir",
+            str(target),
+        ],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    for name in ("proof_obligation.v0.json", "lean_check_result.v0.json"):
+        path = target / name
+        if path.is_file():
+            doc = json.loads(path.read_text(encoding="utf-8-sig"))
+            manifest["artifacts"][name] = {
+                "artifact_type": "ProofObligation.v0" if "obligation" in name else "LeanCheckResult.v0",
+                "schema": name.replace(".json", ".schema.json"),
+                "producer": "pcs-core",
+                "source_repo": str(doc.get("source_repo") or "https://github.com/SentinelOps-CI/pcs-core"),
+                "source_commit": str(doc.get("source_commit") or PCS_CORE),
+                "sha256": file_sha256_digest(path),
+            }
     manifest["signature_or_digest"] = canonical_hash(manifest)
     (target / "release_manifest.v0.json").write_text(
         json.dumps(manifest, indent=2) + "\n",

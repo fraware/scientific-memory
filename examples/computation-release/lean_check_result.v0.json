@@ -1,0 +1,75 @@
+{
+  "schema_version": "v0",
+  "check_result_id": "lean-check-release-pcs-v0.1-scientific-computation-reproducibility",
+  "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+  "obligation_set_id": "obl-set-release-pcs-v0.1-scientific-computation-reproducibility",
+  "status": "ProofChecked",
+  "lean_version": "leanprover/lean4:v4.24.0",
+  "checked_at": "2026-05-19T08:34:18Z",
+  "checker": "pcs-core",
+  "checker_version": "0.1.0",
+  "results": [
+    {
+      "obligation_id": "obl-certificate-matches-runtime",
+      "lean_theorem": "PCS.CertificateMatchesRuntime",
+      "status": "ProofChecked",
+      "source_artifacts": [
+        "trace_certificate.json",
+        "runtime_receipt.json"
+      ],
+      "result": "passed",
+      "checked_at": "2026-05-19T08:34:18Z",
+      "lean_version": "leanprover/lean4:v4.24.0"
+    },
+    {
+      "obligation_id": "obl-verification-admits-bundle",
+      "lean_theorem": "PCS.VerificationAdmitsBundle",
+      "status": "ProofChecked",
+      "source_artifacts": [
+        "verification_result.json",
+        "science_claim_bundle.certified.json"
+      ],
+      "result": "passed",
+      "checked_at": "2026-05-19T08:34:18Z",
+      "lean_version": "leanprover/lean4:v4.24.0"
+    },
+    {
+      "obligation_id": "obl-signed-bundle-admissible",
+      "lean_theorem": "PCS.SignedBundleAdmissible",
+      "status": "ProofChecked",
+      "source_artifacts": [
+        "signed_science_claim_bundle.json",
+        "science_claim_bundle.certified.json"
+      ],
+      "result": "passed",
+      "checked_at": "2026-05-19T08:34:18Z",
+      "lean_version": "leanprover/lean4:v4.24.0"
+    },
+    {
+      "obligation_id": "obl-rejected-certificate-not-admissible",
+      "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
+      "status": "ProofChecked",
+      "source_artifacts": [
+        "trace_certificate.json"
+      ],
+      "result": "passed",
+      "checked_at": "2026-05-19T08:34:18Z",
+      "lean_version": "leanprover/lean4:v4.24.0"
+    },
+    {
+      "obligation_id": "obl-stale-certificate-not-admissible",
+      "lean_theorem": "PCS.StaleCertificateNotAdmissible",
+      "status": "ProofChecked",
+      "source_artifacts": [
+        "trace_certificate.json"
+      ],
+      "result": "passed",
+      "checked_at": "2026-05-19T08:34:18Z",
+      "lean_version": "leanprover/lean4:v4.24.0"
+    }
+  ],
+  "pf_explain": null,
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+  "signature_or_digest": "sha256:d363dea0bda95633f86c33fa0b5b90a491aef86c48103c43bb7d994d34b09d15"
+}

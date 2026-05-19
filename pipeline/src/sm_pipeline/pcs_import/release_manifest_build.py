@@ -67,6 +67,18 @@ _ARTIFACT_META: dict[str, tuple[str, str, str, str]] = {
         "Scientific Memory",
         "https://github.com/fraware/scientific-memory",
     ),
+    "proof_obligation.v0.json": (
+        "ProofObligation.v0",
+        "ProofObligation.v0.schema.json",
+        "pcs-core",
+        "https://github.com/SentinelOps-CI/pcs-core",
+    ),
+    "lean_check_result.v0.json": (
+        "LeanCheckResult.v0",
+        "LeanCheckResult.v0.schema.json",
+        "pcs-core",
+        "https://github.com/SentinelOps-CI/pcs-core",
+    ),
 }
 
 _COMMIT_KEYS = {
@@ -103,6 +115,8 @@ def build_release_manifest_from_release_dir(release_dir: Path) -> dict[str, Any]
             commit_key = legacy.get("provability_fabric_commit")
         elif producer == "Scientific Memory":
             commit_key = legacy.get("scientific_memory_commit")
+        elif producer == "pcs-core":
+            commit_key = legacy.get("pcs_core_commit")
         path = release_dir / name
         sha256 = digest if isinstance(digest, str) else file_sha256_digest(path)
         if path.is_file():
@@ -114,6 +128,24 @@ def build_release_manifest_from_release_dir(release_dir: Path) -> dict[str, Any]
             "source_repo": default_repo,
             "source_commit": commit_key or "",
             "sha256": sha256,
+        }
+
+    pcs_commit = legacy.get("pcs_core_commit") or ""
+    for name in ("proof_obligation.v0.json", "lean_check_result.v0.json"):
+        path = release_dir / name
+        if not path.is_file():
+            continue
+        meta = _ARTIFACT_META.get(name)
+        if meta is None:
+            continue
+        artifact_type, schema, producer, default_repo = meta
+        artifacts[name] = {
+            "artifact_type": artifact_type,
+            "schema": schema,
+            "producer": producer,
+            "source_repo": default_repo,
+            "source_commit": pcs_commit,
+            "sha256": file_sha256_digest(path),
         }
 
     producer_repos = {

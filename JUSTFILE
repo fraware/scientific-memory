@@ -340,6 +340,21 @@ pcs-compare-releases old_release new_release:
 pcs-list-claims-by-trace-hash trace_hash:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-trace-hash --trace-hash "{{trace_hash}}"
 
+pcs-list-claims-with-formal-checks:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-with-formal-checks
+
+pcs-show-formal-checks CLAIM_ID="claim-pcs-qc-release-v0.1":
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-show-formal-checks --claim-id "{{CLAIM_ID}}"
+
+pcs-list-claims-by-lean-theorem THEOREM:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-lean-theorem --theorem "{{THEOREM}}"
+
+pcs-list-claims-with-failed-formal-checks:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-with-failed-formal-checks
+
+bootstrap-formal-trust-release RELEASE_DIR="tests/pcs/fixtures/labtrust-release":
+	python scripts/bootstrap_formal_trust_release.py --release-dir "{{RELEASE_DIR}}"
+
 pcs-list-stale-claims:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-stale-claims
 

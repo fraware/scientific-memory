@@ -212,6 +212,51 @@ def _sync_certified_bundle_hash_references(release_dir: Path) -> bool:
             signed_path.write_text(json.dumps(signed, indent=2) + "\n", encoding="utf-8")
             changed = True
 
+    for handoff_name in (
+        "handoff_manifest.bundle_to_verifier.v0.json",
+        "handoff_to_pf.json",
+    ):
+        handoff_path = release_dir / handoff_name
+        if not handoff_path.is_file():
+            continue
+        handoff = json.loads(handoff_path.read_text(encoding="utf-8-sig"))
+        invariants = handoff.get("invariants")
+        if not isinstance(invariants, dict):
+            continue
+        if invariants.get("certified_bundle_hash") == certified_hash:
+            continue
+        invariants["certified_bundle_hash"] = certified_hash
+        handoff["invariants"] = invariants
+        handoff["signature_or_digest"] = canonical_hash(handoff)
+        handoff_path.write_text(json.dumps(handoff, indent=2) + "\n", encoding="utf-8")
+        changed = True
+
+    for manifest_name in ("ReleaseManifest.v0.json", "release_manifest.v0.json"):
+        manifest_path = release_dir / manifest_name
+        if not manifest_path.is_file():
+            continue
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8-sig"))
+        manifest_changed = False
+        chain_root = manifest.get("chain_root")
+        if isinstance(chain_root, dict) and chain_root.get("certified_bundle_hash") != certified_hash:
+            chain_root["certified_bundle_hash"] = certified_hash
+            manifest["chain_root"] = chain_root
+            manifest_changed = True
+        artifacts = manifest.get("artifacts")
+        if isinstance(artifacts, dict):
+            entry = artifacts.get("science_claim_bundle.certified.json")
+            if isinstance(entry, dict) and entry.get("sha256") != certified_hash:
+                entry["sha256"] = certified_hash
+                artifacts["science_claim_bundle.certified.json"] = entry
+                manifest["artifacts"] = artifacts
+                manifest_changed = True
+        if manifest_changed:
+            manifest["signature_or_digest"] = canonical_hash(
+                {key: value for key, value in manifest.items() if key != "signature_or_digest"},
+            )
+            manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
     return changed
 
 
@@ -340,6 +385,28 @@ def _sync_legacy_manifest_producer_commits(release_dir: Path) -> None:
     legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
 
 
+def _ensure_formal_trust_fixture_artifacts(release_dir: Path) -> None:
+    script = REPO_ROOT / "scripts" / "bootstrap_formal_trust_release.py"
+    if not script.is_file():
+        return
+    import subprocess
+
+    subprocess.run(
+        [sys.executable, str(script), "--release-dir", str(release_dir)],
+        cwd=REPO_ROOT,
+        check=True,
+    )
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if legacy_path.is_file():
+        sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+        from sm_pipeline.pcs_import.formal_trust_protocol import strip_formal_trust_from_legacy_manifest
+
+        legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+        if strip_formal_trust_from_legacy_manifest(legacy):
+            legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+    print(f"formal trust artifacts -> {release_dir}")
+
+
 def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
     from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
 
@@ -391,6 +458,35 @@ def _build_profile_scoped_deferred_checks(
             },
         )
     return deferred
+
+
+def _refresh_canonical_read_model_golden(manifest_path: Path) -> None:
+    """Import labtrust release into corpus and refresh canonical_pcs_read_model.json."""
+    import subprocess
+
+    claim_id = "claim-pcs-qc-release-v0.1"
+    canonical = REPO_ROOT / "tests" / "pcs" / "fixtures" / "canonical_pcs_read_model.json"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "sm_pipeline.cli",
+            "pcs-import-release",
+            "--release-manifest",
+            str(manifest_path.relative_to(REPO_ROOT)),
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        print(f"warn: canonical read model refresh skipped: {result.stderr}", file=sys.stderr)
+        return
+    read_model = REPO_ROOT / "corpus" / "pcs" / "claims" / claim_id / "read_model.json"
+    if read_model.is_file():
+        shutil.copy2(read_model, canonical)
+        print(f"refreshed canonical read model -> {canonical}")
 
 
 def _mirror_fixture_tree_to_release_run() -> None:
@@ -531,6 +627,9 @@ def main() -> int:
 
     out = write_release_manifest(release_dir)
     print(f"generated {out}")
+    _ensure_formal_trust_fixture_artifacts(release_dir)
+    out = write_release_manifest(release_dir)
+    print(f"refreshed {out} (formal trust)")
 
     manifest_path = release_dir / "ReleaseManifest.v0.json"
     validation_path = release_dir / "ReleaseChainValidationResult.v0.json"
@@ -585,6 +684,7 @@ def main() -> int:
 
     if release_dir.resolve() == DEFAULT_DIR.resolve():
         _mirror_fixture_tree_to_release_run()
+        _refresh_canonical_read_model_golden(manifest_path)
 
     print(f"OK: Phase 2 fixtures valid in {release_dir}")
     return 0
