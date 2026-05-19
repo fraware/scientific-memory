@@ -56,7 +56,19 @@ def apply_workflow_context(
     elif profile_id:
         out["workflow_id"] = profile_id
 
-    if isinstance(manifest, dict) and manifest.get("limitations_notice"):
+    from sm_pipeline.pcs_import.computation_protocol import (
+        COMPUTATION_LIMITATION_NOTICE,
+        is_computation_workflow,
+    )
+
+    workflow_key = str(out.get("workflow_id") or profile_id or "")
+    if is_computation_workflow(workflow_key):
+        limitations = list(out.get("limitations") or [])
+        if COMPUTATION_LIMITATION_NOTICE not in limitations:
+            limitations.append(COMPUTATION_LIMITATION_NOTICE)
+        out["limitations"] = limitations
+        out["limitation_notice"] = COMPUTATION_LIMITATION_NOTICE
+    elif isinstance(manifest, dict) and manifest.get("limitations_notice"):
         notice = str(manifest["limitations_notice"])
         limitations = list(out.get("limitations") or [])
         if notice not in limitations:

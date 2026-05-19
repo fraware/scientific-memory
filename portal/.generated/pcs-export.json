@@ -1,10 +1,2665 @@
 {
   "claim_ids": [
+    "claim-computation-rejected-v0.1",
+    "claim-computation-release-v0.1",
     "claim-pcs-qc-release-v0.1",
     "claim-qc-release-v0.1",
     "labtrust-qc-release-claim-001"
   ],
   "claims": {
+    "claim-computation-rejected-v0.1": {
+      "artifact_dependency_graph": [
+        {
+          "from": "dataset_receipt.json",
+          "kind": "release_chain",
+          "to": "environment_receipt.json"
+        },
+        {
+          "from": "environment_receipt.json",
+          "kind": "release_chain",
+          "to": "computation_run_receipt.json"
+        },
+        {
+          "from": "computation_run_receipt.json",
+          "kind": "release_chain",
+          "to": "result_artifact.json"
+        },
+        {
+          "from": "result_artifact.json",
+          "kind": "release_chain",
+          "to": "computation_witness.json"
+        },
+        {
+          "from": "computation_witness.json",
+          "kind": "release_chain",
+          "to": "workflow_profile.v0.json"
+        },
+        {
+          "from": "workflow_profile.v0.json",
+          "kind": "release_chain",
+          "to": "science_claim_bundle.certified.json"
+        },
+        {
+          "from": "science_claim_bundle.certified.json",
+          "kind": "release_chain",
+          "to": "verification_result.json"
+        },
+        {
+          "from": "verification_result.json",
+          "kind": "release_chain",
+          "to": "signed_science_claim_bundle.json"
+        }
+      ],
+      "artifact_hashes": [
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "signature_or_digest",
+          "source_artifact": "claim-computation-rejected-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "name": "signature_or_digest",
+          "source_artifact": "as-labtrust-qc-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "name": "spec",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "name": "trace.json",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "name": "trace_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "name": "policy_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "name": "events_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+          "name": "signature_or_digest",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "name": "trace_hash",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "name": "spec_hash",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e",
+          "name": "signature_or_digest",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:4c5439ae358733f9a4c4a58e33fdaed1ab0d29deaaaaaaaaaaaaaaaaaaaaaaaa",
+          "name": "signature_or_digest",
+          "source_artifact": "scb-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "claim-qc-release-v0.1",
+          "source_artifact": "evidence-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "name": "signature_or_digest",
+          "source_artifact": "evidence-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "claim_artifact",
+          "source_artifact": "claim_artifact"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+          "name": "runtime_receipt",
+          "source_artifact": "runtime_receipt"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e",
+          "name": "trace_certificate",
+          "source_artifact": "trace_certificate"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "name": "evidence_bundle",
+          "source_artifact": "evidence_bundle"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+          "name": "signed_bundle",
+          "source_artifact": "signed_bundle"
+        }
+      ],
+      "artifact_registry": [
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ComputationRunReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:6e7ad087387b4f242718290e977055de670ed047ff2f5d0eef400ef29da1a3bc",
+          "name": "computation_run_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "run_id",
+            "workflow_id",
+            "command",
+            "code_repo",
+            "code_commit",
+            "dataset_receipt_ref",
+            "environment_receipt_ref",
+            "started_at",
+            "completed_at",
+            "exit_code",
+            "stdout_hash",
+            "stderr_hash",
+            "result_artifact_refs",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/ComputationRunReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "CertifyEdge"
+          ],
+          "allowed_statuses": [
+            "CertificateChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ComputationWitness.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:785a55a98ac4186639831fdecf21c2620dc6e126cc6dcf1390b02aa75505e4f7",
+          "name": "computation_witness.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "witness_id",
+            "workflow_id",
+            "dataset_hash",
+            "environment_hash",
+            "run_receipt_hash",
+            "result_hashes",
+            "code_repo",
+            "code_commit",
+            "checker",
+            "checker_version",
+            "status",
+            "violations",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "CertifyEdge",
+          "schema": "schemas/ComputationWitness.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "dataset_hash_matches_receipt",
+            "environment_hash_matches_receipt",
+            "run_receipt_hash_matches_declared_run",
+            "result_hashes_match_result_artifacts",
+            "code_commit_present",
+            "computation_status_checked_for_release",
+            "source_commit_matches_release_manifest",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "DatasetReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
+          "name": "dataset_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "dataset_id",
+            "dataset_name",
+            "dataset_version",
+            "files",
+            "aggregate_hash",
+            "source_uri",
+            "license",
+            "created_at",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/DatasetReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "EnvironmentReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+          "name": "environment_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "environment_id",
+            "environment_kind",
+            "os",
+            "architecture",
+            "language_runtimes",
+            "packages",
+            "container_image",
+            "container_digest",
+            "hardware_summary",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/EnvironmentReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ResultArtifact.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
+          "name": "result_artifact.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "result_id",
+            "result_kind",
+            "path",
+            "size_bytes",
+            "media_type",
+            "description",
+            "produced_by_run",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "sha256",
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/ResultArtifact.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "LabTrust-Gym"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "CertificateChecked",
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ScienceClaimBundle.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "LabTrust-Gym",
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+          "name": "science_claim_bundle.certified.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "bundle_id",
+            "assumption_set",
+            "runtime_receipts",
+            "status",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "LabTrust-Gym",
+          "schema": "schemas/ScienceClaimBundle.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "non_empty_runtime_receipts",
+            "certified_bundle_has_certificate_when_checked"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "Provability Fabric"
+          ],
+          "allowed_statuses": [
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "SignedScienceClaimBundle.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+          "name": "signed_science_claim_bundle.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "signed_bundle_id",
+            "signed_input_bundle_hash",
+            "science_claim_bundle",
+            "verification_result",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "Provability Fabric",
+          "schema": "schemas/SignedScienceClaimBundle.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "signed_input_bundle_hash_matches_certified",
+            "embedded_bundle_passes_science_claim_semantics"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "Provability Fabric"
+          ],
+          "allowed_statuses": [
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "VerificationResult.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+          "name": "verification_result.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "verification_id",
+            "status",
+            "verified_input",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "Provability Fabric",
+          "schema": "schemas/VerificationResult.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "verified_input_bundle_hash_matches_certified",
+            "failed_checks_block_import_ready_status"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "pcs-core"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "Validated",
+            "Deprecated"
+          ],
+          "artifact_type": "WorkflowProfile.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "pcs-core",
+            "LabTrust-Gym",
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "AgentRuntime"
+          ],
+          "hash": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8",
+          "name": "workflow_profile.v0.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": false,
+          "required_release_fields_missing": [
+            "schema_version",
+            "workflow_id",
+            "domain",
+            "description",
+            "runtime_artifacts",
+            "certificate_artifacts",
+            "handoff_sequence",
+            "required_registry_entries",
+            "required_admission_profile",
+            "status_policy",
+            "failure_modes",
+            "limitations_notice",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [],
+          "runtime_producer": "pcs-core",
+          "schema": "schemas/WorkflowProfile.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "required_registry_entries_registered"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        }
+      ],
+      "artifact_registry_artifact": {
+        "registry_id": "pcs-artifact-registry-v0.1",
+        "registry_version": "0.1.0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
+      },
+      "artifact_registry_source": "ArtifactRegistry.v0",
+      "artifact_registry_version": "0.1.0",
+      "assumption_set": {
+        "assumption_set_id": "as-labtrust-qc-v0.1",
+        "assumptions": [
+          {
+            "id": "asm-domain-qc-sim",
+            "kind": "domain",
+            "status": "HumanReviewed",
+            "text": "Simulation models a hospital QC release workflow, not a live clinical laboratory."
+          }
+        ],
+        "created_at": "2026-05-16T12:00:00Z",
+        "human_review_status": "approved",
+        "id": "as-labtrust-qc-v0.1",
+        "producer": "labtrust-gym",
+        "producer_version": "0.1.0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/fraware/LabTrust-Gym",
+        "status": "HumanReviewed"
+      },
+      "bundle_signature_or_digest": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+      "canonical_digests": {
+        "claim_artifact": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_bundle": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "runtime_receipt": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+        "signed_bundle": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+        "trace_certificate": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e"
+      },
+      "certificate_artifact_types": [
+        "ComputationWitness.v0"
+      ],
+      "claim": {
+        "created_at": "2026-05-18T12:05:00Z",
+        "guarantee_types": {
+          "certificate_checked": true,
+          "empirically_measured": false,
+          "formally_checked": false,
+          "human_reviewed": false,
+          "runtime_observed": true,
+          "unchecked_advisory": false
+        },
+        "id": "claim-computation-rejected-v0.1",
+        "producer": "scientific-computation-runner",
+        "producer_version": "0.1.0",
+        "signature_or_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "status": "CertificateChecked",
+        "text": "The declared computation run reproduces the pinned dataset under the recorded environment."
+      },
+      "claim_id": "claim-computation-rejected-v0.1",
+      "computation_run_receipt": {
+        "artifact_type": "ComputationRunReceipt.v0",
+        "id": "run-demo-analysis-001",
+        "payload": {
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "code_repo": "https://github.com/example/scientific-computation-runner",
+          "command": "uv run python -m demo_analysis --input data/measurements.csv",
+          "completed_at": "2026-05-18T12:06:30Z",
+          "dataset_receipt_ref": "dataset-demo-measurements-v0.1",
+          "environment_receipt_ref": "env-linux-py312-uv",
+          "exit_code": 0,
+          "result_artifact_refs": [
+            "result-demo-summary-v0.1"
+          ],
+          "run_id": "run-demo-analysis-001",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner",
+          "started_at": "2026-05-18T12:05:00Z",
+          "stderr_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "stdout_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "scientific_computation.reproducibility_v0"
+      },
+      "computation_witness": {
+        "artifact_type": "ComputationWitness.v0",
+        "id": "witness-computation-demo-v0.1",
+        "payload": {
+          "checker": "pcs-core-computation-validator",
+          "checker_version": "0.1.0",
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "code_repo": "https://github.com/example/scientific-computation-runner",
+          "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "result_hashes": [
+            "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ],
+          "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e",
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Rejected",
+          "violations": [
+            {
+              "actual_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+              "expected_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+              "explanation": "Re-run with the pinned dataset version and verify result artifact sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.",
+              "responsible_component": "scientific-computation-runner",
+              "violation_id": "viol-result-hash-mismatch",
+              "violation_type": "result_hash_mismatch"
+            }
+          ],
+          "witness_id": "witness-computation-demo-v0.1",
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e",
+        "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+        "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+        "status": "Rejected",
+        "summary": "scientific_computation.reproducibility_v0"
+      },
+      "dataset_receipt": {
+        "artifact_type": "DatasetReceipt.v0",
+        "id": "dataset-demo-measurements-v0.1",
+        "payload": {
+          "aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "created_at": "2026-05-18T12:00:00Z",
+          "dataset_id": "dataset-demo-measurements-v0.1",
+          "dataset_name": "Demo measurements",
+          "dataset_version": "v0.1.0",
+          "files": [
+            {
+              "media_type": "text/csv",
+              "path": "data/measurements.csv",
+              "sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size_bytes": 128
+            }
+          ],
+          "license": "CC-BY-4.0",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:baef97b34473403cd928b9e7f3414befeb67cfdbdf094f77e5c758176ef4338d",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner",
+          "source_uri": "https://example.org/datasets/demo-measurements/v0.1.0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:baef97b34473403cd928b9e7f3414befeb67cfdbdf094f77e5c758176ef4338d",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "DatasetReceipt.v0"
+      },
+      "domain": "scientific_computation",
+      "environment_receipt": {
+        "artifact_type": "EnvironmentReceipt.v0",
+        "id": "env-linux-py312-uv",
+        "payload": {
+          "architecture": "x86_64",
+          "container_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "container_image": "ghcr.io/example/scientific-runner:py312",
+          "environment_id": "env-linux-py312-uv",
+          "environment_kind": "uv",
+          "hardware_summary": "4 vCPU, 16 GiB RAM",
+          "language_runtimes": [
+            "python-3.12"
+          ],
+          "os": "linux",
+          "packages": [
+            "numpy==2.1.0",
+            "pandas==2.2.0"
+          ],
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "EnvironmentReceipt.v0"
+      },
+      "evidence_bundle": {
+        "artifact_hashes": {
+          "claim-qc-release-v0.1": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "assumption_set_refs": [
+          "as-labtrust-qc-v0.1"
+        ],
+        "bundle_id": "evidence-qc-release-v0.1",
+        "certificate_refs": [
+          "cert-trace-qc-release-v0.1"
+        ],
+        "claim_refs": [
+          "claim-qc-release-v0.1"
+        ],
+        "created_at": "2026-05-16T12:12:00Z",
+        "id": "evidence-qc-release-v0.1",
+        "producer": "labtrust-gym",
+        "producer_version": "0.1.0",
+        "runtime_receipt_refs": [
+          "receipt-qc-release-run-001"
+        ],
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/fraware/LabTrust-Gym"
+      },
+      "handoff_manifests": [],
+      "limitation_notice": "This artifact verifies declared computational provenance and hash consistency. It does not prove that the dataset is unbiased, that the model is scientifically valid, or that the result generalizes beyond the declared inputs and environment.",
+      "limitations": [
+        "This artifact is a proof-carrying scientific release. It demonstrates protocol-level validation and runtime evidence for the cited workflow. It is not production certification, clinical validation, or a guarantee about real-world deployment outside the stated workflow profile.",
+        "This artifact verifies declared computational provenance and hash consistency. It does not prove that the dataset is unbiased, that the model is scientifically valid, or that the result generalizes beyond the declared inputs and environment."
+      ],
+      "lineage": {
+        "artifact_hashes": {
+          "computation_run_receipt.json": "sha256:6e7ad087387b4f242718290e977055de670ed047ff2f5d0eef400ef29da1a3bc",
+          "computation_witness.json": "sha256:785a55a98ac4186639831fdecf21c2620dc6e126cc6dcf1390b02aa75505e4f7",
+          "dataset_receipt.json": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
+          "environment_receipt.json": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+          "result_artifact.json": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
+          "science_claim_bundle.certified.json": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+          "signed_science_claim_bundle.json": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+          "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+          "workflow_profile.v0.json": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8"
+        },
+        "bundle_id": "scb-qc-release-v0.1",
+        "certificate_id": "witness-computation-demo-v0.1",
+        "changed_artifacts": [
+          "computation_witness.json",
+          "science_claim_bundle.certified.json",
+          "signed_science_claim_bundle.json"
+        ],
+        "changed_hashes": [
+          {
+            "artifact": "computation_witness.json",
+            "current": "sha256:785a55a98ac4186639831fdecf21c2620dc6e126cc6dcf1390b02aa75505e4f7",
+            "previous": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e"
+          },
+          {
+            "artifact": "science_claim_bundle.certified.json",
+            "current": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+            "previous": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b"
+          },
+          {
+            "artifact": "signed_science_claim_bundle.json",
+            "current": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+            "previous": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b"
+          }
+        ],
+        "claim_id": "claim-computation-rejected-v0.1",
+        "claim_state": "current",
+        "computation": {
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "command": "uv run python -m demo_analysis --input data/measurements.csv",
+          "dataset_aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "dataset_id": "dataset-demo-measurements-v0.1",
+          "dataset_version": "v0.1.0",
+          "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "environment_id": "env-linux-py312-uv",
+          "result_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "result_hashes": [
+            "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ],
+          "result_id": "result-demo-summary-v0.1",
+          "run_id": "run-demo-analysis-001",
+          "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "witness_id": "witness-computation-demo-v0.1",
+          "witness_status": "Rejected"
+        },
+        "newer_release_ids": [],
+        "previous_release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "recommended_action": "No action required; claim matches imported release artifacts.",
+        "release_id": "release-pcs-v0.1-scientific-computation-rejected",
+        "release_manifest_hash": "sha256:87fd1d55e23b9fadb8dee689f7d7b4e664de06af83be7b6f1f1d7024bfe1c153",
+        "schema_versions": {
+          "science_claim_bundle": "v0",
+          "signed_bundle": "v0"
+        },
+        "signed_bundle_hash": "sha256:00a129896574d8d315aa349ebf861a3ba4b5e320af6afa5a0c838e46a5be479b",
+        "source_commits": {
+          "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+          "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+          "scientific_computation": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "scientific_memory": "796bb99cb79fe7b195fd156feb346c08fc334d33"
+        },
+        "stale": false,
+        "stale_reasons": [],
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+        "workflow_profile_id": "scientific_computation.reproducibility_v0"
+      },
+      "release_chain_validation": {
+        "artifacts_checked": 9,
+        "checked_at": "2026-05-18T12:00:00Z",
+        "checks": [
+          {
+            "check_id": "release_manifest_integrity",
+            "description": "Release manifest artifact hashes match files",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "science_claim_bundle_semantics",
+            "description": "Science claim bundle certificate refs present",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "verification_and_signed_bundle_hashes",
+            "description": "Verification and signed bundle hash alignment",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "computation_witness_release_status",
+            "description": "Computation witness status checked for release",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "computation_witness_source_commit",
+            "description": "Computation witness source commit matches manifest",
+            "details": {},
+            "status": "passed"
+          }
+        ],
+        "failure_codes": [],
+        "release_candidate": "pcs-v0.1-scientific-computation-conformance",
+        "release_id": "release-pcs-v0.1-scientific-computation-rejected",
+        "signature_or_digest": "sha256:213e9c54a1f1f72f985694c507d91bc820d59f420d62e1d142d2de6f83bb3b18",
+        "status": "ProofChecked",
+        "validation_id": "validation-release-pcs-v0.1-scientific-computation-rejected",
+        "validator": "pcs-core",
+        "validator_version": "0.1.0"
+      },
+      "release_manifest": {
+        "generated_at": "2026-05-18T12:00:00Z",
+        "manifest_hash": "sha256:87fd1d55e23b9fadb8dee689f7d7b4e664de06af83be7b6f1f1d7024bfe1c153",
+        "manifest_path": "tests/pcs/fixtures/computation-rejected-release/ReleaseManifest.v0.json",
+        "producer_repos": {
+          "certifyedge": {
+            "commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+            "repo": "https://github.com/fraware/CertifyEdge"
+          },
+          "pcs_core": {
+            "commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+            "repo": "https://github.com/SentinelOps-CI/pcs-core"
+          },
+          "provability_fabric": {
+            "commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+            "repo": "https://github.com/SentinelOps-CI/provability-fabric"
+          },
+          "scientific_computation": {
+            "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+            "repo": "https://github.com/example/scientific-computation-runner"
+          },
+          "scientific_memory": {
+            "commit": "796bb99cb79fe7b195fd156feb346c08fc334d33",
+            "repo": "https://github.com/fraware/scientific-memory"
+          }
+        },
+        "release_candidate": "pcs-v0.1-scientific-computation-conformance",
+        "release_id": "release-pcs-v0.1-scientific-computation-rejected",
+        "release_status": "Validated",
+        "signature_or_digest": "sha256:87fd1d55e23b9fadb8dee689f7d7b4e664de06af83be7b6f1f1d7024bfe1c153",
+        "validation_profile": "scientific_computation.reproducibility_v0"
+      },
+      "release_manifest_hash": "sha256:87fd1d55e23b9fadb8dee689f7d7b4e664de06af83be7b6f1f1d7024bfe1c153",
+      "reproduce_commands": [],
+      "result_artifact": {
+        "artifact_type": "ResultArtifact.v0",
+        "id": "result-demo-summary-v0.1",
+        "payload": {
+          "description": "Aggregated measurement summary table",
+          "media_type": "application/vnd.apache.parquet",
+          "path": "outputs/summary.parquet",
+          "produced_by_run": "run-demo-analysis-001",
+          "result_id": "result-demo-summary-v0.1",
+          "result_kind": "table",
+          "schema_version": "v0",
+          "sha256": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "signature_or_digest": "sha256:787c5357feeac6cb2ea840fb59d953c78fbca3e9cf88ac58b84725100dcf00b8",
+          "size_bytes": 4096,
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:787c5357feeac6cb2ea840fb59d953c78fbca3e9cf88ac58b84725100dcf00b8",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "Aggregated measurement summary table"
+      },
+      "runtime_artifact_types": [
+        "DatasetReceipt.v0",
+        "EnvironmentReceipt.v0",
+        "ComputationRunReceipt.v0",
+        "ResultArtifact.v0"
+      ],
+      "runtime_receipt": {
+        "ended_at": "2026-05-18T12:06:30Z",
+        "environment": {
+          "labtrust_version": "0.1.0",
+          "platform": "linux",
+          "python": "3.12"
+        },
+        "events_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "final_reason_code": "ok",
+        "id": "receipt-computation-run-001",
+        "input_hashes": {
+          "spec": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+        },
+        "output_hashes": {
+          "trace.json": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+        },
+        "policy_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "producer": "scientific-computation-runner",
+        "producer_version": "0.1.0",
+        "receipt_id": "receipt-computation-run-001",
+        "released": true,
+        "run_id": "run-demo-analysis-001",
+        "run_outcome": "passed",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "started_at": "2026-05-18T12:05:00Z",
+        "status": "RuntimeObserved",
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046"
+      },
+      "schema_version": "PcsClaimReadModel.v0",
+      "signed_bundle_hash": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c",
+      "source_repositories": [
+        {
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        {
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/fraware/LabTrust-Gym"
+        },
+        {
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
+        },
+        {
+          "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+          "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
+        }
+      ],
+      "staleness": {
+        "claim_state": "current",
+        "recommended_action": "No action required; claim matches imported release artifacts.",
+        "repair_hint": "",
+        "stale": false,
+        "stale_reasons": []
+      },
+      "trace_certificate": {
+        "certificate_id": "witness-computation-demo-v0.1",
+        "checker": "pcs-core-computation-validator",
+        "checker_version": "0.1.0",
+        "counterexample_ref": null,
+        "created_at": "2026-05-16T12:10:00Z",
+        "id": "witness-computation-demo-v0.1",
+        "producer": "certifyedge",
+        "producer_version": "0.1.0",
+        "property_id": "scientific_computation.reproducibility_v0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e",
+        "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+        "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+        "spec_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+        "status": "CertificateChecked",
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046"
+      },
+      "verification_result": {
+        "checks": [
+          {
+            "detail": "{}",
+            "guarantee_type": null,
+            "id": "schema-valid",
+            "name": "ScienceClaimBundle conforms to schema",
+            "outcome": "pass"
+          },
+          {
+            "detail": "{}",
+            "guarantee_type": null,
+            "id": "trace-hash-alignment",
+            "name": "Receipt trace_hash matches certificate",
+            "outcome": "pass"
+          }
+        ],
+        "id": "verify-scb-qc-release-v0.1",
+        "overall_outcome": "pass",
+        "signature_or_digest": "sha256:4c5439ae358733f9a4c4a58e33fdaed1ab0d29deaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+        "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+        "status": "ProofChecked",
+        "verification_id": "verify-scb-qc-release-v0.1",
+        "verifier": "provability-fabric",
+        "verifier_version": "0.1.0"
+      },
+      "verify_commands": [
+        "pf verify science-claim signed_science_claim_bundle.json",
+        "just pcs-validate-bundle BUNDLE=signed_science_claim_bundle.json"
+      ],
+      "workflow_id": "scientific_computation.reproducibility_v0",
+      "workflow_profile": {
+        "certificate_artifacts": [
+          "ComputationWitness.v0"
+        ],
+        "description": "Proof-carrying computational reproducibility for declared inputs, environment, command, and results.",
+        "domain": "scientific_computation",
+        "handoff_sequence": [
+          "runtime_to_certificate",
+          "certificate_to_bundle",
+          "bundle_to_verifier",
+          "signed_bundle_to_memory"
+        ],
+        "limitations_notice": "This artifact is a proof-carrying computational reproducibility result. It verifies that declared inputs, environment metadata, code provenance, execution command, and result artifact hashes are internally consistent. It does not prove that the scientific model is true, that the dataset is unbiased, or that the result is externally valid.",
+        "payload": {
+          "certificate_artifacts": [
+            "ComputationWitness.v0"
+          ],
+          "description": "Proof-carrying computational reproducibility for declared inputs, environment, command, and results.",
+          "domain": "scientific_computation",
+          "failure_modes": [
+            "dataset_hash_mismatch",
+            "environment_hash_mismatch",
+            "result_hash_mismatch",
+            "missing_code_commit",
+            "unreproducible_command"
+          ],
+          "handoff_sequence": [
+            "runtime_to_certificate",
+            "certificate_to_bundle",
+            "bundle_to_verifier",
+            "signed_bundle_to_memory"
+          ],
+          "limitations_notice": "This artifact is a proof-carrying computational reproducibility result. It verifies that declared inputs, environment metadata, code provenance, execution command, and result artifact hashes are internally consistent. It does not prove that the scientific model is true, that the dataset is unbiased, or that the result is externally valid.",
+          "required_admission_profile": "scientific_computation_reproducibility",
+          "required_registry_entries": [
+            "DatasetReceipt.v0",
+            "EnvironmentReceipt.v0",
+            "ComputationRunReceipt.v0",
+            "ResultArtifact.v0",
+            "ComputationWitness.v0",
+            "ScienceClaimBundle.v0",
+            "VerificationResult.v0",
+            "SignedScienceClaimBundle.v0",
+            "ReleaseManifest.v0",
+            "HandoffManifest.v0",
+            "ReleaseChainValidationResult.v0",
+            "WorkflowProfile.v0"
+          ],
+          "runtime_artifacts": [
+            "DatasetReceipt.v0",
+            "EnvironmentReceipt.v0",
+            "ComputationRunReceipt.v0",
+            "ResultArtifact.v0"
+          ],
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:57ec645d429826df128e8226f8a5de20b8d13dee043dfec40c254b002c1b0420",
+          "status_policy": {
+            "allowed_terminal_statuses": [
+              "Rejected",
+              "Stale"
+            ],
+            "description": "Computation witnesses require hash alignment before CertificateChecked export.",
+            "forbidden_transitions": [
+              {
+                "from_status": "Rejected",
+                "to_status": "ProofChecked"
+              }
+            ],
+            "policy_id": "pcs-v0.1-scientific-computation-lifecycle"
+          },
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "required_registry_entries": [
+          "DatasetReceipt.v0",
+          "EnvironmentReceipt.v0",
+          "ComputationRunReceipt.v0",
+          "ResultArtifact.v0",
+          "ComputationWitness.v0",
+          "ScienceClaimBundle.v0",
+          "VerificationResult.v0",
+          "SignedScienceClaimBundle.v0",
+          "ReleaseManifest.v0",
+          "HandoffManifest.v0",
+          "ReleaseChainValidationResult.v0",
+          "WorkflowProfile.v0"
+        ],
+        "runtime_artifacts": [
+          "DatasetReceipt.v0",
+          "EnvironmentReceipt.v0",
+          "ComputationRunReceipt.v0",
+          "ResultArtifact.v0"
+        ],
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:57ec645d429826df128e8226f8a5de20b8d13dee043dfec40c254b002c1b0420",
+        "workflow_id": "scientific_computation.reproducibility_v0"
+      }
+    },
+    "claim-computation-release-v0.1": {
+      "artifact_dependency_graph": [
+        {
+          "from": "dataset_receipt.json",
+          "kind": "release_chain",
+          "to": "environment_receipt.json"
+        },
+        {
+          "from": "environment_receipt.json",
+          "kind": "release_chain",
+          "to": "computation_run_receipt.json"
+        },
+        {
+          "from": "computation_run_receipt.json",
+          "kind": "release_chain",
+          "to": "result_artifact.json"
+        },
+        {
+          "from": "result_artifact.json",
+          "kind": "release_chain",
+          "to": "computation_witness.json"
+        },
+        {
+          "from": "computation_witness.json",
+          "kind": "release_chain",
+          "to": "workflow_profile.v0.json"
+        },
+        {
+          "from": "workflow_profile.v0.json",
+          "kind": "release_chain",
+          "to": "science_claim_bundle.certified.json"
+        },
+        {
+          "from": "science_claim_bundle.certified.json",
+          "kind": "release_chain",
+          "to": "verification_result.json"
+        },
+        {
+          "from": "verification_result.json",
+          "kind": "release_chain",
+          "to": "signed_science_claim_bundle.json"
+        },
+        {
+          "from": "CertifyEdge",
+          "handoff_id": "handoff-computation-to-pf",
+          "kind": "bundle_to_verifier",
+          "to": "Provability Fabric"
+        },
+        {
+          "from": "CertifyEdge",
+          "handoff_id": "handoff-computation-witness-to-bundle",
+          "kind": "certificate_to_bundle",
+          "to": "scientific-computation demo producer"
+        },
+        {
+          "from": "scientific-computation demo producer",
+          "handoff_id": "handoff-computation-runtime-to-certifyedge",
+          "kind": "runtime_to_certificate",
+          "to": "CertifyEdge"
+        },
+        {
+          "from": "Provability Fabric",
+          "handoff_id": "handoff-computation-signed-bundle-to-memory",
+          "kind": "signed_bundle_to_memory",
+          "to": "Scientific Memory"
+        }
+      ],
+      "artifact_hashes": [
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "signature_or_digest",
+          "source_artifact": "claim-computation-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+          "name": "signature_or_digest",
+          "source_artifact": "as-labtrust-qc-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "name": "spec",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+          "name": "trace.json",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "name": "trace_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+          "name": "policy_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+          "name": "events_hash",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+          "name": "signature_or_digest",
+          "source_artifact": "receipt-computation-run-001"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "name": "trace_hash",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+          "name": "spec_hash",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425",
+          "name": "signature_or_digest",
+          "source_artifact": "witness-computation-demo-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:4c5439ae358733f9a4c4a58e33fdaed1ab0d29deaaaaaaaaaaaaaaaaaaaaaaaa",
+          "name": "signature_or_digest",
+          "source_artifact": "scb-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "claim-qc-release-v0.1",
+          "source_artifact": "evidence-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "name": "signature_or_digest",
+          "source_artifact": "evidence-qc-release-v0.1"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+          "name": "claim_artifact",
+          "source_artifact": "claim_artifact"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+          "name": "runtime_receipt",
+          "source_artifact": "runtime_receipt"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425",
+          "name": "trace_certificate",
+          "source_artifact": "trace_certificate"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+          "name": "evidence_bundle",
+          "source_artifact": "evidence_bundle"
+        },
+        {
+          "algorithm": "sha256",
+          "digest": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+          "name": "signed_bundle",
+          "source_artifact": "signed_bundle"
+        }
+      ],
+      "artifact_registry": [
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ComputationRunReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:6e7ad087387b4f242718290e977055de670ed047ff2f5d0eef400ef29da1a3bc",
+          "name": "computation_run_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "run_id",
+            "workflow_id",
+            "command",
+            "code_repo",
+            "code_commit",
+            "dataset_receipt_ref",
+            "environment_receipt_ref",
+            "started_at",
+            "completed_at",
+            "exit_code",
+            "stdout_hash",
+            "stderr_hash",
+            "result_artifact_refs",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/ComputationRunReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "CertifyEdge"
+          ],
+          "allowed_statuses": [
+            "CertificateChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ComputationWitness.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e",
+          "name": "computation_witness.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "witness_id",
+            "workflow_id",
+            "dataset_hash",
+            "environment_hash",
+            "run_receipt_hash",
+            "result_hashes",
+            "code_repo",
+            "code_commit",
+            "checker",
+            "checker_version",
+            "status",
+            "violations",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "CertifyEdge",
+          "schema": "schemas/ComputationWitness.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "dataset_hash_matches_receipt",
+            "environment_hash_matches_receipt",
+            "run_receipt_hash_matches_declared_run",
+            "result_hashes_match_result_artifacts",
+            "code_commit_present",
+            "computation_status_checked_for_release",
+            "source_commit_matches_release_manifest",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "DatasetReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
+          "name": "dataset_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "dataset_id",
+            "dataset_name",
+            "dataset_version",
+            "files",
+            "aggregate_hash",
+            "source_uri",
+            "license",
+            "created_at",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/DatasetReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "EnvironmentReceipt.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+          "name": "environment_receipt.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "environment_id",
+            "environment_kind",
+            "os",
+            "architecture",
+            "language_runtimes",
+            "packages",
+            "container_image",
+            "container_digest",
+            "hardware_summary",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/EnvironmentReceipt.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "scientific-computation demo producer"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ResultArtifact.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "pcs-core"
+          ],
+          "hash": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
+          "name": "result_artifact.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "result_id",
+            "result_kind",
+            "path",
+            "size_bytes",
+            "media_type",
+            "description",
+            "produced_by_run",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "sha256",
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "scientific-computation demo producer",
+          "schema": "schemas/ResultArtifact.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "source_commit_not_placeholder",
+            "signature_or_digest_valid"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "LabTrust-Gym"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "RuntimeObserved",
+            "CertificateChecked",
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "ScienceClaimBundle.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "LabTrust-Gym",
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+          "name": "science_claim_bundle.certified.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "bundle_id",
+            "assumption_set",
+            "runtime_receipts",
+            "status",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "LabTrust-Gym",
+          "schema": "schemas/ScienceClaimBundle.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "non_empty_runtime_receipts",
+            "certified_bundle_has_certificate_when_checked"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "Provability Fabric"
+          ],
+          "allowed_statuses": [
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "SignedScienceClaimBundle.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+          "name": "signed_science_claim_bundle.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "signed_bundle_id",
+            "signed_input_bundle_hash",
+            "science_claim_bundle",
+            "verification_result",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "Provability Fabric",
+          "schema": "schemas/SignedScienceClaimBundle.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "signed_input_bundle_hash_matches_certified",
+            "embedded_bundle_passes_science_claim_semantics"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "Provability Fabric"
+          ],
+          "allowed_statuses": [
+            "ProofChecked",
+            "Rejected",
+            "Stale"
+          ],
+          "artifact_type": "VerificationResult.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "Provability Fabric",
+            "Scientific Memory"
+          ],
+          "hash": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+          "name": "verification_result.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": true,
+          "required_release_fields_missing": [
+            "schema_version",
+            "verification_id",
+            "status",
+            "verified_input",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [
+            "source_repo",
+            "source_commit"
+          ],
+          "runtime_producer": "Provability Fabric",
+          "schema": "schemas/VerificationResult.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "verified_input_bundle_hash_matches_certified",
+            "failed_checks_block_import_ready_status"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        },
+        {
+          "actual_status": "Validated",
+          "admission_status": "failed",
+          "allowed_runtime_producers": [
+            "pcs-core"
+          ],
+          "allowed_statuses": [
+            "Draft",
+            "Validated",
+            "Deprecated"
+          ],
+          "artifact_type": "WorkflowProfile.v0",
+          "canonical_hash_required": true,
+          "consumer_repos": [
+            "pcs-core",
+            "LabTrust-Gym",
+            "CertifyEdge",
+            "Provability Fabric",
+            "Scientific Memory",
+            "AgentRuntime"
+          ],
+          "hash": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8",
+          "name": "workflow_profile.v0.json",
+          "producer": "pcs-core",
+          "registry_admission_result": "incomplete",
+          "release_mode_required": false,
+          "required_release_fields_missing": [
+            "schema_version",
+            "workflow_id",
+            "domain",
+            "description",
+            "runtime_artifacts",
+            "certificate_artifacts",
+            "handoff_sequence",
+            "required_registry_entries",
+            "required_admission_profile",
+            "status_policy",
+            "failure_modes",
+            "limitations_notice",
+            "signature_or_digest"
+          ],
+          "required_release_fields_present": [],
+          "runtime_producer": "pcs-core",
+          "schema": "schemas/WorkflowProfile.v0.schema.json",
+          "schema_owner": "pcs-core",
+          "semantic_checks": [
+            "required_registry_entries_registered"
+          ],
+          "semantic_checks_performed": [],
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "Validated"
+        }
+      ],
+      "artifact_registry_artifact": {
+        "registry_id": "pcs-artifact-registry-v0.1",
+        "registry_version": "0.1.0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
+      },
+      "artifact_registry_source": "ArtifactRegistry.v0",
+      "artifact_registry_version": "0.1.0",
+      "assumption_set": {
+        "assumption_set_id": "as-labtrust-qc-v0.1",
+        "assumptions": [
+          {
+            "id": "asm-domain-qc-sim",
+            "kind": "domain",
+            "status": "HumanReviewed",
+            "text": "Simulation models a hospital QC release workflow, not a live clinical laboratory."
+          }
+        ],
+        "created_at": "2026-05-16T12:00:00Z",
+        "human_review_status": "approved",
+        "id": "as-labtrust-qc-v0.1",
+        "producer": "labtrust-gym",
+        "producer_version": "0.1.0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/fraware/LabTrust-Gym",
+        "status": "HumanReviewed"
+      },
+      "bundle_signature_or_digest": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+      "canonical_digests": {
+        "claim_artifact": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "evidence_bundle": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "runtime_receipt": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+        "signed_bundle": "sha256:6bd6088e18a82f3eef22adaba8db91d0f2942142af35b2a698d5d87b92f1331a",
+        "trace_certificate": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425"
+      },
+      "certificate_artifact_types": [
+        "ComputationWitness.v0"
+      ],
+      "claim": {
+        "created_at": "2026-05-18T12:05:00Z",
+        "guarantee_types": {
+          "certificate_checked": true,
+          "empirically_measured": false,
+          "formally_checked": false,
+          "human_reviewed": false,
+          "runtime_observed": true,
+          "unchecked_advisory": false
+        },
+        "id": "claim-computation-release-v0.1",
+        "producer": "scientific-computation-runner",
+        "producer_version": "0.1.0",
+        "signature_or_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+        "status": "CertificateChecked",
+        "text": "The declared computation run reproduces the pinned dataset under the recorded environment."
+      },
+      "claim_id": "claim-computation-release-v0.1",
+      "computation_run_receipt": {
+        "artifact_type": "ComputationRunReceipt.v0",
+        "id": "run-demo-analysis-001",
+        "payload": {
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "code_repo": "https://github.com/example/scientific-computation-runner",
+          "command": "uv run python -m demo_analysis --input data/measurements.csv",
+          "completed_at": "2026-05-18T12:06:30Z",
+          "dataset_receipt_ref": "dataset-demo-measurements-v0.1",
+          "environment_receipt_ref": "env-linux-py312-uv",
+          "exit_code": 0,
+          "result_artifact_refs": [
+            "result-demo-summary-v0.1"
+          ],
+          "run_id": "run-demo-analysis-001",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner",
+          "started_at": "2026-05-18T12:05:00Z",
+          "stderr_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "stdout_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "scientific_computation.reproducibility_v0"
+      },
+      "computation_witness": {
+        "artifact_type": "ComputationWitness.v0",
+        "id": "witness-computation-demo-v0.1",
+        "payload": {
+          "checker": "pcs-core-computation-validator",
+          "checker_version": "0.1.0",
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "code_repo": "https://github.com/example/scientific-computation-runner",
+          "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "result_hashes": [
+            "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ],
+          "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425",
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+          "status": "CertificateChecked",
+          "violations": [],
+          "witness_id": "witness-computation-demo-v0.1",
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425",
+        "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+        "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+        "status": "CertificateChecked",
+        "summary": "scientific_computation.reproducibility_v0"
+      },
+      "dataset_receipt": {
+        "artifact_type": "DatasetReceipt.v0",
+        "id": "dataset-demo-measurements-v0.1",
+        "payload": {
+          "aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "created_at": "2026-05-18T12:00:00Z",
+          "dataset_id": "dataset-demo-measurements-v0.1",
+          "dataset_name": "Demo measurements",
+          "dataset_version": "v0.1.0",
+          "files": [
+            {
+              "media_type": "text/csv",
+              "path": "data/measurements.csv",
+              "sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+              "size_bytes": 128
+            }
+          ],
+          "license": "CC-BY-4.0",
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:baef97b34473403cd928b9e7f3414befeb67cfdbdf094f77e5c758176ef4338d",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner",
+          "source_uri": "https://example.org/datasets/demo-measurements/v0.1.0"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:baef97b34473403cd928b9e7f3414befeb67cfdbdf094f77e5c758176ef4338d",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "DatasetReceipt.v0"
+      },
+      "domain": "scientific_computation",
+      "environment_receipt": {
+        "artifact_type": "EnvironmentReceipt.v0",
+        "id": "env-linux-py312-uv",
+        "payload": {
+          "architecture": "x86_64",
+          "container_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "container_image": "ghcr.io/example/scientific-runner:py312",
+          "environment_id": "env-linux-py312-uv",
+          "environment_kind": "uv",
+          "hardware_summary": "4 vCPU, 16 GiB RAM",
+          "language_runtimes": [
+            "python-3.12"
+          ],
+          "os": "linux",
+          "packages": [
+            "numpy==2.1.0",
+            "pandas==2.2.0"
+          ],
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "EnvironmentReceipt.v0"
+      },
+      "evidence_bundle": {
+        "artifact_hashes": {
+          "claim-qc-release-v0.1": "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+        },
+        "assumption_set_refs": [
+          "as-labtrust-qc-v0.1"
+        ],
+        "bundle_id": "evidence-qc-release-v0.1",
+        "certificate_refs": [
+          "cert-trace-qc-release-v0.1"
+        ],
+        "claim_refs": [
+          "claim-qc-release-v0.1"
+        ],
+        "created_at": "2026-05-16T12:12:00Z",
+        "id": "evidence-qc-release-v0.1",
+        "producer": "labtrust-gym",
+        "producer_version": "0.1.0",
+        "runtime_receipt_refs": [
+          "receipt-qc-release-run-001"
+        ],
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/fraware/LabTrust-Gym"
+      },
+      "handoff_manifests": [
+        {
+          "created_at": "2026-05-18T12:00:00Z",
+          "expected_outputs": [
+            {
+              "artifact_type": "SignedScienceClaimBundle.v0",
+              "name": "signed_science_claim_bundle.json",
+              "sha256": ""
+            },
+            {
+              "artifact_type": "VerificationResult.v0",
+              "name": "verification_result.json",
+              "sha256": ""
+            }
+          ],
+          "from_component": "CertifyEdge",
+          "handoff_id": "handoff-computation-to-pf",
+          "handoff_kind": "bundle_to_verifier",
+          "input_artifacts": [
+            {
+              "artifact_type": "ScienceClaimBundle.v0",
+              "name": "science_claim_bundle.certified.json",
+              "sha256": "sha256:c47168f2de32da5f25407f34ab66cba9e853390e22108bf56ea24712343fd60d"
+            }
+          ],
+          "invariants": {
+            "certified_bundle_hash": "sha256:c47168f2de32da5f25407f34ab66cba9e853390e22108bf56ea24712343fd60d",
+            "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828",
+            "witness_id": "witness-sci-comp-repro-001"
+          },
+          "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
+          "signature_or_digest": "sha256:3db04a8c9656ed55c3efbc7bb08ebd2a606d9b26f21f492d201e0071c8b7e968",
+          "source_commit": "b222222222222222222222222222222222222222",
+          "source_repo": "https://github.com/fraware/CertifyEdge",
+          "status": "Validated",
+          "to_component": "Provability Fabric"
+        },
+        {
+          "created_at": "2026-05-18T12:00:00Z",
+          "expected_outputs": [
+            {
+              "artifact_type": "ScienceClaimBundle.v0",
+              "name": "science_claim_bundle.certified.json",
+              "sha256": ""
+            }
+          ],
+          "from_component": "CertifyEdge",
+          "handoff_id": "handoff-computation-witness-to-bundle",
+          "handoff_kind": "certificate_to_bundle",
+          "input_artifacts": [
+            {
+              "artifact_type": "ComputationWitness.v0",
+              "name": "computation_witness.json",
+              "sha256": "sha256:a86081703ca5bc521445cc5a38826adfc1ca55f87f52f35b3c429a2bbdaf13f9"
+            }
+          ],
+          "invariants": {
+            "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828",
+            "witness_id": "witness-sci-comp-repro-001"
+          },
+          "manifest_path": "handoff_manifest.certificate_to_bundle.v0.json",
+          "signature_or_digest": "sha256:e2170d91b655ae0d9ae9b8f6a18fa78f9801d76213bd8e5bfba577ac7599f501",
+          "source_commit": "b222222222222222222222222222222222222222",
+          "source_repo": "https://github.com/fraware/CertifyEdge",
+          "status": "Validated",
+          "to_component": "scientific-computation demo producer"
+        },
+        {
+          "created_at": "2026-05-18T12:00:00Z",
+          "expected_outputs": [
+            {
+              "artifact_type": "ComputationWitness.v0",
+              "name": "computation_witness.json",
+              "sha256": ""
+            }
+          ],
+          "from_component": "scientific-computation demo producer",
+          "handoff_id": "handoff-computation-runtime-to-certifyedge",
+          "handoff_kind": "runtime_to_certificate",
+          "input_artifacts": [
+            {
+              "artifact_type": "ComputationRunReceipt.v0",
+              "name": "computation_run_receipt.json",
+              "sha256": "sha256:c14b4fed421343459ad081e74f7b613b39b6bca803eca27ffde0fdda1a8dd12a"
+            },
+            {
+              "artifact_type": "DatasetReceipt.v0",
+              "name": "dataset_receipt.json",
+              "sha256": "sha256:d54994e19c32caeb7508edbb73a14efc94341ffd93013873af527e180385dfec"
+            },
+            {
+              "artifact_type": "EnvironmentReceipt.v0",
+              "name": "environment_receipt.json",
+              "sha256": "sha256:6335e612b739e925d74ca94a39690380f8be7c9db836fcad4c8ff0ba8b6c98ae"
+            },
+            {
+              "artifact_type": "ResultArtifact.v0",
+              "name": "result_artifact.json",
+              "sha256": "sha256:a38eeaab2b0cd104ac461b6a061bfa09e4f797253c27173107452a5acd9c42ed"
+            }
+          ],
+          "invariants": {
+            "dataset_hash": "sha256:84c9037231eef6a1742c1d6d0a043878b4de8395397c168026450d8ca9e647e3",
+            "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828"
+          },
+          "manifest_path": "handoff_manifest.runtime_to_certificate.v0.json",
+          "signature_or_digest": "sha256:bafff8665c39e3662b34563a34671f518639fbb46853d889925a537a964c1b41",
+          "source_commit": "e555555555555555555555555555555555555555",
+          "source_repo": "https://github.com/example/scientific-computation-runner",
+          "status": "Validated",
+          "to_component": "CertifyEdge"
+        },
+        {
+          "created_at": "2026-05-18T12:00:00Z",
+          "expected_outputs": [
+            {
+              "artifact_type": "ScientificMemory.ImportReport.v0",
+              "name": "scientific_memory_import_report.json",
+              "sha256": ""
+            }
+          ],
+          "from_component": "Provability Fabric",
+          "handoff_id": "handoff-computation-signed-bundle-to-memory",
+          "handoff_kind": "signed_bundle_to_memory",
+          "input_artifacts": [
+            {
+              "artifact_type": "SignedScienceClaimBundle.v0",
+              "name": "signed_science_claim_bundle.json",
+              "sha256": "sha256:6995cdbdcb788d7e570093db3fd204072d69bd07c03390dce2f5a3a1490bf2ea"
+            }
+          ],
+          "invariants": {
+            "claim_id": "claim-qc-release-v0.1",
+            "workflow_profile_id": "scientific_computation.reproducibility_v0"
+          },
+          "manifest_path": "handoff_manifest.signed_bundle_to_memory.v0.json",
+          "signature_or_digest": "sha256:68159cf6671e21245b197912e054410bf50e39b068e25c0eb66ecc73fca10250",
+          "source_commit": "c333333333333333333333333333333333333333",
+          "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+          "status": "Validated",
+          "to_component": "Scientific Memory"
+        }
+      ],
+      "limitation_notice": "This artifact verifies declared computational provenance and hash consistency. It does not prove that the dataset is unbiased, that the model is scientifically valid, or that the result generalizes beyond the declared inputs and environment.",
+      "limitations": [
+        "This artifact is a proof-carrying scientific release. It demonstrates protocol-level validation and runtime evidence for the cited workflow. It is not production certification, clinical validation, or a guarantee about real-world deployment outside the stated workflow profile.",
+        "This artifact verifies declared computational provenance and hash consistency. It does not prove that the dataset is unbiased, that the model is scientifically valid, or that the result generalizes beyond the declared inputs and environment."
+      ],
+      "lineage": {
+        "artifact_hashes": {
+          "computation_run_receipt.json": "sha256:6e7ad087387b4f242718290e977055de670ed047ff2f5d0eef400ef29da1a3bc",
+          "computation_witness.json": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e",
+          "dataset_receipt.json": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
+          "environment_receipt.json": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+          "result_artifact.json": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
+          "science_claim_bundle.certified.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+          "signed_science_claim_bundle.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+          "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+          "workflow_profile.v0.json": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8"
+        },
+        "bundle_id": "scb-qc-release-v0.1",
+        "certificate_id": "witness-computation-demo-v0.1",
+        "changed_artifacts": [
+          "computation_witness.json",
+          "science_claim_bundle.certified.json",
+          "signed_science_claim_bundle.json"
+        ],
+        "changed_hashes": [
+          {
+            "artifact": "computation_witness.json",
+            "current": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e",
+            "previous": "sha256:785a55a98ac4186639831fdecf21c2620dc6e126cc6dcf1390b02aa75505e4f7"
+          },
+          {
+            "artifact": "science_claim_bundle.certified.json",
+            "current": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+            "previous": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c"
+          },
+          {
+            "artifact": "signed_science_claim_bundle.json",
+            "current": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+            "previous": "sha256:d96e93982436f9c39ae06bd8353f476f52af9e5666f6ce02873dede3626d7f8c"
+          }
+        ],
+        "claim_id": "claim-computation-release-v0.1",
+        "claim_state": "current",
+        "computation": {
+          "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "command": "uv run python -m demo_analysis --input data/measurements.csv",
+          "dataset_aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+          "dataset_id": "dataset-demo-measurements-v0.1",
+          "dataset_version": "v0.1.0",
+          "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+          "environment_id": "env-linux-py312-uv",
+          "result_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "result_hashes": [
+            "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ],
+          "result_id": "result-demo-summary-v0.1",
+          "run_id": "run-demo-analysis-001",
+          "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+          "witness_id": "witness-computation-demo-v0.1",
+          "witness_status": "CertificateChecked"
+        },
+        "newer_release_ids": [],
+        "previous_release_id": "release-pcs-v0.1-scientific-computation-rejected",
+        "recommended_action": "No action required; claim matches imported release artifacts.",
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "release_manifest_hash": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+        "schema_versions": {
+          "science_claim_bundle": "v0",
+          "signed_bundle": "v0"
+        },
+        "signed_bundle_hash": "sha256:58a012b003d6ce15945de01c678898f19fdf688af6f1c6bc18c23ac4173ec557",
+        "source_commits": {
+          "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+          "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+          "scientific_computation": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "scientific_memory": "796bb99cb79fe7b195fd156feb346c08fc334d33"
+        },
+        "stale": false,
+        "stale_reasons": [],
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+        "workflow_profile_id": "scientific_computation.reproducibility_v0"
+      },
+      "release_chain_validation": {
+        "artifacts_checked": 9,
+        "checked_at": "2026-05-18T12:00:00Z",
+        "checks": [
+          {
+            "check_id": "release_manifest_integrity",
+            "description": "Release manifest artifact hashes match files",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "science_claim_bundle_semantics",
+            "description": "Science claim bundle certificate refs present",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "verification_and_signed_bundle_hashes",
+            "description": "Verification and signed bundle hash alignment",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "computation_witness_release_status",
+            "description": "Computation witness status checked for release",
+            "details": {},
+            "status": "passed"
+          },
+          {
+            "check_id": "computation_witness_source_commit",
+            "description": "Computation witness source commit matches manifest",
+            "details": {},
+            "status": "passed"
+          }
+        ],
+        "failure_codes": [],
+        "release_candidate": "pcs-v0.1-scientific-computation-conformance",
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "signature_or_digest": "sha256:bfe0427f8f63fcd07f67ee3ac393a44575a5e4b63244089c8f5ded0f394232ff",
+        "status": "ProofChecked",
+        "validation_id": "validation-release-pcs-v0.1-scientific-computation-reproducibility",
+        "validator": "pcs-core",
+        "validator_version": "0.1.0"
+      },
+      "release_manifest": {
+        "generated_at": "2026-05-18T12:00:00Z",
+        "manifest_hash": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+        "manifest_path": "tests/pcs/fixtures/computation-release/ReleaseManifest.v0.json",
+        "producer_repos": {
+          "certifyedge": {
+            "commit": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+            "repo": "https://github.com/fraware/CertifyEdge"
+          },
+          "pcs_core": {
+            "commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+            "repo": "https://github.com/SentinelOps-CI/pcs-core"
+          },
+          "provability_fabric": {
+            "commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+            "repo": "https://github.com/SentinelOps-CI/provability-fabric"
+          },
+          "scientific_computation": {
+            "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+            "repo": "https://github.com/example/scientific-computation-runner"
+          },
+          "scientific_memory": {
+            "commit": "796bb99cb79fe7b195fd156feb346c08fc334d33",
+            "repo": "https://github.com/fraware/scientific-memory"
+          }
+        },
+        "release_candidate": "pcs-v0.1-scientific-computation-conformance",
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "release_status": "Validated",
+        "signature_or_digest": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+        "validation_profile": "scientific_computation.reproducibility_v0"
+      },
+      "release_manifest_hash": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+      "reproduce_commands": [],
+      "result_artifact": {
+        "artifact_type": "ResultArtifact.v0",
+        "id": "result-demo-summary-v0.1",
+        "payload": {
+          "description": "Aggregated measurement summary table",
+          "media_type": "application/vnd.apache.parquet",
+          "path": "outputs/summary.parquet",
+          "produced_by_run": "run-demo-analysis-001",
+          "result_id": "result-demo-summary-v0.1",
+          "result_kind": "table",
+          "schema_version": "v0",
+          "sha256": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+          "signature_or_digest": "sha256:787c5357feeac6cb2ea840fb59d953c78fbca3e9cf88ac58b84725100dcf00b8",
+          "size_bytes": 4096,
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:787c5357feeac6cb2ea840fb59d953c78fbca3e9cf88ac58b84725100dcf00b8",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "status": null,
+        "summary": "Aggregated measurement summary table"
+      },
+      "runtime_artifact_types": [
+        "DatasetReceipt.v0",
+        "EnvironmentReceipt.v0",
+        "ComputationRunReceipt.v0",
+        "ResultArtifact.v0"
+      ],
+      "runtime_receipt": {
+        "ended_at": "2026-05-18T12:06:30Z",
+        "environment": {
+          "labtrust_version": "0.1.0",
+          "platform": "linux",
+          "python": "3.12"
+        },
+        "events_hash": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+        "final_reason_code": "ok",
+        "id": "receipt-computation-run-001",
+        "input_hashes": {
+          "spec": "sha256:6666666666666666666666666666666666666666666666666666666666666666"
+        },
+        "output_hashes": {
+          "trace.json": "sha256:5555555555555555555555555555555555555555555555555555555555555555"
+        },
+        "policy_hash": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+        "producer": "scientific-computation-runner",
+        "producer_version": "0.1.0",
+        "receipt_id": "receipt-computation-run-001",
+        "released": true,
+        "run_id": "run-demo-analysis-001",
+        "run_outcome": "passed",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:260299295080e7b1a07b2d0b1ef37fff0a96d2c6d0b701263a36a0f2d0aa5081",
+        "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+        "source_repo": "https://github.com/example/scientific-computation-runner",
+        "started_at": "2026-05-18T12:05:00Z",
+        "status": "RuntimeObserved",
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046"
+      },
+      "schema_version": "PcsClaimReadModel.v0",
+      "signed_bundle_hash": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+      "source_repositories": [
+        {
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/example/scientific-computation-runner"
+        },
+        {
+          "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+          "source_repo": "https://github.com/fraware/LabTrust-Gym"
+        },
+        {
+          "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+          "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
+        },
+        {
+          "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+          "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
+        }
+      ],
+      "staleness": {
+        "claim_state": "current",
+        "recommended_action": "No action required; claim matches imported release artifacts.",
+        "repair_hint": "",
+        "stale": false,
+        "stale_reasons": []
+      },
+      "trace_certificate": {
+        "certificate_id": "witness-computation-demo-v0.1",
+        "checker": "pcs-core-computation-validator",
+        "checker_version": "0.1.0",
+        "counterexample_ref": null,
+        "created_at": "2026-05-16T12:10:00Z",
+        "id": "witness-computation-demo-v0.1",
+        "producer": "certifyedge",
+        "producer_version": "0.1.0",
+        "property_id": "scientific_computation.reproducibility_v0",
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:8b8fc0ca6fa3d4b7646e8e87a454f79371270220209e2a91ee6db9fcc7850425",
+        "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+        "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+        "spec_hash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+        "status": "CertificateChecked",
+        "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046"
+      },
+      "verification_result": {
+        "checks": [
+          {
+            "detail": "{}",
+            "guarantee_type": null,
+            "id": "schema-valid",
+            "name": "ScienceClaimBundle conforms to schema",
+            "outcome": "pass"
+          },
+          {
+            "detail": "{}",
+            "guarantee_type": null,
+            "id": "trace-hash-alignment",
+            "name": "Receipt trace_hash matches certificate",
+            "outcome": "pass"
+          }
+        ],
+        "id": "verify-scb-qc-release-v0.1",
+        "overall_outcome": "pass",
+        "signature_or_digest": "sha256:4c5439ae358733f9a4c4a58e33fdaed1ab0d29deaaaaaaaaaaaaaaaaaaaaaaaa",
+        "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+        "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+        "status": "ProofChecked",
+        "verification_id": "verify-scb-qc-release-v0.1",
+        "verifier": "provability-fabric",
+        "verifier_version": "0.1.0"
+      },
+      "verify_commands": [
+        "pf verify science-claim signed_science_claim_bundle.json",
+        "just pcs-validate-bundle BUNDLE=signed_science_claim_bundle.json"
+      ],
+      "workflow_id": "scientific_computation.reproducibility_v0",
+      "workflow_profile": {
+        "certificate_artifacts": [
+          "ComputationWitness.v0"
+        ],
+        "description": "Proof-carrying computational reproducibility for declared inputs, environment, command, and results.",
+        "domain": "scientific_computation",
+        "handoff_sequence": [
+          "runtime_to_certificate",
+          "certificate_to_bundle",
+          "bundle_to_verifier",
+          "signed_bundle_to_memory"
+        ],
+        "limitations_notice": "This artifact is a proof-carrying computational reproducibility result. It verifies that declared inputs, environment metadata, code provenance, execution command, and result artifact hashes are internally consistent. It does not prove that the scientific model is true, that the dataset is unbiased, or that the result is externally valid.",
+        "payload": {
+          "certificate_artifacts": [
+            "ComputationWitness.v0"
+          ],
+          "description": "Proof-carrying computational reproducibility for declared inputs, environment, command, and results.",
+          "domain": "scientific_computation",
+          "failure_modes": [
+            "dataset_hash_mismatch",
+            "environment_hash_mismatch",
+            "result_hash_mismatch",
+            "missing_code_commit",
+            "unreproducible_command"
+          ],
+          "handoff_sequence": [
+            "runtime_to_certificate",
+            "certificate_to_bundle",
+            "bundle_to_verifier",
+            "signed_bundle_to_memory"
+          ],
+          "limitations_notice": "This artifact is a proof-carrying computational reproducibility result. It verifies that declared inputs, environment metadata, code provenance, execution command, and result artifact hashes are internally consistent. It does not prove that the scientific model is true, that the dataset is unbiased, or that the result is externally valid.",
+          "required_admission_profile": "scientific_computation_reproducibility",
+          "required_registry_entries": [
+            "DatasetReceipt.v0",
+            "EnvironmentReceipt.v0",
+            "ComputationRunReceipt.v0",
+            "ResultArtifact.v0",
+            "ComputationWitness.v0",
+            "ScienceClaimBundle.v0",
+            "VerificationResult.v0",
+            "SignedScienceClaimBundle.v0",
+            "ReleaseManifest.v0",
+            "HandoffManifest.v0",
+            "ReleaseChainValidationResult.v0",
+            "WorkflowProfile.v0"
+          ],
+          "runtime_artifacts": [
+            "DatasetReceipt.v0",
+            "EnvironmentReceipt.v0",
+            "ComputationRunReceipt.v0",
+            "ResultArtifact.v0"
+          ],
+          "schema_version": "v0",
+          "signature_or_digest": "sha256:57ec645d429826df128e8226f8a5de20b8d13dee043dfec40c254b002c1b0420",
+          "status_policy": {
+            "allowed_terminal_statuses": [
+              "Rejected",
+              "Stale"
+            ],
+            "description": "Computation witnesses require hash alignment before CertificateChecked export.",
+            "forbidden_transitions": [
+              {
+                "from_status": "Rejected",
+                "to_status": "ProofChecked"
+              }
+            ],
+            "policy_id": "pcs-v0.1-scientific-computation-lifecycle"
+          },
+          "workflow_id": "scientific_computation.reproducibility_v0"
+        },
+        "required_registry_entries": [
+          "DatasetReceipt.v0",
+          "EnvironmentReceipt.v0",
+          "ComputationRunReceipt.v0",
+          "ResultArtifact.v0",
+          "ComputationWitness.v0",
+          "ScienceClaimBundle.v0",
+          "VerificationResult.v0",
+          "SignedScienceClaimBundle.v0",
+          "ReleaseManifest.v0",
+          "HandoffManifest.v0",
+          "ReleaseChainValidationResult.v0",
+          "WorkflowProfile.v0"
+        ],
+        "runtime_artifacts": [
+          "DatasetReceipt.v0",
+          "EnvironmentReceipt.v0",
+          "ComputationRunReceipt.v0",
+          "ResultArtifact.v0"
+        ],
+        "schema_version": "v0",
+        "signature_or_digest": "sha256:57ec645d429826df128e8226f8a5de20b8d13dee043dfec40c254b002c1b0420",
+        "workflow_id": "scientific_computation.reproducibility_v0"
+      }
+    },
     "claim-pcs-qc-release-v0.1": {
       "artifact_dependency_graph": [
         {
@@ -70,13 +2725,13 @@
       "artifact_hashes": [
         {
           "algorithm": "sha256",
-          "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+          "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
           "name": "signature_or_digest",
           "source_artifact": "claim-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:52aae25fd8625d1f09589e0fff8e73c10a5e197ffb56cedb1903af4bef5fcdc1",
+          "digest": "sha256:512a6818f59380688ce9926d8b6adfbcb920829f50d2274ec1cf96ebe8925069",
           "name": "signature_or_digest",
           "source_artifact": "as-pcs-qc-release-v0.1"
         },
@@ -112,7 +2767,7 @@
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
+          "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
           "name": "signature_or_digest",
           "source_artifact": "receipt-qc-release"
         },
@@ -136,7 +2791,7 @@
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:5dfc1b8fcf0649fc12371264e4bd27e71378e56acdf0c0803945d55baa533e4d",
+          "digest": "sha256:527d3c13a00f860633f47fa532a042c9c054e5c55ac1aff040270a15a9964c4e",
           "name": "signature_or_digest",
           "source_artifact": "scb-pcs-qc-release-v0.1"
         },
@@ -148,31 +2803,31 @@
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+          "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
           "name": "claim-pcs-qc-release-v0.1",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
+          "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
           "name": "receipt-qc-release",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
+          "digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
           "name": "signature_or_digest",
           "source_artifact": "evidence-pcs-qc-release-v0.1"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+          "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
           "name": "claim_artifact",
           "source_artifact": "claim_artifact"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
+          "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
           "name": "runtime_receipt",
           "source_artifact": "runtime_receipt"
         },
@@ -184,13 +2839,13 @@
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
+          "digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
           "name": "evidence_bundle",
           "source_artifact": "evidence_bundle"
         },
         {
           "algorithm": "sha256",
-          "digest": "sha256:4795fd35c1edc6cbbbb9cc95537a5289fa535cb833fb7031b3bab2504f802159",
+          "digest": "sha256:fba582ba6a1d47bd010244e7b092ca76635c5bcb362eeca1a9f5c3d9b2f49ce9",
           "name": "signed_bundle",
           "source_artifact": "signed_bundle"
         }
@@ -215,7 +2870,7 @@
             "CertifyEdge",
             "Provability Fabric"
           ],
-          "hash": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
+          "hash": "sha256:10576e0d581c624f7988a937ffaacb47775dceb166050cd957379a929af65ac3",
           "name": "runtime_receipt.json",
           "producer": "LabTrust-Gym",
           "registry_admission_result": "incomplete",
@@ -239,7 +2894,7 @@
             "source_commit_matches_release_manifest"
           ],
           "semantic_checks_performed": [],
-          "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+          "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
         },
@@ -264,7 +2919,7 @@
             "Provability Fabric",
             "Scientific Memory"
           ],
-          "hash": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
+          "hash": "sha256:877cc81881e19bf0852b7a7b6f3118facdbe8eb1bd1c390dd5cc6c6128c91545",
           "name": "science_claim_bundle.certified.json",
           "producer": "LabTrust-Gym",
           "registry_admission_result": "incomplete",
@@ -289,7 +2944,7 @@
             "certified_bundle_has_certificate_when_checked"
           ],
           "semantic_checks_performed": [],
-          "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+          "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
         },
@@ -314,7 +2969,7 @@
             "Provability Fabric",
             "Scientific Memory"
           ],
-          "hash": "sha256:406d376c6d26eb949c32f2b6c6f6578aa877f24c9ea0cb0a8b87bd377c72cfe0",
+          "hash": "sha256:e89b0866cd25a9308f7ba70deb68e8e3c8f072b6885ca6f2e9fcaaa55706e6c7",
           "name": "science_claim_bundle.pending.json",
           "producer": "LabTrust-Gym",
           "registry_admission_result": "incomplete",
@@ -339,7 +2994,7 @@
             "certified_bundle_has_certificate_when_checked"
           ],
           "semantic_checks_performed": [],
-          "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+          "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
         },
@@ -384,7 +3039,7 @@
             "Provability Fabric",
             "Scientific Memory"
           ],
-          "hash": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e",
+          "hash": "sha256:4eb39dc6ed7a14027e3d43573af899c1674c253f344089cacc51f71fceed147d",
           "name": "signed_science_claim_bundle.json",
           "producer": "Provability Fabric",
           "registry_admission_result": "incomplete",
@@ -433,7 +3088,7 @@
           "schema_owner": "",
           "semantic_checks": [],
           "semantic_checks_performed": [],
-          "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+          "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated"
         },
@@ -457,7 +3112,7 @@
             "Provability Fabric",
             "Scientific Memory"
           ],
-          "hash": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575",
+          "hash": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c",
           "name": "trace_certificate.json",
           "producer": "CertifyEdge",
           "registry_admission_result": "incomplete",
@@ -504,7 +3159,7 @@
             "Provability Fabric",
             "Scientific Memory"
           ],
-          "hash": "sha256:8929abf4c382ddb16f65cc978a13f558899c82b66f6fa625777fe06c968f5b29",
+          "hash": "sha256:b32f90571504286979b080d86b0d33ab491c5e8b75456697c1d250533a7e979e",
           "name": "verification_result.json",
           "producer": "Provability Fabric",
           "registry_admission_result": "incomplete",
@@ -537,7 +3192,7 @@
         "registry_id": "pcs-artifact-registry-v0.1",
         "registry_version": "0.1.0",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:daa958cdc73a161c70f1132c4e4e0f6441efbac3dacc76635cc94748616a8b19"
+        "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
       },
       "artifact_registry_source": "ArtifactRegistry.v0",
       "artifact_registry_version": "0.1.0",
@@ -581,17 +3236,17 @@
         "producer": "labtrust-gym",
         "producer_version": "0.2.0",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:52aae25fd8625d1f09589e0fff8e73c10a5e197ffb56cedb1903af4bef5fcdc1",
-        "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+        "signature_or_digest": "sha256:512a6818f59380688ce9926d8b6adfbcb920829f50d2274ec1cf96ebe8925069",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
         "source_repo": "https://github.com/fraware/LabTrust-Gym",
         "status": "HumanReviewed"
       },
-      "bundle_signature_or_digest": "sha256:4795fd35c1edc6cbbbb9cc95537a5289fa535cb833fb7031b3bab2504f802159",
+      "bundle_signature_or_digest": "sha256:fba582ba6a1d47bd010244e7b092ca76635c5bcb362eeca1a9f5c3d9b2f49ce9",
       "canonical_digests": {
-        "claim_artifact": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
-        "evidence_bundle": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
-        "runtime_receipt": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
-        "signed_bundle": "sha256:4795fd35c1edc6cbbbb9cc95537a5289fa535cb833fb7031b3bab2504f802159",
+        "claim_artifact": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+        "evidence_bundle": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
+        "runtime_receipt": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
+        "signed_bundle": "sha256:fba582ba6a1d47bd010244e7b092ca76635c5bcb362eeca1a9f5c3d9b2f49ce9",
         "trace_certificate": "sha256:b40e23cccf21540bc90d3939b9c274e2c88da5bdb39fcce72e504ade00699f29"
       },
       "certificate_artifact_types": [
@@ -610,7 +3265,7 @@
         "id": "claim-pcs-qc-release-v0.1",
         "producer": "labtrust-gym",
         "producer_version": "0.2.0",
-        "signature_or_digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+        "signature_or_digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
         "status": "CertificateChecked",
         "text": "A sample may be released only after accession, QC completion, analysis, authorization by a release-capable actor, and satisfaction of the required temporal protocol constraints."
       },
@@ -619,8 +3274,8 @@
       "evidence_bundle": {
         "artifact_hashes": {
           "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7": "sha256:b40e23cccf21540bc90d3939b9c274e2c88da5bdb39fcce72e504ade00699f29",
-          "claim-pcs-qc-release-v0.1": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
-          "receipt-qc-release": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5"
+          "claim-pcs-qc-release-v0.1": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+          "receipt-qc-release": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b"
         },
         "assumption_set_refs": [
           "as-pcs-qc-release-v0.1"
@@ -640,8 +3295,8 @@
           "receipt-qc-release"
         ],
         "schema_version": "v0",
-        "signature_or_digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
-        "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+        "signature_or_digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
         "source_repo": "https://github.com/fraware/LabTrust-Gym"
       },
       "handoff_manifests": [
@@ -666,16 +3321,16 @@
             {
               "artifact_type": "ScienceClaimBundle.v0",
               "name": "science_claim_bundle.certified.json",
-              "sha256": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536"
+              "sha256": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe"
             }
           ],
           "invariants": {
-            "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
-            "certified_bundle_hash": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536",
+            "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+            "certified_bundle_hash": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
             "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
           },
           "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
-          "signature_or_digest": "sha256:70d44fd475511bf7678b7efcccab9dafd1900ab73c9e80b39b32af8891b198c8",
+          "signature_or_digest": "sha256:ce778d7a932cbe4b87e752fb13fa67c5125d909059ca58ea32cbfefd4a978591",
           "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
           "source_repo": "https://github.com/fraware/LabTrust-Gym",
           "status": "Validated",
@@ -701,11 +3356,11 @@
             }
           ],
           "invariants": {
-            "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+            "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
             "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
           },
           "manifest_path": "handoff_manifest.certificate_to_bundle.v0.json",
-          "signature_or_digest": "sha256:98b3bb18df632763e6fe440d702877c9a4e7c8bf3b7e73ad964fb1b1b68c4718",
+          "signature_or_digest": "sha256:ce9312baf79822d4971bbd0af4c2f5c2e200e1b66aec2cb9add6dd1e8d50e4f5",
           "source_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
           "source_repo": "https://github.com/fraware/CertifyEdge",
           "status": "Validated",
@@ -765,11 +3420,11 @@
             }
           ],
           "invariants": {
-            "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+            "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
             "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
           },
           "manifest_path": "handoff_manifest.signed_bundle_to_memory.v0.json",
-          "signature_or_digest": "sha256:c15567dbde19c0968204543ef513671ec14227f2e4012882a4283dba2e0bc8fc",
+          "signature_or_digest": "sha256:1bf5fd4b5330ef13a51e5cdde9d537331ecee7c51dbfaf3b775fb283986b20f6",
           "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
           "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
           "status": "Validated",
@@ -783,14 +3438,14 @@
       ],
       "lineage": {
         "artifact_hashes": {
-          "runtime_receipt.json": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
-          "science_claim_bundle.certified.json": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
-          "science_claim_bundle.pending.json": "sha256:406d376c6d26eb949c32f2b6c6f6578aa877f24c9ea0cb0a8b87bd377c72cfe0",
+          "runtime_receipt.json": "sha256:10576e0d581c624f7988a937ffaacb47775dceb166050cd957379a929af65ac3",
+          "science_claim_bundle.certified.json": "sha256:877cc81881e19bf0852b7a7b6f3118facdbe8eb1bd1c390dd5cc6c6128c91545",
+          "science_claim_bundle.pending.json": "sha256:e89b0866cd25a9308f7ba70deb68e8e3c8f072b6885ca6f2e9fcaaa55706e6c7",
           "scientific_memory_import_report.json": "sha256:1598d195ad94b6d2f487569ab3fb53c2160d429ce50d8ea311be0e122c8e3050",
-          "signed_science_claim_bundle.json": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e",
+          "signed_science_claim_bundle.json": "sha256:4eb39dc6ed7a14027e3d43573af899c1674c253f344089cacc51f71fceed147d",
           "trace.json": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
-          "trace_certificate.json": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575",
-          "verification_result.json": "sha256:8929abf4c382ddb16f65cc978a13f558899c82b66f6fa625777fe06c968f5b29"
+          "trace_certificate.json": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c",
+          "verification_result.json": "sha256:b32f90571504286979b080d86b0d33ab491c5e8b75456697c1d250533a7e979e"
         },
         "bundle_id": "scb-pcs-qc-release-v0.1",
         "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
@@ -802,16 +3457,16 @@
         "previous_release_id": null,
         "recommended_action": "No action required; claim matches imported release artifacts.",
         "release_id": "release-pcs-v0.1-labtrust-qc",
-        "release_manifest_hash": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777",
+        "release_manifest_hash": "sha256:85b51f7a8613678fc176ed62f6f6e415a14d897f342df1cdc84e422370580508",
         "schema_versions": {
           "science_claim_bundle": "v0",
           "signed_bundle": "v0"
         },
-        "signed_bundle_hash": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e",
+        "signed_bundle_hash": "sha256:4eb39dc6ed7a14027e3d43573af899c1674c253f344089cacc51f71fceed147d",
         "source_commits": {
           "certifyedge": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
-          "labtrust_gym": "17ed831acfd775889ab497d11004cceb083a9c2d",
-          "pcs_core": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
+          "labtrust_gym": "8369892d8872bc08ef5acb6cf503f38665c36733",
+          "pcs_core": "5ed33a0f995df88392ee0fc849967e9c42038738",
           "provability_fabric": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
           "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
         },
@@ -1015,8 +3670,8 @@
         "validator_version": "0.1.0"
       },
       "release_manifest": {
-        "generated_at": "2026-05-18T21:29:17Z",
-        "manifest_hash": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777",
+        "generated_at": "2026-05-18T23:17:38Z",
+        "manifest_hash": "sha256:85b51f7a8613678fc176ed62f6f6e415a14d897f342df1cdc84e422370580508",
         "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
         "producer_repos": {
           "certifyedge": {
@@ -1024,11 +3679,11 @@
             "repo": "https://github.com/fraware/CertifyEdge"
           },
           "labtrust_gym": {
-            "commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+            "commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
             "repo": "https://github.com/fraware/LabTrust-Gym"
           },
           "pcs_core": {
-            "commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
+            "commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
             "repo": "https://github.com/SentinelOps-CI/pcs-core"
           },
           "provability_fabric": {
@@ -1043,10 +3698,10 @@
         "release_candidate": "pcs-v0.1.0-rc1",
         "release_id": "release-pcs-v0.1-labtrust-qc",
         "release_status": "Validated",
-        "signature_or_digest": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777",
+        "signature_or_digest": "sha256:85b51f7a8613678fc176ed62f6f6e415a14d897f342df1cdc84e422370580508",
         "validation_profile": "labtrust-v0.1-release-chain"
       },
-      "release_manifest_hash": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777",
+      "release_manifest_hash": "sha256:85b51f7a8613678fc176ed62f6f6e415a14d897f342df1cdc84e422370580508",
       "reproduce_commands": [],
       "runtime_artifact_types": [
         "RuntimeReceipt.v0",
@@ -1076,18 +3731,18 @@
         "run_id": "qc-release",
         "run_outcome": "passed",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
-        "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+        "signature_or_digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
         "source_repo": "https://github.com/fraware/LabTrust-Gym",
         "started_at": "2026-01-15T08:00:00Z",
         "status": "RuntimeObserved",
         "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
       },
       "schema_version": "PcsClaimReadModel.v0",
-      "signed_bundle_hash": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e",
+      "signed_bundle_hash": "sha256:4eb39dc6ed7a14027e3d43573af899c1674c253f344089cacc51f71fceed147d",
       "source_repositories": [
         {
-          "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+          "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
           "source_repo": "https://github.com/fraware/LabTrust-Gym"
         },
         {
@@ -1248,7 +3903,7 @@
         ],
         "id": "verification-31ac5758-9219-47cf-b832-0ca8ae07a871",
         "overall_outcome": "pass",
-        "signature_or_digest": "sha256:5dfc1b8fcf0649fc12371264e4bd27e71378e56acdf0c0803945d55baa533e4d",
+        "signature_or_digest": "sha256:527d3c13a00f860633f47fa532a042c9c054e5c55ac1aff040270a15a9964c4e",
         "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
         "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
         "status": "ProofChecked",
@@ -1881,7 +4536,7 @@
         "registry_id": "pcs-artifact-registry-v0.1",
         "registry_version": "0.1.0",
         "schema_version": "v0",
-        "signature_or_digest": "sha256:daa958cdc73a161c70f1132c4e4e0f6441efbac3dacc76635cc94748616a8b19"
+        "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
       },
       "artifact_registry_source": "ArtifactRegistry.v0",
       "artifact_registry_version": "0.1.0",
@@ -2119,7 +4774,7 @@
         "previous_release_id": null,
         "recommended_action": "No action required; claim matches imported release artifacts.",
         "release_id": "release-pcs-v0.1-tool-use-safety",
-        "release_manifest_hash": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+        "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
         "schema_versions": {
           "science_claim_bundle": "v0",
           "signed_bundle": "v0"
@@ -2130,7 +4785,7 @@
           "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
           "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
           "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-          "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+          "scientific_memory": "796bb99e5c86687a5142bd3a8aa802650722036f"
         },
         "stale": false,
         "stale_reasons": [],
@@ -2213,7 +4868,7 @@
       },
       "release_manifest": {
         "generated_at": "2026-05-18T12:00:00Z",
-        "manifest_hash": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+        "manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
         "manifest_path": "tests/pcs/fixtures/tool-use-release/release_manifest.v0.json",
         "producer_repos": {
           "agent_runtime": {
@@ -2233,17 +4888,17 @@
             "repo": "https://github.com/SentinelOps-CI/provability-fabric"
           },
           "scientific_memory": {
-            "commit": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2",
+            "commit": "796bb99e5c86687a5142bd3a8aa802650722036f",
             "repo": "https://github.com/fraware/scientific-memory"
           }
         },
         "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
         "release_id": "release-pcs-v0.1-tool-use-safety",
         "release_status": "Validated",
-        "signature_or_digest": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+        "signature_or_digest": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
         "validation_profile": "agent_tool_use.safety_v0"
       },
-      "release_manifest_hash": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+      "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
       "reproduce_commands": [],
       "runtime_artifact_types": [
         "ToolUseTrace.v0",

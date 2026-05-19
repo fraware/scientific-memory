@@ -227,6 +227,11 @@ export type PcsClaimReadModel = {
   workflow_profile?: PcsWorkflowProfileView;
   tool_use_trace?: PcsNamedArtifact;
   tool_use_certificate?: PcsNamedArtifact;
+  dataset_receipt?: PcsNamedArtifact;
+  environment_receipt?: PcsNamedArtifact;
+  computation_run_receipt?: PcsNamedArtifact;
+  result_artifact?: PcsNamedArtifact;
+  computation_witness?: PcsNamedArtifact;
   release_manifest?: PcsReleaseManifestView;
   release_chain_validation?: PcsReleaseChainValidationView;
   protocol_artifacts?: PcsProtocolArtifact[];

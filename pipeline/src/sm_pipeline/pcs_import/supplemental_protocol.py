@@ -8,11 +8,14 @@ from typing import Any
 
 from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
 
+from sm_pipeline.pcs_import.computation_protocol import COMPUTATION_SUPPLEMENTAL_TYPES
+
 SUPPLEMENTAL_ARTIFACT_TYPES = frozenset(
     {
         "ToolUseTrace.v0",
         "ToolUseCertificate.v0",
         "WorkflowProfile.v0",
+        *COMPUTATION_SUPPLEMENTAL_TYPES,
     },
 )
 
@@ -42,6 +45,11 @@ def _artifact_id(data: dict[str, Any]) -> str:
     for key in (
         "trace_id",
         "certificate_id",
+        "witness_id",
+        "dataset_id",
+        "environment_id",
+        "run_id",
+        "result_id",
         "workflow_id",
         "id",
         "artifact_id",
@@ -121,7 +129,9 @@ def supplemental_by_type(
 
 
 def attach_domain_artifacts(read_model: dict[str, Any], supplemental: list[dict[str, Any]]) -> dict[str, Any]:
-    """Promote ToolUse* / WorkflowProfile artifacts to first-class read-model fields."""
+    """Promote domain protocol artifacts to first-class read-model fields."""
+    from sm_pipeline.pcs_import.computation_protocol import attach_computation_artifacts
+
     out = dict(read_model)
     by_type = supplemental_by_type(supplemental)
     trace = by_type.get("ToolUseTrace.v0")
@@ -130,6 +140,27 @@ def attach_domain_artifacts(read_model: dict[str, Any], supplemental: list[dict[
     cert = by_type.get("ToolUseCertificate.v0")
     if cert is not None:
         out["tool_use_certificate"] = protocol_artifact_to_named(cert)
+
+    has_computation = any(
+        str(row.get("artifact_type") or "") in COMPUTATION_SUPPLEMENTAL_TYPES for row in supplemental
+    )
+    if has_computation:
+        out = attach_computation_artifacts(out, supplemental)
+        remaining = [
+            row
+            for row in supplemental
+            if str(row.get("artifact_type") or "")
+            not in {
+                "ToolUseTrace.v0",
+                "ToolUseCertificate.v0",
+                "WorkflowProfile.v0",
+                *COMPUTATION_SUPPLEMENTAL_TYPES,
+            }
+        ]
+        if remaining:
+            out["protocol_artifacts"] = remaining
+        return out
+
     remaining = [
         row
         for row in supplemental

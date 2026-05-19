@@ -2,13 +2,13 @@
   "schema_version": "v0",
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_candidate": "pcs-v0.1.0-rc1",
-  "generated_at": "2026-05-18T21:29:17Z",
+  "generated_at": "2026-05-18T23:17:38Z",
   "validation_profile": "labtrust-v0.1-release-chain",
   "workflow_profile_id": "labtrust.qc_release_v0.1",
   "chain_root": {
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
-    "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
-    "certified_bundle_hash": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
+    "certificate_id": "cert-trace-02b3a7c1-35f7-4d23-85c2-dfd60aff7693",
+    "certified_bundle_hash": "sha256:68d59a16ac4f5d1e6e5aff61a011be192fbb12f9b4476fa221079a934b1265fc",
     "signed_bundle_hash": "sha256:2fe8c786dc98b5dae912ad5ba12d5a672b22b2b1ae29330bceee19afe78d616e"
   },
   "release_chain_validation_result": {
@@ -24,15 +24,15 @@
   "producer_repos": {
     "pcs_core": {
       "repo": "https://github.com/SentinelOps-CI/pcs-core",
-      "commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9"
+      "commit": "5ed33a0f995df88392ee0fc849967e9c42038738"
     },
     "labtrust_gym": {
       "repo": "https://github.com/fraware/LabTrust-Gym",
-      "commit": "17ed831acfd775889ab497d11004cceb083a9c2d"
+      "commit": "8369892d8872bc08ef5acb6cf503f38665c36733"
     },
     "certifyedge": {
       "repo": "https://github.com/fraware/CertifyEdge",
-      "commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc"
+      "commit": "11e079bc643b9e813c1a5516dc6d4db1d60a3f8a"
     },
     "provability_fabric": {
       "repo": "https://github.com/SentinelOps-CI/provability-fabric",
@@ -49,24 +49,24 @@
       "schema": "RuntimeReceipt.v0.schema.json",
       "producer": "LabTrust-Gym",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
-      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
-      "sha256": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60"
+      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "sha256": "sha256:10576e0d581c624f7988a937ffaacb47775dceb166050cd957379a929af65ac3"
     },
     "science_claim_bundle.certified.json": {
       "artifact_type": "ScienceClaimBundle.v0",
       "schema": "ScienceClaimBundle.v0.schema.json",
       "producer": "LabTrust-Gym",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
-      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
-      "sha256": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe"
+      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "sha256": "sha256:68d59a16ac4f5d1e6e5aff61a011be192fbb12f9b4476fa221079a934b1265fc"
     },
     "science_claim_bundle.pending.json": {
       "artifact_type": "ScienceClaimBundle.v0",
       "schema": "ScienceClaimBundle.v0.schema.json",
       "producer": "LabTrust-Gym",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
-      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
-      "sha256": "sha256:406d376c6d26eb949c32f2b6c6f6578aa877f24c9ea0cb0a8b87bd377c72cfe0"
+      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "sha256": "sha256:e89b0866cd25a9308f7ba70deb68e8e3c8f072b6885ca6f2e9fcaaa55706e6c7"
     },
     "scientific_memory_import_report.json": {
       "artifact_type": "ScientificMemory.ImportReport.v0",
@@ -89,7 +89,7 @@
       "schema": "trace.json",
       "producer": "LabTrust-Gym",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
-      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
       "sha256": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c"
     },
     "trace_certificate.json": {
@@ -97,8 +97,8 @@
       "schema": "TraceCertificate.v0.schema.json",
       "producer": "CertifyEdge",
       "source_repo": "https://github.com/fraware/CertifyEdge",
-      "source_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
-      "sha256": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575"
+      "source_commit": "11e079bc643b9e813c1a5516dc6d4db1d60a3f8a",
+      "sha256": "sha256:f25188838271cb394eeac93628d500e6b9ec9a7c0a8b7d6b0258d58790bd5c6c"
     },
     "verification_result.json": {
       "artifact_type": "VerificationResult.v0",
@@ -110,5 +110,5 @@
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:32a36758c68d38856b9633a4c598fba53a0fbbdb8a3b834a51f5563ffddef777"
+  "signature_or_digest": "sha256:e430d2726c94cb21a3ef130c40b45f4a5b8d0f3e904f2704c5404b6638e07bdb"
 }

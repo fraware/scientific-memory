@@ -49,12 +49,18 @@ def finalize_release_mode_claim(
     bundle = json.loads(lineage_bundle_path.read_text(encoding="utf-8-sig"))
     claim_id = _claim_id_from_read_model(claim_dir) or claim_dir.name
     workflow_profile_id = str(release_validation.get("workflow_profile_id") or "")
+    from sm_pipeline.pcs_import.computation_protocol import computation_lineage_from_supplemental
+    from sm_pipeline.pcs_import.supplemental_protocol import load_supplemental_protocol_artifacts
+
+    supplemental = load_supplemental_protocol_artifacts(manifest, release_dir)
+    computation_fields = computation_lineage_from_supplemental(supplemental)
     lineage = build_lineage(
         claim_id=claim_id,
         bundle=bundle,
         signed_bundle_path=lineage_bundle_path,
         release_manifest=manifest,
         workflow_profile_id=workflow_profile_id or None,
+        computation_fields=computation_fields or None,
     )
     write_lineage(claim_dir, lineage)
     lineage = update_lineage_stale_flags(claim_dir, bundle_path=lineage_bundle_path)

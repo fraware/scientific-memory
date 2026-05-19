@@ -19,9 +19,9 @@
     }
   },
   "invariants": {
-    "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+    "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
   },
   "status": "Validated",
-  "signature_or_digest": "sha256:c15567dbde19c0968204543ef513671ec14227f2e4012882a4283dba2e0bc8fc"
+  "signature_or_digest": "sha256:1bf5fd4b5330ef13a51e5cdde9d537331ecee7c51dbfaf3b775fb283986b20f6"
 }

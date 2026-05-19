@@ -17,6 +17,11 @@ import { StalenessView } from "./StalenessView";
 import { ReplayCommand } from "./ReplayCommand";
 import { RuntimeReceiptView } from "./RuntimeReceiptView";
 import { SourceRepositories } from "./SourceRepositories";
+import { ComputationRunReceiptView } from "./ComputationRunReceiptView";
+import { ComputationWitnessView } from "./ComputationWitnessView";
+import { DatasetReceiptView } from "./DatasetReceiptView";
+import { EnvironmentReceiptView } from "./EnvironmentReceiptView";
+import { ResultArtifactView } from "./ResultArtifactView";
 import { ToolUseCertificateView } from "./ToolUseCertificateView";
 import { ToolUseTraceView } from "./ToolUseTraceView";
 import { TraceCertificateView } from "./TraceCertificateView";
@@ -34,6 +39,9 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
   const hasTemporalCertificate =
     Boolean(model.trace_certificate?.id) &&
     model.certificate_artifact_types?.includes("TraceCertificate.v0");
+  const isComputationDomain =
+    model.domain === "scientific_computation" ||
+    model.workflow_id === "scientific_computation.reproducibility_v0";
 
   return (
     <main className="mx-auto max-w-5xl space-y-8 p-8" data-testid="pcs-claim-page">
@@ -57,7 +65,18 @@ export function PcsClaimPage({ model }: PcsClaimPageProps) {
         <WorkflowProfileView profile={model.workflow_profile} />
       ) : null}
       <AssumptionSetView assumptionSet={model.assumption_set} />
-      <RuntimeReceiptView receipt={model.runtime_receipt} />
+      {!isComputationDomain ? <RuntimeReceiptView receipt={model.runtime_receipt} /> : null}
+      {model.dataset_receipt ? <DatasetReceiptView receipt={model.dataset_receipt} /> : null}
+      {model.environment_receipt ? (
+        <EnvironmentReceiptView receipt={model.environment_receipt} />
+      ) : null}
+      {model.computation_run_receipt ? (
+        <ComputationRunReceiptView receipt={model.computation_run_receipt} />
+      ) : null}
+      {model.result_artifact ? <ResultArtifactView artifact={model.result_artifact} /> : null}
+      {model.computation_witness ? (
+        <ComputationWitnessView witness={model.computation_witness} />
+      ) : null}
       {model.tool_use_trace ? <ToolUseTraceView trace={model.tool_use_trace} /> : null}
       {model.tool_use_certificate ? (
         <ToolUseCertificateView certificate={model.tool_use_certificate} />

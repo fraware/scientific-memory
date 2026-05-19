@@ -20,16 +20,16 @@
       {
         "artifact_type": "ScienceClaimBundle.v0",
         "name": "science_claim_bundle.certified.json",
-        "sha256": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536"
+        "sha256": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe"
       }
     ],
     "invariants": {
-      "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
-      "certified_bundle_hash": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536",
+      "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+      "certified_bundle_hash": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe",
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
-    "signature_or_digest": "sha256:70d44fd475511bf7678b7efcccab9dafd1900ab73c9e80b39b32af8891b198c8",
+    "signature_or_digest": "sha256:ce778d7a932cbe4b87e752fb13fa67c5125d909059ca58ea32cbfefd4a978591",
     "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "status": "Validated",
@@ -55,11 +55,11 @@
       }
     ],
     "invariants": {
-      "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+      "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.certificate_to_bundle.v0.json",
-    "signature_or_digest": "sha256:98b3bb18df632763e6fe440d702877c9a4e7c8bf3b7e73ad964fb1b1b68c4718",
+    "signature_or_digest": "sha256:ce9312baf79822d4971bbd0af4c2f5c2e200e1b66aec2cb9add6dd1e8d50e4f5",
     "source_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
     "source_repo": "https://github.com/fraware/CertifyEdge",
     "status": "Validated",
@@ -119,11 +119,11 @@
       }
     ],
     "invariants": {
-      "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+      "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
       "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
     },
     "manifest_path": "handoff_manifest.signed_bundle_to_memory.v0.json",
-    "signature_or_digest": "sha256:c15567dbde19c0968204543ef513671ec14227f2e4012882a4283dba2e0bc8fc",
+    "signature_or_digest": "sha256:1bf5fd4b5330ef13a51e5cdde9d537331ecee7c51dbfaf3b775fb283986b20f6",
     "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
     "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
     "status": "Validated",

@@ -1,0 +1,14 @@
+{
+  "schema_version": "v0",
+  "result_id": "result-demo-summary-v0.1",
+  "result_kind": "table",
+  "path": "outputs/summary.parquet",
+  "sha256": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "size_bytes": 4096,
+  "media_type": "application/vnd.apache.parquet",
+  "description": "Aggregated measurement summary table",
+  "produced_by_run": "run-demo-analysis-001",
+  "source_repo": "https://github.com/example/scientific-computation-runner",
+  "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "signature_or_digest": "sha256:787c5357feeac6cb2ea840fb59d953c78fbca3e9cf88ac58b84725100dcf00b8"
+}

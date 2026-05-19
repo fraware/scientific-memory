@@ -19,6 +19,12 @@ PCS_UI_SECTION_TESTIDS = (
     "pcs-section-workflow-profile",
     "pcs-section-assumptions",
     "pcs-section-runtime-evidence",
+    "pcs-section-dataset-receipt",
+    "pcs-section-environment-receipt",
+    "pcs-section-computation-run-receipt",
+    "pcs-section-result-artifact",
+    "pcs-section-computation-witness",
+    "pcs-computation-witness-failures",
     "pcs-section-tool-use-trace",
     "pcs-section-tool-use-certificate",
     "pcs-section-temporal-certificate",
@@ -54,6 +60,49 @@ def test_canonical_read_model_matches_portal_contract() -> None:
     assert read_model["verification_result"] is not None
     assert len(read_model["artifact_hashes"]) >= 5
     assert read_model["canonical_digests"]["signed_bundle"].startswith("sha256:")
+
+
+def test_computation_phase2_read_model_fixture_passes_portal_contract() -> None:
+    script = REPO_ROOT / "portal" / "scripts" / "verify-pcs-phase2-read-model.mjs"
+    read_model = (
+        REPO_ROOT / "tests" / "pcs" / "fixtures" / "computation-release" / ".phase2-read-model.json"
+    )
+    if not read_model.is_file():
+        pytest.skip("computation .phase2-read-model.json missing; run: just bootstrap-computation-release")
+
+    result = subprocess.run(
+        ["node", str(script), str(read_model)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_computation_rejected_phase2_read_model_fixture_passes_portal_contract() -> None:
+    script = REPO_ROOT / "portal" / "scripts" / "verify-pcs-phase2-read-model.mjs"
+    read_model = (
+        REPO_ROOT
+        / "tests"
+        / "pcs"
+        / "fixtures"
+        / "computation-rejected-release"
+        / ".phase2-read-model.json"
+    )
+    if not read_model.is_file():
+        pytest.skip(
+            "computation-rejected .phase2-read-model.json missing; run: just bootstrap-computation-release",
+        )
+
+    result = subprocess.run(
+        ["node", str(script), str(read_model)],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
 
 
 def test_tool_use_phase2_read_model_fixture_passes_portal_contract() -> None:

@@ -113,6 +113,75 @@ def _entry_for_release(repo_root: Path, release_id: str) -> dict[str, Any] | Non
     return max(matches, key=lambda row: str(row.get("imported_at") or ""))
 
 
+def _computation_snapshot(lineage: dict[str, Any]) -> dict[str, Any]:
+    computation = lineage.get("computation")
+    return dict(computation) if isinstance(computation, dict) else {}
+
+
+def _diff_computation_evidence(
+    old_lineage: dict[str, Any],
+    new_lineage: dict[str, Any],
+) -> dict[str, list[dict[str, str]]]:
+    """Diff computation lineage fields (dataset, environment, run, results, witness)."""
+    old_c = _computation_snapshot(old_lineage)
+    new_c = _computation_snapshot(new_lineage)
+    if not old_c and not new_c:
+        return {}
+
+    def _changes(field: str) -> list[dict[str, str]]:
+        prev = str(old_c.get(field) or "")
+        cur = str(new_c.get(field) or "")
+        if prev == cur:
+            return []
+        return [{"field": field, "previous": prev, "current": cur}]
+
+    dataset_changes = _changes("dataset_id") + _changes("dataset_version") + _changes(
+        "dataset_aggregate_hash",
+    )
+    environment_changes = _changes("environment_id")
+    code_changes = _changes("code_commit")
+    command_changes = _changes("command")
+
+    old_results = list(old_c.get("result_hashes") or [])
+    new_results = list(new_c.get("result_hashes") or [])
+    result_changes: list[dict[str, str]] = []
+    if old_results != new_results:
+        result_changes.append(
+            {
+                "field": "result_hashes",
+                "previous": ",".join(old_results),
+                "current": ",".join(new_results),
+            },
+        )
+    if old_c.get("result_hash") != new_c.get("result_hash"):
+        result_changes.append(
+            {
+                "field": "result_hash",
+                "previous": str(old_c.get("result_hash") or ""),
+                "current": str(new_c.get("result_hash") or ""),
+            },
+        )
+
+    witness_changes = _changes("witness_status") + _changes("witness_id")
+    for key in ("dataset_hash", "environment_hash", "run_receipt_hash"):
+        witness_changes.extend(_changes(key))
+
+    out: dict[str, list[dict[str, str]]] = {}
+    if dataset_changes:
+        out["dataset_changes"] = dataset_changes
+    if environment_changes:
+        out["environment_changes"] = environment_changes
+    if code_changes:
+        out["code_commit_changes"] = code_changes
+    if command_changes:
+        out["command_changes"] = command_changes
+    if result_changes:
+        out["result_hash_changes"] = result_changes
+    if witness_changes:
+        out["witness_status_changes"] = witness_changes
+    return out
+
+
 def _lineage_hashes(claim_dir: Path) -> dict[str, str]:
     lineage = load_lineage(claim_dir)
     if lineage is None:
@@ -197,10 +266,14 @@ def compare_releases(
 
     changed_workflow_profile = _diff_workflow_profile(old_dir, new_dir)
     changed_registry_checks = _diff_registry_checks(old_dir, new_dir)
+    changed_computation = _diff_computation_evidence(old_lineage, new_lineage)
     if changed_workflow_profile:
         staleness_impact.append(normalize_stale_reason("workflow_profile changed"))
     if changed_registry_checks:
         staleness_impact.append(normalize_stale_reason("registry_checks changed"))
+    if changed_computation:
+        for key in changed_computation:
+            staleness_impact.append(normalize_stale_reason(f"computation_{key}"))
 
     recommended = (
         "Import the newer release manifest and refresh lineage."
@@ -221,6 +294,7 @@ def compare_releases(
         "changed_certificates": changed_certificates,
         "changed_workflow_profile": changed_workflow_profile,
         "changed_registry_checks": changed_registry_checks,
+        "changed_computation": changed_computation,
         "staleness_impact": sorted(set(staleness_impact)),
         "recommended_action": recommended,
     }

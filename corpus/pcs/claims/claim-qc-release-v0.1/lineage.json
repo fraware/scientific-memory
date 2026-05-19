@@ -12,7 +12,7 @@
   "certificate_id": "cert-tool-use-safety-v0",
   "claim_id": "claim-qc-release-v0.1",
   "release_id": "release-pcs-v0.1-tool-use-safety",
-  "release_manifest_hash": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd",
+  "release_manifest_hash": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"
@@ -23,7 +23,7 @@
     "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
     "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
     "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-    "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+    "scientific_memory": "796bb99e5c86687a5142bd3a8aa802650722036f"
   },
   "stale": false,
   "stale_reasons": [],

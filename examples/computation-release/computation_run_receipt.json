@@ -1,0 +1,21 @@
+{
+  "schema_version": "v0",
+  "run_id": "run-demo-analysis-001",
+  "workflow_id": "scientific_computation.reproducibility_v0",
+  "command": "uv run python -m demo_analysis --input data/measurements.csv",
+  "code_repo": "https://github.com/example/scientific-computation-runner",
+  "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "dataset_receipt_ref": "dataset-demo-measurements-v0.1",
+  "environment_receipt_ref": "env-linux-py312-uv",
+  "started_at": "2026-05-18T12:05:00Z",
+  "completed_at": "2026-05-18T12:06:30Z",
+  "exit_code": 0,
+  "stdout_hash": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+  "stderr_hash": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "result_artifact_refs": [
+    "result-demo-summary-v0.1"
+  ],
+  "source_repo": "https://github.com/example/scientific-computation-runner",
+  "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "signature_or_digest": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624"
+}

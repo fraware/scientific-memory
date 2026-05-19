@@ -40,7 +40,7 @@
     },
     "scientific_memory": {
       "repo": "https://github.com/fraware/scientific-memory",
-      "commit": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
+      "commit": "796bb99e5c86687a5142bd3a8aa802650722036f"
     }
   },
   "artifacts": {
@@ -102,5 +102,5 @@
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:8db776767a9f0802cd54eb3c9d394aad901209159e6bc5939e5652df11f825fd"
+  "signature_or_digest": "sha256:76dcd378986712634c5e55afd8a05cd9b07a057f8a156e6a8644cb8d86dce06e"
 }

@@ -1,0 +1,143 @@
+[
+  {
+    "created_at": "2026-05-18T12:00:00Z",
+    "expected_outputs": [
+      {
+        "artifact_type": "SignedScienceClaimBundle.v0",
+        "name": "signed_science_claim_bundle.json",
+        "sha256": ""
+      },
+      {
+        "artifact_type": "VerificationResult.v0",
+        "name": "verification_result.json",
+        "sha256": ""
+      }
+    ],
+    "from_component": "CertifyEdge",
+    "handoff_id": "handoff-computation-to-pf",
+    "handoff_kind": "bundle_to_verifier",
+    "input_artifacts": [
+      {
+        "artifact_type": "ScienceClaimBundle.v0",
+        "name": "science_claim_bundle.certified.json",
+        "sha256": "sha256:c47168f2de32da5f25407f34ab66cba9e853390e22108bf56ea24712343fd60d"
+      }
+    ],
+    "invariants": {
+      "certified_bundle_hash": "sha256:c47168f2de32da5f25407f34ab66cba9e853390e22108bf56ea24712343fd60d",
+      "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828",
+      "witness_id": "witness-sci-comp-repro-001"
+    },
+    "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
+    "signature_or_digest": "sha256:3db04a8c9656ed55c3efbc7bb08ebd2a606d9b26f21f492d201e0071c8b7e968",
+    "source_commit": "b222222222222222222222222222222222222222",
+    "source_repo": "https://github.com/fraware/CertifyEdge",
+    "status": "Validated",
+    "to_component": "Provability Fabric"
+  },
+  {
+    "created_at": "2026-05-18T12:00:00Z",
+    "expected_outputs": [
+      {
+        "artifact_type": "ScienceClaimBundle.v0",
+        "name": "science_claim_bundle.certified.json",
+        "sha256": ""
+      }
+    ],
+    "from_component": "CertifyEdge",
+    "handoff_id": "handoff-computation-witness-to-bundle",
+    "handoff_kind": "certificate_to_bundle",
+    "input_artifacts": [
+      {
+        "artifact_type": "ComputationWitness.v0",
+        "name": "computation_witness.json",
+        "sha256": "sha256:a86081703ca5bc521445cc5a38826adfc1ca55f87f52f35b3c429a2bbdaf13f9"
+      }
+    ],
+    "invariants": {
+      "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828",
+      "witness_id": "witness-sci-comp-repro-001"
+    },
+    "manifest_path": "handoff_manifest.certificate_to_bundle.v0.json",
+    "signature_or_digest": "sha256:e2170d91b655ae0d9ae9b8f6a18fa78f9801d76213bd8e5bfba577ac7599f501",
+    "source_commit": "b222222222222222222222222222222222222222",
+    "source_repo": "https://github.com/fraware/CertifyEdge",
+    "status": "Validated",
+    "to_component": "scientific-computation demo producer"
+  },
+  {
+    "created_at": "2026-05-18T12:00:00Z",
+    "expected_outputs": [
+      {
+        "artifact_type": "ComputationWitness.v0",
+        "name": "computation_witness.json",
+        "sha256": ""
+      }
+    ],
+    "from_component": "scientific-computation demo producer",
+    "handoff_id": "handoff-computation-runtime-to-certifyedge",
+    "handoff_kind": "runtime_to_certificate",
+    "input_artifacts": [
+      {
+        "artifact_type": "ComputationRunReceipt.v0",
+        "name": "computation_run_receipt.json",
+        "sha256": "sha256:c14b4fed421343459ad081e74f7b613b39b6bca803eca27ffde0fdda1a8dd12a"
+      },
+      {
+        "artifact_type": "DatasetReceipt.v0",
+        "name": "dataset_receipt.json",
+        "sha256": "sha256:d54994e19c32caeb7508edbb73a14efc94341ffd93013873af527e180385dfec"
+      },
+      {
+        "artifact_type": "EnvironmentReceipt.v0",
+        "name": "environment_receipt.json",
+        "sha256": "sha256:6335e612b739e925d74ca94a39690380f8be7c9db836fcad4c8ff0ba8b6c98ae"
+      },
+      {
+        "artifact_type": "ResultArtifact.v0",
+        "name": "result_artifact.json",
+        "sha256": "sha256:a38eeaab2b0cd104ac461b6a061bfa09e4f797253c27173107452a5acd9c42ed"
+      }
+    ],
+    "invariants": {
+      "dataset_hash": "sha256:84c9037231eef6a1742c1d6d0a043878b4de8395397c168026450d8ca9e647e3",
+      "run_receipt_hash": "sha256:9c74749d2ad46c6a60394db676e5527929f9b7bef9a012439d6d14b26d960828"
+    },
+    "manifest_path": "handoff_manifest.runtime_to_certificate.v0.json",
+    "signature_or_digest": "sha256:bafff8665c39e3662b34563a34671f518639fbb46853d889925a537a964c1b41",
+    "source_commit": "e555555555555555555555555555555555555555",
+    "source_repo": "https://github.com/example/scientific-computation-runner",
+    "status": "Validated",
+    "to_component": "CertifyEdge"
+  },
+  {
+    "created_at": "2026-05-18T12:00:00Z",
+    "expected_outputs": [
+      {
+        "artifact_type": "ScientificMemory.ImportReport.v0",
+        "name": "scientific_memory_import_report.json",
+        "sha256": ""
+      }
+    ],
+    "from_component": "Provability Fabric",
+    "handoff_id": "handoff-computation-signed-bundle-to-memory",
+    "handoff_kind": "signed_bundle_to_memory",
+    "input_artifacts": [
+      {
+        "artifact_type": "SignedScienceClaimBundle.v0",
+        "name": "signed_science_claim_bundle.json",
+        "sha256": "sha256:6995cdbdcb788d7e570093db3fd204072d69bd07c03390dce2f5a3a1490bf2ea"
+      }
+    ],
+    "invariants": {
+      "claim_id": "claim-qc-release-v0.1",
+      "workflow_profile_id": "scientific_computation.reproducibility_v0"
+    },
+    "manifest_path": "handoff_manifest.signed_bundle_to_memory.v0.json",
+    "signature_or_digest": "sha256:68159cf6671e21245b197912e054410bf50e39b068e25c0eb66ecc73fca10250",
+    "source_commit": "c333333333333333333333333333333333333333",
+    "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
+    "status": "Validated",
+    "to_component": "Scientific Memory"
+  }
+]

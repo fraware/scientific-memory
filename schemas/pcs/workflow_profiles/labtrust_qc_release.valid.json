@@ -27,6 +27,7 @@
     "ReleaseChainValidationResult.v0",
     "WorkflowProfile.v0"
   ],
+  "required_admission_profile": "labtrust_qc_release",
   "status_policy": {
     "policy_id": "pcs-v0.1-default-lifecycle",
     "description": "RuntimeObserved through ProofChecked with terminal Rejected and Stale.",
@@ -53,5 +54,5 @@
     "manifest_hash_mismatch"
   ],
   "limitations_notice": "LabTrust QC release demonstrates a proof-carrying simulated workflow; not clinical certification.",
-  "signature_or_digest": "sha256:cb646ac26c2d4c44453c3fce83ca3208a6fc34742bc1cde9075f602d25fccbfd"
+  "signature_or_digest": "sha256:ef46e42e500f839727fa814df0f95f81aab7ad8f6259c6c6a70f24d861a92f8d"
 }

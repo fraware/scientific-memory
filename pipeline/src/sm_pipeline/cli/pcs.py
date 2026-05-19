@@ -11,7 +11,11 @@ from sm_pipeline.pcs_import.claim_index import load_claims_index, query_claims_i
 from sm_pipeline.pcs_import.claim_query import (
     list_claim_ids,
     list_claims_by_certificate,
+    list_claims_by_code_commit,
+    list_claims_by_dataset,
+    list_claims_by_environment,
     list_claims_by_release_id,
+    list_claims_by_result_hash,
     list_claims_by_source_commit,
     list_claims_by_trace_hash,
     list_claims_by_workflow,
@@ -240,6 +244,34 @@ def pcs_list_claims_by_workflow(
         console.print(claim_id)
 
 
+def pcs_list_claims_by_dataset(
+    dataset_id: str = typer.Option(..., "--dataset-id", help="DatasetReceipt dataset_id"),
+) -> None:
+    for claim_id in list_claims_by_dataset(_repo_root(), dataset_id):
+        console.print(claim_id)
+
+
+def pcs_list_claims_by_environment(
+    environment_id: str = typer.Option(..., "--environment-id", help="EnvironmentReceipt environment_id"),
+) -> None:
+    for claim_id in list_claims_by_environment(_repo_root(), environment_id):
+        console.print(claim_id)
+
+
+def pcs_list_claims_by_code_commit(
+    commit: str = typer.Option(..., "--commit", help="Computation run code_commit"),
+) -> None:
+    for claim_id in list_claims_by_code_commit(_repo_root(), commit):
+        console.print(claim_id)
+
+
+def pcs_list_claims_by_result_hash(
+    result_hash: str = typer.Option(..., "--result-hash", help="ResultArtifact sha256 digest"),
+) -> None:
+    for claim_id in list_claims_by_result_hash(_repo_root(), result_hash):
+        console.print(claim_id)
+
+
 def pcs_compare_releases(
     old_release: str = typer.Option(..., "--old-release", help="Previous release_id"),
     new_release: str = typer.Option(..., "--new-release", help="Newer release_id"),
@@ -291,13 +323,27 @@ def pcs_query_lineage(
     commit: str = typer.Option(None, "--commit"),  # type: ignore[assignment]
     claim_state: str = typer.Option(None, "--claim-state"),  # type: ignore[assignment]
     workflow_id: str = typer.Option(None, "--workflow-id"),  # type: ignore[assignment]
+    dataset_id: str = typer.Option(None, "--dataset-id"),  # type: ignore[assignment]
+    environment_id: str = typer.Option(None, "--environment-id"),  # type: ignore[assignment]
+    result_hash: str = typer.Option(None, "--result-hash"),  # type: ignore[assignment]
     stale_only: bool = typer.Option(False, "--stale-only"),
 ) -> None:
     """Query corpus/pcs/claims_index.json (JSON lines to stdout)."""
     import json
 
     if not any(
-        (release_id, certificate_id, trace_hash, commit, claim_state, workflow_id, stale_only),
+        (
+            release_id,
+            certificate_id,
+            trace_hash,
+            commit,
+            claim_state,
+            workflow_id,
+            dataset_id,
+            environment_id,
+            result_hash,
+            stale_only,
+        ),
     ):
         index = load_claims_index(_repo_root())
         typer.echo(json.dumps(index, indent=2))
@@ -311,6 +357,10 @@ def pcs_query_lineage(
         stale_only=stale_only,
         claim_state=claim_state,
         workflow_profile_id=workflow_id,
+        dataset_id=dataset_id,
+        environment_id=environment_id,
+        code_commit=commit,
+        result_hash=result_hash,
     )
     for entry in matches:
         typer.echo(json.dumps(entry, sort_keys=True))

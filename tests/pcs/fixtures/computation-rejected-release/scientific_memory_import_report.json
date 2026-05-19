@@ -1,0 +1,21 @@
+{
+  "allow_legacy": false,
+  "bundle_shape": "pcs_core",
+  "claim_id": "claim-computation-rejected-v0.1",
+  "imported_at": "2026-05-18T12:10:00Z",
+  "render_path": "/pcs/claims/claim-computation-rejected-v0.1",
+  "scientific_memory_commit": "796bb99cb79fe7b195fd156feb346c08fc334d33",
+  "source_commit": "796bb99cb79fe7b195fd156feb346c08fc334d33",
+  "source_repo": "https://github.com/fraware/scientific-memory",
+  "strict": true,
+  "verification_status": "passed",
+  "warnings": [],
+  "release_id": "release-pcs-v0.1-scientific-computation-rejected",
+  "release_candidate": "pcs-v0.1-scientific-computation-conformance",
+  "release_manifest_path": "tests/pcs/fixtures/computation-rejected-release/release_manifest.v0.json",
+  "validation_profile": "scientific_computation.reproducibility_v0",
+  "workflow_profile_id": "scientific_computation.reproducibility_v0",
+  "release_chain_validation_status": "ProofChecked",
+  "release_chain_validator": "pcs-core",
+  "release_chain_checked_at": "2026-05-18T12:00:00Z"
+}

@@ -52,6 +52,14 @@ def _run_portal_pcs_contracts() -> None:
             "scripts/verify-pcs-phase2-read-model.mjs",
             "../tests/pcs/fixtures/tool-use-release/.phase2-read-model.json",
         ],
+        [
+            "scripts/verify-pcs-phase2-read-model.mjs",
+            "../tests/pcs/fixtures/computation-release/.phase2-read-model.json",
+        ],
+        [
+            "scripts/verify-pcs-phase2-read-model.mjs",
+            "../tests/pcs/fixtures/computation-rejected-release/.phase2-read-model.json",
+        ],
     )
     for parts in contract_runs:
         _run([node, *parts], cwd=portal)
@@ -111,8 +119,6 @@ def main() -> int:
             return 1
         print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release")
 
-    _run([sys.executable, "-m", "pytest", str(REPO_ROOT / "tests/pcs"), "-q"], env=env)
-
     manifest = REPO_ROOT / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json"
     _run(
         [
@@ -125,6 +131,35 @@ def main() -> int:
         ],
         env=env,
     )
+
+    _run([sys.executable, str(REPO_ROOT / "scripts" / "verify_tool_use_release_fixture.py")], env=env)
+
+    computation_manifest = (
+        REPO_ROOT / "tests/pcs/fixtures/computation-release/release_manifest.v0.json"
+    )
+    if computation_manifest.is_file():
+        _run(
+            [sys.executable, str(REPO_ROOT / "scripts" / "verify_computation_release_fixture.py")],
+            env=env,
+        )
+        _run(
+            [
+                sys.executable,
+                "-m",
+                "sm_pipeline.cli",
+                "pcs-import-release",
+                "--release-manifest",
+                str(computation_manifest.relative_to(REPO_ROOT)),
+            ],
+            env=env,
+        )
+    else:
+        print(
+            "warn: computation-release fixtures missing; run: just bootstrap-computation-release",
+            file=sys.stderr,
+        )
+
+    _run([sys.executable, "-m", "pytest", str(REPO_ROOT / "tests/pcs"), "-q"], env=env)
     _run(
         [
             sys.executable,
@@ -160,8 +195,6 @@ def main() -> int:
     if report.get("release_chain_validation_status") != "ProofChecked":
         print("expected ProofChecked release chain status", file=sys.stderr)
         return 1
-
-    _run([sys.executable, str(REPO_ROOT / "scripts" / "verify_tool_use_release_fixture.py")], env=env)
 
     _run_portal_pcs_contracts()
 

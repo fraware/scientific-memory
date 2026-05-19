@@ -76,10 +76,13 @@ test-pcs:
 	@echo "==> test-pcs"
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py
 	python scripts/verify_tool_use_release_fixture.py
+	python scripts/verify_computation_release_fixture.py
 	bash scripts/run_pcs_tests.sh
 	node portal/scripts/verify-pcs-read-model.mjs
 	pnpm --dir portal test:pcs-phase2-contract
 	pnpm --dir portal test:pcs-tool-use-phase2-contract
+	pnpm --dir portal test:pcs-computation-phase2-contract
+	pnpm --dir portal test:pcs-computation-rejected-phase2-contract
 
 # PCS v0.1 gate: contract tests + corpus validation (fixtures are committed; no refresh)
 pcs-verify: test-pcs
@@ -90,6 +93,7 @@ refresh-pcs-release:
 	bash scripts/sm_python.sh scripts/sync_pcs_schemas.py
 	bash scripts/sm_python.sh scripts/sync_labtrust_release_from_pcs_core.py
 	python scripts/sync_tool_use_release_from_pcs_core.py --ensure
+	python scripts/sync_computation_release_from_pcs_core.py --bootstrap-if-missing
 	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py
 	bash scripts/sm_python.sh scripts/ensure_labtrust_phase2_fixtures.py --release-dir release-run
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
@@ -276,6 +280,24 @@ pcs-import-tool-use-release RELEASE_MANIFEST="tests/pcs/fixtures/tool-use-releas
 sync-tool-use-release:
 	python scripts/sync_tool_use_release_from_pcs_core.py --ensure
 
+bootstrap-computation-release:
+	python scripts/bootstrap_computation_release_fixture.py
+
+sync-computation-release:
+	python scripts/sync_computation_release_from_pcs_core.py --bootstrap-if-missing
+
+publish-computation-release-to-pcs-core:
+	python scripts/publish_computation_release_to_pcs_core.py --include-rejected
+
+verify-computation-release:
+	python scripts/verify_computation_release_fixture.py
+
+pcs-import-computation-release RELEASE_MANIFEST="tests/pcs/fixtures/computation-release/release_manifest.v0.json":
+	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
+
+pcs-import-computation-rejected-release RELEASE_MANIFEST="tests/pcs/fixtures/computation-rejected-release/release_manifest.v0.json":
+	just pcs-import-release-manifest "{{RELEASE_MANIFEST}}"
+
 pcs-import-release-manifest release_manifest:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-import-release --release-manifest "{{release_manifest}}"
 
@@ -299,6 +321,18 @@ pcs-list-claims-by-release release_id:
 
 pcs-list-claims-by-workflow workflow_id:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-workflow --workflow-id "{{workflow_id}}"
+
+pcs-list-claims-by-dataset DATASET_ID:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-dataset --dataset-id "{{DATASET_ID}}"
+
+pcs-list-claims-by-code-commit COMMIT:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-code-commit --commit "{{COMMIT}}"
+
+pcs-list-claims-by-result-hash HASH:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-result-hash --result-hash "{{HASH}}"
+
+pcs-list-claims-by-environment ENVIRONMENT_ID:
+	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-list-claims-by-environment --environment-id "{{ENVIRONMENT_ID}}"
 
 pcs-compare-releases old_release new_release:
 	SM_FORCE_UV=1 bash scripts/sm_python.sh -m sm_pipeline.cli pcs-compare-releases --old-release "{{old_release}}" --new-release "{{new_release}}"

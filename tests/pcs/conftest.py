@@ -30,14 +30,7 @@ def _ensure_labtrust_phase2_fixtures() -> None:
             check=True,
             capture_output=True,
         )
-    release_run = repo / "release-run"
-    if script.is_file() and (release_run / "RELEASE_FIXTURE_MANIFEST.json").is_file():
-        subprocess.run(
-            [sys.executable, str(script), "--release-dir", str(release_run)],
-            cwd=repo,
-            check=True,
-            capture_output=True,
-        )
+    # release-run is mirrored from tests/pcs/fixtures/labtrust-release by ensure_labtrust_phase2_fixtures.
 
 
 @pytest.fixture(scope="session", autouse=True)

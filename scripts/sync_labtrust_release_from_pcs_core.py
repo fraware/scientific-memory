@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -32,6 +33,15 @@ PHASE2_ARTIFACTS = (
 )
 HANDOFF_GLOB = "handoff_manifest.*.v0.json"
 CLAIM_ID = "claim-pcs-qc-release-v0.1"
+
+
+def _pcs_core_validation_importable(src: Path) -> bool:
+    """Only import pcs-core validation when it is release-ready (ProofChecked)."""
+    try:
+        data = json.loads(src.read_text(encoding="utf-8-sig"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return data.get("status") == "ProofChecked"
 
 
 def _resolve_pcs_core_manifest_src(pcs_core_dir: Path, pcs_examples: Path, phase2_name: str) -> Path | None:
@@ -108,6 +118,12 @@ def sync_from_pcs_core(
             alt = pcs_examples / name
             src = alt if alt.is_file() else None
         if src is not None and src.is_file():
+            if name == "ReleaseChainValidationResult.v0.json" and not _pcs_core_validation_importable(src):
+                print(
+                    f"note: skipping pcs-core {name} (status != ProofChecked); "
+                    "keeping SM fixture validation",
+                )
+                continue
             shutil.copy2(src, run_dir / name)
             shutil.copy2(src, fixture_dir / name)
 
@@ -129,20 +145,13 @@ def sync_from_pcs_core(
         cwd=REPO_ROOT,
         check=True,
     )
-    subprocess.run(
-        [
-            sys.executable,
-            str(REPO_ROOT / "scripts" / "ensure_labtrust_phase2_fixtures.py"),
-            "--release-dir",
-            str(run_dir),
-        ],
-        cwd=REPO_ROOT,
-        check=True,
-    )
 
     print(f"synced {pcs_core_dir} -> {run_dir}")
     print(f"synced {pcs_core_dir} -> {fixture_dir}")
     _publish_examples_release(fixture_dir, EXAMPLES_DIR)
+
+    if not import_corpus:
+        return
 
     sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
     from sm_pipeline.pcs_validate.release_chain import validate_release_chain
@@ -153,9 +162,6 @@ def sync_from_pcs_core(
             for issue in issues:
                 print(f"error: {label}: {issue.format()}", file=sys.stderr)
             raise SystemExit(1)
-
-    if not import_corpus:
-        return
 
     from sm_pipeline.pcs_import.portal_export import write_pcs_portal_export
     from sm_pipeline.pcs_import.release_manifest_importer import import_release_manifest

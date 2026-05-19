@@ -10,7 +10,7 @@
   "input_artifacts": {
     "science_claim_bundle.certified.json": {
       "artifact_type": "ScienceClaimBundle.v0",
-      "sha256": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536"
+      "sha256": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe"
     }
   },
   "expected_outputs": {
@@ -22,10 +22,10 @@
     }
   },
   "invariants": {
-    "certificate_id": "cert-trace-886c95f0-5d63-42d6-aa13-5891c12c5a6a",
+    "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
-    "certified_bundle_hash": "sha256:30b5b731a298922c41432de82c4ea407ec732f1e54f85b45ed9344ee5ec2c536"
+    "certified_bundle_hash": "sha256:bb740698a01c4e918ca0f346e5bfaed83e6665da8df84e931c0d50e03ce82ffe"
   },
   "status": "Validated",
-  "signature_or_digest": "sha256:70d44fd475511bf7678b7efcccab9dafd1900ab73c9e80b39b32af8891b198c8"
+  "signature_or_digest": "sha256:ce778d7a932cbe4b87e752fb13fa67c5125d909059ca58ea32cbfefd4a978591"
 }

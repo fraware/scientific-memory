@@ -69,6 +69,11 @@ const phase2Schema = z
     tool_use_trace: namedArtifact.optional(),
     tool_use_certificate: namedArtifact.optional(),
     trace_certificate: namedArtifact.optional(),
+    dataset_receipt: namedArtifact.optional(),
+    environment_receipt: namedArtifact.optional(),
+    computation_run_receipt: namedArtifact.optional(),
+    result_artifact: namedArtifact.optional(),
+    computation_witness: namedArtifact.optional(),
     lineage: z.object({
       claim_id: z.string().min(1),
       certificate_id: z.string().min(1),
@@ -89,6 +94,9 @@ const phase2Schema = z
     const isToolUse =
       data.domain === "agent_tool_use" ||
       data.workflow_id.startsWith("agent_tool_use");
+    const isComputation =
+      data.domain === "scientific_computation" ||
+      data.workflow_id.startsWith("scientific_computation");
     if (isToolUse) {
       if (!data.tool_use_trace) {
         ctx.addIssue({
@@ -110,6 +118,54 @@ const phase2Schema = z
           code: z.ZodIssueCode.custom,
           message: "runtime_artifact_types must include ToolUseTrace.v0",
           path: ["runtime_artifact_types"],
+        });
+      }
+    } else if (isComputation) {
+      const required = [
+        ["dataset_receipt", "DatasetReceipt.v0"],
+        ["environment_receipt", "EnvironmentReceipt.v0"],
+        ["computation_run_receipt", "ComputationRunReceipt.v0"],
+        ["result_artifact", "ResultArtifact.v0"],
+        ["computation_witness", "ComputationWitness.v0"],
+      ];
+      for (const [pathKey] of required) {
+        if (!data[pathKey]) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `${pathKey} required for scientific_computation workflow`,
+            path: [pathKey],
+          });
+        }
+      }
+      const runtime = data.runtime_artifact_types ?? [];
+      for (const artifactType of [
+        "DatasetReceipt.v0",
+        "EnvironmentReceipt.v0",
+        "ComputationRunReceipt.v0",
+        "ResultArtifact.v0",
+      ]) {
+        if (!runtime.includes(artifactType)) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: `runtime_artifact_types must include ${artifactType}`,
+            path: ["runtime_artifact_types"],
+          });
+        }
+      }
+      const certs = data.certificate_artifact_types ?? [];
+      if (!certs.includes("ComputationWitness.v0")) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "certificate_artifact_types must include ComputationWitness.v0",
+          path: ["certificate_artifact_types"],
+        });
+      }
+      const notice = data.limitation_notice ?? "";
+      if (!notice.includes("computational provenance")) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "limitation_notice must include computation reproducibility disclaimer",
+          path: ["limitation_notice"],
         });
       }
     } else if (!(data.handoff_manifests?.length ?? 0)) {

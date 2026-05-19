@@ -48,18 +48,31 @@ print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release"
 PY
 fi
 
-echo "==> PCS: pytest (full tests/pcs suite)"
-python -m pytest "$_root/tests/pcs" -q
-
 if command -v just >/dev/null 2>&1; then
   echo "==> PCS: just pcs-import-release (Phase 2 primary path)"
   just -f "$_root/JUSTFILE" pcs-import-release
-  echo "==> PCS: just pcs-render-claim"
-  just -f "$_root/JUSTFILE" pcs-render-claim claim-pcs-qc-release-v0.1
 else
   echo "==> PCS: CLI import-release (just not installed)"
   python -m sm_pipeline.cli pcs-import-release \
     --release-manifest tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json
+fi
+
+if [ -f "$_root/tests/pcs/fixtures/computation-release/release_manifest.v0.json" ]; then
+  echo "==> PCS: computation-release fixture verify + import"
+  python "$_root/scripts/verify_computation_release_fixture.py"
+  python -m sm_pipeline.cli pcs-import-release \
+    --release-manifest tests/pcs/fixtures/computation-release/release_manifest.v0.json
+fi
+
+python "$_root/scripts/verify_tool_use_release_fixture.py"
+
+echo "==> PCS: pytest (full tests/pcs suite)"
+python -m pytest "$_root/tests/pcs" -q
+
+if command -v just >/dev/null 2>&1; then
+  echo "==> PCS: just pcs-render-claim"
+  just -f "$_root/JUSTFILE" pcs-render-claim claim-pcs-qc-release-v0.1
+else
   python -m sm_pipeline.cli pcs-render-claim --claim-id claim-pcs-qc-release-v0.1
 fi
 
@@ -98,12 +111,18 @@ if command -v pnpm >/dev/null 2>&1; then
   pnpm --dir "$_portal" test:pcs-contract
   pnpm --dir "$_portal" test:pcs-phase2-contract
   pnpm --dir "$_portal" test:pcs-tool-use-phase2-contract
+  pnpm --dir "$_portal" test:pcs-computation-phase2-contract
+  pnpm --dir "$_portal" test:pcs-computation-rejected-phase2-contract
 else
   node "$_portal/scripts/verify-pcs-read-model.mjs"
   node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
     "$_root/corpus/pcs/claims/claim-pcs-qc-release-v0.1/read_model.json"
   node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
     "$_root/tests/pcs/fixtures/tool-use-release/.phase2-read-model.json"
+  node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
+    "$_root/tests/pcs/fixtures/computation-release/.phase2-read-model.json"
+  node "$_portal/scripts/verify-pcs-phase2-read-model.mjs" \
+    "$_root/tests/pcs/fixtures/computation-rejected-release/.phase2-read-model.json"
 fi
 
 echo "OK: PCS RC + Phase 2 gate passed"

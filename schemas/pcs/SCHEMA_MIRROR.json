@@ -14,6 +14,14 @@
     "TraceCertificate.v0.schema.json",
     "EvidenceBundle.v0.schema.json",
     "SourceSpan.v0.schema.json",
+    "DatasetReceipt.v0.schema.json",
+    "EnvironmentReceipt.v0.schema.json",
+    "ComputationRunReceipt.v0.schema.json",
+    "ResultArtifact.v0.schema.json",
+    "ComputationWitness.v0.schema.json",
+    "WorkflowProfile.v0.schema.json",
+    "ToolUseTrace.v0.schema.json",
+    "ToolUseCertificate.v0.schema.json",
     "common.defs.json"
   ],
   "legacy_aliases": {

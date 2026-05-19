@@ -12,7 +12,8 @@ Scientific Memory is the **human-facing evidence layer** for PCS releases: it im
 | `HandoffManifest.v0` | Handoff chain between producer repos |
 | `WorkflowProfile.v0` | Resolved via `workflow_profile_id` on chain validation |
 | `SignedScienceClaimBundle.v0` | Claim payload |
-| `ToolUseTrace.v0` / `ToolUseCertificate.v0` | Rendered via generic protocol artifact views when listed in manifest |
+| `ToolUseTrace.v0` / `ToolUseCertificate.v0` | Rendered via dedicated portal views when listed in manifest |
+| `DatasetReceipt.v0` / `EnvironmentReceipt.v0` / `ComputationRunReceipt.v0` / `ResultArtifact.v0` / `ComputationWitness.v0` | Computation reproducibility chain; promoted to top-level read-model fields |
 
 ## Import (primary)
 
@@ -35,6 +36,30 @@ just pcs-import-tool-use-release
 ```
 
 Fixture directory: `tests/pcs/fixtures/tool-use-release/` (`release_manifest.v0.json`, `ToolUseTrace.v0`, `ToolUseCertificate.v0`). Portal contract golden: `.phase2-read-model.json` in that directory.
+
+```bash
+just sync-tool-use-release
+just pcs-import-tool-use-release
+```
+
+### Scientific computation reproducibility release
+
+```bash
+just sync-computation-release        # pcs-core sync or bootstrap fallback
+just bootstrap-computation-release   # regenerate fixtures + .phase2-read-model.json
+just verify-computation-release
+just publish-computation-release-to-pcs-core
+just pcs-import-computation-release
+just pcs-import-computation-rejected-release   # rejected ComputationWitness (failure evidence)
+```
+
+Fixture directories:
+
+- `tests/pcs/fixtures/computation-release/` — passed witness (`CertificateChecked` supplemental witness)
+- `tests/pcs/fixtures/computation-rejected-release/` — `ComputationWitness.v0` status `Rejected` with violations
+- Published copy: `examples/computation-release/`
+
+Workflow profile: `scientific_computation.reproducibility_v0` (`schemas/pcs/workflow_profiles/` or pcs-core `examples/workflow_profiles/scientific_computation_reproducibility.valid.json`).
 
 Requires in the release directory:
 
@@ -92,6 +117,10 @@ just pcs-list-claims-by-source-commit COMMIT=...
 just pcs-list-claims-by-release release_id=release-pcs-v0.1-labtrust-qc
 just pcs-list-claims-by-workflow workflow_id=labtrust.qc_release_v0.1
 just pcs-list-claims-by-trace-hash trace_hash=sha256:...
+just pcs-list-claims-by-dataset DATASET_ID=dataset-demo-measurements-v0.1
+just pcs-list-claims-by-code-commit COMMIT=4c5439ae358733f9a4c4a58e33fdaed1ab0d29de
+just pcs-list-claims-by-result-hash HASH=sha256:...
+just pcs-list-claims-by-environment ENVIRONMENT_ID=env-linux-py312-uv
 just pcs-query-lineage
 just pcs-query-lineage --stale-only
 just pcs-query-lineage --claim-state stale
@@ -104,7 +133,13 @@ just pcs-query-lineage --workflow-id labtrust.qc_release_v0.1
 just pcs-compare-releases release-pcs-v0.1-labtrust-qc release-pcs-v0.2-example
 ```
 
-JSON output: `changed_artifacts`, `changed_hashes`, `changed_source_commits`, `changed_certificates`, `staleness_impact`, `recommended_action`.
+JSON output: `changed_artifacts`, `changed_hashes`, `changed_source_commits`, `changed_certificates`, `changed_workflow_profile`, `changed_registry_checks`, `changed_computation`, `staleness_impact`, `recommended_action`.
+
+`changed_computation` (when either release is a computation workflow) includes lineage-indexed diffs: dataset, environment, code commit, command, result hashes, witness status. Example:
+
+```bash
+just pcs-compare-releases release-pcs-v0.1-labtrust-qc release-pcs-v0.1-scientific-computation-reproducibility
+```
 
 Requires both `release_id` values in `claims_index.json` (from prior imports).
 
@@ -128,6 +163,17 @@ just pcs-phase2-gate
 just refresh-pcs-release
 uv run python scripts/sync_pcs_schemas.py
 just sync-tool-use-release
+just sync-computation-release
 uv run python scripts/ensure_labtrust_phase2_fixtures.py
 python scripts/verify_tool_use_release_fixture.py
+python scripts/verify_computation_release_fixture.py
+```
+
+Portal contracts (no pnpm required):
+
+```bash
+node portal/scripts/verify-pcs-read-model.mjs
+node portal/scripts/verify-pcs-phase2-read-model.mjs corpus/pcs/claims/claim-pcs-qc-release-v0.1/read_model.json
+node portal/scripts/verify-pcs-phase2-read-model.mjs tests/pcs/fixtures/tool-use-release/.phase2-read-model.json
+node portal/scripts/verify-pcs-phase2-read-model.mjs tests/pcs/fixtures/computation-release/.phase2-read-model.json
 ```

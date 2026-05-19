@@ -53,6 +53,10 @@ def build_claim_index_entry(claim_dir: Path) -> dict[str, Any] | None:
         if isinstance(workflow_profile, dict):
             workflow_profile_id = workflow_profile.get("workflow_id")
 
+    computation = (lineage or {}).get("computation")
+    if not isinstance(computation, dict):
+        computation = {}
+
     entry: dict[str, Any] = {
         "claim_id": claim_id,
         "claim_dir": claim_dir.name,
@@ -62,6 +66,13 @@ def build_claim_index_entry(claim_dir: Path) -> dict[str, Any] | None:
         "release_candidate": (report or {}).get("release_candidate"),
         "certificate_id": (lineage or {}).get("certificate_id"),
         "trace_hash": (lineage or {}).get("trace_hash"),
+        "dataset_id": computation.get("dataset_id"),
+        "dataset_version": computation.get("dataset_version"),
+        "environment_id": computation.get("environment_id"),
+        "code_commit": computation.get("code_commit"),
+        "result_hash": computation.get("result_hash"),
+        "witness_id": computation.get("witness_id"),
+        "witness_status": computation.get("witness_status"),
         "bundle_id": (lineage or {}).get("bundle_id"),
         "signed_bundle_hash": (lineage or {}).get("signed_bundle_hash")
         or (read_model or {}).get("signed_bundle_hash"),
@@ -122,6 +133,10 @@ def query_claims_index(
     stale_only: bool = False,
     claim_state: str | None = None,
     workflow_profile_id: str | None = None,
+    dataset_id: str | None = None,
+    environment_id: str | None = None,
+    code_commit: str | None = None,
+    result_hash: str | None = None,
 ) -> list[dict[str, Any]]:
     index = load_claims_index(repo_root)
     claims = index.get("claims")
@@ -148,7 +163,18 @@ def query_claims_index(
             continue
         if source_commit is not None:
             commits = entry.get("source_commits")
-            if not isinstance(commits, dict) or source_commit not in commits.values():
+            indexed_commit = entry.get("code_commit")
+            if indexed_commit == source_commit:
+                pass
+            elif not isinstance(commits, dict) or source_commit not in commits.values():
                 continue
+        if dataset_id is not None and entry.get("dataset_id") != dataset_id:
+            continue
+        if environment_id is not None and entry.get("environment_id") != environment_id:
+            continue
+        if code_commit is not None and entry.get("code_commit") != code_commit:
+            continue
+        if result_hash is not None and entry.get("result_hash") != result_hash:
+            continue
         matches.append(entry)
     return matches

@@ -164,30 +164,271 @@
         }
       ]
     },
-    "ComputationWitness.v0": {
+    "ComputationRunReceipt.v0": {
       "allowed_runtime_producers": [
-        "Provability Fabric"
+        "scientific-computation demo producer"
       ],
       "allowed_statuses": [
         "Draft",
+        "RuntimeObserved",
+        "Rejected",
+        "Stale"
+      ],
+      "artifact_type": "ComputationRunReceipt.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "producer": "scientific-computation demo producer",
+      "release_mode_required": true,
+      "required_release_fields": [
+        "schema_version",
+        "run_id",
+        "workflow_id",
+        "command",
+        "code_repo",
+        "code_commit",
+        "dataset_receipt_ref",
+        "environment_receipt_ref",
+        "started_at",
+        "completed_at",
+        "exit_code",
+        "stdout_hash",
+        "stderr_hash",
+        "result_artifact_refs",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "scientific-computation demo producer",
+      "schema": "schemas/ComputationRunReceipt.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        {
+          "allowed_to_skip": false,
+          "check_id": "source_commit_not_placeholder",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "signature_or_digest_valid",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        }
+      ]
+    },
+    "ComputationWitness.v0": {
+      "allowed_runtime_producers": [
+        "CertifyEdge"
+      ],
+      "allowed_statuses": [
+        "CertificateChecked",
         "Rejected",
         "Stale"
       ],
       "artifact_type": "ComputationWitness.v0",
-      "canonical_hash_required": false,
+      "canonical_hash_required": true,
       "consumer_repos": [
         "Provability Fabric",
+        "Scientific Memory",
         "pcs-core"
       ],
-      "producer": "Provability Fabric",
-      "release_mode_required": false,
+      "producer": "CertifyEdge",
+      "release_mode_required": true,
       "required_release_fields": [
-        "schema_version"
+        "schema_version",
+        "witness_id",
+        "workflow_id",
+        "dataset_hash",
+        "environment_hash",
+        "run_receipt_hash",
+        "result_hashes",
+        "code_repo",
+        "code_commit",
+        "checker",
+        "checker_version",
+        "status",
+        "violations",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
       ],
-      "runtime_producer": "Provability Fabric",
+      "runtime_producer": "CertifyEdge",
       "schema": "schemas/ComputationWitness.v0.schema.json",
       "schema_owner": "pcs-core",
-      "semantic_checks": []
+      "semantic_checks": [
+        {
+          "allowed_to_skip": false,
+          "check_id": "dataset_hash_matches_receipt",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "environment_hash_matches_receipt",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "run_receipt_hash_matches_declared_run",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "result_hashes_match_result_artifacts",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "code_commit_present",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "computation_status_checked_for_release",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "source_commit_matches_release_manifest",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "signature_or_digest_valid",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "CertifyEdge",
+          "severity": "release_blocking"
+        }
+      ]
+    },
+    "DatasetReceipt.v0": {
+      "allowed_runtime_producers": [
+        "scientific-computation demo producer"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "Rejected",
+        "Stale"
+      ],
+      "artifact_type": "DatasetReceipt.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "producer": "scientific-computation demo producer",
+      "release_mode_required": true,
+      "required_release_fields": [
+        "schema_version",
+        "dataset_id",
+        "dataset_name",
+        "dataset_version",
+        "files",
+        "aggregate_hash",
+        "source_uri",
+        "source_repo",
+        "source_commit",
+        "license",
+        "created_at",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "scientific-computation demo producer",
+      "schema": "schemas/DatasetReceipt.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        {
+          "allowed_to_skip": false,
+          "check_id": "source_commit_not_placeholder",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "signature_or_digest_valid",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        }
+      ]
+    },
+    "EnvironmentReceipt.v0": {
+      "allowed_runtime_producers": [
+        "scientific-computation demo producer"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "Rejected",
+        "Stale"
+      ],
+      "artifact_type": "EnvironmentReceipt.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "producer": "scientific-computation demo producer",
+      "release_mode_required": true,
+      "required_release_fields": [
+        "schema_version",
+        "environment_id",
+        "environment_kind",
+        "os",
+        "architecture",
+        "language_runtimes",
+        "packages",
+        "container_image",
+        "container_digest",
+        "hardware_summary",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "scientific-computation demo producer",
+      "schema": "schemas/EnvironmentReceipt.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        {
+          "allowed_to_skip": false,
+          "check_id": "source_commit_not_placeholder",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "signature_or_digest_valid",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        }
+      ]
     },
     "EvidenceBundle.v0": {
       "allowed_runtime_producers": [
@@ -368,6 +609,60 @@
           "check_id": "artifact_hashes_match_files",
           "execution_required_in_release_mode": true,
           "responsible_component": "pcs-core",
+          "severity": "release_blocking"
+        }
+      ]
+    },
+    "ResultArtifact.v0": {
+      "allowed_runtime_producers": [
+        "scientific-computation demo producer"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "RuntimeObserved",
+        "Rejected",
+        "Stale"
+      ],
+      "artifact_type": "ResultArtifact.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "CertifyEdge",
+        "Provability Fabric",
+        "Scientific Memory",
+        "pcs-core"
+      ],
+      "producer": "scientific-computation demo producer",
+      "release_mode_required": true,
+      "required_release_fields": [
+        "schema_version",
+        "result_id",
+        "result_kind",
+        "path",
+        "sha256",
+        "size_bytes",
+        "media_type",
+        "description",
+        "produced_by_run",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "scientific-computation demo producer",
+      "schema": "schemas/ResultArtifact.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": [
+        {
+          "allowed_to_skip": false,
+          "check_id": "source_commit_not_placeholder",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
+          "severity": "release_blocking"
+        },
+        {
+          "allowed_to_skip": false,
+          "check_id": "signature_or_digest_valid",
+          "execution_required_in_release_mode": true,
+          "responsible_component": "scientific-computation demo producer",
           "severity": "release_blocking"
         }
       ]
@@ -847,5 +1142,5 @@
   "registry_id": "pcs-artifact-registry-v0.1",
   "registry_version": "0.1.0",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:daa958cdc73a161c70f1132c4e4e0f6441efbac3dacc76635cc94748616a8b19"
+  "signature_or_digest": "sha256:0e3dd30e9ad79be29be23ebf363d52c38f9a07081b003757299194877805e366"
 }

@@ -104,6 +104,46 @@ def list_claims_by_workflow(repo_root: Path, workflow_id: str) -> list[str]:
     ]
 
 
+def list_claims_by_dataset(repo_root: Path, dataset_id: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, dataset_id=dataset_id)
+        if entry.get("claim_id")
+    ]
+
+
+def list_claims_by_environment(repo_root: Path, environment_id: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, environment_id=environment_id)
+        if entry.get("claim_id")
+    ]
+
+
+def list_claims_by_code_commit(repo_root: Path, commit: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, code_commit=commit)
+        if entry.get("claim_id")
+    ]
+
+
+def list_claims_by_result_hash(repo_root: Path, result_hash: str) -> list[str]:
+    from sm_pipeline.pcs_import.claim_index import query_claims_index
+
+    return [
+        str(entry["claim_id"])
+        for entry in query_claims_index(repo_root, result_hash=result_hash)
+        if entry.get("claim_id")
+    ]
+
+
 def list_stale_claims(repo_root: Path) -> list[str]:
     from sm_pipeline.pcs_import.claim_index import query_claims_index
 

@@ -1,0 +1,53 @@
+{
+  "artifact_hashes": {
+    "computation_run_receipt.json": "sha256:6e7ad087387b4f242718290e977055de670ed047ff2f5d0eef400ef29da1a3bc",
+    "computation_witness.json": "sha256:524c76f338791b6fa631c9ec538958ad5ba01a62011d165f05bc3a840589c91e",
+    "dataset_receipt.json": "sha256:6c952299faa9b5ab944460f59b467baea5be7447ac13b9a69ed5890a3106a7c4",
+    "environment_receipt.json": "sha256:e2eb6e0b238b34daccd6f7de1058fc63a27f5f178ada18cdae0dd99ff93944a7",
+    "result_artifact.json": "sha256:1133e3ab0f3d19d24adb14b99a2fa0f9a29809fc4eaf24827dd0f299e63836fe",
+    "science_claim_bundle.certified.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+    "signed_science_claim_bundle.json": "sha256:3520c4c528d33c41337793ebc47d0f45ae96c332419896d70bc3a4137a59a66b",
+    "verification_result.json": "sha256:d8c313dde7b282838497a7d70eb9e5da8e78877f4ee32ccb6c15a09f3b0a9724",
+    "workflow_profile.v0.json": "sha256:9059e646990af0b72f82b740c0f8db102fea4b3b8e5ed809c916fc259ae279f8"
+  },
+  "bundle_id": "scb-qc-release-v0.1",
+  "certificate_id": "witness-computation-demo-v0.1",
+  "claim_id": "claim-computation-release-v0.1",
+  "computation": {
+    "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+    "command": "uv run python -m demo_analysis --input data/measurements.csv",
+    "dataset_aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+    "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+    "dataset_id": "dataset-demo-measurements-v0.1",
+    "dataset_version": "v0.1.0",
+    "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+    "environment_id": "env-linux-py312-uv",
+    "result_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "result_hashes": [
+      "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    ],
+    "result_id": "result-demo-summary-v0.1",
+    "run_id": "run-demo-analysis-001",
+    "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+    "witness_id": "witness-computation-demo-v0.1",
+    "witness_status": "CertificateChecked"
+  },
+  "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+  "release_manifest_hash": "sha256:059e145297c449980b871098245ffdb7e1f7a2b34a1bf1af07b60dfb824fef79",
+  "schema_versions": {
+    "science_claim_bundle": "v0",
+    "signed_bundle": "v0"
+  },
+  "signed_bundle_hash": "sha256:58a012b003d6ce15945de01c678898f19fdf688af6f1c6bc18c23ac4173ec557",
+  "source_commits": {
+    "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
+    "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+    "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
+    "scientific_computation": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+    "scientific_memory": "796bb99cb79fe7b195fd156feb346c08fc334d33"
+  },
+  "stale": false,
+  "stale_reasons": [],
+  "trace_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+  "workflow_profile_id": "scientific_computation.reproducibility_v0"
+}

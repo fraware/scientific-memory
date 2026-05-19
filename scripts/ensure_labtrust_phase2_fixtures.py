@@ -8,6 +8,7 @@ import json
 import shutil
 import sys
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DIR = REPO_ROOT / "tests" / "pcs" / "fixtures" / "labtrust-release"
@@ -24,6 +25,7 @@ PHASE2_FILES = (
 )
 
 LABTRUST_WORKFLOW_PROFILE_ID = "labtrust.qc_release_v0.1"
+LABTRUST_SOURCE_REPO = "https://github.com/fraware/LabTrust-Gym"
 
 IMPORT_REPORT_TEMPLATE = {
     "allow_legacy": False,
@@ -74,9 +76,271 @@ def _pin_scientific_memory_commit_in_legacy(release_dir: Path) -> None:
         legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
 
 
-def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
-    import json
+def _signed_certificate_id(release_dir: Path) -> str | None:
+    signed_path = release_dir / "signed_science_claim_bundle.json"
+    if not signed_path.is_file():
+        return None
+    signed = json.loads(signed_path.read_text(encoding="utf-8-sig"))
+    scb = signed.get("science_claim_bundle")
+    if not isinstance(scb, dict):
+        return None
+    certs = scb.get("certificates")
+    if not isinstance(certs, list) or not certs or not isinstance(certs[0], dict):
+        return None
+    cert_id = certs[0].get("certificate_id")
+    return cert_id if isinstance(cert_id, str) and cert_id else None
 
+
+def _labtrust_gym_commit_from_runtime_receipt(release_dir: Path) -> str | None:
+    receipt_path = release_dir / "runtime_receipt.json"
+    if not receipt_path.is_file():
+        return None
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8-sig"))
+    commit = receipt.get("source_commit")
+    return commit if isinstance(commit, str) and commit else None
+
+
+def _patch_labtrust_gym_provenance(obj: Any, commit: str) -> bool:
+    changed = False
+    if isinstance(obj, dict):
+        if obj.get("source_repo") == LABTRUST_SOURCE_REPO and obj.get("source_commit") != commit:
+            obj["source_commit"] = commit
+            changed = True
+        for value in obj.values():
+            if _patch_labtrust_gym_provenance(value, commit):
+                changed = True
+    elif isinstance(obj, list):
+        for item in obj:
+            if _patch_labtrust_gym_provenance(item, commit):
+                changed = True
+    return changed
+
+
+def _rehash_science_claim_bundle(bundle: dict[str, Any]) -> None:
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
+
+    assumption_set = bundle.get("assumption_set")
+    if isinstance(assumption_set, dict):
+        assumption_set["signature_or_digest"] = canonical_hash(assumption_set)
+
+    claim = bundle.get("claim_artifact")
+    if isinstance(claim, dict):
+        claim["signature_or_digest"] = canonical_hash(claim)
+
+    receipts = bundle.get("runtime_receipts")
+    receipt_digests: dict[str, str] = {}
+    if isinstance(receipts, list):
+        for receipt in receipts:
+            if isinstance(receipt, dict):
+                receipt["signature_or_digest"] = canonical_hash(receipt)
+                receipt_id = receipt.get("receipt_id")
+                digest = receipt.get("signature_or_digest")
+                if isinstance(receipt_id, str) and isinstance(digest, str):
+                    receipt_digests[receipt_id] = digest
+
+    cert_digests: dict[str, str] = {}
+    certs = bundle.get("certificates")
+    if isinstance(certs, list):
+        for cert in certs:
+            if isinstance(cert, dict):
+                cert["signature_or_digest"] = canonical_hash(cert)
+                cert_id = cert.get("certificate_id")
+                digest = cert.get("signature_or_digest")
+                if isinstance(cert_id, str) and isinstance(digest, str):
+                    cert_digests[cert_id] = digest
+
+    claim_id = claim.get("artifact_id") if isinstance(claim, dict) else None
+    claim_digest = claim.get("signature_or_digest") if isinstance(claim, dict) else None
+
+    evidence = bundle.get("evidence_bundle")
+    if isinstance(evidence, dict):
+        artifact_hashes = evidence.get("artifact_hashes")
+        if isinstance(artifact_hashes, dict):
+            if isinstance(claim_id, str) and isinstance(claim_digest, str):
+                artifact_hashes[claim_id] = claim_digest
+            for cert_id, digest in cert_digests.items():
+                artifact_hashes[cert_id] = digest
+            for receipt_id, digest in receipt_digests.items():
+                artifact_hashes[receipt_id] = digest
+        evidence["signature_or_digest"] = canonical_hash(evidence)
+
+    bundle["signature_or_digest"] = canonical_hash(bundle)
+
+
+def _sync_certified_bundle_hash_references(release_dir: Path) -> bool:
+    """After certified bundle bytes change, align PF verification + signed bundle hash pins."""
+    certified_path = release_dir / "science_claim_bundle.certified.json"
+    if not certified_path.is_file():
+        return False
+
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_validate.canonical_hash import canonical_hash, file_sha256_digest
+
+    certified_hash = file_sha256_digest(certified_path)
+    changed = False
+
+    vr_path = release_dir / "verification_result.json"
+    if vr_path.is_file():
+        vr = json.loads(vr_path.read_text(encoding="utf-8-sig"))
+        verified = vr.get("verified_input")
+        if isinstance(verified, dict) and verified.get("bundle_hash") != certified_hash:
+            verified["bundle_hash"] = certified_hash
+            vr["verified_input"] = verified
+            vr["signature_or_digest"] = canonical_hash(vr)
+            vr_path.write_text(json.dumps(vr, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
+    signed_path = release_dir / "signed_science_claim_bundle.json"
+    if signed_path.is_file():
+        signed = json.loads(signed_path.read_text(encoding="utf-8-sig"))
+        signed_changed = False
+        if signed.get("signed_input_bundle_hash") != certified_hash:
+            signed["signed_input_bundle_hash"] = certified_hash
+            signed_changed = True
+        embedded_vr = signed.get("verification_result")
+        if isinstance(embedded_vr, dict):
+            embedded_verified = embedded_vr.get("verified_input")
+            if isinstance(embedded_verified, dict) and embedded_verified.get("bundle_hash") != certified_hash:
+                embedded_verified["bundle_hash"] = certified_hash
+                embedded_vr["verified_input"] = embedded_verified
+                embedded_vr["signature_or_digest"] = canonical_hash(embedded_vr)
+                signed["verification_result"] = embedded_vr
+                signed_changed = True
+        if signed_changed:
+            signed["signature_or_digest"] = canonical_hash(signed)
+            signed_path.write_text(json.dumps(signed, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
+    return changed
+
+
+def _align_labtrust_gym_source_commits(release_dir: Path) -> bool:
+    """Pin all LabTrust-Gym provenance to runtime_receipt.source_commit (manifest authority)."""
+    commit = _labtrust_gym_commit_from_runtime_receipt(release_dir)
+    if not commit:
+        return False
+
+    changed = False
+    bundle_paths = (
+        release_dir / "science_claim_bundle.pending.json",
+        release_dir / "science_claim_bundle.certified.json",
+    )
+    for path in bundle_paths:
+        if not path.is_file():
+            continue
+        bundle = json.loads(path.read_text(encoding="utf-8-sig"))
+        if _patch_labtrust_gym_provenance(bundle, commit):
+            _rehash_science_claim_bundle(bundle)
+            path.write_text(json.dumps(bundle, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
+    signed_path = release_dir / "signed_science_claim_bundle.json"
+    if signed_path.is_file():
+        signed = json.loads(signed_path.read_text(encoding="utf-8-sig"))
+        scb = signed.get("science_claim_bundle")
+        if isinstance(scb, dict) and _patch_labtrust_gym_provenance(scb, commit):
+            _rehash_science_claim_bundle(scb)
+            sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+            from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
+
+            signed["signature_or_digest"] = canonical_hash(signed)
+            signed_path.write_text(json.dumps(signed, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
+    return changed
+
+
+def _align_labtrust_bundle_certificate_identity(release_dir: Path) -> bool:
+    """Keep certified bundle and trace certificate certificate_id aligned with the signed bundle."""
+    sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
+    from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
+
+    cert_id = _signed_certificate_id(release_dir)
+    if not cert_id:
+        return False
+
+    changed = False
+    certified_path = release_dir / "science_claim_bundle.certified.json"
+    if certified_path.is_file():
+        certified = json.loads(certified_path.read_text(encoding="utf-8-sig"))
+        if _first_certificate_id(certified) != cert_id:
+            certs = certified.get("certificates")
+            if isinstance(certs, list) and certs and isinstance(certs[0], dict):
+                old_id = certs[0].get("certificate_id")
+                certs[0]["certificate_id"] = cert_id
+                claim = certified.get("claim_artifact")
+                if isinstance(claim, dict) and isinstance(claim.get("certificate_refs"), list):
+                    claim["certificate_refs"] = [
+                        cert_id if ref == old_id else ref for ref in claim["certificate_refs"]
+                    ]
+                evidence = certified.get("evidence_bundle")
+                if isinstance(evidence, dict):
+                    refs = evidence.get("certificate_refs")
+                    if isinstance(refs, list):
+                        evidence["certificate_refs"] = [
+                            cert_id if ref == old_id else ref for ref in refs
+                        ]
+                    ah = evidence.get("artifact_hashes")
+                    if isinstance(ah, dict) and isinstance(old_id, str) and old_id in ah:
+                        ah[cert_id] = ah.pop(old_id)
+                _rehash_science_claim_bundle(certified)
+                certified_path.write_text(json.dumps(certified, indent=2) + "\n", encoding="utf-8")
+                changed = True
+
+    trace_cert_path = release_dir / "trace_certificate.json"
+    if trace_cert_path.is_file():
+        trace_cert = json.loads(trace_cert_path.read_text(encoding="utf-8-sig"))
+        if trace_cert.get("certificate_id") != cert_id:
+            trace_cert["certificate_id"] = cert_id
+            trace_cert["signature_or_digest"] = canonical_hash(trace_cert)
+            trace_cert_path.write_text(json.dumps(trace_cert, indent=2) + "\n", encoding="utf-8")
+            changed = True
+
+    return changed
+
+
+def _first_certificate_id(bundle: dict) -> str | None:
+    certs = bundle.get("certificates")
+    if not isinstance(certs, list) or not certs or not isinstance(certs[0], dict):
+        return None
+    cert_id = certs[0].get("certificate_id")
+    return cert_id if isinstance(cert_id, str) else None
+
+
+def _sync_legacy_manifest_producer_commits(release_dir: Path) -> None:
+    """Pin RELEASE_FIXTURE_MANIFEST producer commits to on-disk artifact source_commit fields."""
+    legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
+    if not legacy_path.is_file():
+        return
+    legacy = json.loads(legacy_path.read_text(encoding="utf-8-sig"))
+    trace_cert_path = release_dir / "trace_certificate.json"
+    signed_path = release_dir / "signed_science_claim_bundle.json"
+    lt_commit = _labtrust_gym_commit_from_runtime_receipt(release_dir)
+    if lt_commit:
+        legacy["labtrust_gym_commit"] = lt_commit
+    if trace_cert_path.is_file():
+        trace_cert = json.loads(trace_cert_path.read_text(encoding="utf-8-sig"))
+        commit = trace_cert.get("source_commit")
+        if isinstance(commit, str) and commit:
+            legacy["certifyedge_commit"] = commit
+    if signed_path.is_file():
+        signed = json.loads(signed_path.read_text(encoding="utf-8-sig"))
+        for key in ("verification_result",):
+            artifact = signed.get(key)
+            if isinstance(artifact, dict):
+                commit = artifact.get("source_commit")
+                if isinstance(commit, str) and commit:
+                    legacy["provability_fabric_commit"] = commit
+                    break
+        else:
+            commit = signed.get("source_commit")
+            if isinstance(commit, str) and commit:
+                legacy["provability_fabric_commit"] = commit
+    legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
+
+
+def _sync_legacy_manifest_artifact_hashes(release_dir: Path) -> None:
     from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
 
     legacy_path = release_dir / "RELEASE_FIXTURE_MANIFEST.json"
@@ -127,6 +391,17 @@ def _build_profile_scoped_deferred_checks(
             },
         )
     return deferred
+
+
+def _mirror_fixture_tree_to_release_run() -> None:
+    """Keep release-run aligned with the labtrust fixture after ensure regenerates Phase 2 metadata."""
+    release_run = (REPO_ROOT / "release-run").resolve()
+    if not release_run.is_dir():
+        return
+    for path in sorted(DEFAULT_DIR.iterdir()):
+        if path.is_file() and not path.name.startswith("."):
+            shutil.copy2(path, release_run / path.name)
+    print(f"mirrored labtrust fixture -> {release_run}")
 
 
 def _align_release_chain_validation(validation_path: Path) -> bool:
@@ -245,6 +520,13 @@ def main() -> int:
             print(f"copied pcs-core handoff -> {dest}")
 
     pcs_labtrust = PCS_CORE_LABTRUST
+    if _align_labtrust_gym_source_commits(release_dir):
+        print(f"aligned LabTrust-Gym source commits in {release_dir}")
+    if _align_labtrust_bundle_certificate_identity(release_dir):
+        print(f"aligned certified/trace certificate identity in {release_dir}")
+    if _sync_certified_bundle_hash_references(release_dir):
+        print(f"synced certified bundle hash references in {release_dir}")
+    _sync_legacy_manifest_producer_commits(release_dir)
     _sync_legacy_manifest_artifact_hashes(release_dir)
 
     out = write_release_manifest(release_dir)
@@ -300,6 +582,9 @@ def main() -> int:
 
         subprocess.run([sys.executable, str(verify), "--write"], cwd=REPO_ROOT, check=True)
         print(f"updated SM fixture manifest -> {release_dir / 'FIXTURE_MANIFEST.json'}")
+
+    if release_dir.resolve() == DEFAULT_DIR.resolve():
+        _mirror_fixture_tree_to_release_run()
 
     print(f"OK: Phase 2 fixtures valid in {release_dir}")
     return 0

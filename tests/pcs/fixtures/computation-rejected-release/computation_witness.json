@@ -1,0 +1,29 @@
+{
+  "schema_version": "v0",
+  "witness_id": "witness-computation-demo-v0.1",
+  "workflow_id": "scientific_computation.reproducibility_v0",
+  "dataset_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+  "environment_hash": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8",
+  "run_receipt_hash": "sha256:b8849e3846ede3cf5a1bf6ae6d375f9385d01255d90edade43bd173b44563624",
+  "result_hashes": [
+    "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+  ],
+  "code_repo": "https://github.com/example/scientific-computation-runner",
+  "code_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "checker": "pcs-core-computation-validator",
+  "checker_version": "0.1.0",
+  "status": "Rejected",
+  "violations": [
+    {
+      "violation_id": "viol-result-hash-mismatch",
+      "violation_type": "result_hash_mismatch",
+      "explanation": "Re-run with the pinned dataset version and verify result artifact sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee.",
+      "expected_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "actual_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "responsible_component": "scientific-computation-runner"
+    }
+  ],
+  "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
+  "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
+  "signature_or_digest": "sha256:f3ddf13aaa6b89becd3b737ed396add5ebb294e7ffdcb18c344a512f83c0192e"
+}

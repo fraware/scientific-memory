@@ -1,0 +1,21 @@
+{
+  "schema_version": "v0",
+  "dataset_id": "dataset-demo-measurements-v0.1",
+  "dataset_name": "Demo measurements",
+  "dataset_version": "v0.1.0",
+  "files": [
+    {
+      "path": "data/measurements.csv",
+      "sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "size_bytes": 128,
+      "media_type": "text/csv"
+    }
+  ],
+  "aggregate_hash": "sha256:701f0ede04cba3644c15e7364228b5bcd873fd7b690ccf1a90cc5e6af93fe046",
+  "source_uri": "https://example.org/datasets/demo-measurements/v0.1.0",
+  "source_repo": "https://github.com/example/scientific-computation-runner",
+  "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "license": "CC-BY-4.0",
+  "created_at": "2026-05-18T12:00:00Z",
+  "signature_or_digest": "sha256:baef97b34473403cd928b9e7f3414befeb67cfdbdf094f77e5c758176ef4338d"
+}

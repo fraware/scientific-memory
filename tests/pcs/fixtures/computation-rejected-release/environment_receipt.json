@@ -1,0 +1,20 @@
+{
+  "schema_version": "v0",
+  "environment_id": "env-linux-py312-uv",
+  "environment_kind": "uv",
+  "os": "linux",
+  "architecture": "x86_64",
+  "language_runtimes": [
+    "python-3.12"
+  ],
+  "packages": [
+    "numpy==2.1.0",
+    "pandas==2.2.0"
+  ],
+  "container_image": "ghcr.io/example/scientific-runner:py312",
+  "container_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "hardware_summary": "4 vCPU, 16 GiB RAM",
+  "source_repo": "https://github.com/example/scientific-computation-runner",
+  "source_commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de",
+  "signature_or_digest": "sha256:e8151506572c24de819d50107365d3b23545e25e6dd239670759bead0afa37b8"
+}

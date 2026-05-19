@@ -58,6 +58,7 @@ def build_lineage(
     signed_bundle_path: Path,
     release_manifest: dict[str, Any] | None = None,
     workflow_profile_id: str | None = None,
+    computation_fields: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     scb = bundle_for_validation(bundle)
     producer_repos = {}
@@ -98,6 +99,12 @@ def build_lineage(
                 for name, entry in artifacts.items()
                 if isinstance(entry, dict)
             }
+    if computation_fields:
+        lineage["computation"] = dict(computation_fields)
+        if computation_fields.get("witness_id"):
+            lineage["certificate_id"] = str(computation_fields["witness_id"])
+        if computation_fields.get("dataset_aggregate_hash"):
+            lineage["trace_hash"] = str(computation_fields["dataset_aggregate_hash"])
     return lineage
 
 
