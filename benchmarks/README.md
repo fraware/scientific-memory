@@ -12,6 +12,8 @@ The run writes `benchmarks/reports/latest.json` and compares results against
 
 ## Folder guide
 
+- [`rendering/`](rendering/README.md): PCS import/render/query benchmarks for the
+  Scientific Memory evidence layer (`just pcs-benchmark-rendering`)
 - [`tasks/`](tasks/README.md): deterministic benchmark scorers
 - [`gold/`](gold/README.md): human-reviewed gold labels per paper
 - [`llm_eval/`](llm_eval/README.md): reviewed LLM reference bundles used as

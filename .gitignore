@@ -86,6 +86,7 @@ Thumbs.db
 portal/public/generated/
 *.local.*
 benchmarks/reports/
+benchmark_runs/
 docs/verso/_build/
 tmp/
 

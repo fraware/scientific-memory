@@ -91,6 +91,68 @@ def test_compare_releases_reports_hash_and_commit_deltas(tmp_path: Path) -> None
     assert result["recommended_action"]
     assert "changed_workflow_profile" in result
     assert "changed_registry_checks" in result
+    assert "changed_formal_checks" in result
+
+
+def test_compare_releases_diffs_formal_trust_lineage(tmp_path: Path) -> None:
+    root = tmp_path
+    for claim_id, release_id, lean_status, theorems in (
+        (
+            "claim-old",
+            "release-old",
+            "ProofChecked",
+            ["PCS.CertificateMatchesRuntime"],
+        ),
+        (
+            "claim-new",
+            "release-new",
+            "Failed",
+            ["PCS.CertificateMatchesRuntime", "PCS.SignedBundleAdmissible"],
+        ),
+    ):
+        claim_dir = root / "corpus" / "pcs" / "claims" / claim_id
+        claim_dir.mkdir(parents=True)
+        (claim_dir / "lineage.json").write_text(
+            json.dumps(
+                {
+                    "claim_id": claim_id,
+                    "release_id": release_id,
+                    "signed_bundle_hash": "sha256:" + ("1" if claim_id.endswith("old") else "2") * 64,
+                    "artifact_hashes": {},
+                    "formal_trust": {
+                        "lean_check_status": lean_status,
+                        "obligation_set_id": f"obl-{claim_id}",
+                        "lean_theorems": theorems,
+                    },
+                },
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+
+    _write_claim_index(
+        root,
+        [
+            {
+                "claim_id": "claim-old",
+                "claim_dir": "claim-old",
+                "release_id": "release-old",
+                "imported_at": "2026-01-01T00:00:00Z",
+            },
+            {
+                "claim_id": "claim-new",
+                "claim_dir": "claim-new",
+                "release_id": "release-new",
+                "imported_at": "2026-02-01T00:00:00Z",
+            },
+        ],
+    )
+
+    result = compare_releases(root, old_release_id="release-old", new_release_id="release-new")
+    assert result["changed_formal_checks"]
+    assert any(row["field"] == "lean_check_status" for row in result["changed_formal_checks"])
+    assert "formal_checks_changed" in result["staleness_impact"]
 
 
 def test_compare_releases_diffs_workflow_profile_and_registry_checks(tmp_path: Path) -> None:

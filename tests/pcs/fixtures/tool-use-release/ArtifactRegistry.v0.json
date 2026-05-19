@@ -1196,6 +1196,315 @@
       "canonical_hash_required": true,
       "release_mode_required": false
     },
+    "BenchmarkRegistry.v0": {
+      "artifact_type": "BenchmarkRegistry.v0",
+      "schema": "schemas/BenchmarkRegistry.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "registry_id",
+        "registry_version",
+        "suites",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "BenchmarkTask.v0": {
+      "artifact_type": "BenchmarkTask.v0",
+      "schema": "schemas/BenchmarkTask.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "task_id",
+        "workflow_id",
+        "domain",
+        "description",
+        "input_case_set",
+        "expected_outputs",
+        "metrics",
+        "success_criteria",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "BenchmarkCase.v0": {
+      "artifact_type": "BenchmarkCase.v0",
+      "schema": "schemas/BenchmarkCase.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "case_id",
+        "task_id",
+        "workflow_id",
+        "case_kind",
+        "input_artifacts",
+        "expected_status",
+        "expected_failure_code",
+        "expected_responsible_component",
+        "expected_repair_hint_kind",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "BenchmarkRun.v0": {
+      "artifact_type": "BenchmarkRun.v0",
+      "schema": "schemas/BenchmarkRun.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "run_id",
+        "task_id",
+        "case_id",
+        "started_at",
+        "completed_at",
+        "commands",
+        "artifacts_produced",
+        "observed_status",
+        "observed_failure_code",
+        "observed_responsible_component",
+        "observed_repair_hint",
+        "duration_ms",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "BenchmarkReport.v0": {
+      "artifact_type": "BenchmarkReport.v0",
+      "schema": "schemas/BenchmarkReport.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "report_id",
+        "benchmark_suite_id",
+        "runs",
+        "metrics",
+        "summary",
+        "coverage",
+        "failures",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "ConformanceRun.v0": {
+      "artifact_type": "ConformanceRun.v0",
+      "schema": "schemas/ConformanceRun.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "run_id",
+        "suite",
+        "status",
+        "checks_passed",
+        "checks_failed",
+        "failures",
+        "started_at",
+        "completed_at",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "FailureCaseManifest.v0": {
+      "artifact_type": "FailureCaseManifest.v0",
+      "schema": "schemas/FailureCaseManifest.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "manifest_id",
+        "case_id",
+        "task_id",
+        "failure_code",
+        "responsible_component",
+        "repair_hint_kind",
+        "message",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "FailureLocalizationResult.v0": {
+      "artifact_type": "FailureLocalizationResult.v0",
+      "schema": "schemas/FailureLocalizationResult.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "result_id",
+        "run_id",
+        "case_id",
+        "expected_failure_code",
+        "observed_failure_code",
+        "expected_responsible_component",
+        "observed_responsible_component",
+        "localized_correctly",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
+    "CoverageReport.v0": {
+      "artifact_type": "CoverageReport.v0",
+      "schema": "schemas/CoverageReport.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "runtime_producer": "pcs-core",
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "required_release_fields": [
+        "schema_version",
+        "coverage_id",
+        "metric",
+        "numerator",
+        "denominator",
+        "coverage_ratio",
+        "details",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "semantic_checks": [],
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "canonical_hash_required": true,
+      "release_mode_required": false
+    },
     "ArtifactRegistry.v0": {
       "artifact_type": "ArtifactRegistry.v0",
       "schema": "schemas/ArtifactRegistry.v0.schema.json",
@@ -1237,5 +1546,5 @@
       "release_mode_required": false
     }
   },
-  "signature_or_digest": "sha256:cee659a6ed8df62d188374619e62477f6fd3f5fafff804d8dc9d3d67bd729e72"
+  "signature_or_digest": "sha256:8e972612ea2a8ba67a544503ff75084629bd0fac4da4933d792d11cc906a8fff"
 }

@@ -1,15 +1,15 @@
 {
   "artifact_hashes": {
-    "lean_check_result.v0.json": "sha256:1bb54a1f95d06e424b67265e078639bdb6f4c126655310f511c74cbf2d1cc210",
-    "proof_obligation.v0.json": "sha256:f8c245f94e1a22807909a9d313a1143ae1bd4142d1606d92206a54b43911e2f8",
+    "lean_check_result.v0.json": "sha256:529fdb4dc7ce5de87b2e87a69601bedb28ede2499a1b1234e5c241cebbbb6ab8",
+    "proof_obligation.v0.json": "sha256:66bf1c52e9e8553829dbed37d96a76f84bfe21dbf33fbb0ac6e7871986916fd6",
     "runtime_receipt.json": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
     "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
     "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
     "scientific_memory_import_report.json": "sha256:1598d195ad94b6d2f487569ab3fb53c2160d429ce50d8ea311be0e122c8e3050",
-    "signed_science_claim_bundle.json": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
+    "signed_science_claim_bundle.json": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
     "trace.json": "sha256:0b356b952c0eb5c033e4e7166113f5e34aa76af7f473362bcbc0d2b337dabb04",
     "trace_certificate.json": "sha256:1fb39e4677c3a7838ec09079bf3d69684cd8fdb1d3e2f234ff333270920aaef7",
-    "verification_result.json": "sha256:6f891689b7033faa9c396f496811a4c0d62d941a197071a019bd102f52aa10fb"
+    "verification_result.json": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679"
   },
   "bundle_id": "scb-pcs-qc-release-v0.1",
   "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
@@ -27,7 +27,7 @@
     "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc"
   },
   "release_id": "release-pcs-v0.1-labtrust-qc",
-  "release_manifest_hash": "sha256:5a6de93004e02b686a02be66bd8c6b1f9cfa3c130b86cf0902e16d5fa5df0dbc",
+  "release_manifest_hash": "sha256:f81c65b4814e7245db7459dcdc39dca8eff02108bd13a96a6fbbe8d2d1972cfe",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"

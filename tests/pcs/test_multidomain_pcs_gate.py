@@ -146,3 +146,4 @@ def test_multidomain_compare_labtrust_to_computation() -> None:
     payload = json.loads(result.stdout)
     assert payload.get("changed_workflow_profile")
     assert payload.get("changed_computation")
+    assert "changed_formal_checks" in payload

@@ -1,0 +1,22 @@
+{
+  "queries": [
+    {
+      "id": "list_claims",
+      "type": "list_claims",
+      "params": {},
+      "expected_claim_ids": [
+        "claim-computation-rejected-v0.1"
+      ]
+    },
+    {
+      "id": "by_release",
+      "type": "by_release",
+      "params": {
+        "release_id": "release-pcs-v0.1-scientific-computation-rejected"
+      },
+      "expected_claim_ids": [
+        "claim-computation-rejected-v0.1"
+      ]
+    }
+  ]
+}

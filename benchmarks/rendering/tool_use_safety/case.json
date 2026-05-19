@@ -1,0 +1,8 @@
+{
+  "case_id": "tool_use_safety",
+  "fixture_dir": "tests/pcs/fixtures/tool-use-release",
+  "manifest_filename": "release_manifest.v0.json",
+  "claim_id": "claim-qc-release-v0.1",
+  "release_id": "release-pcs-v0.1-tool-use-safety",
+  "workflow_id": "agent_tool_use.safety_v0"
+}

@@ -4,10 +4,10 @@
     "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
     "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
     "scientific_memory_import_report.json": "sha256:1598d195ad94b6d2f487569ab3fb53c2160d429ce50d8ea311be0e122c8e3050",
-    "signed_science_claim_bundle.json": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
+    "signed_science_claim_bundle.json": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
     "trace.json": "sha256:0b356b952c0eb5c033e4e7166113f5e34aa76af7f473362bcbc0d2b337dabb04",
     "trace_certificate.json": "sha256:1fb39e4677c3a7838ec09079bf3d69684cd8fdb1d3e2f234ff333270920aaef7",
-    "verification_result.json": "sha256:6f891689b7033faa9c396f496811a4c0d62d941a197071a019bd102f52aa10fb"
+    "verification_result.json": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679"
   },
   "certifyedge_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
   "generated_at": "2026-05-18T23:17:38Z",

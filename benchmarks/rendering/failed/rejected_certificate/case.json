@@ -1,0 +1,8 @@
+{
+  "case_id": "rejected_certificate",
+  "fixture_dir": "tests/pcs/fixtures/computation-rejected-release",
+  "manifest_filename": "release_manifest.v0.json",
+  "claim_id": "claim-computation-rejected-v0.1",
+  "release_id": "release-pcs-v0.1-scientific-computation-rejected",
+  "failure_mode": true
+}

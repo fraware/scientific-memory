@@ -1,0 +1,82 @@
+{
+  "queries": [
+    {
+      "id": "list_claims",
+      "type": "list_claims",
+      "params": {},
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_release",
+      "type": "by_release",
+      "params": {
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_workflow",
+      "type": "by_workflow",
+      "params": {
+        "workflow_id": "scientific_computation.reproducibility_v0"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_certificate",
+      "type": "by_certificate",
+      "params": {
+        "certificate_id": "witness-computation-demo-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_source_commit",
+      "type": "by_source_commit",
+      "params": {
+        "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_dataset",
+      "type": "by_dataset",
+      "params": {
+        "dataset_id": "dataset-demo-measurements-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_result_hash",
+      "type": "by_result_hash",
+      "params": {
+        "hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_lean_theorem",
+      "type": "by_lean_theorem",
+      "params": {
+        "theorem": "PCS.SignedBundleAdmissible"
+      },
+      "expected_claim_ids": [
+        "claim-computation-release-v0.1"
+      ]
+    }
+  ]
+}

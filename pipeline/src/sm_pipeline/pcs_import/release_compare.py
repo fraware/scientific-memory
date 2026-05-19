@@ -118,6 +118,47 @@ def _computation_snapshot(lineage: dict[str, Any]) -> dict[str, Any]:
     return dict(computation) if isinstance(computation, dict) else {}
 
 
+def _diff_formal_checks(old_lineage: dict[str, Any], new_lineage: dict[str, Any]) -> list[dict[str, str]]:
+    """Diff formal trust kernel lineage fields (ProofObligation / LeanCheckResult)."""
+    old_ft = old_lineage.get("formal_trust")
+    new_ft = new_lineage.get("formal_trust")
+    if not isinstance(old_ft, dict) and not isinstance(new_ft, dict):
+        return []
+    old_ft = old_ft if isinstance(old_ft, dict) else {}
+    new_ft = new_ft if isinstance(new_ft, dict) else {}
+    changes: list[dict[str, str]] = []
+    for field in (
+        "lean_check_status",
+        "obligation_set_id",
+        "lean_check_result_id",
+    ):
+        prev = str(old_ft.get(field) or "")
+        cur = str(new_ft.get(field) or "")
+        if prev != cur:
+            changes.append({"field": field, "previous": prev, "current": cur})
+    old_theorems = sorted(str(t) for t in (old_ft.get("lean_theorems") or []) if str(t).strip())
+    new_theorems = sorted(str(t) for t in (new_ft.get("lean_theorems") or []) if str(t).strip())
+    if old_theorems != new_theorems:
+        changes.append(
+            {
+                "field": "lean_theorems",
+                "previous": ",".join(old_theorems),
+                "current": ",".join(new_theorems),
+            },
+        )
+    old_failed = sorted(str(t) for t in (old_ft.get("failed_lean_theorems") or []) if str(t).strip())
+    new_failed = sorted(str(t) for t in (new_ft.get("failed_lean_theorems") or []) if str(t).strip())
+    if old_failed != new_failed:
+        changes.append(
+            {
+                "field": "failed_lean_theorems",
+                "previous": ",".join(old_failed),
+                "current": ",".join(new_failed),
+            },
+        )
+    return changes
+
+
 def _diff_computation_evidence(
     old_lineage: dict[str, Any],
     new_lineage: dict[str, Any],
@@ -266,11 +307,14 @@ def compare_releases(
 
     changed_workflow_profile = _diff_workflow_profile(old_dir, new_dir)
     changed_registry_checks = _diff_registry_checks(old_dir, new_dir)
+    changed_formal_checks = _diff_formal_checks(old_lineage, new_lineage)
     changed_computation = _diff_computation_evidence(old_lineage, new_lineage)
     if changed_workflow_profile:
         staleness_impact.append(normalize_stale_reason("workflow_profile changed"))
     if changed_registry_checks:
         staleness_impact.append(normalize_stale_reason("registry_checks changed"))
+    if changed_formal_checks:
+        staleness_impact.append(normalize_stale_reason("formal_checks changed"))
     if changed_computation:
         for key in changed_computation:
             staleness_impact.append(normalize_stale_reason(f"computation_{key}"))
@@ -294,6 +338,7 @@ def compare_releases(
         "changed_certificates": changed_certificates,
         "changed_workflow_profile": changed_workflow_profile,
         "changed_registry_checks": changed_registry_checks,
+        "changed_formal_checks": changed_formal_checks,
         "changed_computation": changed_computation,
         "staleness_impact": sorted(set(staleness_impact)),
         "recommended_action": recommended,

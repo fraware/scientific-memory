@@ -118,7 +118,20 @@ Each registry row must expose (when available from `ReleaseManifest.v0` + `Artif
 
 ## Release comparison
 
-`pcs-compare-releases` reports: `changed_artifacts`, `changed_hashes`, `changed_source_commits`, `changed_certificates`, `changed_workflow_profile`, `changed_registry_checks`, `changed_computation`, `staleness_impact`, `recommended_action`.
+`pcs-compare-releases` reports: `changed_artifacts`, `changed_hashes`, `changed_source_commits`, `changed_certificates`, `changed_workflow_profile`, `changed_registry_checks`, `changed_formal_checks`, `changed_computation`, `staleness_impact`, `recommended_action`.
+
+`changed_formal_checks` diffs indexed `lineage.formal_trust` fields: `lean_check_status`, `obligation_set_id`, `lean_check_result_id`, `lean_theorems`, `failed_lean_theorems`.
+
+## Rendering benchmarks (evidence-layer gate)
+
+Scientific Memory measures import/render/query quality under `benchmarks/rendering/`:
+
+```bash
+just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
+python -m sm_pipeline.benchmark.rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
+```
+
+Reports: `rendering_benchmark_report.json` (schema `PcsRenderingBenchmarkReport.v0`) and `pcs_bench_payload.json` for **pcs-bench**. Thresholds: `benchmarks/rendering/baseline_thresholds.json`. The PCS RC gate runs the full rendering benchmark suite.
 
 For computation releases, `changed_computation` may include: `dataset_changes`, `environment_changes`, `code_commit_changes`, `command_changes`, `result_hash_changes`, `witness_status_changes` (derived from indexed `lineage.computation` fields, not bundle rescans).
 

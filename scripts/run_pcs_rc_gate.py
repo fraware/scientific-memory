@@ -198,6 +198,30 @@ def main() -> int:
 
     _run_portal_pcs_contracts()
 
+    _run(
+        [
+            sys.executable,
+            "-m",
+            "sm_pipeline.benchmark.rendering",
+            "--cases",
+            "benchmarks/rendering",
+            "--out",
+            "benchmark_runs/pcs_rc_gate_rendering",
+            "--pcs-bench-out",
+            "benchmark_runs/pcs_rc_gate_rendering/pcs_bench_payload.json",
+        ],
+        env=env,
+    )
+    gate_report = REPO_ROOT / "benchmark_runs/pcs_rc_gate_rendering/rendering_benchmark_report.json"
+    if not gate_report.is_file():
+        print("missing rendering benchmark report", file=sys.stderr)
+        return 1
+    gate_payload = json.loads(gate_report.read_text(encoding="utf-8"))
+    if not gate_payload.get("passed"):
+        for msg in gate_payload.get("failures") or []:
+            print(f"rendering benchmark: {msg}", file=sys.stderr)
+        return 1
+
     index_path = REPO_ROOT / "corpus/pcs/claims_index.json"
     if not index_path.is_file():
         print("missing corpus/pcs/claims_index.json", file=sys.stderr)

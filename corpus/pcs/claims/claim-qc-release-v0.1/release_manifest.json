@@ -4,23 +4,23 @@
       "artifact_type": "LeanCheckResult.v0",
       "producer": "pcs-core",
       "schema": "lean_check_result.v0.schema.json",
-      "sha256": "sha256:bc92f8a8fffccbc6f0e3508396ef30f29dda37c5590deb3c6fc40409eed01f17",
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:403eaf8e8eddaa73eccaa8ea889fe17f08046f0cc2a27a32b29a655202598428",
+      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "proof_obligation.v0.json": {
       "artifact_type": "ProofObligation.v0",
       "producer": "pcs-core",
       "schema": "proof_obligation.v0.schema.json",
-      "sha256": "sha256:66b4d8fe3f6f1464d772fcb0fc7b71df516b6358779fed355f042b9c52c8a042",
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:e76876e168a4ae92c9123b157ccf62cf16b841df39107b6a99c98e0cfc40d1c6",
+      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "runtime_receipt.json": {
       "artifact_type": "RuntimeReceipt.v0",
       "producer": "pcs-core",
       "schema": "schemas/RuntimeReceipt.v0.schema.json",
-      "sha256": "sha256:eddf1ad1446050bb029ac1bf31b6755c247e631a44c51d245041e41d1f362e3d",
+      "sha256": "sha256:6ea1cf9af78a850a0790a047f1f1807f07be41e02a838a62e0a8ba9f202c24c2",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -28,7 +28,7 @@
       "artifact_type": "ScienceClaimBundle.v0",
       "producer": "pcs-core",
       "schema": "schemas/ScienceClaimBundle.v0.schema.json",
-      "sha256": "sha256:08b07170dd8406bfe0cee6cedbe2e02b9f280f4fc81858f8dad36431a40d54d6",
+      "sha256": "sha256:21cec2008298ed8c48319e685e5219acbc3091dd9c40b171c9aa51c5f5ff8174",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -44,7 +44,7 @@
       "artifact_type": "ToolUseCertificate.v0",
       "producer": "pcs-core",
       "schema": "schemas/ToolUseCertificate.v0.schema.json",
-      "sha256": "sha256:1b8fb66898980e0868927b8e62400aa8c992a0d6a9f193c755fbe1656e404a68",
+      "sha256": "sha256:4c2732b485fbaef340d57330403c9f1aba5530b395594cd6ca120ea0e8f5b502",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -52,7 +52,7 @@
       "artifact_type": "ToolUseTrace.v0",
       "producer": "pcs-core",
       "schema": "schemas/ToolUseTrace.v0.schema.json",
-      "sha256": "sha256:b31313785703270d7cc5402c694c5eb88e71535490506d0785cebe30f4e3e585",
+      "sha256": "sha256:cf47cfa5593b6801072d4462f134b9642c1002c38ab3d37c19ce5752ebca4e48",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -60,7 +60,7 @@
       "artifact_type": "VerificationResult.v0",
       "producer": "Provability Fabric",
       "schema": "schemas/VerificationResult.v0.schema.json",
-      "sha256": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
+      "sha256": "sha256:f73d61825d1ac16d0ca3bca23897b6c22e61c01b96a0dadac95013d3f6463f1f",
       "source_commit": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
@@ -68,7 +68,7 @@
       "artifact_type": "WorkflowProfile.v0",
       "producer": "pcs-core",
       "schema": "schemas/WorkflowProfile.v0.schema.json",
-      "sha256": "sha256:0f54c947169f2733cf05ae8486b73afbc7bd82ec51275448f72d18ad29783e66",
+      "sha256": "sha256:2d006b20aab138929001c1fdbd51061f833c1f8ce3cd2ae1eeac876240516b05",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     }
@@ -104,7 +104,7 @@
       "repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
     "scientific_memory": {
-      "commit": "9cfbcaa3df3ef1d1c9820c670c4fd3f82b124b9c",
+      "commit": "8e6f1b61d44b1561057bd5ce26cf5a085767e8bf",
       "repo": "https://github.com/fraware/scientific-memory"
     }
   },
@@ -116,7 +116,7 @@
   "release_id": "release-pcs-v0.1-tool-use-safety",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:ed2be2eb8f5839a2199e5c6136f829ee589b4fa66d45d1cd95555ee46c39a114",
+  "signature_or_digest": "sha256:b3c1d6c28e6bd899cfd7de52747384ec20e100f876bf90d68375d03d504e02cd",
   "validation_profile": "agent_tool_use.safety_v0",
   "workflow_profile_id": "agent_tool_use.safety_v0"
 }

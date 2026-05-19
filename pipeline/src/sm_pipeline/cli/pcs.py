@@ -1,5 +1,6 @@
 """CLI: PCS LabTrust bundle import, validate, and portal render."""
 
+import json
 import os
 from pathlib import Path
 
@@ -418,3 +419,69 @@ def pcs_render_claim(
         console.print(f"[red]{exc}[/red]")
         raise typer.Exit(code=1) from exc
     console.print(f"[green]PCS portal export[/green] -> {out}")
+
+
+def pcs_benchmark_rendering(
+    cases: str = typer.Option(
+        "benchmarks/rendering/labtrust_qc_release",
+        "--cases",
+        help="Benchmark case directory (single case or parent directory)",
+    ),
+    out: str = typer.Option(
+        "",
+        "--out",
+        help="Output directory for rendering_benchmark_report.json",
+    ),
+    in_place: bool = typer.Option(
+        False,
+        "--in-place",
+        help="Import into repo corpus instead of isolated workspace",
+    ),
+    check_regression: bool = typer.Option(
+        True,
+        "--check-regression/--no-check-regression",
+        help="Enforce benchmarks/rendering/baseline_thresholds.json",
+    ),
+) -> None:
+    """Run PCS import/render/query benchmarks (pcs-bench consumable report)."""
+    from pathlib import Path
+
+    from sm_pipeline.benchmark.rendering import (
+        check_rendering_regression,
+        export_pcs_bench_payload,
+        run_rendering_benchmark,
+    )
+
+    repo = _repo_root()
+    cases_path = Path(cases)
+    if not cases_path.is_absolute():
+        cases_path = repo / cases_path
+    out_dir = Path(out) if out else repo / "benchmark_runs" / cases_path.name
+    if out and not out_dir.is_absolute():
+        out_dir = repo / out_dir
+
+    report = run_rendering_benchmark(
+        cases_path,
+        repo_root=repo,
+        out_dir=out_dir,
+        isolated=not in_place,
+    )
+    bench_path = out_dir / "pcs_bench_payload.json"
+    bench_path.write_text(
+        json.dumps(export_pcs_bench_payload(report), indent=2) + "\n",
+        encoding="utf-8",
+    )
+    report_path = report.get("report_path") or out_dir / "rendering_benchmark_report.json"
+    if check_regression:
+        ok, msg = check_rendering_regression(repo, report)
+        if not ok and msg:
+            console.print(f"[red]{msg}[/red]")
+            raise typer.Exit(code=1)
+    if report.get("passed"):
+        console.print(f"[green]PCS rendering benchmark passed[/green] -> {report_path}")
+        console.print(f"[dim]pcs-bench payload[/dim] -> {bench_path}")
+    else:
+        console.print(f"[red]PCS rendering benchmark failed[/red] -> {report_path}")
+        for msg in report.get("failures") or []:
+            console.print(f"  - {msg}")
+        raise typer.Exit(code=1)

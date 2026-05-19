@@ -1,0 +1,62 @@
+{
+  "queries": [
+    {
+      "id": "list_claims",
+      "type": "list_claims",
+      "params": {},
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_release",
+      "type": "by_release",
+      "params": {
+        "release_id": "release-pcs-v0.1-tool-use-safety"
+      },
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_workflow",
+      "type": "by_workflow",
+      "params": {
+        "workflow_id": "agent_tool_use.safety_v0"
+      },
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_certificate",
+      "type": "by_certificate",
+      "params": {
+        "certificate_id": "cert-tool-use-safety-v0"
+      },
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_source_commit",
+      "type": "by_source_commit",
+      "params": {
+        "commit": "4c5439ae358733f9a4c4a58e33fdaed1ab0d29de"
+      },
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_lean_theorem",
+      "type": "by_lean_theorem",
+      "params": {
+        "theorem": "PCS.VerificationAdmitsBundle"
+      },
+      "expected_claim_ids": [
+        "claim-qc-release-v0.1"
+      ]
+    }
+  ]
+}

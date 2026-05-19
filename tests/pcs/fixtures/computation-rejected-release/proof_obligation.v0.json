@@ -3,7 +3,7 @@
   "obligation_set_id": "obl-set-release-pcs-v0.1-scientific-computation-rejected",
   "release_id": "release-pcs-v0.1-scientific-computation-rejected",
   "release_candidate": "pcs-v0.1-scientific-computation-conformance",
-  "generated_at": "2026-05-19T08:34:23Z",
+  "generated_at": "2026-05-19T14:26:43Z",
   "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
   "obligations": [
     {
@@ -61,6 +61,6 @@
     }
   ],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
-  "signature_or_digest": "sha256:5e233bf764dac7adb821d10f585bef754ccb5f4d14e793ed46b0a397fa407d2f"
+  "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
+  "signature_or_digest": "sha256:cc340892d407bb9c51fb0b257d5d0b3f4a7931381421ec26f9ab5fce2a5e4b67"
 }

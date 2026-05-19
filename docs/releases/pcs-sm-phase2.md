@@ -185,6 +185,18 @@ Triggers: signed bundle hash, release manifest hash, certificate ID, trace hash,
 
 Claim states: `current`, `stale`, `superseded`, `withdrawn`, `revalidated`.
 
+## Rendering benchmarks (evidence layer)
+
+Scientific Memory is benchmarked as the human-facing PCS evidence layer: interpretability sections, query correctness, release comparison, and failed-release rendering.
+
+```bash
+just pcs-benchmark-rendering CASES=benchmarks/rendering/labtrust_qc_release OUT=benchmark_runs/labtrust_rendering
+just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
+python scripts/bootstrap_pcs_rendering_benchmarks.py   # regenerate expected_*.json after fixture changes
+```
+
+Cases: `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, plus `failed/*` (rejected certificate, stale, failed Lean/PF, missing registry metadata). Output is consumable by **pcs-bench** via `pcs_bench_payload.json`.
+
 ## CI gate
 
 ```bash
@@ -192,6 +204,8 @@ just pcs-rc-gate
 just pcs-rc-gate-py
 just pcs-phase2-gate
 ```
+
+The RC gate includes the full PCS rendering benchmark suite (`benchmarks/rendering/`).
 
 ## Refresh fixtures
 

@@ -1,0 +1,9 @@
+{
+  "required_checks": [
+    "failure_reason_present",
+    "artifact_path_present",
+    "repair_hint_present",
+    "non_claims_present",
+    "partial_import_present"
+  ]
+}

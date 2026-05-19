@@ -116,6 +116,13 @@ benchmark:
 benchmark-smoke:
 	uv run --project pipeline python -m sm_pipeline.cli benchmark
 
+# PCS rendering/query benchmark (Scientific Memory evidence layer; report for pcs-bench)
+pcs-benchmark-rendering CASES="benchmarks/rendering/labtrust_qc_release" OUT="benchmark_runs/labtrust_rendering":
+	uv run --project pipeline python -m sm_pipeline.benchmark.rendering --cases {{CASES}} --out {{OUT}}
+
+pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
+	uv run --project pipeline python -m sm_pipeline.benchmark.rendering --cases benchmarks/rendering --out {{OUT}}
+
 # Recipe dependencies avoid nested `just` subprocesses (fixes PATH on Windows).
 check: fmt lint validate test build
 	@echo "==> check complete"

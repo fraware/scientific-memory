@@ -4,7 +4,7 @@
       "artifact_type": "LeanCheckResult.v0",
       "producer": "pcs-core",
       "schema": "LeanCheckResult.v0.schema.json",
-      "sha256": "sha256:1bb54a1f95d06e424b67265e078639bdb6f4c126655310f511c74cbf2d1cc210",
+      "sha256": "sha256:529fdb4dc7ce5de87b2e87a69601bedb28ede2499a1b1234e5c241cebbbb6ab8",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -12,7 +12,7 @@
       "artifact_type": "ProofObligation.v0",
       "producer": "pcs-core",
       "schema": "ProofObligation.v0.schema.json",
-      "sha256": "sha256:f8c245f94e1a22807909a9d313a1143ae1bd4142d1606d92206a54b43911e2f8",
+      "sha256": "sha256:66bf1c52e9e8553829dbed37d96a76f84bfe21dbf33fbb0ac6e7871986916fd6",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -52,7 +52,7 @@
       "artifact_type": "SignedScienceClaimBundle.v0",
       "producer": "Provability Fabric",
       "schema": "SignedScienceClaimBundle.v0.schema.json",
-      "sha256": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
+      "sha256": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
       "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
@@ -76,7 +76,7 @@
       "artifact_type": "VerificationResult.v0",
       "producer": "Provability Fabric",
       "schema": "VerificationResult.v0.schema.json",
-      "sha256": "sha256:6f891689b7033faa9c396f496811a4c0d62d941a197071a019bd102f52aa10fb",
+      "sha256": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679",
       "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
       "source_repo": "https://github.com/SentinelOps-CI/provability-fabric"
     }
@@ -84,12 +84,12 @@
   "canonical_claim_id": "claim-pcs-qc-release-v0.1",
   "canonical_signed_bundle": {
     "path": "signed_science_claim_bundle.json",
-    "sha256": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d"
+    "sha256": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062"
   },
   "chain_root": {
     "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
     "certified_bundle_hash": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
-    "signed_bundle_hash": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
+    "signed_bundle_hash": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
   },
   "generated_at": "2026-05-18T23:17:38Z",
@@ -124,7 +124,7 @@
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:5a6de93004e02b686a02be66bd8c6b1f9cfa3c130b86cf0902e16d5fa5df0dbc",
+  "signature_or_digest": "sha256:f81c65b4814e7245db7459dcdc39dca8eff02108bd13a96a6fbbe8d2d1972cfe",
   "validation_profile": "labtrust-v0.1-release-chain",
   "workflow_profile_id": "labtrust.qc_release_v0.1"
 }
