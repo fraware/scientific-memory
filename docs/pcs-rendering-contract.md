@@ -129,20 +129,27 @@ Scientific Memory measures import/render/query quality under `benchmarks/renderi
 ```bash
 just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
 python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
-python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
+just validate-pcs-benchmark-output benchmark_runs/pcs_rendering
 ```
 
-**pcs-bench ingest** (validated under `schemas/pcs/benchmark/`):
+**pcs-bench canonical ingest:** `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`). Required arrays: `benchmark_runs`, `coverage_reports`, `explain_quality_reports`, `query_results`, `rendering_reports`, plus `source_repo`, `source_commit`, `signature_or_digest`.
 
-| Artifact | Schema |
-|----------|--------|
-| `benchmark_run.v0.json` | `BenchmarkRun.v0` |
-| `rendering_coverage_report.v0.json` | `RenderingCoverageReport.v0` |
-| `query_coverage_report.v0.json` | `QueryCoverageReport.v0` |
-| `failed_release_rendering_report.v0.json` | `FailedReleaseRenderingReport.v0` |
-| `pcs_bench_ingest.v0.json` | `PcsBenchIngest.v0` (manifest with artifact paths) |
+| Artifact | Role |
+|----------|------|
+| `pcs_bench_ingest.v0.json` | Canonical pcs-bench integration manifest |
+| `benchmark_run.v0.json` | Aggregate run + structured `failure_summary` |
+| `rendering_coverage_report.v0.json` | Per-case coverage mapped to pcs-core `explain_quality_section_id` values |
+| `explain_quality_report.v0.json` | Bundle of `ExplainQualityReport.v0`-shaped per-case reports |
+| `query_coverage_report.v0.json` | Query dispatch results |
+| `failed_release_rendering_report.v0.json` | Failed-release evidence rendering |
 
-Legacy alias: `pcs_bench_payload.json`. Thresholds: `benchmarks/rendering/baseline_thresholds.json` (10 cases). The PCS RC gate runs the full suite.
+`rendering_coverage_report.v0.json` uses pcs-core explain-quality sections: `provenance`, `hashes`, `handoffs`, `verification`, `formal_checks`, `limitations`, `lineage`, `repair_hints`.
+
+Benchmark failures are typed (not collapsed): `import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`. Each event includes `responsible_component`, `repair_hint`, and `artifact_path`.
+
+**External reviewer packet:** `benchmarks/rendering/external_reviewer_minimal/` (`suite_id`: `scientific-memory-external-reviewer-v0`). Run with `just pcs-benchmark-external-reviewer`.
+
+Legacy alias: `pcs_bench_payload.json`. Suite registry: `benchmarks/pcs_bench/suite_registry.v0.json`. Full contract: [pcs-bench-ingest.md](pcs-bench-ingest.md). Package for upload: `python scripts/package_pcs_bench_bundle.py`. Thresholds: `benchmarks/rendering/baseline_thresholds.json` (10 cases). CI runs the external-reviewer packet via `scripts/run_pcs_rc_ci_gate.sh`.
 
 **Success cases:** `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, `formal_trust_kernel`.
 

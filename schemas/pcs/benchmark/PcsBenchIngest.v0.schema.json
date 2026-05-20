@@ -2,39 +2,35 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://scientific-memory.local/schemas/pcs/benchmark/PcsBenchIngest.v0.schema.json",
   "title": "PcsBenchIngest.v0",
-  "description": "Manifest for pcs-bench to ingest Scientific Memory PCS rendering benchmark outputs.",
+  "description": "Canonical pcs-bench ingest manifest for Scientific Memory rendering benchmark outputs.",
   "type": "object",
   "required": [
     "schema_version",
-    "benchmark_id",
-    "consumer",
-    "passed",
-    "generated_at",
-    "ingest_files",
-    "artifacts"
+    "producer_id",
+    "suite_id",
+    "benchmark_runs",
+    "coverage_reports",
+    "explain_quality_reports",
+    "query_results",
+    "rendering_reports",
+    "source_repo",
+    "source_commit",
+    "signature_or_digest"
   ],
   "properties": {
-    "schema_version": { "const": "PcsBenchIngest.v0" },
-    "benchmark_id": { "const": "pcs_rendering" },
-    "consumer": { "const": "pcs-bench" },
+    "schema_version": { "const": "v0" },
+    "producer_id": { "const": "scientific-memory" },
+    "suite_id": { "type": "string" },
     "passed": { "type": "boolean" },
-    "generated_at": { "type": "string" },
-    "case_count": { "type": "integer", "minimum": 0 },
-    "metrics": { "type": "object" },
-    "failures": { "type": "array", "items": { "type": "string" } },
-    "ingest_files": {
-      "type": "array",
-      "items": { "type": "string" },
-      "minItems": 4
-    },
-    "artifacts": {
-      "type": "object",
-      "additionalProperties": { "type": "string" }
-    },
-    "metric_keys": {
-      "type": "array",
-      "items": { "type": "string" }
-    }
+    "benchmark_runs": { "type": "array", "items": { "type": "object" } },
+    "coverage_reports": { "type": "array", "items": { "type": "object" } },
+    "explain_quality_reports": { "type": "array", "items": { "type": "object" } },
+    "query_results": { "type": "array", "items": { "type": "object" } },
+    "rendering_reports": { "type": "array", "items": { "type": "object" } },
+    "failure_summary": { "type": "object" },
+    "source_repo": { "type": "string" },
+    "source_commit": { "type": "string" },
+    "signature_or_digest": { "type": "string", "pattern": "^sha256:" }
   },
   "additionalProperties": true
 }

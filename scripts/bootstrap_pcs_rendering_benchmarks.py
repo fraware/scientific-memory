@@ -141,6 +141,66 @@ FAILED_CASE_DEFS: list[dict] = [
     },
 ]
 
+EXTERNAL_REVIEWER_CASE_DEFS: list[dict] = [
+    {
+        "case_id": "labtrust_valid",
+        "dir": "external_reviewer_minimal/labtrust_valid",
+        "fixture_dir": "tests/pcs/fixtures/labtrust-release",
+        "manifest_filename": "ReleaseManifest.v0.json",
+        "claim_id": "claim-pcs-qc-release-v0.1",
+        "release_id": "release-pcs-v0.1-labtrust-qc",
+        "workflow_id": "labtrust.qc_release_v0.1",
+        "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+        "lean_theorem": "PCS.CertificateMatchesRuntime",
+    },
+    {
+        "case_id": "failed_lean",
+        "dir": "external_reviewer_minimal/failed_lean",
+        "fixture_dir": "tests/pcs/fixtures/labtrust-release",
+        "manifest_filename": "ReleaseManifest.v0.json",
+        "claim_id": "claim-pcs-qc-release-v0.1",
+        "release_id": "release-pcs-v0.1-labtrust-qc",
+        "post_import": "patch_lean_failed",
+    },
+    {
+        "case_id": "stale_release",
+        "dir": "external_reviewer_minimal/stale_release",
+        "fixture_dir": "tests/pcs/fixtures/labtrust-release",
+        "manifest_filename": "ReleaseManifest.v0.json",
+        "claim_id": "claim-pcs-qc-release-v0.1",
+        "release_id": "release-pcs-v0.1-labtrust-qc",
+        "post_import": "mark_stale",
+    },
+    {
+        "case_id": "result_hash_mismatch",
+        "dir": "external_reviewer_minimal/result_hash_mismatch",
+        "fixture_dir": "tests/pcs/fixtures/computation-release",
+        "manifest_filename": "release_manifest.v0.json",
+        "claim_id": "claim-computation-release-v0.1",
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "post_import": "patch_result_hash_mismatch",
+    },
+    {
+        "case_id": "release_compare",
+        "dir": "external_reviewer_minimal/release_compare",
+        "fixture_dir": "tests/pcs/fixtures/labtrust-release",
+        "manifest_filename": "ReleaseManifest.v0.json",
+        "claim_id": "claim-pcs-qc-release-v0.1",
+        "release_id": "release-pcs-v0.1-labtrust-qc",
+        "workflow_id": "labtrust.qc_release_v0.1",
+        "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+        "compare": {
+            "old_release_id": "release-pcs-v0.1-labtrust-qc",
+            "new_release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+            "second_fixture_dir": "tests/pcs/fixtures/computation-release",
+            "manifest_filename": "release_manifest.v0.json",
+            "second_claim_id": "claim-computation-release-v0.1",
+        },
+    },
+]
+
 
 def _apply_post_import(root: Path, release_dir: Path, case_def: dict) -> None:
     post = str(case_def.get("post_import") or "")
@@ -478,6 +538,9 @@ def main() -> None:
         _write_case(case_def, failed=False)
     for case_def in FAILED_CASE_DEFS:
         _write_case(case_def, failed=True)
+    for case_def in EXTERNAL_REVIEWER_CASE_DEFS:
+        failed = bool(case_def.get("post_import")) and case_def["case_id"] != "release_compare"
+        _write_case(case_def, failed=failed)
     print(f"Wrote PCS rendering benchmarks under {BENCHMARKS}")
 
 

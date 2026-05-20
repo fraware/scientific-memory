@@ -3,22 +3,42 @@
   "$id": "https://scientific-memory.local/schemas/pcs/benchmark/RenderingCoverageReport.v0.schema.json",
   "title": "RenderingCoverageReport.v0",
   "type": "object",
-  "required": ["schema_version", "generated_at", "passed", "cases"],
+  "required": ["schema_version", "generated_at", "passed", "explain_quality_section_ids", "cases"],
   "properties": {
     "schema_version": { "const": "RenderingCoverageReport.v0" },
     "generated_at": { "type": "string" },
     "passed": { "type": "boolean" },
+    "suite_id": { "type": "string" },
+    "producer_id": { "const": "scientific-memory" },
+    "explain_quality_section_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "provenance",
+          "hashes",
+          "handoffs",
+          "verification",
+          "formal_checks",
+          "limitations",
+          "lineage",
+          "repair_hints"
+        ]
+      }
+    },
     "cases": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["case_id", "passed", "section_coverage"],
+        "required": ["case_id", "passed", "explain_quality_coverage"],
         "properties": {
           "case_id": { "type": "string" },
           "claim_id": { "type": "string" },
           "passed": { "type": "boolean" },
           "section_coverage": { "type": "object" },
-          "render_metrics": { "type": "object" }
+          "explain_quality_coverage": { "type": "object" },
+          "render_metrics": { "type": "object" },
+          "failure_kinds": { "type": "object" }
         }
       }
     }

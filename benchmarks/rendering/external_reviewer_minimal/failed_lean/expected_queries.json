@@ -1,0 +1,32 @@
+{
+  "queries": [
+    {
+      "id": "list_claims",
+      "type": "list_claims",
+      "params": {},
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "show_claim",
+      "type": "show_claim",
+      "params": {
+        "claim_id": "claim-pcs-qc-release-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_release",
+      "type": "by_release",
+      "params": {
+        "release_id": "release-pcs-v0.1-labtrust-qc"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    }
+  ]
+}

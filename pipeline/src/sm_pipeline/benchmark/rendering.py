@@ -10,12 +10,19 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from sm_pipeline.benchmark.failure_taxonomy import (
+    FAILURE_KINDS,
+    failure_event,
+    failure_messages,
+    summarize_failure_kinds,
+)
 from sm_pipeline.benchmark.pcs_sections import (
     BENCHMARK_RENDERING_SECTIONS,
     REQUIRED_INTERPRETABILITY_SECTIONS,
     count_render_metrics,
     evaluate_section_coverage,
 )
+from sm_pipeline.benchmark.pcs_core_coverage import suite_id_for_cases_path
 from sm_pipeline.benchmark.report_builder import (
     LEGACY_PAYLOAD_FILENAME,
     PCS_BENCH_INGEST_FILENAME,
@@ -473,6 +480,37 @@ def _match_lineage(actual: dict[str, Any], expected: dict[str, Any]) -> bool:
     return True
 
 
+def _case_result(
+    *,
+    case_id: str,
+    case_config: dict[str, Any],
+    failure_events: list[dict[str, Any]],
+    t0: float,
+    import_failed: bool = False,
+    read_model: dict[str, Any] | None = None,
+    **extra: Any,
+) -> dict[str, Any]:
+    failures = failure_messages(failure_events)
+    kinds = summarize_failure_kinds(failure_events)
+    base: dict[str, Any] = {
+        "case_id": case_id,
+        "claim_id": case_config.get("claim_id"),
+        "release_id": case_config.get("release_id"),
+        "failure_mode": bool(case_config.get("failure_mode")),
+        "import_failed": import_failed,
+        "passed": not failures,
+        "failures": failures,
+        "failure_events": failure_events,
+        "failure_kinds": kinds,
+        "metrics": extra.pop("metrics", {}),
+        "_runtime_seconds": round(time.perf_counter() - t0, 2),
+    }
+    if read_model is not None:
+        base["read_model"] = read_model
+    base.update(extra)
+    return base
+
+
 def _match_staleness(actual: dict[str, Any], expected: dict[str, Any]) -> bool:
     if "stale" in expected and bool(actual.get("stale")) != bool(expected["stale"]):
         return False
@@ -517,18 +555,54 @@ def run_case(
         release_dir = case_release
         manifest_path = _resolve_manifest_path(release_dir, case_config)
 
-    import_release_manifest(manifest_path, repo_root=import_root, write=True, render=False)
-    _apply_post_import(import_root, case_config, release_dir=release_dir)
+    failure_events: list[dict[str, Any]] = []
+    try:
+        import_release_manifest(manifest_path, repo_root=import_root, write=True, render=False)
+        _apply_post_import(import_root, case_config, release_dir=release_dir)
+    except Exception as exc:
+        failure_events.append(
+            failure_event(
+                "import_failed",
+                str(exc),
+                responsible_component="Scientific Memory",
+                repair_hint=(
+                    "Validate ReleaseManifest.v0, ReleaseChainValidationResult, "
+                    "formal trust artifacts, and signed bundle before re-import."
+                ),
+                artifact_path=str(manifest_path),
+            ),
+        )
+        return _case_result(
+            case_id=case_id,
+            case_config=case_config,
+            failure_events=failure_events,
+            t0=t0,
+            import_failed=True,
+            metrics={"import_failed": 1},
+        )
 
     claim_id = str(case_config.get("claim_id") or "")
     read_model_path = import_root / "corpus" / "pcs" / "claims" / claim_id / "read_model.json"
     if not read_model_path.is_file():
-        raise FileNotFoundError(f"read_model missing after import: {read_model_path}")
+        failure_events.append(
+            failure_event(
+                "import_failed",
+                f"read_model missing after import: {read_model_path}",
+                artifact_path=str(read_model_path),
+                repair_hint="Ensure release import finalizes claim read_model.json.",
+            ),
+        )
+        return _case_result(
+            case_id=case_id,
+            case_config=case_config,
+            failure_events=failure_events,
+            t0=t0,
+            import_failed=True,
+            metrics={"import_failed": 1},
+        )
     read_model = json.loads(read_model_path.read_text(encoding="utf-8"))
     lineage_path = import_root / "corpus" / "pcs" / "claims" / claim_id / "lineage.json"
     lineage = json.loads(lineage_path.read_text(encoding="utf-8")) if lineage_path.is_file() else {}
-
-    failures: list[str] = []
 
     # Section coverage
     expected_sections_path = case_dir / EXPECTED_SECTIONS
@@ -543,7 +617,14 @@ def run_case(
         required_sections = list(required_sections) + ["Formal Trust Kernel"]
     section_report = evaluate_section_coverage(read_model, required=required_sections)
     if section_report["missing_sections"]:
-        failures.append(f"missing sections: {', '.join(section_report['missing_sections'])}")
+        failure_events.append(
+            failure_event(
+                "render_failed",
+                f"missing sections: {', '.join(section_report['missing_sections'])}",
+                repair_hint="Re-import release and verify read_model enrichment for required interpretability sections.",
+                artifact_path=str(read_model_path),
+            ),
+        )
 
     render_metrics = count_render_metrics(read_model)
 
@@ -554,7 +635,14 @@ def run_case(
         expected_lineage = _load_json(expected_lineage_path)
         lineage_ok = _match_lineage(lineage, expected_lineage)
         if not lineage_ok:
-            failures.append("lineage mismatch")
+            failure_events.append(
+                failure_event(
+                    "render_failed",
+                    "lineage mismatch",
+                    repair_hint="Refresh lineage index after import; verify certificate and signed bundle hashes.",
+                    artifact_path=str(lineage_path),
+                ),
+            )
 
     # Staleness
     staleness_ok = True
@@ -564,7 +652,15 @@ def run_case(
         expected_staleness = _load_json(expected_staleness_path)
         staleness_ok = _match_staleness(staleness, expected_staleness)
         if not staleness_ok:
-            failures.append("staleness mismatch")
+            failure_events.append(
+                failure_event(
+                    "staleness_failed",
+                    "staleness mismatch",
+                    responsible_component=str(staleness.get("responsible_component") or "Scientific Memory"),
+                    repair_hint=str(staleness.get("repair_hint") or "Refresh stale flags and re-import release."),
+                    artifact_path=str(read_model_path),
+                ),
+            )
 
     # Second release import before queries when compare is configured (compare_releases query).
     compare_report: dict[str, Any] = {"passed": True, "skipped": True}
@@ -582,7 +678,13 @@ def run_case(
     if expected_queries_path.is_file():
         query_report = _run_queries(import_root, _load_json(expected_queries_path), claim_id=claim_id)
         if not query_report["passed"]:
-            failures.append("query benchmark failed")
+            failure_events.append(
+                failure_event(
+                    "query_failed",
+                    "query benchmark failed",
+                    repair_hint="Verify claim index fields (certificate, release, workflow, dataset, result hash, Lean theorem).",
+                ),
+            )
 
     # Release comparison
     if expected_compare_path.is_file():
@@ -594,7 +696,13 @@ def run_case(
         subset = _compare_subset(actual_compare, expected_compare)
         compare_report = {**subset, "old_release_id": old_release, "new_release_id": new_release}
         if not subset["passed"]:
-            failures.append("release comparison benchmark failed")
+            failure_events.append(
+                failure_event(
+                    "comparison_failed",
+                    "release comparison benchmark failed",
+                    repair_hint="Import both releases before compare_releases; verify lineage index for each release_id.",
+                ),
+            )
 
     # Failure evidence (failed-release cases)
     failure_report: dict[str, Any] = {"passed": True, "skipped": True}
@@ -604,17 +712,23 @@ def run_case(
         expected_failure = _load_json(expected_failure_path) if expected_failure_path.is_file() else {}
         failure_report = _evaluate_failure_evidence(read_model, expected_failure)
         if not failure_report["passed"]:
-            failures.append("failure evidence rendering incomplete")
+            failure_events.append(
+                failure_event(
+                    "render_failed",
+                    "failure evidence rendering incomplete",
+                    repair_hint="Surface failure reason, responsible component, artifact path, repair hint, and non-claims in read_model.",
+                    artifact_path=str(read_model_path),
+                    what_was_still_imported=["claim", "artifact_registry", "scientific_memory_import_report"],
+                ),
+            )
 
-    passed = not failures
-    return {
-        "case_id": case_id,
-        "claim_id": claim_id,
-        "release_id": case_config.get("release_id"),
-        "failure_mode": bool(case_config.get("failure_mode")),
-        "passed": passed,
-        "failures": failures,
-        "metrics": {
+    return _case_result(
+        case_id=case_id,
+        case_config=case_config,
+        failure_events=failure_events,
+        t0=t0,
+        read_model=read_model,
+        metrics={
             **section_report,
             **render_metrics,
             "lineage_records_created": 1 if lineage_ok else 0,
@@ -623,12 +737,11 @@ def run_case(
             "release_comparison_correct": 1.0 if compare_report.get("passed") else 0.0,
             "failure_evidence_rendered": 1.0 if failure_report.get("passed") else 0.0,
         },
-        "section_coverage": section_report,
-        "queries": query_report,
-        "compare": compare_report,
-        "failure_evidence": failure_report,
-        "_runtime_seconds": round(time.perf_counter() - t0, 2),
-    }
+        section_coverage=section_report,
+        queries=query_report,
+        compare=compare_report,
+        failure_evidence=failure_report,
+    )
 
 
 def discover_case_dirs(cases_path: Path) -> list[Path]:
@@ -687,6 +800,21 @@ def run_rendering_benchmark(
                 f"{result.get('case_id')}: {msg}" for msg in (result.get("failures") or [])
             )
 
+    failure_summary = {
+        "by_kind": {kind: 0 for kind in FAILURE_KINDS},
+        "total_events": 0,
+        "events": [],
+    }
+    for result in case_results:
+        for event in result.get("failure_events") or []:
+            if not isinstance(event, dict):
+                continue
+            kind = str(event.get("kind") or "")
+            if kind in failure_summary["by_kind"]:
+                failure_summary["by_kind"][kind] += 1
+            failure_summary["total_events"] += 1
+            failure_summary["events"].append({**event, "case_id": result.get("case_id")})
+
     def _avg(key: str) -> float:
         vals = [
             float((c.get("metrics") or {}).get(key, 0))
@@ -695,15 +823,18 @@ def run_rendering_benchmark(
         ]
         return round(sum(vals) / len(vals), 4) if vals else 0.0
 
+    suite_id = suite_id_for_cases_path(str(cases_path))
     report: dict[str, Any] = {
         "benchmark": "pcs_rendering",
         "schema_version": BENCHMARK_SCHEMA,
+        "suite_id": suite_id,
         "generated_at": datetime.now(UTC).isoformat(),
         "repo_root": str(root),
         "cases_path": str(cases_path.resolve()),
         "case_count": len(case_results),
         "passed": not aggregate_failures,
         "failures": aggregate_failures,
+        "failure_summary": failure_summary,
         "cases": case_results,
         "metrics": {
             "required_sections_rendered": _avg("required_sections_rendered"),
@@ -720,6 +851,7 @@ def run_rendering_benchmark(
         },
         "pcs_bench": {
             "consumer": "pcs-bench",
+            "ingest_file": PCS_BENCH_INGEST_FILENAME,
             "metric_keys": [
                 "required_sections_rendered",
                 "artifact_rows_rendered",
@@ -806,7 +938,10 @@ def run_rendering_benchmark(
 
 def check_rendering_regression(repo_root: Path, report: dict[str, Any]) -> tuple[bool, str]:
     """Compare aggregate metrics to benchmarks/rendering/baseline_thresholds.json."""
-    thresholds_path = repo_root / "benchmarks" / "rendering" / "baseline_thresholds.json"
+    cases_path = Path(str(report.get("cases_path") or ""))
+    thresholds_path = cases_path / "baseline_thresholds.json"
+    if not thresholds_path.is_file():
+        thresholds_path = repo_root / "benchmarks" / "rendering" / "baseline_thresholds.json"
     if not thresholds_path.is_file():
         return True, ""
     thresholds = json.loads(thresholds_path.read_text(encoding="utf-8"))
@@ -838,22 +973,17 @@ def check_rendering_regression(repo_root: Path, report: dict[str, Any]) -> tuple
 
 def export_pcs_bench_payload(report: dict[str, Any]) -> dict[str, Any]:
     """Legacy flattened payload; prefer pcs_bench_ingest.v0.json in the output directory."""
-    metrics = dict(report.get("metrics") or {})
-    artifacts = {
-        name: path
-        for name, path in (report.get("v0_reports") or {}).items()
-        if name in V0_REPORT_FILENAMES
-    }
     return {
-        "benchmark": report.get("benchmark") or "pcs_rendering",
-        "schema_version": "PcsBenchIngest.v0",
+        "schema_version": "v0",
+        "producer_id": "scientific-memory",
+        "suite_id": report.get("suite_id") or suite_id_for_cases_path(str(report.get("cases_path") or "")),
         "passed": report.get("passed"),
         "case_count": report.get("case_count"),
         "generated_at": report.get("generated_at"),
-        "metrics": metrics,
+        "metrics": dict(report.get("metrics") or {}),
         "failures": list(report.get("failures") or []),
         "ingest_manifest": PCS_BENCH_INGEST_FILENAME,
-        "artifacts": artifacts,
+        "artifacts": dict(report.get("v0_reports") or {}),
     }
 
 

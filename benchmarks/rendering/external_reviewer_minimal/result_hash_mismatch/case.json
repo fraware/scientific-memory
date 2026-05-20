@@ -1,0 +1,9 @@
+{
+  "case_id": "result_hash_mismatch",
+  "fixture_dir": "tests/pcs/fixtures/computation-release",
+  "manifest_filename": "release_manifest.v0.json",
+  "claim_id": "claim-computation-release-v0.1",
+  "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+  "post_import": "patch_result_hash_mismatch",
+  "failure_mode": true
+}

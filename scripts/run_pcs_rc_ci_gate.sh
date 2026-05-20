@@ -69,6 +69,13 @@ python "$_root/scripts/verify_tool_use_release_fixture.py"
 echo "==> PCS: pytest (full tests/pcs suite)"
 python -m pytest "$_root/tests/pcs" -q
 
+echo "==> PCS: rendering benchmark (external reviewer, pcs-bench ingest)"
+python -m sm_pipeline.benchmark.pcs_rendering \
+  --cases "$_root/benchmarks/rendering/external_reviewer_minimal" \
+  --out "$_root/benchmark_runs/pcs_rc_ci_rendering" \
+  --no-check-regression
+python "$_root/scripts/validate_pcs_benchmark_output.py" "$_root/benchmark_runs/pcs_rc_ci_rendering"
+
 if command -v just >/dev/null 2>&1; then
   echo "==> PCS: just pcs-render-claim"
   just -f "$_root/JUSTFILE" pcs-render-claim claim-pcs-qc-release-v0.1

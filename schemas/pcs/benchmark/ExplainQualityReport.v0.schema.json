@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/ExplainQualityReport.v0.schema.json",
+  "title": "ExplainQualityReport.v0",
+  "description": "pcs-core ExplainQualityReport.v0 mirror for Scientific Memory rendering benchmarks.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "report_id",
+    "suite_id",
+    "case_id",
+    "producer_id",
+    "required_sections",
+    "sections",
+    "sections_present_count",
+    "sections_required_count",
+    "quality_score",
+    "gaps",
+    "source_repo",
+    "source_commit",
+    "signature_or_digest"
+  ],
+  "properties": {
+    "schema_version": { "const": "v0" },
+    "report_id": { "type": "string" },
+    "suite_id": { "type": "string" },
+    "case_id": { "type": "string" },
+    "claim_id": { "type": "string" },
+    "producer_id": { "const": "scientific-memory" },
+    "required_sections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "provenance",
+          "hashes",
+          "handoffs",
+          "verification",
+          "formal_checks",
+          "limitations",
+          "lineage",
+          "repair_hints"
+        ]
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["explain_quality_section_id", "rendered"],
+        "properties": {
+          "explain_quality_section_id": { "type": "string" },
+          "rendered": { "type": "boolean" },
+          "interpretability_sections": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "sections_present_count": { "type": "integer", "minimum": 0 },
+    "sections_required_count": { "type": "integer", "minimum": 0 },
+    "quality_score": { "type": "number", "minimum": 0, "maximum": 1 },
+    "gaps": { "type": "array", "items": { "type": "string" } },
+    "source_repo": { "type": "string" },
+    "source_commit": { "type": "string" },
+    "signature_or_digest": { "type": "string", "pattern": "^sha256:" }
+  },
+  "additionalProperties": true
+}

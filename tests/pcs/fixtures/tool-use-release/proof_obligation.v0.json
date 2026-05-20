@@ -3,7 +3,7 @@
   "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
   "release_id": "release-pcs-v0.1-tool-use-safety",
   "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
-  "generated_at": "2026-05-20T10:41:30Z",
+  "generated_at": "2026-05-20T12:06:22Z",
   "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
   "obligations": [
     {
@@ -61,6 +61,6 @@
     }
   ],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "aafb8b12eb62b540e448aac9a34c79e1dbccfe99",
-  "signature_or_digest": "sha256:89d80336ba4e811fd3cc0e8995326116b4372b1dfad8adcedab35aec5bc4cd66"
+  "source_commit": "874d884ef0de77e1f9335a9622d07fb6f3471089",
+  "signature_or_digest": "sha256:5a68f97fa31e7446fbbfe4a0c75f6d79910823e012c15a82ebe3fba45a57fc2c"
 }

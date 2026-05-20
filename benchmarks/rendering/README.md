@@ -58,7 +58,10 @@ Validate a completed run:
 
 ```bash
 python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
+python scripts/package_pcs_bench_bundle.py benchmark_runs/pcs_rendering
 ```
+
+pcs-bench contract: [docs/pcs-bench-ingest.md](../../docs/pcs-bench-ingest.md). Suite registry: [benchmarks/pcs_bench/suite_registry.v0.json](../pcs_bench/suite_registry.v0.json).
 
 Regression floors: `baseline_thresholds.json` (enforced by default via `--check-regression`).
 

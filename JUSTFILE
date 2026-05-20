@@ -123,8 +123,20 @@ pcs-benchmark-rendering CASES="benchmarks/rendering/labtrust_qc_release" OUT="be
 pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out {{OUT}}
 
-validate-pcs-benchmark-output OUT="benchmark_runs/pcs_rendering":
-	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py {{OUT}}
+# Pass the output directory as the first argument (not ``OUT=path`` — that is shell syntax).
+validate-pcs-benchmark-output out_dir="benchmark_runs/pcs_rendering":
+	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out {{out_dir}}
+
+pcs-benchmark-external-reviewer out_dir="benchmark_runs/external_reviewer_minimal":
+	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering/external_reviewer_minimal --out {{out_dir}}
+
+validate-pcs-benchmark-output-external-reviewer:
+	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out benchmark_runs/external_reviewer_minimal
+
+validate-external-reviewer-benchmark: pcs-benchmark-external-reviewer validate-pcs-benchmark-output-external-reviewer
+
+package-pcs-bench-bundle SRC="benchmark_runs/pcs_rendering" DEST="":
+	uv run --project pipeline python scripts/package_pcs_bench_bundle.py {{SRC}} --dest {{DEST}}
 
 # Recipe dependencies avoid nested `just` subprocesses (fixes PATH on Windows).
 check: fmt lint validate test build

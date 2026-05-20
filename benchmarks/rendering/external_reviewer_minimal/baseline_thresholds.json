@@ -1,0 +1,9 @@
+{
+  "description": "External reviewer minimal rendering packet (5 cases).",
+  "min_case_count": 5,
+  "metrics": {
+    "required_sections_rendered": 1.0,
+    "query_responses_correct": 1.0,
+    "failure_evidence_rendered": 1.0
+  }
+}

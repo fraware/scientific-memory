@@ -10,7 +10,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
 
-from sm_pipeline.benchmark.report_builder import validate_benchmark_output_dir
+from sm_pipeline.benchmark.report_builder import normalize_benchmark_out_dir, validate_benchmark_output_dir
 
 
 def main() -> int:
@@ -22,12 +22,20 @@ def main() -> int:
         help="Benchmark output directory (default: benchmark_runs/pcs_rendering)",
     )
     parser.add_argument(
+        "--out",
+        "-o",
+        dest="out_dir_flag",
+        default="",
+        help="Benchmark output directory (preferred over positional)",
+    )
+    parser.add_argument(
         "--repo-root",
         default=str(REPO_ROOT),
         help="Scientific Memory repo root",
     )
     args = parser.parse_args()
-    out_dir = Path(args.out_dir)
+    raw = args.out_dir_flag or args.out_dir or "benchmark_runs/pcs_rendering"
+    out_dir = Path(normalize_benchmark_out_dir(raw))
     if not out_dir.is_absolute():
         out_dir = REPO_ROOT / out_dir
     repo_root = Path(args.repo_root).resolve()

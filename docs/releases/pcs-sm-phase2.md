@@ -195,7 +195,9 @@ just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
 python scripts/bootstrap_pcs_rendering_benchmarks.py   # regenerate expected_*.json after fixture changes
 ```
 
-Cases: `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, `formal_trust_kernel`, plus `failed/*` (rejected certificate, stale, failed Lean/PF, missing registry metadata, result hash mismatch). Output is consumable by **pcs-bench** via `pcs_bench_ingest.v0.json` and four companion v0 reports (`benchmark_run`, rendering/query/failed coverage). Validate with `python scripts/validate_pcs_benchmark_output.py`.
+Cases: `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, `formal_trust_kernel`, plus `failed/*` (rejected certificate, stale, failed Lean/PF, missing registry metadata, result hash mismatch). External reviewer packet: `benchmarks/rendering/external_reviewer_minimal/` (5 cases).
+
+**pcs-bench:** canonical file `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`). Suite registry: `benchmarks/pcs_bench/suite_registry.v0.json`. See [pcs-bench-ingest.md](../pcs-bench-ingest.md). Validate: `just validate-pcs-benchmark-output`. Package: `python scripts/package_pcs_bench_bundle.py`.
 
 ## CI gate
 

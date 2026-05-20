@@ -1,0 +1,55 @@
+{
+  "schema_version": "v0",
+  "registry_id": "scientific-memory-pcs-bench",
+  "producer_id": "scientific-memory",
+  "description": "Scientific Memory PCS rendering benchmark suites consumable by pcs-bench.",
+  "suites": [
+    {
+      "suite_id": "scientific-memory-rendering-v0",
+      "cases_path": "benchmarks/rendering",
+      "ingest_artifact": "pcs_bench_ingest.v0.json",
+      "description": "Full PCS import/render/query/failure-evidence benchmark (10 cases).",
+      "min_case_count": 10,
+      "baseline_thresholds": "benchmarks/rendering/baseline_thresholds.json"
+    },
+    {
+      "suite_id": "scientific-memory-external-reviewer-v0",
+      "cases_path": "benchmarks/rendering/external_reviewer_minimal",
+      "ingest_artifact": "pcs_bench_ingest.v0.json",
+      "description": "Minimal external reviewer packet (LabTrust, failed Lean, stale, hash mismatch, compare).",
+      "min_case_count": 5,
+      "baseline_thresholds": "benchmarks/rendering/external_reviewer_minimal/baseline_thresholds.json"
+    }
+  ],
+  "ingest_contract": {
+    "schema_version": "v0",
+    "canonical_file": "pcs_bench_ingest.v0.json",
+    "required_artifacts": [
+      "pcs_bench_ingest.v0.json",
+      "benchmark_run.v0.json",
+      "rendering_coverage_report.v0.json",
+      "explain_quality_report.v0.json",
+      "query_coverage_report.v0.json",
+      "failed_release_rendering_report.v0.json"
+    ],
+    "explain_quality_section_ids": [
+      "provenance",
+      "hashes",
+      "handoffs",
+      "verification",
+      "formal_checks",
+      "limitations",
+      "lineage",
+      "repair_hints"
+    ],
+    "failure_kinds": [
+      "import_failed",
+      "render_failed",
+      "query_failed",
+      "staleness_failed",
+      "comparison_failed"
+    ]
+  },
+  "source_repo": "https://github.com/fraware/scientific-memory",
+  "source_commit": "registry-v0"
+}

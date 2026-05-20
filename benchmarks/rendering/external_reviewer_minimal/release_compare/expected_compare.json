@@ -1,0 +1,13 @@
+{
+  "old_release_id": "release-pcs-v0.1-labtrust-qc",
+  "new_release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+  "changed_artifacts": true,
+  "changed_hashes": true,
+  "changed_source_commits": true,
+  "changed_certificates": true,
+  "changed_workflow_profile": true,
+  "changed_registry_checks": true,
+  "changed_formal_checks": true,
+  "staleness_impact": true,
+  "recommended_action": true
+}

@@ -1,0 +1,41 @@
+{
+  "required_sections": [
+    "Claim",
+    "Workflow Profile",
+    "Runtime Evidence",
+    "Certificate or Witness",
+    "Verification Result",
+    "Formal Trust Kernel",
+    "Release Manifest",
+    "Release Chain Validation",
+    "Artifact Registry",
+    "Handoff Manifests",
+    "Artifact Dependency Graph",
+    "Lineage",
+    "Staleness",
+    "Artifact Hashes",
+    "Source Repositories",
+    "Reproduce / Verify",
+    "Limitations"
+  ],
+  "present_sections": [
+    "Claim",
+    "Workflow Profile",
+    "Assumptions",
+    "Runtime Evidence",
+    "Certificate or Witness",
+    "Verification Result",
+    "Formal Trust Kernel",
+    "Release Manifest",
+    "Release Chain Validation",
+    "Artifact Registry",
+    "Handoff Manifests",
+    "Artifact Dependency Graph",
+    "Lineage",
+    "Staleness",
+    "Artifact Hashes",
+    "Source Repositories",
+    "Reproduce / Verify",
+    "Limitations"
+  ]
+}

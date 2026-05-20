@@ -103,6 +103,7 @@
         "case_kind",
         "input_artifacts",
         "expected_status",
+        "expected_system_outcome",
         "expected_failure_code",
         "expected_responsible_component",
         "expected_repair_hint_kind",
@@ -193,6 +194,7 @@
         "benchmark_suite_id",
         "runs",
         "metrics",
+        "metric_summaries",
         "summary",
         "coverage",
         "failures",
@@ -943,6 +945,42 @@
         }
       ]
     },
+    "MetricSummary.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "MetricSummary.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "metric_id",
+        "score",
+        "applicability",
+        "numerator",
+        "denominator",
+        "reason",
+        "details",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/MetricSummary.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
     "ProfileCoverageReport.v0": {
       "allowed_runtime_producers": [
         "pcs-core",
@@ -1656,5 +1694,5 @@
   "registry_id": "pcs-artifact-registry-v0.1",
   "registry_version": "0.1.0",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:43812c27f004f438c5f88f1e018df102e0ed442a2df9b4b53591decbd1209701"
+  "signature_or_digest": "sha256:0e1d417d6995a55fd92921db680d195dcd888864637fa2b286664499954a5d11"
 }

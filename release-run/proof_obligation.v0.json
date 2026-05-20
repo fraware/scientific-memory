@@ -3,7 +3,7 @@
   "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_candidate": "pcs-v0.1.0-rc1",
-  "generated_at": "2026-05-20T10:41:03Z",
+  "generated_at": "2026-05-20T12:06:18Z",
   "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
   "obligations": [
     {
@@ -61,6 +61,6 @@
     }
   ],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "aafb8b12eb62b540e448aac9a34c79e1dbccfe99",
-  "signature_or_digest": "sha256:dcf7a2aff7ca885cbfa77e7a30d391d900155825165acb266e1a66659428d2e9"
+  "source_commit": "874d884ef0de77e1f9335a9622d07fb6f3471089",
+  "signature_or_digest": "sha256:e7f4562e358d0277410d3610fa475757f221bd5860faaa6cddf057ef8bad232c"
 }

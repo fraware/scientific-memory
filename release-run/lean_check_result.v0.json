@@ -5,7 +5,7 @@
   "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
   "status": "ProofChecked",
   "lean_version": "leanprover/lean4:v4.24.0",
-  "checked_at": "2026-05-20T10:41:03Z",
+  "checked_at": "2026-05-20T12:06:18Z",
   "checker": "pcs-core",
   "checker_version": "0.1.0",
   "results": [
@@ -18,7 +18,7 @@
         "runtime_receipt.json"
       ],
       "result": "passed",
-      "checked_at": "2026-05-20T10:41:03Z",
+      "checked_at": "2026-05-20T12:06:18Z",
       "lean_version": "leanprover/lean4:v4.24.0"
     },
     {
@@ -30,7 +30,7 @@
         "science_claim_bundle.certified.json"
       ],
       "result": "passed",
-      "checked_at": "2026-05-20T10:41:03Z",
+      "checked_at": "2026-05-20T12:06:18Z",
       "lean_version": "leanprover/lean4:v4.24.0"
     },
     {
@@ -42,7 +42,7 @@
         "science_claim_bundle.certified.json"
       ],
       "result": "passed",
-      "checked_at": "2026-05-20T10:41:03Z",
+      "checked_at": "2026-05-20T12:06:18Z",
       "lean_version": "leanprover/lean4:v4.24.0"
     },
     {
@@ -53,7 +53,7 @@
         "trace_certificate.json"
       ],
       "result": "passed",
-      "checked_at": "2026-05-20T10:41:03Z",
+      "checked_at": "2026-05-20T12:06:18Z",
       "lean_version": "leanprover/lean4:v4.24.0"
     },
     {
@@ -64,12 +64,12 @@
         "trace_certificate.json"
       ],
       "result": "passed",
-      "checked_at": "2026-05-20T10:41:03Z",
+      "checked_at": "2026-05-20T12:06:18Z",
       "lean_version": "leanprover/lean4:v4.24.0"
     }
   ],
   "pf_explain": null,
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "aafb8b12eb62b540e448aac9a34c79e1dbccfe99",
-  "signature_or_digest": "sha256:918e2344709318e2d1ab902ca8f58e5b9a1f297f1da2c3c37b5d896992b27fab"
+  "source_commit": "874d884ef0de77e1f9335a9622d07fb6f3471089",
+  "signature_or_digest": "sha256:b89778662d43012b65660925c4e92136c6efae738691fbfd7934f2b57f1ae36e"
 }

@@ -1,0 +1,73 @@
+{
+  "queries": [
+    {
+      "id": "list_claims",
+      "type": "list_claims",
+      "params": {},
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "show_claim",
+      "type": "show_claim",
+      "params": {
+        "claim_id": "claim-pcs-qc-release-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_release",
+      "type": "by_release",
+      "params": {
+        "release_id": "release-pcs-v0.1-labtrust-qc"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_workflow",
+      "type": "by_workflow",
+      "params": {
+        "workflow_id": "labtrust.qc_release_v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_certificate",
+      "type": "by_certificate",
+      "params": {
+        "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "by_source_commit",
+      "type": "by_source_commit",
+      "params": {
+        "commit": "8369892d8872bc08ef5acb6cf503f38665c36733"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "compare_releases",
+      "type": "compare_releases",
+      "params": {
+        "old_release_id": "release-pcs-v0.1-labtrust-qc",
+        "new_release_id": "release-pcs-v0.1-scientific-computation-reproducibility"
+      },
+      "expected_claim_ids": [
+        "compare_ok"
+      ]
+    }
+  ]
+}
