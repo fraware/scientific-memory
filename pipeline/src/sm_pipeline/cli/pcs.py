@@ -430,7 +430,7 @@ def pcs_benchmark_rendering(
     out: str = typer.Option(
         "",
         "--out",
-        help="Output directory for rendering_benchmark_report.json",
+        help="Output directory for benchmark_run.v0.json and companion v0 reports",
     ),
     in_place: bool = typer.Option(
         False,
@@ -466,12 +466,14 @@ def pcs_benchmark_rendering(
         out_dir=out_dir,
         isolated=not in_place,
     )
+    report_path = report.get("report_path") or out_dir / "benchmark_run.v0.json"
+    ingest_path = report.get("pcs_bench_ingest") or out_dir / "pcs_bench_ingest.v0.json"
     bench_path = out_dir / "pcs_bench_payload.json"
-    bench_path.write_text(
-        json.dumps(export_pcs_bench_payload(report), indent=2) + "\n",
-        encoding="utf-8",
-    )
-    report_path = report.get("report_path") or out_dir / "rendering_benchmark_report.json"
+    if not bench_path.is_file():
+        bench_path.write_text(
+            json.dumps(export_pcs_bench_payload(report), indent=2) + "\n",
+            encoding="utf-8",
+        )
     if check_regression:
         ok, msg = check_rendering_regression(repo, report)
         if not ok and msg:
@@ -479,7 +481,8 @@ def pcs_benchmark_rendering(
             raise typer.Exit(code=1)
     if report.get("passed"):
         console.print(f"[green]PCS rendering benchmark passed[/green] -> {report_path}")
-        console.print(f"[dim]pcs-bench payload[/dim] -> {bench_path}")
+        console.print(f"[dim]pcs-bench ingest[/dim] -> {ingest_path}")
+        console.print(f"[dim]pcs-bench payload (legacy)[/dim] -> {bench_path}")
     else:
         console.print(f"[red]PCS rendering benchmark failed[/red] -> {report_path}")
         for msg in report.get("failures") or []:

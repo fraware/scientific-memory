@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/FailedReleaseRenderingReport.v0.schema.json",
+  "title": "FailedReleaseRenderingReport.v0",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "passed", "cases"],
+  "properties": {
+    "schema_version": { "const": "FailedReleaseRenderingReport.v0" },
+    "generated_at": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["case_id", "passed", "failure_evidence"],
+        "properties": {
+          "case_id": { "type": "string" },
+          "claim_id": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "failure_evidence": { "type": "object" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

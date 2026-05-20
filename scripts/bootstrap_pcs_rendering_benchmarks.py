@@ -12,7 +12,11 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
 
-from sm_pipeline.benchmark.pcs_sections import REQUIRED_INTERPRETABILITY_SECTIONS, evaluate_section_coverage
+from sm_pipeline.benchmark.pcs_sections import (
+    BENCHMARK_RENDERING_SECTIONS,
+    REQUIRED_INTERPRETABILITY_SECTIONS,
+    evaluate_section_coverage,
+)
 from sm_pipeline.benchmark.rendering import _copy_pcs_schemas, _resolve_manifest_path
 from sm_pipeline.pcs_import.claim_query import refresh_all_stale_flags
 from sm_pipeline.pcs_import.release_compare import compare_releases
@@ -66,6 +70,19 @@ CASE_DEFS: list[dict] = [
         "result_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "lean_theorem": "PCS.SignedBundleAdmissible",
     },
+    {
+        "case_id": "formal_trust_kernel",
+        "dir": "formal_trust_kernel",
+        "fixture_dir": "tests/pcs/fixtures/labtrust-release",
+        "manifest_filename": "ReleaseManifest.v0.json",
+        "claim_id": "claim-pcs-qc-release-v0.1",
+        "release_id": "release-pcs-v0.1-labtrust-qc",
+        "workflow_id": "labtrust.qc_release_v0.1",
+        "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
+        "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+        "lean_theorem": "PCS.CertificateMatchesRuntime",
+        "require_formal_trust_kernel": True,
+    },
 ]
 
 FAILED_CASE_DEFS: list[dict] = [
@@ -113,6 +130,15 @@ FAILED_CASE_DEFS: list[dict] = [
         "release_id": "release-pcs-v0.1-labtrust-qc",
         "post_import": "deferred_registry_only",
     },
+    {
+        "case_id": "result_hash_mismatch",
+        "dir": "failed/result_hash_mismatch",
+        "fixture_dir": "tests/pcs/fixtures/computation-release",
+        "manifest_filename": "release_manifest.v0.json",
+        "claim_id": "claim-computation-release-v0.1",
+        "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
+        "post_import": "patch_result_hash_mismatch",
+    },
 ]
 
 
@@ -132,6 +158,33 @@ def _apply_post_import(root: Path, release_dir: Path, case_def: dict) -> None:
             staleness = read_model.get("staleness")
             if isinstance(staleness, dict):
                 staleness["responsible_component"] = "Scientific Memory"
+            read_model_path.write_text(json.dumps(read_model, indent=2) + "\n", encoding="utf-8")
+        return
+
+    if post == "patch_result_hash_mismatch":
+        read_model_path = claim_dir / "read_model.json"
+        if read_model_path.is_file():
+            read_model = json.loads(read_model_path.read_text(encoding="utf-8"))
+            witness = read_model.get("computation_witness")
+            if not isinstance(witness, dict):
+                witness = {}
+                read_model["computation_witness"] = witness
+            payload = witness.get("payload") if isinstance(witness.get("payload"), dict) else witness
+            if not isinstance(payload, dict):
+                payload = {}
+                witness["payload"] = payload
+            payload["status"] = "Rejected"
+            payload["violations"] = [
+                {
+                    "violation_id": "viol-result-hash-mismatch",
+                    "violation_type": "result_hash_mismatch",
+                    "explanation": "Result artifact digest does not match witness result_hashes.",
+                    "expected_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "actual_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                    "artifact_path": "result_artifact.json",
+                    "responsible_component": "scientific-computation-runner",
+                },
+            ]
             read_model_path.write_text(json.dumps(read_model, indent=2) + "\n", encoding="utf-8")
         return
 
@@ -204,12 +257,27 @@ def _queries_for(case_def: dict, claim_id: str) -> dict:
     queries: list[dict] = [
         {"id": "list_claims", "type": "list_claims", "params": {}, "expected_claim_ids": [claim_id]},
         {
+            "id": "show_claim",
+            "type": "show_claim",
+            "params": {"claim_id": claim_id},
+            "expected_claim_ids": [claim_id],
+        },
+        {
             "id": "by_release",
             "type": "by_release",
             "params": {"release_id": case_def["release_id"]},
             "expected_claim_ids": [claim_id],
         },
     ]
+    if case_def.get("post_import") == "mark_stale":
+        queries.append(
+            {
+                "id": "check_stale",
+                "type": "check_stale",
+                "params": {"claim_id": claim_id},
+                "expected_claim_ids": [claim_id],
+            },
+        )
     if case_def.get("workflow_id"):
         queries.append(
             {
@@ -264,6 +332,19 @@ def _queries_for(case_def: dict, claim_id: str) -> dict:
                 "expected_claim_ids": [claim_id],
             },
         )
+    if case_def.get("compare"):
+        cmp = case_def["compare"]
+        queries.append(
+            {
+                "id": "compare_releases",
+                "type": "compare_releases",
+                "params": {
+                    "old_release_id": cmp["old_release_id"],
+                    "new_release_id": cmp["new_release_id"],
+                },
+                "expected_claim_ids": ["compare_ok"],
+            },
+        )
     return {"queries": queries}
 
 
@@ -284,6 +365,8 @@ def _write_case(case_def: dict, *, failed: bool = False) -> None:
         config["compare"] = case_def["compare"]
     if case_def.get("post_import"):
         config["post_import"] = case_def["post_import"]
+    if case_def.get("require_formal_trust_kernel"):
+        config["require_formal_trust_kernel"] = True
     if failed:
         config["failure_mode"] = True
     (case_dir / "case.json").write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
@@ -299,7 +382,7 @@ def _write_case(case_def: dict, *, failed: bool = False) -> None:
     (case_dir / "expected_sections.json").write_text(
         json.dumps(
             {
-                "required_sections": list(REQUIRED_INTERPRETABILITY_SECTIONS),
+                "required_sections": list(BENCHMARK_RENDERING_SECTIONS),
                 "present_sections": section["present_sections"],
             },
             indent=2,
@@ -377,8 +460,10 @@ def _write_case(case_def: dict, *, failed: bool = False) -> None:
             "failed_lean_check",
             "failed_pf_verification",
             "stale_release",
+            "result_hash_mismatch",
         ):
             required_checks.insert(1, "responsible_component_present")
+        required_checks.append("what_was_still_imported")
         (case_dir / "expected_failure.json").write_text(
             json.dumps({"required_checks": required_checks}, indent=2) + "\n",
             encoding="utf-8",

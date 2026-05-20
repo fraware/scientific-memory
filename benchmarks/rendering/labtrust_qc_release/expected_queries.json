@@ -9,6 +9,16 @@
       ]
     },
     {
+      "id": "show_claim",
+      "type": "show_claim",
+      "params": {
+        "claim_id": "claim-pcs-qc-release-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
       "id": "by_release",
       "type": "by_release",
       "params": {
@@ -56,6 +66,17 @@
       },
       "expected_claim_ids": [
         "claim-pcs-qc-release-v0.1"
+      ]
+    },
+    {
+      "id": "compare_releases",
+      "type": "compare_releases",
+      "params": {
+        "old_release_id": "release-pcs-v0.1-labtrust-qc",
+        "new_release_id": "release-pcs-v0.1-scientific-computation-reproducibility"
+      },
+      "expected_claim_ids": [
+        "compare_ok"
       ]
     }
   ]

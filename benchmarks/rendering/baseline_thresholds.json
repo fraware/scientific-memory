@@ -1,8 +1,10 @@
 {
   "description": "Minimum aggregate metrics for PCS rendering benchmarks (Scientific Memory evidence layer).",
+  "min_case_count": 10,
   "metrics": {
     "required_sections_rendered": 1.0,
     "registry_metadata_rendered": 1.0,
+    "formal_checks_rendered": 1.0,
     "query_responses_correct": 1.0,
     "release_comparison_correct": 1.0,
     "failure_evidence_rendered": 1.0,

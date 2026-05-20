@@ -2,7 +2,6 @@
   "required_sections": [
     "Claim",
     "Workflow Profile",
-    "Assumptions",
     "Runtime Evidence",
     "Certificate or Witness",
     "Verification Result",

@@ -124,14 +124,31 @@ Each registry row must expose (when available from `ReleaseManifest.v0` + `Artif
 
 ## Rendering benchmarks (evidence-layer gate)
 
-Scientific Memory measures import/render/query quality under `benchmarks/rendering/`:
+Scientific Memory measures import/render/query quality under `benchmarks/rendering/`. The benchmark contract uses **17 interpretability sections** (`BENCHMARK_RENDERING_SECTIONS` in `sm_pipeline.benchmark.pcs_sections`); the portal adds **Assumptions** for full human-facing pages.
 
 ```bash
 just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
-python -m sm_pipeline.benchmark.rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
+python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
+python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
 ```
 
-Reports: `rendering_benchmark_report.json` (schema `PcsRenderingBenchmarkReport.v0`) and `pcs_bench_payload.json` for **pcs-bench**. Thresholds: `benchmarks/rendering/baseline_thresholds.json`. The PCS RC gate runs the full rendering benchmark suite.
+**pcs-bench ingest** (validated under `schemas/pcs/benchmark/`):
+
+| Artifact | Schema |
+|----------|--------|
+| `benchmark_run.v0.json` | `BenchmarkRun.v0` |
+| `rendering_coverage_report.v0.json` | `RenderingCoverageReport.v0` |
+| `query_coverage_report.v0.json` | `QueryCoverageReport.v0` |
+| `failed_release_rendering_report.v0.json` | `FailedReleaseRenderingReport.v0` |
+| `pcs_bench_ingest.v0.json` | `PcsBenchIngest.v0` (manifest with artifact paths) |
+
+Legacy alias: `pcs_bench_payload.json`. Thresholds: `benchmarks/rendering/baseline_thresholds.json` (10 cases). The PCS RC gate runs the full suite.
+
+**Success cases:** `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, `formal_trust_kernel`.
+
+**Failed cases:** `rejected_certificate`, `stale_release`, `failed_lean_check`, `failed_pf_verification`, `missing_registry_metadata`, `result_hash_mismatch`.
+
+**Query operations benchmarked:** `list_claims`, `show_claim`, `check_stale`, `by_certificate`, `by_source_commit`, `by_release`, `by_workflow`, `by_lean_theorem`, `by_dataset`, `by_result_hash`, `compare_releases`.
 
 For computation releases, `changed_computation` may include: `dataset_changes`, `environment_changes`, `code_commit_changes`, `command_changes`, `result_hash_changes`, `witness_status_changes` (derived from indexed `lineage.computation` fields, not bundle rescans).
 

@@ -114,7 +114,7 @@
       "producer": "pcs-core",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
-      "sha256": "sha256:4870419fa473a749ac0e766d0a1c1cf643cfd4cbf101bb3668422d1caa31aaa9"
+      "sha256": "sha256:66bf1c52e9e8553829dbed37d96a76f84bfe21dbf33fbb0ac6e7871986916fd6"
     },
     "lean_check_result.v0.json": {
       "artifact_type": "LeanCheckResult.v0",
@@ -122,9 +122,9 @@
       "producer": "pcs-core",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
-      "sha256": "sha256:0e5805789c47221350635e62c61b9e071f482dcd0bed0e9a60791eab02b4ba4a"
+      "sha256": "sha256:529fdb4dc7ce5de87b2e87a69601bedb28ede2499a1b1234e5c241cebbbb6ab8"
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:10a74d122fdf880446c16d1a1324e36b94813ed46131ed754c9bf735f0d29765"
+  "signature_or_digest": "sha256:f81c65b4814e7245db7459dcdc39dca8eff02108bd13a96a6fbbe8d2d1972cfe"
 }

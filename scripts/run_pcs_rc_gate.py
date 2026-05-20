@@ -202,7 +202,7 @@ def main() -> int:
         [
             sys.executable,
             "-m",
-            "sm_pipeline.benchmark.rendering",
+            "sm_pipeline.benchmark.pcs_rendering",
             "--cases",
             "benchmarks/rendering",
             "--out",
@@ -212,10 +212,19 @@ def main() -> int:
         ],
         env=env,
     )
-    gate_report = REPO_ROOT / "benchmark_runs/pcs_rc_gate_rendering/rendering_benchmark_report.json"
-    if not gate_report.is_file():
-        print("missing rendering benchmark report", file=sys.stderr)
-        return 1
+    gate_out = REPO_ROOT / "benchmark_runs/pcs_rc_gate_rendering"
+    gate_report = gate_out / "benchmark_run.v0.json"
+    ingest_manifest = gate_out / "pcs_bench_ingest.v0.json"
+    for required in (
+        "benchmark_run.v0.json",
+        "rendering_coverage_report.v0.json",
+        "query_coverage_report.v0.json",
+        "failed_release_rendering_report.v0.json",
+        "pcs_bench_ingest.v0.json",
+    ):
+        if not (gate_out / required).is_file():
+            print(f"missing rendering benchmark artifact: {required}", file=sys.stderr)
+            return 1
     gate_payload = json.loads(gate_report.read_text(encoding="utf-8"))
     if not gate_payload.get("passed"):
         for msg in gate_payload.get("failures") or []:

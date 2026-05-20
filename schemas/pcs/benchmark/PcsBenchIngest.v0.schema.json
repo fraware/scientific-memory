@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/PcsBenchIngest.v0.schema.json",
+  "title": "PcsBenchIngest.v0",
+  "description": "Manifest for pcs-bench to ingest Scientific Memory PCS rendering benchmark outputs.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "benchmark_id",
+    "consumer",
+    "passed",
+    "generated_at",
+    "ingest_files",
+    "artifacts"
+  ],
+  "properties": {
+    "schema_version": { "const": "PcsBenchIngest.v0" },
+    "benchmark_id": { "const": "pcs_rendering" },
+    "consumer": { "const": "pcs-bench" },
+    "passed": { "type": "boolean" },
+    "generated_at": { "type": "string" },
+    "case_count": { "type": "integer", "minimum": 0 },
+    "metrics": { "type": "object" },
+    "failures": { "type": "array", "items": { "type": "string" } },
+    "ingest_files": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 4
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "metric_keys": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

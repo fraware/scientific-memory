@@ -4,7 +4,28 @@ from __future__ import annotations
 
 from typing import Any
 
-# Human-facing section labels required for interpretability (Step 3).
+# Benchmark contract (pcs-bench / rendering suites) — evidence-interface sections.
+BENCHMARK_RENDERING_SECTIONS: tuple[str, ...] = (
+    "Claim",
+    "Workflow Profile",
+    "Runtime Evidence",
+    "Certificate or Witness",
+    "Verification Result",
+    "Formal Trust Kernel",
+    "Release Manifest",
+    "Release Chain Validation",
+    "Artifact Registry",
+    "Handoff Manifests",
+    "Artifact Dependency Graph",
+    "Lineage",
+    "Staleness",
+    "Artifact Hashes",
+    "Source Repositories",
+    "Reproduce / Verify",
+    "Limitations",
+)
+
+# Portal interpretability (includes Assumptions for full human-facing pages).
 REQUIRED_INTERPRETABILITY_SECTIONS: tuple[str, ...] = (
     "Claim",
     "Workflow Profile",

@@ -1,7 +1,7 @@
 {
   "artifact_hashes": {
-    "lean_check_result.v0.json": "sha256:529fdb4dc7ce5de87b2e87a69601bedb28ede2499a1b1234e5c241cebbbb6ab8",
-    "proof_obligation.v0.json": "sha256:66bf1c52e9e8553829dbed37d96a76f84bfe21dbf33fbb0ac6e7871986916fd6",
+    "lean_check_result.v0.json": "sha256:4bddab6d007479a015580a8ed357b2b9f18cbb9dbb3b941efb39db2a9105b0b8",
+    "proof_obligation.v0.json": "sha256:939049f527a8b412c047ef2bd883b2db40b40cf1ae5e886e40ce5d3897aa8e46",
     "runtime_receipt.json": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
     "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
     "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
@@ -27,7 +27,7 @@
     "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc"
   },
   "release_id": "release-pcs-v0.1-labtrust-qc",
-  "release_manifest_hash": "sha256:f81c65b4814e7245db7459dcdc39dca8eff02108bd13a96a6fbbe8d2d1972cfe",
+  "release_manifest_hash": "sha256:85f673a614de08a0bad841f31daf9caf4a1ee1a92c5ffca281159bf5fc96c24a",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"

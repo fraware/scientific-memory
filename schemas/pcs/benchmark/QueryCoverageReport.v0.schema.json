@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/QueryCoverageReport.v0.schema.json",
+  "title": "QueryCoverageReport.v0",
+  "type": "object",
+  "required": ["schema_version", "generated_at", "passed", "cases"],
+  "properties": {
+    "schema_version": { "const": "QueryCoverageReport.v0" },
+    "generated_at": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["case_id", "passed", "queries"],
+        "properties": {
+          "case_id": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "queries": { "type": "array" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

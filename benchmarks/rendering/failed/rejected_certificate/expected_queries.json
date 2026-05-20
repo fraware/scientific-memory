@@ -9,6 +9,16 @@
       ]
     },
     {
+      "id": "show_claim",
+      "type": "show_claim",
+      "params": {
+        "claim_id": "claim-computation-rejected-v0.1"
+      },
+      "expected_claim_ids": [
+        "claim-computation-rejected-v0.1"
+      ]
+    },
+    {
       "id": "by_release",
       "type": "by_release",
       "params": {

@@ -21,6 +21,7 @@ Each case directory contains:
 - `labtrust_qc_release/`
 - `tool_use_safety/`
 - `computation_reproducibility/`
+- `formal_trust_kernel/` — LabTrust release with formal trust kernel emphasis
 
 ### Failed-release cases
 
@@ -31,6 +32,7 @@ Under `failed/`:
 - `failed_lean_check/` — formal kernel failed obligation (read-model evidence)
 - `failed_pf_verification/` — PF explain on failed formal check
 - `missing_registry_metadata/` — deferred registry checks in read model
+- `result_hash_mismatch/` — computation witness result hash mismatch
 
 ## Run
 
@@ -39,14 +41,24 @@ just pcs-benchmark-rendering CASES=benchmarks/rendering/labtrust_qc_release OUT=
 
 just pcs-benchmark-rendering-all OUT=benchmark_runs/pcs_rendering
 
-python -m sm_pipeline.benchmark.rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
+python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out benchmark_runs/pcs_rendering
 ```
 
-Reports are written to:
+Reports are written to (validated against `schemas/pcs/benchmark/*.schema.json`):
 
-- `rendering_benchmark_report.json` — full case results (`PcsRenderingBenchmarkReport.v0`)
-- `pcs_bench_payload.json` — flattened metrics for **pcs-bench**
+- `benchmark_run.v0.json` — aggregate run summary for **pcs-bench**
+- `rendering_coverage_report.v0.json` — section coverage per success case
+- `query_coverage_report.v0.json` — query and compare coverage
+- `failed_release_rendering_report.v0.json` — failure-evidence rendering for failed cases
+- `pcs_bench_ingest.v0.json` — pcs-bench manifest (artifact paths + metrics)
+- `pcs_bench_payload.json` — legacy flattened alias
 - `rendering_benchmark_summary.md` — human-readable summary
+
+Validate a completed run:
+
+```bash
+python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
+```
 
 Regression floors: `baseline_thresholds.json` (enforced by default via `--check-regression`).
 

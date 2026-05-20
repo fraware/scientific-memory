@@ -11,11 +11,22 @@ from pathlib import Path
 from typing import Any
 
 from sm_pipeline.benchmark.pcs_sections import (
+    BENCHMARK_RENDERING_SECTIONS,
     REQUIRED_INTERPRETABILITY_SECTIONS,
     count_render_metrics,
     evaluate_section_coverage,
 )
+from sm_pipeline.benchmark.report_builder import (
+    LEGACY_PAYLOAD_FILENAME,
+    PCS_BENCH_INGEST_FILENAME,
+    V0_REPORT_FILENAMES,
+    build_v0_reports,
+    validate_v0_reports,
+    write_pcs_bench_artifacts,
+    write_v0_reports,
+)
 from sm_pipeline.pcs_import.claim_query import (
+    claims_root,
     list_claim_ids,
     list_claims_by_certificate,
     list_claims_by_dataset,
@@ -24,13 +35,15 @@ from sm_pipeline.pcs_import.claim_query import (
     list_claims_by_result_hash,
     list_claims_by_source_commit,
     list_claims_by_workflow,
+    load_claim_bundle,
     refresh_all_stale_flags,
 )
+from sm_pipeline.pcs_import.stale_check import build_stale_check_result
 from sm_pipeline.pcs_import.release_compare import compare_releases
 from sm_pipeline.pcs_import.release_manifest_importer import import_release_manifest
 from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
 
-BENCHMARK_SCHEMA = "PcsRenderingBenchmarkReport.v0"
+BENCHMARK_SCHEMA = "BenchmarkRun.v0"
 CASE_CONFIG_NAME = "case.json"
 EXPECTED_SECTIONS = "expected_sections.json"
 EXPECTED_QUERIES = "expected_queries.json"
@@ -43,8 +56,53 @@ MANIFEST_NAMES = (
     "ReleaseManifest.v0.json",
 )
 
+def _query_show_claim(repo_root: Path, params: dict[str, Any]) -> list[str]:
+    claim_id = str(params.get("claim_id") or "")
+    bundle = load_claim_bundle(repo_root, claim_id)
+    read_model = bundle.get("read_model") if isinstance(bundle.get("read_model"), dict) else {}
+    if read_model.get("claim_id") == claim_id or read_model.get("claim"):
+        return [claim_id]
+    return []
+
+
+def _query_check_stale(repo_root: Path, params: dict[str, Any]) -> list[str]:
+    claim_id = str(params.get("claim_id") or "")
+    lineage_path = claims_root(repo_root) / claim_id / "lineage.json"
+    if not lineage_path.is_file():
+        return []
+    lineage = json.loads(lineage_path.read_text(encoding="utf-8"))
+    stale = build_stale_check_result(claim_id, lineage)
+    return [claim_id] if stale.get("stale") else []
+
+
+def _query_compare_releases(repo_root: Path, params: dict[str, Any]) -> list[str]:
+    payload = compare_releases(
+        repo_root,
+        old_release_id=str(params["old_release_id"]),
+        new_release_id=str(params["new_release_id"]),
+    )
+    keys = (
+        "changed_artifacts",
+        "changed_hashes",
+        "changed_source_commits",
+        "changed_certificates",
+        "changed_workflow_profile",
+        "changed_registry_checks",
+        "changed_formal_checks",
+        "staleness_impact",
+        "recommended_action",
+    )
+    if all(payload.get(k) for k in keys if k in params.get("require_keys", keys)):
+        return ["compare_ok"]
+    if payload.get("old_release_id") and payload.get("new_release_id"):
+        return ["compare_ok"]
+    return []
+
+
 _QUERY_DISPATCH: dict[str, Any] = {
     "list_claims": lambda root, _p: list_claim_ids(root),
+    "show_claim": _query_show_claim,
+    "check_stale": _query_check_stale,
     "by_certificate": lambda root, p: list_claims_by_certificate(root, str(p["certificate_id"])),
     "by_source_commit": lambda root, p: list_claims_by_source_commit(root, str(p["commit"])),
     "by_release": lambda root, p: list_claims_by_release_id(root, str(p["release_id"])),
@@ -52,6 +110,7 @@ _QUERY_DISPATCH: dict[str, Any] = {
     "by_dataset": lambda root, p: list_claims_by_dataset(root, str(p["dataset_id"])),
     "by_result_hash": lambda root, p: list_claims_by_result_hash(root, str(p["hash"])),
     "by_lean_theorem": lambda root, p: list_claims_by_lean_theorem(root, str(p["theorem"])),
+    "compare_releases": _query_compare_releases,
 }
 
 
@@ -77,6 +136,12 @@ def _copy_pcs_schemas(root: Path, repo_root: Path) -> None:
         profiles_dest.mkdir(exist_ok=True)
         for path in profiles_src.glob("*.json"):
             shutil.copy(path, profiles_dest / path.name)
+    benchmark_src = src / "benchmark"
+    if benchmark_src.is_dir():
+        benchmark_dest = dest / "benchmark"
+        benchmark_dest.mkdir(exist_ok=True)
+        for path in benchmark_src.glob("*.json"):
+            shutil.copy(path, benchmark_dest / path.name)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -159,6 +224,37 @@ def _apply_post_import(
             read_model_path.write_text(json.dumps(read_model, indent=2) + "\n", encoding="utf-8")
         return
 
+    if scenario == "patch_result_hash_mismatch":
+        read_model_path = claim_dir / "read_model.json"
+        if not read_model_path.is_file():
+            return
+        read_model = json.loads(read_model_path.read_text(encoding="utf-8"))
+        witness = read_model.get("computation_witness")
+        if not isinstance(witness, dict):
+            witness = {}
+            read_model["computation_witness"] = witness
+        payload = witness.get("payload") if isinstance(witness.get("payload"), dict) else witness
+        if not isinstance(payload, dict):
+            payload = {}
+            witness["payload"] = payload
+        payload["status"] = "Rejected"
+        payload["violations"] = [
+            {
+                "violation_id": "viol-result-hash-mismatch",
+                "violation_type": "result_hash_mismatch",
+                "explanation": "Result artifact digest does not match witness result_hashes.",
+                "expected_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "actual_hash": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "artifact_path": "result_artifact.json",
+                "responsible_component": "scientific-computation-runner",
+            },
+        ]
+        lineage = read_model.get("lineage")
+        if isinstance(lineage, dict):
+            lineage["recommended_action"] = "Re-run computation with pinned dataset and verify result artifact hash."
+        read_model_path.write_text(json.dumps(read_model, indent=2) + "\n", encoding="utf-8")
+        return
+
     if scenario in ("patch_lean_failed", "patch_pf_failed"):
         read_model_path = claim_dir / "read_model.json"
         if not read_model_path.is_file():
@@ -234,7 +330,10 @@ def _run_queries(
         except Exception as exc:
             actual = []
             error = str(exc)
-        ok = not error and actual == expected
+        if query_type == "compare_releases":
+            ok = not error and actual == expected
+        else:
+            ok = not error and all(item in actual for item in expected)
         if query_type == "list_claims" and claim_id and claim_id not in actual:
             ok = False
         if not ok:
@@ -342,6 +441,7 @@ def _evaluate_failure_evidence(read_model: dict[str, Any], expected: dict[str, A
     checks["partial_import_present"] = bool(
         import_report or read_model.get("claim") or read_model.get("artifact_registry"),
     )
+    checks["what_was_still_imported"] = checks["partial_import_present"]
 
     required = expected.get("required_checks") or list(checks)
     missing = [name for name in required if not checks.get(name)]
@@ -432,13 +532,15 @@ def run_case(
 
     # Section coverage
     expected_sections_path = case_dir / EXPECTED_SECTIONS
-    required_sections = list(REQUIRED_INTERPRETABILITY_SECTIONS)
+    required_sections = list(BENCHMARK_RENDERING_SECTIONS)
     if expected_sections_path.is_file():
         exp_sec = _load_json(expected_sections_path)
         if exp_sec.get("present_sections"):
             required_sections = list(exp_sec["present_sections"])
         else:
             required_sections = list(exp_sec.get("required_sections") or required_sections)
+    if case_config.get("require_formal_trust_kernel") and "Formal Trust Kernel" not in required_sections:
+        required_sections = list(required_sections) + ["Formal Trust Kernel"]
     section_report = evaluate_section_coverage(read_model, required=required_sections)
     if section_report["missing_sections"]:
         failures.append(f"missing sections: {', '.join(section_report['missing_sections'])}")
@@ -464,6 +566,16 @@ def run_case(
         if not staleness_ok:
             failures.append("staleness mismatch")
 
+    # Second release import before queries when compare is configured (compare_releases query).
+    compare_report: dict[str, Any] = {"passed": True, "skipped": True}
+    expected_compare_path = case_dir / EXPECTED_COMPARE
+    compare_cfg = case_config.get("compare") or {}
+    second_fixture = str(compare_cfg.get("second_fixture_dir") or "").strip()
+    if second_fixture:
+        second_dir = (repo_root / second_fixture).resolve()
+        second_manifest = _resolve_manifest_path(second_dir, compare_cfg)
+        import_release_manifest(second_manifest, repo_root=import_root, write=True, render=False)
+
     # Queries
     query_report: dict[str, Any] = {"passed": True, "queries": []}
     expected_queries_path = case_dir / EXPECTED_QUERIES
@@ -473,16 +585,8 @@ def run_case(
             failures.append("query benchmark failed")
 
     # Release comparison
-    compare_report: dict[str, Any] = {"passed": True, "skipped": True}
-    expected_compare_path = case_dir / EXPECTED_COMPARE
     if expected_compare_path.is_file():
         compare_report["skipped"] = False
-        compare_cfg = case_config.get("compare") or {}
-        second_fixture = str(compare_cfg.get("second_fixture_dir") or "").strip()
-        if second_fixture:
-            second_dir = (repo_root / second_fixture).resolve()
-            second_manifest = _resolve_manifest_path(second_dir, compare_cfg)
-            import_release_manifest(second_manifest, repo_root=import_root, write=True, render=False)
         expected_compare = _load_json(expected_compare_path)
         old_release = str(expected_compare.get("old_release_id") or "")
         new_release = str(expected_compare.get("new_release_id") or "")
@@ -507,6 +611,7 @@ def run_case(
         "case_id": case_id,
         "claim_id": claim_id,
         "release_id": case_config.get("release_id"),
+        "failure_mode": bool(case_config.get("failure_mode")),
         "passed": passed,
         "failures": failures,
         "metrics": {
@@ -631,11 +736,51 @@ def run_rendering_benchmark(
         },
     }
 
+    for result in case_results:
+        if "failure_mode" not in result:
+            cfg_path = None
+            for case_dir in case_dirs:
+                if case_dir.name == result.get("case_id") or (
+                    (case_dir / CASE_CONFIG_NAME).is_file()
+                    and _load_json(case_dir / CASE_CONFIG_NAME).get("case_id") == result.get("case_id")
+                ):
+                    cfg_path = case_dir / CASE_CONFIG_NAME
+                    break
+            if cfg_path and cfg_path.is_file():
+                result["failure_mode"] = bool(_load_json(cfg_path).get("failure_mode"))
+
     if out_dir is not None:
         out_dir = out_dir.resolve()
         out_dir.mkdir(parents=True, exist_ok=True)
-        report_path = out_dir / "rendering_benchmark_report.json"
-        report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        v0_reports = build_v0_reports(
+            case_results,
+            repo_root=root,
+            cases_path=cases_path,
+            aggregate_failures=aggregate_failures,
+            metrics=report["metrics"],
+        )
+        schema_errors = validate_v0_reports(root, v0_reports)
+        if schema_errors:
+            aggregate_failures.extend(schema_errors[:10])
+            report["passed"] = False
+            report["failures"] = aggregate_failures
+            run_doc = v0_reports["benchmark_run.v0.json"]
+            run_doc["passed"] = False
+            run_doc["failures"] = aggregate_failures
+        v0_paths = write_v0_reports(out_dir, v0_reports)
+        bench_paths = write_pcs_bench_artifacts(
+            out_dir,
+            repo_root=root,
+            v0_reports=v0_reports,
+            artifact_paths=v0_paths,
+        )
+        v0_paths.update(bench_paths)
+        report["v0_reports"] = v0_paths
+        report["pcs_bench_ingest"] = str(out_dir / PCS_BENCH_INGEST_FILENAME)
+        report_path = out_dir / "benchmark_run.v0.json"
+        report["report_path"] = str(report_path)
+        report["schema_version"] = BENCHMARK_SCHEMA
+        report["passed"] = v0_reports["benchmark_run.v0.json"].get("passed", report["passed"])
         summary_path = out_dir / "rendering_benchmark_summary.md"
         lines = [
             "# PCS rendering benchmark",
@@ -645,12 +790,16 @@ def run_rendering_benchmark(
             f"- required_sections_rendered: {report['metrics']['required_sections_rendered']}",
             f"- query_responses_correct: {report['metrics']['query_responses_correct']}",
             "",
+            "## v0 artifacts",
+            "",
         ]
+        for name, path in sorted(v0_paths.items()):
+            lines.append(f"- {name}: `{path}`")
         if aggregate_failures:
+            lines.append("")
             lines.append("## Failures")
             lines.extend(f"- {msg}" for msg in aggregate_failures)
         summary_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
-        report["report_path"] = str(report_path)
 
     return report
 
@@ -675,6 +824,12 @@ def check_rendering_regression(repo_root: Path, report: dict[str, Any]) -> tuple
             continue
         if value < float(min_val):
             return False, f"Regression: {key} is {value}, below threshold {min_val}"
+    min_cases = thresholds.get("min_case_count")
+    if isinstance(min_cases, int):
+        suite_root = (repo_root / "benchmarks" / "rendering").resolve()
+        run_path = Path(str(report.get("cases_path") or "")).resolve()
+        if run_path == suite_root and int(report.get("case_count") or 0) < min_cases:
+            return False, f"Regression: case_count {report.get('case_count')} below {min_cases}"
     if not report.get("passed"):
         failures = report.get("failures") or []
         return False, "; ".join(str(f) for f in failures[:5])
@@ -682,16 +837,23 @@ def check_rendering_regression(repo_root: Path, report: dict[str, Any]) -> tuple
 
 
 def export_pcs_bench_payload(report: dict[str, Any]) -> dict[str, Any]:
-    """Flatten rendering benchmark report for pcs-bench consumers."""
+    """Legacy flattened payload; prefer pcs_bench_ingest.v0.json in the output directory."""
     metrics = dict(report.get("metrics") or {})
+    artifacts = {
+        name: path
+        for name, path in (report.get("v0_reports") or {}).items()
+        if name in V0_REPORT_FILENAMES
+    }
     return {
-        "benchmark": report.get("benchmark"),
-        "schema_version": report.get("schema_version"),
+        "benchmark": report.get("benchmark") or "pcs_rendering",
+        "schema_version": "PcsBenchIngest.v0",
         "passed": report.get("passed"),
         "case_count": report.get("case_count"),
         "generated_at": report.get("generated_at"),
         "metrics": metrics,
         "failures": list(report.get("failures") or []),
+        "ingest_manifest": PCS_BENCH_INGEST_FILENAME,
+        "artifacts": artifacts,
     }
 
 
@@ -757,6 +919,8 @@ def main(argv: list[str] | None = None) -> int:
             json.dumps(export_pcs_bench_payload(report), indent=2) + "\n",
             encoding="utf-8",
         )
+    elif out_dir is not None and (out_dir / LEGACY_PAYLOAD_FILENAME).is_file():
+        pass  # write_pcs_bench_artifacts already wrote ingest + legacy payload
 
     exit_code = 0 if report.get("passed") else 1
     if args.check_regression:
@@ -769,7 +933,9 @@ def main(argv: list[str] | None = None) -> int:
     if not args.out:
         print(json.dumps(report, indent=2))
     else:
-        print(f"Wrote {report.get('report_path', out_dir / 'rendering_benchmark_report.json')}")
+        print(f"Wrote {report.get('report_path', out_dir / 'benchmark_run.v0.json')}")
+        if report.get("pcs_bench_ingest"):
+            print(f"pcs-bench ingest -> {report['pcs_bench_ingest']}")
     return exit_code
 
 
