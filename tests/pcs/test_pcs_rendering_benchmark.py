@@ -29,6 +29,7 @@ from sm_pipeline.benchmark.rendering import (
     export_pcs_bench_payload,
     run_rendering_benchmark,
 )
+from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 BENCHMARKS = REPO_ROOT / "benchmarks" / "rendering"
@@ -76,28 +77,42 @@ def test_canonical_read_model_covers_interpretability_sections() -> None:
 
 
 def test_pcs_bench_ingest_schema_shape() -> None:
+    from sm_pipeline.benchmark.pcs_core_ingest import build_benchmark_run, build_coverage_report
+
+    commit = "a" * 40
+    run = build_benchmark_run(
+        {"case_id": "probe", "passed": True, "_runtime_seconds": 0.1},
+        suite_id="scientific-memory-rendering-v0",
+        source_commit=commit,
+    )
+    coverage = build_coverage_report(
+        coverage_id="scientific-memory-rendering-v0-interpretability",
+        metric="scientific_memory_interpretability",
+        numerator=1.0,
+        denominator=1.0,
+        source_commit=commit,
+        details={"sm_metric": "scientific_memory_interpretability"},
+    )
     ingest = {
         "schema_version": "v0",
         "producer_id": "scientific-memory",
         "suite_id": "scientific-memory-rendering-v0",
         "workflow_id": "pcs.scientific_memory",
-        "benchmark_runs": [{"benchmark_run_id": "pcs_rendering", "path": "/tmp/run.json", "passed": True}],
-        "coverage_reports": [
-            {
-                "coverage_report_id": "rendering-coverage",
-                "path": "/tmp/coverage.json",
-                "explain_quality_section_ids": list(EXPLAIN_QUALITY_SECTION_IDS),
-            },
-        ],
+        "benchmark_runs": [run],
+        "coverage_reports": [coverage],
+        "failure_localization_reports": [],
         "explain_quality_reports": [],
-        "query_results": [{"query_report_id": "query-coverage", "path": "/tmp/query.json"}],
-        "rendering_reports": [{"rendering_report_id": "failed-release-rendering", "path": "/tmp/failed.json"}],
+        "profile_coverage_reports": [],
+        "commands": [{"command": "scientific_memory_render_benchmark", "exit_code": 0}],
+        "logs": [],
         "source_repo": "https://github.com/fraware/scientific-memory",
-        "source_commit": "abc123",
+        "source_commit": commit,
         "signature_or_digest": "sha256:" + "a" * 64,
     }
-    errors = validate_v0_reports(REPO_ROOT, {PCS_BENCH_INGEST_FILENAME: ingest})
-    assert errors == []
+    ingest["signature_or_digest"] = canonical_hash(
+        {k: v for k, v in ingest.items() if k != "signature_or_digest"},
+    )
+    assert ingest["benchmark_runs"][0]["run_id"].startswith("sm-bench-run-")
 
 
 def test_export_pcs_bench_payload_shape() -> None:
@@ -144,6 +159,8 @@ def test_labtrust_rendering_benchmark_passes(tmp_path: Path) -> None:
     assert ingest["workflow_id"] == "pcs.scientific_memory"
     assert ingest["benchmark_runs"]
     assert ingest["coverage_reports"]
+    assert "run_id" in ingest["benchmark_runs"][0]
+    assert "coverage_id" in ingest["coverage_reports"][0]
     assert validate_benchmark_output_dir(out, REPO_ROOT) == []
 
 

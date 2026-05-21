@@ -132,7 +132,7 @@ python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out
 just validate-pcs-benchmark-output benchmark_runs/pcs_rendering
 ```
 
-**pcs-bench canonical ingest:** `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`, `workflow_id`: `pcs.scientific_memory`). Required arrays: `benchmark_runs`, `coverage_reports`, `explain_quality_reports`, `query_results`, `rendering_reports`, plus `source_repo`, `source_commit`, `signature_or_digest`. Optional pcs-core validation: `--validate-pcs-core-output ../pcs-core` on the benchmark CLI or validate script.
+**pcs-bench canonical ingest:** `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`, `workflow_id`: `pcs.scientific_memory`). Embeds pcs-core `BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, and `ExplainQualityReport.v0` objects in `benchmark_runs`, `coverage_reports`, `failure_localization_reports`, and `explain_quality_reports` (plus empty `profile_coverage_reports`, `commands`, `logs`). Optional `artifact_refs` may point at on-disk companion reports. Hard gate: `--validate-pcs-core-output ../pcs-core` on the benchmark CLI or validate script (fails on any `PcsBenchIngest.v0` schema mismatch).
 
 | Artifact | Role |
 |----------|------|

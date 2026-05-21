@@ -12,26 +12,22 @@ Scientific Memory exposes PCS rendering benchmarks as a **pcs-bench** producer. 
   "producer_id": "scientific-memory",
   "suite_id": "scientific-memory-rendering-v0",
   "workflow_id": "pcs.scientific_memory",
-  "passed": true,
   "benchmark_runs": [],
   "coverage_reports": [],
+  "failure_localization_reports": [],
   "explain_quality_reports": [],
-  "query_results": [],
-  "rendering_reports": [],
-  "failure_summary": {},
-  "failure_kinds": [
-    "import_failed",
-    "render_failed",
-    "query_failed",
-    "staleness_failed",
-    "comparison_failed",
-    "formal_failed"
-  ],
+  "profile_coverage_reports": [],
+  "commands": [],
+  "logs": [],
   "source_repo": "https://github.com/fraware/scientific-memory",
-  "source_commit": "<git HEAD>",
+  "source_commit": "<40-char git HEAD>",
   "signature_or_digest": "sha256:..."
 }
 ```
+
+`benchmark_runs`, `coverage_reports`, `failure_localization_reports`, and `explain_quality_reports` embed full pcs-core v0 objects (`BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`).
+
+**`artifact_refs` (required for pcs-bench):** one `BenchmarkArtifactRef.v0` per embedded `ExplainQualityReport.v0`, with `path` under `explain_quality_reports/<report_id>.v0.json` and `sha256` matching the embedded report digest. Companion dialect JSON files remain on disk for debugging but are not path-only ingest rows.
 
 Registry of suites: `benchmarks/pcs_bench/suite_registry.v0.json`.
 
@@ -83,15 +79,19 @@ Each event includes `responsible_component`, `repair_hint`, `artifact_path`, and
 When a sibling [pcs-core](https://github.com/SentinelOps-CI/pcs-core) checkout is available, validate benchmark outputs against its canonical schemas:
 
 ```bash
-python -m sm_pipeline.benchmark.pcs_rendering \
-  --cases benchmarks/rendering/labtrust_qc_release \
-  --out benchmark_runs/labtrust_qc_release \
+sm-pipeline pcs-benchmark-rendering \
+  --cases benchmarks/rendering/external_reviewer_minimal \
+  --out benchmark_runs/external_reviewer_minimal \
   --validate-pcs-core-output ../pcs-core
 
 python scripts/validate_pcs_benchmark_output.py \
   --out benchmark_runs/external_reviewer_minimal \
   --validate-pcs-core-output ../pcs-core
 ```
+
+With `--validate-pcs-core-output`, the runner fails on any `PcsBenchIngest.v0` schema mismatch **or** pcs-core ingest semantics (including `artifact_refs` coverage of embedded explain-quality digests).
+
+`scripts/validate_pcs_benchmark_output.py` also runs embedded-ingest structural checks and, when a sibling `pcs-core` checkout is present, applies the same pcs-core schema and semantic validation automatically.
 
 Resolution order: CLI path, `PCS_CORE_PATH` (CI), `PCS_CORE_ROOT`, `../pcs-core`, `./pcs-core`.
 

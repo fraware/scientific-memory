@@ -78,8 +78,12 @@ def main() -> int:
     elif args.require_pcs_core:
         pcs_core_root = resolve_pcs_core_from_env(repo_root=repo_root)
         if pcs_core_root is None:
-            print("pcs-core required but PCS_CORE_PATH/PCS_CORE_ROOT not set", file=sys.stderr)
+            pcs_core_root = resolve_pcs_core_root(None, repo_root=repo_root)
+        if pcs_core_root is None:
+            print("pcs-core required but checkout not found", file=sys.stderr)
             return 1
+    else:
+        pcs_core_root = resolve_pcs_core_root(None, repo_root=repo_root)
     errors = validate_benchmark_output_dir(out_dir, repo_root, pcs_core_root=pcs_core_root)
     if errors:
         for msg in errors:

@@ -54,12 +54,22 @@ def test_validate_against_pcs_core_mirror_schemas(tmp_path: Path) -> None:
     schemas = pcs_core / "schemas" / "benchmark"
     schemas.mkdir(parents=True)
     sm_schema_dir = REPO_ROOT / "schemas" / "pcs" / "benchmark"
+    pcs_defs = REPO_ROOT / "schemas" / "pcs" / "common.defs.json"
+    if pcs_defs.is_file():
+        (pcs_core / "schemas" / "common.defs.json").write_text(
+            pcs_defs.read_text(encoding="utf-8"),
+            encoding="utf-8",
+        )
     for name in (
         "BenchmarkRun.v0.schema.json",
+        "CoverageReport.v0.schema.json",
+        "FailureLocalizationResult.v0.schema.json",
+        "ProfileCoverageReport.v0.schema.json",
         "RenderingCoverageReport.v0.schema.json",
         "QueryCoverageReport.v0.schema.json",
         "FailedReleaseRenderingReport.v0.schema.json",
         "ExplainQualityReport.v0.schema.json",
+        "BenchmarkArtifactRef.v0.schema.json",
         "PcsBenchIngest.v0.schema.json",
     ):
         src = sm_schema_dir / name
@@ -82,6 +92,12 @@ def test_validate_against_pcs_core_mirror_schemas(tmp_path: Path) -> None:
     }
     errors = validate_benchmark_artifacts_with_pcs_core(reports, pcs_core)
     assert errors == [], errors
+
+    ingest = reports.get("pcs_bench_ingest.v0.json")
+    assert isinstance(ingest, dict)
+    assert ingest.get("benchmark_runs") and "run_id" in ingest["benchmark_runs"][0]
+    assert ingest.get("coverage_reports") and "coverage_id" in ingest["coverage_reports"][0]
+    assert ingest.get("explain_quality_reports") and "sections" in ingest["explain_quality_reports"][0]
 
 
 def test_workflow_id_constant() -> None:

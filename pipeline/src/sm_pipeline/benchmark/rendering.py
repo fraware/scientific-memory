@@ -916,6 +916,23 @@ def run_rendering_benchmark(
             aggregate_failures=aggregate_failures,
             metrics=report["metrics"],
         )
+        from sm_pipeline.benchmark.report_builder import (
+            _load_case_configs,
+            build_pcs_bench_ingest,
+            resolve_source_commit,
+        )
+
+        benchmark_run_doc = v0_reports["benchmark_run.v0.json"]
+        suite_id_ingest = str(benchmark_run_doc.get("suite_id") or suite_id)
+        source_commit_ingest = resolve_source_commit(root)
+        v0_reports[PCS_BENCH_INGEST_FILENAME] = build_pcs_bench_ingest(
+            benchmark_run=benchmark_run_doc,
+            v0_reports=v0_reports,
+            case_results=case_results,
+            suite_id=suite_id_ingest,
+            source_commit=source_commit_ingest,
+            case_configs=_load_case_configs(case_results, cases_path),
+        )
         pcs_core_root: Path | None = None
         if validate_pcs_core_output is not None:
             raw_pcs = str(validate_pcs_core_output).strip()
@@ -947,6 +964,8 @@ def run_rendering_benchmark(
             repo_root=root,
             v0_reports=v0_reports,
             artifact_paths=v0_paths,
+            case_results=case_results,
+            cases_path=cases_path,
         )
         v0_paths.update(bench_paths)
         report["v0_reports"] = v0_paths

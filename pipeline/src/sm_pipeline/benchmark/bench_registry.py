@@ -52,9 +52,12 @@ def _resolve_source_commit(repo_root: Path) -> str:
             check=True,
             timeout=10,
         )
-        return proc.stdout.strip() or "unknown"
+        commit = proc.stdout.strip().lower()
+        if len(commit) == 40 and all(ch in "0123456789abcdef" for ch in commit):
+            return commit
     except (OSError, subprocess.SubprocessError):
-        return "unknown"
+        pass
+    return "0" * 40
 
 
 def refresh_registry_source_commit(repo_root: Path) -> str:

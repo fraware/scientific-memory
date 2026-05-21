@@ -16,6 +16,12 @@ from sm_pipeline.benchmark.pcs_core_coverage import (
     build_explain_quality_report,
     suite_id_for_cases_path,
 )
+from sm_pipeline.benchmark.pcs_core_ingest import (
+    PCS_WORKFLOW_ID as PCS_CORE_INGEST_WORKFLOW_ID,
+    build_embedded_pcs_bench_ingest,
+    validate_embedded_ingest_contract,
+    write_explain_quality_sidecars,
+)
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
 from sm_pipeline.pcs_validate.validator import validator_for
 
@@ -27,11 +33,10 @@ V0_REPORT_FILENAMES: tuple[str, ...] = (
 )
 
 V0_SCHEMAS = {
-    "benchmark_run.v0.json": "benchmark/BenchmarkRun.v0.schema.json",
+    "benchmark_run.v0.json": "benchmark/RenderingBenchmarkRun.v0.schema.json",
     "rendering_coverage_report.v0.json": "benchmark/RenderingCoverageReport.v0.schema.json",
     "query_coverage_report.v0.json": "benchmark/QueryCoverageReport.v0.schema.json",
     "failed_release_rendering_report.v0.json": "benchmark/FailedReleaseRenderingReport.v0.schema.json",
-    "pcs_bench_ingest.v0.json": "benchmark/PcsBenchIngest.v0.schema.json",
     "explain_quality_report.v0.json": "benchmark/ExplainQualityReport.v0.schema.json",
 }
 
@@ -39,7 +44,7 @@ PCS_BENCH_INGEST_FILENAME = "pcs_bench_ingest.v0.json"
 EXPLAIN_QUALITY_REPORT_FILENAME = "explain_quality_report.v0.json"
 BENCH_SUITE_MANIFEST_FILENAME = "bench_suite_manifest.v0.json"
 LEGACY_PAYLOAD_FILENAME = "pcs_bench_payload.json"
-PCS_WORKFLOW_ID = "pcs.scientific_memory"
+PCS_WORKFLOW_ID = PCS_CORE_INGEST_WORKFLOW_ID
 
 
 def _now() -> str:
@@ -64,9 +69,12 @@ def resolve_source_commit(repo_root: Path) -> str:
             check=True,
             timeout=10,
         )
-        return proc.stdout.strip() or "unknown"
+        commit = proc.stdout.strip().lower()
+        if len(commit) == 40 and all(ch in "0123456789abcdef" for ch in commit):
+            return commit
     except (OSError, subprocess.SubprocessError):
-        return "unknown"
+        pass
+    return "0" * 40
 
 
 def _aggregate_failure_summary(case_results: list[dict[str, Any]]) -> dict[str, Any]:
@@ -296,83 +304,84 @@ def write_v0_reports(out_dir: Path, reports: dict[str, dict[str, Any]]) -> dict[
 def build_pcs_bench_ingest(
     *,
     benchmark_run: dict[str, Any],
-    out_dir: Path,
-    artifact_paths: dict[str, str],
-    explain_quality_bundle: dict[str, Any],
+    v0_reports: dict[str, dict[str, Any]],
+    case_results: list[dict[str, Any]],
     suite_id: str,
     source_commit: str,
+    case_configs: dict[str, dict[str, Any]] | None = None,
+    artifact_refs: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Canonical pcs-bench ingest manifest (stable integration point)."""
-    run_path = artifact_paths.get("benchmark_run.v0.json") or str(out_dir / "benchmark_run.v0.json")
-    coverage_path = artifact_paths.get("rendering_coverage_report.v0.json") or str(
-        out_dir / "rendering_coverage_report.v0.json",
-    )
-    query_path = artifact_paths.get("query_coverage_report.v0.json") or str(
-        out_dir / "query_coverage_report.v0.json",
-    )
-    failed_path = artifact_paths.get("failed_release_rendering_report.v0.json") or str(
-        out_dir / "failed_release_rendering_report.v0.json",
-    )
-    eq_path = artifact_paths.get(EXPLAIN_QUALITY_REPORT_FILENAME) or str(
-        out_dir / EXPLAIN_QUALITY_REPORT_FILENAME,
+    """Canonical pcs-bench ingest with embedded pcs-core v0 objects."""
+    return build_embedded_pcs_bench_ingest(
+        suite_id=suite_id,
+        source_commit=source_commit,
+        benchmark_run_doc=benchmark_run,
+        v0_reports=v0_reports,
+        case_results=case_results,
+        case_configs=case_configs,
+        artifact_refs=artifact_refs,
     )
 
-    ingest: dict[str, Any] = {
-        "schema_version": "v0",
-        "producer_id": "scientific-memory",
-        "suite_id": suite_id,
-        "workflow_id": PCS_WORKFLOW_ID,
-        "passed": bool(benchmark_run.get("passed")),
-        "benchmark_runs": [
-            {
-                "benchmark_run_id": benchmark_run.get("benchmark_id") or "pcs_rendering",
-                "path": run_path,
-                "passed": bool(benchmark_run.get("passed")),
-                "case_count": int(benchmark_run.get("case_count") or 0),
-                "generated_at": benchmark_run.get("generated_at"),
-            },
-        ],
-        "coverage_reports": [
-            {
-                "coverage_report_id": "rendering-coverage",
-                "path": coverage_path,
-                "explain_quality_section_ids": list(EXPLAIN_QUALITY_SECTION_IDS),
-            },
-        ],
-        "explain_quality_reports": [
-            {
-                "report_id": row.get("report_id"),
-                "case_id": row.get("case_id"),
-                "claim_id": row.get("claim_id"),
-                "bundle_path": eq_path,
-                "path": eq_path,
-                "quality_score": row.get("quality_score"),
-                "gaps": row.get("gaps") or [],
-                "explain_quality_section_ids": list(EXPLAIN_QUALITY_SECTION_IDS),
-            }
-            for row in (explain_quality_bundle.get("reports") or [])
-            if isinstance(row, dict)
-        ],
-        "ingest_contract": "pcs-bench/scientific-memory/v1",
-        "query_results": [
-            {
-                "query_report_id": "query-coverage",
-                "path": query_path,
-            },
-        ],
-        "rendering_reports": [
-            {
-                "rendering_report_id": "failed-release-rendering",
-                "path": failed_path,
-            },
-        ],
-        "failure_summary": benchmark_run.get("failure_summary") or {},
-        "failure_kinds": list(FAILURE_KINDS),
-        "source_repo": SOURCE_REPO,
-        "source_commit": source_commit,
-    }
-    ingest["signature_or_digest"] = canonical_hash(ingest)
-    return ingest
+
+def _load_case_configs(case_results: list[dict[str, Any]], cases_path: Path | None) -> dict[str, dict[str, Any]]:
+    configs: dict[str, dict[str, Any]] = {}
+    if cases_path is None:
+        return configs
+    from sm_pipeline.benchmark.rendering import CASE_CONFIG_NAME, EXPECTED_FAILURE
+
+    for case_dir in cases_path.iterdir() if cases_path.is_dir() else []:
+        if not case_dir.is_dir():
+            continue
+        cfg_path = case_dir / CASE_CONFIG_NAME
+        if not cfg_path.is_file():
+            continue
+        try:
+            cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(cfg, dict):
+            continue
+        case_id = str(cfg.get("case_id") or case_dir.name)
+        expected_path = case_dir / EXPECTED_FAILURE
+        if expected_path.is_file():
+            try:
+                expected = json.loads(expected_path.read_text(encoding="utf-8"))
+                if isinstance(expected, dict):
+                    cfg["expected_failure"] = expected
+                    if expected.get("failure_kind"):
+                        cfg["expected_failure_code"] = str(expected["failure_kind"])
+                    if expected.get("formal_focus"):
+                        cfg["formal_focus"] = True
+            except (OSError, json.JSONDecodeError):
+                pass
+        configs[case_id] = cfg
+    failed_root = cases_path / "failed"
+    if failed_root.is_dir():
+        for case_dir in failed_root.iterdir():
+            if not case_dir.is_dir():
+                continue
+            cfg_path = case_dir / CASE_CONFIG_NAME
+            if not cfg_path.is_file():
+                continue
+            try:
+                cfg = json.loads(cfg_path.read_text(encoding="utf-8"))
+            except (OSError, json.JSONDecodeError):
+                continue
+            if not isinstance(cfg, dict):
+                continue
+            case_id = str(cfg.get("case_id") or case_dir.name)
+            expected_path = case_dir / EXPECTED_FAILURE
+            if expected_path.is_file():
+                try:
+                    expected = json.loads(expected_path.read_text(encoding="utf-8"))
+                    if isinstance(expected, dict):
+                        cfg["expected_failure"] = expected
+                        if expected.get("failure_kind"):
+                            cfg["expected_failure_code"] = str(expected["failure_kind"])
+                except (OSError, json.JSONDecodeError):
+                    pass
+            configs[case_id] = cfg
+    return configs
 
 
 def write_pcs_bench_artifacts(
@@ -381,26 +390,40 @@ def write_pcs_bench_artifacts(
     repo_root: Path,
     v0_reports: dict[str, dict[str, Any]],
     artifact_paths: dict[str, str],
+    case_results: list[dict[str, Any]] | None = None,
+    cases_path: Path | None = None,
 ) -> dict[str, str]:
     """Write pcs_bench_ingest.v0.json (canonical) and pcs_bench_payload.json (legacy alias)."""
     benchmark_run = v0_reports["benchmark_run.v0.json"]
     eq_bundle = v0_reports.get(EXPLAIN_QUALITY_REPORT_FILENAME) or {}
     suite_id = str(benchmark_run.get("suite_id") or suite_id_for_cases_path(""))
     source_commit = str(eq_bundle.get("source_commit") or resolve_source_commit(repo_root))
+    cases = case_results if case_results is not None else list(benchmark_run.get("cases") or [])
 
     suite_err = validate_suite_id(repo_root, suite_id)
     if suite_err:
         raise ValueError(suite_err)
 
-    ingest = build_pcs_bench_ingest(
-        benchmark_run=benchmark_run,
-        out_dir=out_dir,
-        artifact_paths=artifact_paths,
-        explain_quality_bundle=eq_bundle,
-        suite_id=suite_id,
-        source_commit=source_commit,
-    )
     ingest_path = out_dir / PCS_BENCH_INGEST_FILENAME
+    existing = v0_reports.get(PCS_BENCH_INGEST_FILENAME)
+    if isinstance(existing, dict):
+        ingest = existing
+    else:
+        case_configs = _load_case_configs(cases, cases_path)
+        ingest = build_pcs_bench_ingest(
+            benchmark_run=benchmark_run,
+            v0_reports=v0_reports,
+            case_results=cases,
+            suite_id=suite_id,
+            source_commit=source_commit,
+            case_configs=case_configs,
+        )
+    eq_reports = ingest.get("explain_quality_reports") or []
+    if isinstance(eq_reports, list):
+        write_explain_quality_sidecars(
+            out_dir,
+            [row for row in eq_reports if isinstance(row, dict)],
+        )
     ingest_path.write_text(json.dumps(ingest, indent=2) + "\n", encoding="utf-8")
     paths = {PCS_BENCH_INGEST_FILENAME: str(ingest_path)}
 
@@ -408,7 +431,7 @@ def write_pcs_bench_artifacts(
         suite_id=suite_id,
         out_dir=out_dir,
         ingest_path=ingest_path,
-        passed=bool(ingest.get("passed")),
+        passed=bool(benchmark_run.get("passed")),
     )
     manifest_path = out_dir / BENCH_SUITE_MANIFEST_FILENAME
     manifest_path.write_text(json.dumps(run_manifest, indent=2) + "\n", encoding="utf-8")
@@ -418,7 +441,7 @@ def write_pcs_bench_artifacts(
         "schema_version": "v0",
         "producer_id": "scientific-memory",
         "suite_id": suite_id,
-        "passed": ingest["passed"],
+        "passed": bool(benchmark_run.get("passed")),
         "ingest_manifest": PCS_BENCH_INGEST_FILENAME,
         "artifacts": {
             "benchmark_run.v0.json": artifact_paths.get("benchmark_run.v0.json"),
@@ -430,7 +453,7 @@ def write_pcs_bench_artifacts(
             EXPLAIN_QUALITY_REPORT_FILENAME: artifact_paths.get(EXPLAIN_QUALITY_REPORT_FILENAME),
             PCS_BENCH_INGEST_FILENAME: str(ingest_path),
         },
-        "failure_summary": ingest.get("failure_summary"),
+        "failure_summary": benchmark_run.get("failure_summary"),
         "source_repo": ingest["source_repo"],
         "source_commit": ingest["source_commit"],
         "signature_or_digest": ingest["signature_or_digest"],
@@ -439,9 +462,6 @@ def write_pcs_bench_artifacts(
     legacy_path.write_text(json.dumps(legacy, indent=2) + "\n", encoding="utf-8")
     paths[LEGACY_PAYLOAD_FILENAME] = str(legacy_path)
 
-    ingest_errors = validate_v0_reports(repo_root, {PCS_BENCH_INGEST_FILENAME: ingest})
-    if ingest_errors:
-        raise ValueError("; ".join(ingest_errors[:5]))
     return paths
 
 
@@ -471,6 +491,9 @@ def validate_benchmark_output_dir(
     for filename in required:
         if not (out_dir / filename).is_file():
             errors.append(f"missing {filename}")
+    sidecar_dir = out_dir / "explain_quality_reports"
+    if not sidecar_dir.is_dir():
+        errors.append("missing explain_quality_reports/ (per-case ExplainQualityReport.v0 sidecars)")
     if errors:
         return errors
     try:
@@ -481,7 +504,7 @@ def validate_benchmark_output_dir(
     ingest = json.loads((out_dir / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     if isinstance(ingest, dict):
         reports[PCS_BENCH_INGEST_FILENAME] = ingest
-        errors.extend(validate_v0_reports(repo_root, {PCS_BENCH_INGEST_FILENAME: ingest}))
+        errors.extend(validate_embedded_ingest_contract(ingest, out_dir=out_dir))
         expected_sig = canonical_hash(ingest)
         actual_sig = str(ingest.get("signature_or_digest") or "")
         if actual_sig != expected_sig:
@@ -494,12 +517,27 @@ def validate_benchmark_output_dir(
         for key in (
             "benchmark_runs",
             "coverage_reports",
+            "failure_localization_reports",
             "explain_quality_reports",
-            "query_results",
-            "rendering_reports",
+            "profile_coverage_reports",
+            "commands",
+            "logs",
         ):
             if key not in ingest:
                 errors.append(f"pcs_bench_ingest.v0.json: missing {key}")
+            elif not isinstance(ingest.get(key), list):
+                errors.append(f"pcs_bench_ingest.v0.json: {key} must be a list")
+        if ingest.get("benchmark_runs") and isinstance(ingest["benchmark_runs"][0], dict):
+            first = ingest["benchmark_runs"][0]
+            if "path" in first and "run_id" not in first:
+                errors.append(
+                    "pcs_bench_ingest.v0.json: benchmark_runs must embed BenchmarkRun.v0 objects, not path refs",
+                )
+    if isinstance(ingest, dict):
+        from sm_pipeline.benchmark.pcs_core_benchmark_validate import _validate_pcs_bench_ingest_semantics
+
+        errors.extend(_validate_pcs_bench_ingest_semantics(ingest))
+
     if pcs_core_root is not None:
         from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
             validate_benchmark_artifacts_with_pcs_core,

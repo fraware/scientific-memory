@@ -1,8 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/PcsBenchIngest.v0.schema.json",
+  "$id": "https://pcs.sentinelops.ci/schemas/PcsBenchIngest.v0.schema.json",
   "title": "PcsBenchIngest.v0",
-  "description": "Canonical pcs-bench ingest manifest for Scientific Memory rendering benchmark outputs.",
   "type": "object",
   "required": [
     "schema_version",
@@ -11,42 +10,55 @@
     "workflow_id",
     "benchmark_runs",
     "coverage_reports",
+    "failure_localization_reports",
     "explain_quality_reports",
-    "query_results",
-    "rendering_reports",
+    "profile_coverage_reports",
+    "commands",
+    "logs",
     "source_repo",
     "source_commit",
     "signature_or_digest"
   ],
+  "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "v0" },
-    "producer_id": { "const": "scientific-memory" },
-    "suite_id": { "type": "string" },
-    "workflow_id": { "type": "string", "const": "pcs.scientific_memory" },
-    "passed": { "type": "boolean" },
-    "benchmark_runs": { "type": "array", "items": { "type": "object" } },
-    "coverage_reports": { "type": "array", "items": { "type": "object" } },
-    "explain_quality_reports": { "type": "array", "items": { "type": "object" } },
-    "query_results": { "type": "array", "items": { "type": "object" } },
-    "rendering_reports": { "type": "array", "items": { "type": "object" } },
-    "failure_summary": { "type": "object" },
-    "failure_kinds": {
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
+    "producer_id": { "$ref": "common.defs.json#/$defs/benchmark_producer_id" },
+    "suite_id": { "type": "string", "minLength": 1 },
+    "workflow_id": { "type": "string", "minLength": 1 },
+    "benchmark_runs": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "import_failed",
-          "render_failed",
-          "query_failed",
-          "staleness_failed",
-          "comparison_failed",
-          "formal_failed"
-        ]
-      }
+      "items": { "$ref": "BenchmarkRun.v0.schema.json" }
     },
-    "source_repo": { "type": "string" },
-    "source_commit": { "type": "string" },
-    "signature_or_digest": { "type": "string", "pattern": "^sha256:" }
-  },
-  "additionalProperties": true
+    "coverage_reports": {
+      "type": "array",
+      "items": { "$ref": "CoverageReport.v0.schema.json" }
+    },
+    "failure_localization_reports": {
+      "type": "array",
+      "items": { "$ref": "FailureLocalizationResult.v0.schema.json" }
+    },
+    "explain_quality_reports": {
+      "type": "array",
+      "items": { "$ref": "ExplainQualityReport.v0.schema.json" }
+    },
+    "profile_coverage_reports": {
+      "type": "array",
+      "items": { "$ref": "ProfileCoverageReport.v0.schema.json" }
+    },
+    "commands": {
+      "type": "array",
+      "items": { "$ref": "common.defs.json#/$defs/benchmark_command_entry" }
+    },
+    "logs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": { "$ref": "BenchmarkArtifactRef.v0.schema.json" }
+    },
+    "source_repo": { "type": "string", "format": "uri" },
+    "source_commit": { "$ref": "common.defs.json#/$defs/git_commit" },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
+  }
 }

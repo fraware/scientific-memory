@@ -89,13 +89,18 @@ def main() -> int:
         if src_file.is_file():
             shutil.copy2(src_file, dest / name)
 
+    sidecar_src = source / "explain_quality_reports"
+    if sidecar_src.is_dir():
+        shutil.copytree(sidecar_src, dest / "explain_quality_reports")
+
     ingest = json.loads((source / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     suite_id = str(ingest.get("suite_id") or "")
+    run_doc = json.loads((source / "benchmark_run.v0.json").read_text(encoding="utf-8"))
     manifest = build_run_suite_manifest(
         suite_id=suite_id,
         out_dir=dest,
         ingest_path=dest / PCS_BENCH_INGEST_FILENAME,
-        passed=bool(ingest.get("passed")),
+        passed=bool(run_doc.get("passed")),
     )
     (dest / "bench_suite_manifest.v0.json").write_text(
         json.dumps(manifest, indent=2) + "\n",

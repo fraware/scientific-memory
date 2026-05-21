@@ -24,13 +24,21 @@
   "ingest_contract": {
     "schema_version": "v0",
     "canonical_file": "pcs_bench_ingest.v0.json",
+    "embedded_arrays": [
+      "benchmark_runs",
+      "coverage_reports",
+      "failure_localization_reports",
+      "explain_quality_reports",
+      "profile_coverage_reports"
+    ],
     "required_artifacts": [
       "pcs_bench_ingest.v0.json",
       "benchmark_run.v0.json",
       "rendering_coverage_report.v0.json",
       "explain_quality_report.v0.json",
       "query_coverage_report.v0.json",
-      "failed_release_rendering_report.v0.json"
+      "failed_release_rendering_report.v0.json",
+      "explain_quality_reports/"
     ],
     "explain_quality_section_ids": [
       "provenance",

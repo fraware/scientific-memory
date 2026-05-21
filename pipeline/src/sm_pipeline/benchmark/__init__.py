@@ -7,6 +7,12 @@ from sm_pipeline.benchmark.pcs_core_coverage import (
     build_explain_quality_report,
     suite_id_for_cases_path,
 )
+from sm_pipeline.benchmark.pcs_core_ingest import (
+    SM_COVERAGE_METRICS,
+    build_artifact_refs_for_ingest,
+    build_embedded_pcs_bench_ingest,
+    validate_embedded_ingest_contract,
+)
 from sm_pipeline.benchmark.pcs_sections import (
     BENCHMARK_RENDERING_SECTIONS,
     REQUIRED_INTERPRETABILITY_SECTIONS,
@@ -47,8 +53,12 @@ __all__ = [
     "PCS_BENCH_INGEST_FILENAME",
     "REQUIRED_INTERPRETABILITY_SECTIONS",
     "V0_REPORT_FILENAMES",
+    "SM_COVERAGE_METRICS",
+    "build_artifact_refs_for_ingest",
+    "build_embedded_pcs_bench_ingest",
     "build_explain_quality_report",
     "build_pcs_bench_ingest",
+    "validate_embedded_ingest_contract",
     "build_v0_reports",
     "check_rendering_regression",
     "discover_case_dirs",

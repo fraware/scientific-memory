@@ -1,58 +1,66 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/BenchmarkRun.v0.schema.json",
+  "$id": "https://pcs.sentinelops.ci/schemas/BenchmarkRun.v0.schema.json",
   "title": "BenchmarkRun.v0",
   "type": "object",
-  "required": ["schema_version", "benchmark_id", "generated_at", "passed", "case_count", "cases"],
+  "required": [
+    "schema_version",
+    "run_id",
+    "task_id",
+    "case_id",
+    "started_at",
+    "completed_at",
+    "commands",
+    "artifacts_produced",
+    "observed_status",
+    "observed_failure_code",
+    "observed_responsible_component",
+    "observed_repair_hint",
+    "duration_ms",
+    "source_repo",
+    "source_commit",
+    "signature_or_digest"
+  ],
+  "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "BenchmarkRun.v0" },
-    "benchmark_id": { "type": "string" },
-    "suite_id": { "type": "string" },
-    "generated_at": { "type": "string" },
-    "repo_root": { "type": "string" },
-    "cases_path": { "type": "string" },
-    "passed": { "type": "boolean" },
-    "case_count": { "type": "integer", "minimum": 0 },
-    "failures": { "type": "array", "items": { "type": "string" } },
-    "failure_events": { "type": "array", "items": { "type": "object" } },
-    "failure_summary": {
-      "type": "object",
-      "properties": {
-        "by_kind": {
-          "type": "object",
-          "properties": {
-            "import_failed": { "type": "integer", "minimum": 0 },
-            "render_failed": { "type": "integer", "minimum": 0 },
-            "query_failed": { "type": "integer", "minimum": 0 },
-            "staleness_failed": { "type": "integer", "minimum": 0 },
-            "comparison_failed": { "type": "integer", "minimum": 0 },
-            "formal_failed": { "type": "integer", "minimum": 0 }
-          },
-          "additionalProperties": true
-        },
-        "total_events": { "type": "integer", "minimum": 0 },
-        "events": { "type": "array", "items": { "type": "object" } }
-      },
-      "additionalProperties": true
-    },
-    "metrics": { "type": "object" },
-    "cases": {
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
+    "run_id": { "type": "string", "minLength": 1 },
+    "task_id": { "type": "string", "minLength": 1 },
+    "case_id": { "type": "string", "minLength": 1 },
+    "started_at": { "$ref": "common.defs.json#/$defs/iso8601_datetime" },
+    "completed_at": { "$ref": "common.defs.json#/$defs/iso8601_datetime" },
+    "commands": {
       "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["case_id", "passed"],
-        "properties": {
-          "case_id": { "type": "string" },
-          "claim_id": { "type": "string" },
-          "release_id": { "type": "string" },
-          "passed": { "type": "boolean" },
-          "failures": { "type": "array", "items": { "type": "string" } },
-          "failure_kinds": { "type": "object" },
-          "failure_events": { "type": "array" },
-          "failure_mode": { "type": "boolean" }
-        }
-      }
-    }
-  },
-  "additionalProperties": true
+      "items": { "$ref": "common.defs.json#/$defs/benchmark_command_entry" }
+    },
+    "artifacts_produced": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "observed_status": { "$ref": "common.defs.json#/$defs/benchmark_observed_status" },
+    "observed_failure_code": { "type": ["string", "null"] },
+    "observed_responsible_component": {
+      "$ref": "common.defs.json#/$defs/nullable_benchmark_responsible_component"
+    },
+    "observed_repair_hint": { "type": ["string", "null"] },
+    "system_admission_outcome": {
+      "$ref": "common.defs.json#/$defs/system_admission_outcome"
+    },
+    "release_chain_status": {
+      "$ref": "common.defs.json#/$defs/release_chain_status"
+    },
+    "certificate_status": {
+      "$ref": "common.defs.json#/$defs/certificate_status_value"
+    },
+    "scientific_memory_import_status": {
+      "$ref": "common.defs.json#/$defs/scientific_memory_import_status"
+    },
+    "scientific_memory_render_status": {
+      "$ref": "common.defs.json#/$defs/scientific_memory_render_status"
+    },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "source_repo": { "type": "string", "format": "uri" },
+    "source_commit": { "$ref": "common.defs.json#/$defs/git_commit" },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
+  }
 }

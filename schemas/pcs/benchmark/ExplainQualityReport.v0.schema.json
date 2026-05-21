@@ -1,8 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/ExplainQualityReport.v0.schema.json",
+  "$id": "https://pcs.sentinelops.ci/schemas/ExplainQualityReport.v0.schema.json",
   "title": "ExplainQualityReport.v0",
-  "description": "pcs-core ExplainQualityReport.v0 mirror for Scientific Memory rendering benchmarks.",
   "type": "object",
   "required": [
     "schema_version",
@@ -20,51 +19,53 @@
     "source_commit",
     "signature_or_digest"
   ],
+  "additionalProperties": false,
   "properties": {
-    "schema_version": { "const": "v0" },
-    "report_id": { "type": "string" },
-    "suite_id": { "type": "string" },
-    "case_id": { "type": "string" },
-    "claim_id": { "type": "string" },
-    "producer_id": { "const": "scientific-memory" },
+    "schema_version": { "$ref": "common.defs.json#/$defs/schema_version" },
+    "report_id": { "type": "string", "minLength": 1 },
+    "suite_id": { "type": "string", "minLength": 1 },
+    "case_id": { "type": "string", "minLength": 1 },
+    "producer_id": { "$ref": "common.defs.json#/$defs/benchmark_producer_id" },
+    "workflow_id": { "type": "string", "minLength": 1 },
     "required_sections": {
       "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "provenance",
-          "hashes",
-          "handoffs",
-          "verification",
-          "formal_checks",
-          "limitations",
-          "lineage",
-          "repair_hints"
-        ]
-      }
+      "minItems": 1,
+      "items": { "$ref": "common.defs.json#/$defs/explain_quality_section_id" }
     },
     "sections": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["explain_quality_section_id", "rendered"],
-        "properties": {
-          "explain_quality_section_id": { "type": "string" },
-          "rendered": { "type": "boolean" },
-          "interpretability_sections": {
-            "type": "array",
-            "items": { "type": "string" }
-          }
-        }
-      }
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/section_quality" }
     },
     "sections_present_count": { "type": "integer", "minimum": 0 },
     "sections_required_count": { "type": "integer", "minimum": 0 },
     "quality_score": { "type": "number", "minimum": 0, "maximum": 1 },
-    "gaps": { "type": "array", "items": { "type": "string" } },
-    "source_repo": { "type": "string" },
-    "source_commit": { "type": "string" },
-    "signature_or_digest": { "type": "string", "pattern": "^sha256:" }
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/quality_gap" }
+    },
+    "source_repo": { "type": "string", "format": "uri" },
+    "source_commit": { "$ref": "common.defs.json#/$defs/git_commit" },
+    "signature_or_digest": { "$ref": "common.defs.json#/$defs/hex_digest" }
   },
-  "additionalProperties": true
+  "$defs": {
+    "section_quality": {
+      "type": "object",
+      "required": ["present", "score"],
+      "additionalProperties": false,
+      "properties": {
+        "present": { "type": "boolean" },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "notes": { "type": "string" }
+      }
+    },
+    "quality_gap": {
+      "type": "object",
+      "required": ["section_id", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "section_id": { "$ref": "common.defs.json#/$defs/explain_quality_section_id" },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
 }

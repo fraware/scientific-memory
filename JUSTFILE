@@ -120,8 +120,14 @@ benchmark-smoke:
 pcs-benchmark-rendering CASES="benchmarks/rendering/labtrust_qc_release" OUT="benchmark_runs/labtrust_rendering":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases {{CASES}} --out {{OUT}}
 
+pcs-benchmark-rendering-pcs-core CASES="benchmarks/rendering/labtrust_qc_release" OUT="benchmark_runs/labtrust_rendering" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases {{CASES}} --out {{OUT}} --validate-pcs-core-output {{pcs_core}}
+
 pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out {{OUT}}
+
+pcs-benchmark-rendering-all-pcs-core OUT="benchmark_runs/pcs_rendering" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out {{OUT}} --validate-pcs-core-output {{pcs_core}}
 
 # Pass the output directory as the first argument (not ``OUT=path`` — that is shell syntax).
 validate-pcs-benchmark-output out_dir="benchmark_runs/pcs_rendering":
@@ -133,10 +139,18 @@ validate-pcs-benchmark-output-pcs-core out_dir="benchmark_runs/pcs_rendering" pc
 pcs-benchmark-external-reviewer out_dir="benchmark_runs/external_reviewer_minimal":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering/external_reviewer_minimal --out {{out_dir}}
 
+pcs-benchmark-external-reviewer-pcs-core out_dir="benchmark_runs/external_reviewer_minimal" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering/external_reviewer_minimal --out {{out_dir}} --validate-pcs-core-output {{pcs_core}}
+
 validate-pcs-benchmark-output-external-reviewer:
 	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out benchmark_runs/external_reviewer_minimal
 
+validate-external-reviewer-benchmark-pcs-core out_dir="benchmark_runs/external_reviewer_minimal" pcs_core="../pcs-core":
+	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out {{out_dir}} --validate-pcs-core-output {{pcs_core}}
+
 validate-external-reviewer-benchmark: pcs-benchmark-external-reviewer validate-pcs-benchmark-output-external-reviewer
+
+validate-external-reviewer-benchmark-full: pcs-benchmark-external-reviewer-pcs-core validate-external-reviewer-benchmark-pcs-core
 
 package-pcs-bench-bundle SRC="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python scripts/package_pcs_bench_bundle.py {{SRC}}

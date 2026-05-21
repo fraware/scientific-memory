@@ -9,6 +9,7 @@ import pytest
 
 from sm_pipeline.benchmark.bench_registry import load_suite_registry, validate_suite_id
 from sm_pipeline.benchmark.pcs_core_coverage import EXPLAIN_QUALITY_SECTION_IDS
+from sm_pipeline.benchmark.pcs_core_ingest import SM_COVERAGE_METRICS, validate_embedded_ingest_contract
 from sm_pipeline.benchmark.report_builder import PCS_BENCH_INGEST_FILENAME, validate_benchmark_output_dir
 from sm_pipeline.benchmark.rendering import run_rendering_benchmark
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
@@ -60,14 +61,28 @@ def test_ingest_canonical_shape_from_run(tmp_path: Path) -> None:
     assert ingest["producer_id"] == "scientific-memory"
     assert ingest["suite_id"] == "scientific-memory-external-reviewer-v0"
     assert ingest["workflow_id"] == "pcs.scientific_memory"
-    assert ingest.get("failure_kinds") and "formal_failed" in ingest["failure_kinds"]
     assert ingest["benchmark_runs"]
     assert ingest["coverage_reports"]
     assert ingest["explain_quality_reports"]
-    assert ingest["query_results"]
-    assert ingest["rendering_reports"]
+    assert ingest["failure_localization_reports"] is not None
+    assert ingest["profile_coverage_reports"] == []
+    assert ingest.get("artifact_refs")
+    assert "run_id" in ingest["benchmark_runs"][0]
+    assert "coverage_id" in ingest["coverage_reports"][0]
+    assert "report_id" in ingest["explain_quality_reports"][0]
+    assert isinstance(ingest["explain_quality_reports"][0].get("sections"), dict)
+    assert "query_results" not in ingest
+    assert "rendering_reports" not in ingest
+    sm_metrics = {
+        (row.get("details") or {}).get("sm_metric")
+        for row in ingest["coverage_reports"]
+        if isinstance(row, dict)
+    }
+    assert sm_metrics >= set(SM_COVERAGE_METRICS)
+    assert validate_embedded_ingest_contract(ingest, out_dir=out) == []
     assert ingest["signature_or_digest"] == canonical_hash(ingest)
     assert (out / "bench_suite_manifest.v0.json").is_file()
+    assert (out / "explain_quality_reports").is_dir()
     assert validate_benchmark_output_dir(out, REPO_ROOT) == []
 
 

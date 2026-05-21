@@ -16,33 +16,34 @@ Scientific Memory publishes PCS rendering benchmark output for [pcs-bench](https
 Each run writes **`pcs_bench_ingest.v0.json`** with:
 
 - `workflow_id`: `pcs.scientific_memory`
-- Arrays: `benchmark_runs`, `coverage_reports`, `explain_quality_reports`, `query_results`, `rendering_reports`
-- `signature_or_digest`: canonical SHA-256 over the ingest object (excluding the digest field)
+- Embedded pcs-core objects: `benchmark_runs`, `coverage_reports`, `failure_localization_reports`, `explain_quality_reports`, `profile_coverage_reports`
+- `artifact_refs`: one `BenchmarkArtifactRef.v0` per embedded explain-quality report (paths under `explain_quality_reports/`)
+- `commands`, `logs`, `source_repo`, `source_commit`, `signature_or_digest`
+
+Companion SM dialect files (`rendering_coverage_report.v0.json`, etc.) and `explain_quality_report.v0.json` (bundle) remain for debugging; pcs-bench ingests the embedded manifest.
 
 Contract: [docs/pcs-bench-ingest.md](../../docs/pcs-bench-ingest.md).
 
 ## Run and validate
 
 ```bash
-just pcs-benchmark-external-reviewer
-just validate-external-reviewer-benchmark
+just pcs-benchmark-external-reviewer-pcs-core
+just validate-external-reviewer-benchmark-pcs-core
 
 # Full suite
-just pcs-benchmark-rendering-all
-just validate-pcs-benchmark-output benchmark_runs/pcs_rendering
-
-# pcs-core schema parity (when pcs-core checkout is present)
+just pcs-benchmark-rendering-all-pcs-core
 just validate-pcs-benchmark-output-pcs-core benchmark_runs/pcs_rendering ../pcs-core
 ```
 
 ## Package for upload
 
 ```bash
-python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_minimal
+python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_minimal \
+  --validate-pcs-core-output ../pcs-core
 ```
 
-Produces `<out>_bundle/` with ingest, v0 reports, `bench_suite_manifest.v0.json`, and contract README.
+Produces `<out>_bundle/` with ingest, v0 reports, `explain_quality_reports/`, `bench_suite_manifest.v0.json`, and contract README.
 
 ## Typed failures
 
-`import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`, `formal_failed` — see ingest contract `failure_kinds` in the registry.
+`import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`, `formal_failed` — projected to `FailureLocalizationResult.v0` in ingest; see registry `ingest_contract.failure_kinds`.

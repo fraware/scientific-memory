@@ -50,15 +50,18 @@ Reports are written to (validated against `schemas/pcs/benchmark/*.schema.json`)
 - `rendering_coverage_report.v0.json` — section coverage per success case
 - `query_coverage_report.v0.json` — query and compare coverage
 - `failed_release_rendering_report.v0.json` — failure-evidence rendering for failed cases
-- `pcs_bench_ingest.v0.json` — pcs-bench manifest (artifact paths + metrics)
+- `pcs_bench_ingest.v0.json` — **canonical pcs-bench ingest** (embedded `BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`, plus `artifact_refs`)
+- `explain_quality_reports/` — per-case `ExplainQualityReport.v0` sidecars referenced from ingest
 - `pcs_bench_payload.json` — legacy flattened alias
 - `rendering_benchmark_summary.md` — human-readable summary
 
-Validate a completed run:
+Validate a completed run (auto-detects adjacent `pcs-core` for schema + semantic checks when present):
 
 ```bash
+just validate-pcs-benchmark-output-pcs-core benchmark_runs/pcs_rendering ../pcs-core
+
 python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
-python scripts/package_pcs_bench_bundle.py benchmark_runs/pcs_rendering
+python scripts/package_pcs_bench_bundle.py benchmark_runs/pcs_rendering --validate-pcs-core-output ../pcs-core
 ```
 
 pcs-bench contract: [docs/pcs-bench-ingest.md](../../docs/pcs-bench-ingest.md). Suite registry: [benchmarks/pcs_bench/suite_registry.v0.json](../pcs_bench/suite_registry.v0.json).

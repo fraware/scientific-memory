@@ -9,12 +9,16 @@ import sys
 from pathlib import Path
 
 BENCHMARK_SCHEMAS = (
-    "BenchmarkRun.v0.schema.json",
+    "BenchmarkRun.v0.schema.json",  # pcs-core per-case run (ingest embedded)
+    "CoverageReport.v0.schema.json",
+    "FailureLocalizationResult.v0.schema.json",
+    "ProfileCoverageReport.v0.schema.json",
     "RenderingCoverageReport.v0.schema.json",
     "QueryCoverageReport.v0.schema.json",
     "FailedReleaseRenderingReport.v0.schema.json",
     "ExplainQualityReport.v0.schema.json",
     "PcsBenchIngest.v0.schema.json",
+    "BenchmarkArtifactRef.v0.schema.json",
 )
 
 

@@ -19,19 +19,26 @@ from sm_pipeline.benchmark.report_builder import (
 # pcs_core package validate_artifact targets protocol artifacts, not SM rendering benchmark reports.
 
 # Output filename -> pcs-core artifact type(s), most specific first.
-OUTPUT_ARTIFACT_TYPES: dict[str, tuple[str, ...]] = {
-    "benchmark_run.v0.json": ("BenchmarkRun.v0",),
-    "rendering_coverage_report.v0.json": (
-        "RenderingCoverageReport.v0",
-        "CoverageReport.v0",
-    ),
-    "query_coverage_report.v0.json": (
-        "QueryCoverageReport.v0",
-        "CoverageReport.v0",
-    ),
-    "failed_release_rendering_report.v0.json": ("FailedReleaseRenderingReport.v0",),
+# pcs-core validates canonical ingest and embedded artifacts; SM companion dialect reports use SM mirrors only.
+PCS_CORE_OUTPUT_ARTIFACT_TYPES: dict[str, tuple[str, ...]] = {
     EXPLAIN_QUALITY_REPORT_FILENAME: ("ExplainQualityReport.v0",),
     PCS_BENCH_INGEST_FILENAME: ("PcsBenchIngest.v0",),
+}
+
+# SM mirror validation (validate_benchmark_reports_dual / validate_v0_reports).
+SM_MIRROR_ARTIFACT_TYPES: dict[str, tuple[str, ...]] = {
+    "rendering_coverage_report.v0.json": ("RenderingCoverageReport.v0",),
+    "query_coverage_report.v0.json": ("QueryCoverageReport.v0",),
+    "failed_release_rendering_report.v0.json": ("FailedReleaseRenderingReport.v0",),
+    EXPLAIN_QUALITY_REPORT_FILENAME: ("ExplainQualityReport.v0",),
+}
+
+INGEST_EMBEDDED_TYPES: dict[str, str] = {
+    "benchmark_runs": "BenchmarkRun.v0",
+    "coverage_reports": "CoverageReport.v0",
+    "failure_localization_reports": "FailureLocalizationResult.v0",
+    "explain_quality_reports": "ExplainQualityReport.v0",
+    "profile_coverage_reports": "ProfileCoverageReport.v0",
 }
 
 _SCHEMA_SUFFIX = ".schema.json"
@@ -95,19 +102,33 @@ def _build_registry(pcs_core_root: Path) -> Registry:
     schemas_dir = pcs_core_root / "schemas"
     if not schemas_dir.is_dir():
         return registry
+
+    common_path = schemas_dir / "common.defs.json"
+    if common_path.is_file():
+        try:
+            common_schema = _load_schema(common_path)
+            common_resource = Resource.from_contents(
+                common_schema,
+                default_specification=DRAFT202012,
+            )
+            common_id = common_schema.get("$id")
+            if isinstance(common_id, str):
+                registry = registry.with_resource(common_id, common_resource)
+            registry = registry.with_resource("common.defs.json", common_resource)
+        except (OSError, json.JSONDecodeError, ValueError):
+            pass
+
     paths = list(schemas_dir.rglob("*.schema.json"))
     for path in sorted(paths):
         try:
             schema = _load_schema(path)
         except (OSError, json.JSONDecodeError, ValueError):
             continue
+        resource = Resource.from_contents(schema, default_specification=DRAFT202012)
         schema_id = schema.get("$id")
-        if not isinstance(schema_id, str):
-            continue
-        registry = registry.with_resource(
-            schema_id,
-            Resource.from_contents(schema, default_specification=DRAFT202012),
-        )
+        if isinstance(schema_id, str):
+            registry = registry.with_resource(schema_id, resource)
+        registry = registry.with_resource(path.name, resource)
     return registry
 
 
@@ -147,7 +168,76 @@ def validate_benchmark_artifacts_with_pcs_core(
     errors: list[str] = []
     resolved_types: dict[str, str] = {}
 
-    for filename, artifact_types in OUTPUT_ARTIFACT_TYPES.items():
+    ingest_payload = reports.get(PCS_BENCH_INGEST_FILENAME)
+    if isinstance(ingest_payload, dict):
+        ingest_schema_path: Path | None = None
+        for candidate_type in PCS_CORE_OUTPUT_ARTIFACT_TYPES[PCS_BENCH_INGEST_FILENAME]:
+            for path in _schema_file_candidates(pcs_core_root, candidate_type):
+                if path.is_file():
+                    ingest_schema_path = path
+                    break
+            if ingest_schema_path:
+                break
+        if ingest_schema_path is None:
+            errors.append(
+                f"{PCS_BENCH_INGEST_FILENAME}: no pcs-core schema for PcsBenchIngest.v0 under {pcs_core_root / 'schemas'}",
+            )
+        else:
+            errors.extend(
+                _validate_with_schema_file(
+                    ingest_payload,
+                    ingest_schema_path,
+                    registry,
+                    label=PCS_BENCH_INGEST_FILENAME,
+                ),
+            )
+            for array_key, artifact_type in INGEST_EMBEDDED_TYPES.items():
+                rows = ingest_payload.get(array_key)
+                if not isinstance(rows, list):
+                    continue
+                for index, row in enumerate(rows):
+                    if not isinstance(row, dict):
+                        errors.append(f"{PCS_BENCH_INGEST_FILENAME}/{array_key}[{index}]: expected object")
+                        continue
+                    schema_path: Path | None = None
+                    for path in _schema_file_candidates(pcs_core_root, artifact_type):
+                        if path.is_file():
+                            schema_path = path
+                            break
+                    if schema_path is None:
+                        errors.append(
+                            f"{PCS_BENCH_INGEST_FILENAME}/{array_key}[{index}]: "
+                            f"no pcs-core schema for {artifact_type}",
+                        )
+                        continue
+                    label = f"{PCS_BENCH_INGEST_FILENAME}/{array_key}/{row.get('case_id', row.get('coverage_id', index))}"
+                    errors.extend(
+                        _validate_with_schema_file(row, schema_path, registry, label=label),
+                    )
+            refs = ingest_payload.get("artifact_refs")
+            if isinstance(refs, list):
+                ref_schema_path: Path | None = None
+                for path in _schema_file_candidates(pcs_core_root, "BenchmarkArtifactRef.v0"):
+                    if path.is_file():
+                        ref_schema_path = path
+                        break
+                if ref_schema_path is None:
+                    errors.append(
+                        f"{PCS_BENCH_INGEST_FILENAME}: no pcs-core schema for BenchmarkArtifactRef.v0",
+                    )
+                else:
+                    for index, ref in enumerate(refs):
+                        if not isinstance(ref, dict):
+                            errors.append(f"{PCS_BENCH_INGEST_FILENAME}/artifact_refs[{index}]: expected object")
+                            continue
+                        label = f"{PCS_BENCH_INGEST_FILENAME}/artifact_refs/{ref.get('path', index)}"
+                        errors.extend(
+                            _validate_with_schema_file(ref, ref_schema_path, registry, label=label),
+                        )
+
+    for filename, artifact_types in PCS_CORE_OUTPUT_ARTIFACT_TYPES.items():
+        if filename == PCS_BENCH_INGEST_FILENAME:
+            continue
         payload = reports.get(filename)
         if not isinstance(payload, dict):
             continue
@@ -184,9 +274,12 @@ def validate_benchmark_artifacts_with_pcs_core(
     if errors:
         return errors
 
-    missing = [name for name in OUTPUT_ARTIFACT_TYPES if name not in reports]
-    if missing:
-        return [f"pcs-core validation: missing reports: {', '.join(missing)}"]
+    ingest_payload = reports.get(PCS_BENCH_INGEST_FILENAME)
+    if isinstance(ingest_payload, dict):
+        errors.extend(_validate_pcs_bench_ingest_semantics(ingest_payload))
+
+    if PCS_BENCH_INGEST_FILENAME not in reports:
+        return [f"pcs-core validation: missing {PCS_BENCH_INGEST_FILENAME}"]
     return []
 
 
@@ -218,6 +311,47 @@ def validate_benchmark_output_dir_with_pcs_core(
     return errors
 
 
+def _validate_pcs_bench_ingest_semantics(ingest: dict[str, Any]) -> list[str]:
+    """pcs-core semantic rules (artifact_refs vs embedded digests, producer contract)."""
+    from sm_pipeline.pcs_validate.pcs_core_hook import pcs_core_available, validate_protocol_artifact
+
+    if not pcs_core_available():
+        return _validate_pcs_bench_ingest_semantics_local(ingest)
+    return validate_protocol_artifact(ingest, "PcsBenchIngest.v0")
+
+
+def _validate_pcs_bench_ingest_semantics_local(ingest: dict[str, Any]) -> list[str]:
+    """Minimal mirror of pcs-core ingest semantics when pcs_core package is not installed."""
+    errors: list[str] = []
+    explain_rows = ingest.get("explain_quality_reports")
+    refs = ingest.get("artifact_refs")
+    if isinstance(explain_rows, list) and explain_rows and refs is None:
+        errors.append(
+            "PcsBenchIngest.v0 producer 'scientific-memory' requires artifact_refs "
+            "when explain_quality_reports are embedded",
+        )
+        return errors
+    if not isinstance(refs, list):
+        return errors
+    ref_keys = {
+        (str(ref.get("artifact_type")), str(ref.get("sha256")))
+        for ref in refs
+        if isinstance(ref, dict)
+    }
+    paths = [str(ref.get("path")) for ref in refs if isinstance(ref, dict) and ref.get("path")]
+    if len(paths) != len(set(paths)):
+        errors.append("PcsBenchIngest.v0 artifact_refs contains duplicate path values")
+    for index, row in enumerate(explain_rows or []):
+        if not isinstance(row, dict):
+            continue
+        digest = row.get("signature_or_digest")
+        if isinstance(digest, str) and ("ExplainQualityReport.v0", digest) not in ref_keys:
+            errors.append(
+                f"explain_quality_reports[{index}]: missing artifact_refs entry for digest {digest}",
+            )
+    return errors
+
+
 def validate_benchmark_reports_dual(
     reports: dict[str, dict[str, Any]],
     *,
@@ -228,4 +362,8 @@ def validate_benchmark_reports_dual(
     errors = validate_v0_reports(repo_root, reports)
     if pcs_core_root is not None:
         errors.extend(validate_benchmark_artifacts_with_pcs_core(reports, pcs_core_root))
+    elif reports.get(PCS_BENCH_INGEST_FILENAME):
+        ingest = reports[PCS_BENCH_INGEST_FILENAME]
+        if isinstance(ingest, dict):
+            errors.extend(_validate_pcs_bench_ingest_semantics(ingest))
     return errors

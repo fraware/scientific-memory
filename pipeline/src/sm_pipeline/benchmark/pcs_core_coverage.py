@@ -56,36 +56,43 @@ def build_explain_quality_report(
     coverage = section_coverage or evaluate_section_coverage(read_model)
     present_labels = set(coverage.get("present_sections") or [])
 
-    sections: list[dict[str, Any]] = []
+    sections: dict[str, Any] = {}
+    gaps: list[dict[str, str]] = []
     for eq_id in EXPLAIN_QUALITY_SECTION_IDS:
         interp_labels = [label for label, mapped in INTERPRETABILITY_TO_EXPLAIN_QUALITY.items() if mapped == eq_id]
         rendered_labels = [label for label in interp_labels if label in present_labels]
         rendered = bool(rendered_labels) or _explain_quality_present(read_model, eq_id)
-        sections.append(
-            {
-                "explain_quality_section_id": eq_id,
-                "rendered": rendered,
-                "interpretability_sections": rendered_labels,
-            },
-        )
+        sections[eq_id] = {"present": rendered, "score": 1.0 if rendered else 0.0}
+        if not rendered:
+            gaps.append(
+                {
+                    "section_id": eq_id,
+                    "message": (
+                        f"Missing explain-quality section {eq_id}"
+                        + (f" (interpretability: {', '.join(rendered_labels)})" if interp_labels else "")
+                    ),
+                },
+            )
 
-    present_count = sum(1 for row in sections if row.get("rendered"))
+    present_count = sum(1 for row in sections.values() if row.get("present"))
     required_count = len(EXPLAIN_QUALITY_SECTION_IDS)
+    from sm_pipeline.benchmark.pcs_core_ingest import PCS_WORKFLOW_ID, normalize_source_commit
+
     report: dict[str, Any] = {
         "schema_version": "v0",
         "report_id": f"explain-quality-{case_id}",
         "suite_id": suite_id,
         "case_id": case_id,
-        "claim_id": claim_id,
         "producer_id": "scientific-memory",
+        "workflow_id": PCS_WORKFLOW_ID,
         "required_sections": list(EXPLAIN_QUALITY_SECTION_IDS),
         "sections": sections,
         "sections_present_count": present_count,
         "sections_required_count": required_count,
         "quality_score": round(present_count / required_count, 4) if required_count else 1.0,
-        "gaps": [row["explain_quality_section_id"] for row in sections if not row.get("rendered")],
+        "gaps": gaps,
         "source_repo": SOURCE_REPO,
-        "source_commit": source_commit,
+        "source_commit": normalize_source_commit(source_commit),
     }
     report["signature_or_digest"] = canonical_hash(report)
     return report

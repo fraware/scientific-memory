@@ -15,11 +15,14 @@ Minimal PCS rendering benchmark for external reviewers and pcs-bench smoke inges
 ## Run
 
 ```bash
-just pcs-benchmark-rendering CASES=benchmarks/rendering/external_reviewer_minimal OUT=benchmark_runs/external_reviewer_minimal
-python scripts/validate_pcs_benchmark_output.py benchmark_runs/external_reviewer_minimal
+just validate-external-reviewer-benchmark-full
+
+# Or stepwise:
+just pcs-benchmark-external-reviewer-pcs-core
+just validate-external-reviewer-benchmark-pcs-core
 ```
 
-Ingest manifest: `pcs_bench_ingest.v0.json` (`suite_id`: `scientific-memory-external-reviewer-v0`).
+Ingest: `pcs_bench_ingest.v0.json` (`suite_id`: `scientific-memory-external-reviewer-v0`) with embedded pcs-core v0 objects and `explain_quality_reports/` sidecars.
 
 Regenerate expectations:
 

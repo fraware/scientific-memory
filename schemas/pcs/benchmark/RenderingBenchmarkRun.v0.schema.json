@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.local/schemas/pcs/benchmark/BenchmarkRun.v0.schema.json",
+  "title": "BenchmarkRun.v0",
+  "type": "object",
+  "required": ["schema_version", "benchmark_id", "generated_at", "passed", "case_count", "cases"],
+  "properties": {
+    "schema_version": { "const": "BenchmarkRun.v0" },
+    "benchmark_id": { "type": "string" },
+    "suite_id": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "repo_root": { "type": "string" },
+    "cases_path": { "type": "string" },
+    "passed": { "type": "boolean" },
+    "case_count": { "type": "integer", "minimum": 0 },
+    "failures": { "type": "array", "items": { "type": "string" } },
+    "failure_events": { "type": "array", "items": { "type": "object" } },
+    "failure_summary": {
+      "type": "object",
+      "properties": {
+        "by_kind": {
+          "type": "object",
+          "properties": {
+            "import_failed": { "type": "integer", "minimum": 0 },
+            "render_failed": { "type": "integer", "minimum": 0 },
+            "query_failed": { "type": "integer", "minimum": 0 },
+            "staleness_failed": { "type": "integer", "minimum": 0 },
+            "comparison_failed": { "type": "integer", "minimum": 0 },
+            "formal_failed": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": true
+        },
+        "total_events": { "type": "integer", "minimum": 0 },
+        "events": { "type": "array", "items": { "type": "object" } }
+      },
+      "additionalProperties": true
+    },
+    "metrics": { "type": "object" },
+    "cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["case_id", "passed"],
+        "properties": {
+          "case_id": { "type": "string" },
+          "claim_id": { "type": "string" },
+          "release_id": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "failures": { "type": "array", "items": { "type": "string" } },
+          "failure_kinds": { "type": "object" },
+          "failure_events": { "type": "array" },
+          "failure_mode": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}
