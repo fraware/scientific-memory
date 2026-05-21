@@ -11,6 +11,7 @@ Scientific Memory exposes PCS rendering benchmarks as a **pcs-bench** producer. 
   "schema_version": "v0",
   "producer_id": "scientific-memory",
   "suite_id": "scientific-memory-rendering-v0",
+  "workflow_id": "pcs.scientific_memory",
   "passed": true,
   "benchmark_runs": [],
   "coverage_reports": [],
@@ -18,6 +19,14 @@ Scientific Memory exposes PCS rendering benchmarks as a **pcs-bench** producer. 
   "query_results": [],
   "rendering_reports": [],
   "failure_summary": {},
+  "failure_kinds": [
+    "import_failed",
+    "render_failed",
+    "query_failed",
+    "staleness_failed",
+    "comparison_failed",
+    "formal_failed"
+  ],
   "source_repo": "https://github.com/fraware/scientific-memory",
   "source_commit": "<git HEAD>",
   "signature_or_digest": "sha256:..."
@@ -65,8 +74,28 @@ Benchmark failures are **not** collapsed into a single string. Each case emits `
 | `query_failed` | Claim index query mismatch |
 | `staleness_failed` | Staleness expectation mismatch |
 | `comparison_failed` | `compare_releases` subset mismatch |
+| `formal_failed` | Lean / formal-trust kernel evidence missing or incomplete |
 
 Each event includes `responsible_component`, `repair_hint`, `artifact_path`, and optional `what_was_still_imported`.
+
+## pcs-core schema validation
+
+When a sibling [pcs-core](https://github.com/SentinelOps-CI/pcs-core) checkout is available, validate benchmark outputs against its canonical schemas:
+
+```bash
+python -m sm_pipeline.benchmark.pcs_rendering \
+  --cases benchmarks/rendering/labtrust_qc_release \
+  --out benchmark_runs/labtrust_qc_release \
+  --validate-pcs-core-output ../pcs-core
+
+python scripts/validate_pcs_benchmark_output.py \
+  --out benchmark_runs/external_reviewer_minimal \
+  --validate-pcs-core-output ../pcs-core
+```
+
+Resolution order: CLI path, `PCS_CORE_PATH` (CI), `PCS_CORE_ROOT`, `../pcs-core`, `./pcs-core`.
+
+When `PCS_CORE_PATH` is set (see `scripts/run_pcs_rc_ci_gate.sh`), the RC gate runs benchmark + validate with pcs-core schema checks automatically.
 
 ## Run commands
 

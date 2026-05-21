@@ -4,7 +4,7 @@
       "artifact_type": "LeanCheckResult.v0",
       "producer": "pcs-core",
       "schema": "LeanCheckResult.v0.schema.json",
-      "sha256": "sha256:7986842b7abe543bcd068aa4aa2e57f085807aad8eabec8c975a4efa35c7bd94",
+      "sha256": "sha256:54d22e1100da6ed537b29de025a5bb42faad9ce6dbec58f827c926abf0d86b20",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -12,7 +12,7 @@
       "artifact_type": "ProofObligation.v0",
       "producer": "pcs-core",
       "schema": "ProofObligation.v0.schema.json",
-      "sha256": "sha256:1372a557ec7f57b434b898440fba07713c7d6e73383a449b6e4a5fccf3ca4459",
+      "sha256": "sha256:f2a2e9c3b8bc372ce408a00a1a753001233a77b29751bbe67fe70d7fbdd16004",
       "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -124,7 +124,7 @@
   "release_id": "release-pcs-v0.1-labtrust-qc",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:ff3095cf961e408698594c78df92df3907ee91db211a82185548fe6058a89c21",
+  "signature_or_digest": "sha256:3fdf2d4c16dd8ae782621737838884fd9968fae74d0df2e039b62751ea074bbe",
   "validation_profile": "labtrust-v0.1-release-chain",
   "workflow_profile_id": "labtrust.qc_release_v0.1"
 }

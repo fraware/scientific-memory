@@ -80,6 +80,7 @@ def test_pcs_bench_ingest_schema_shape() -> None:
         "schema_version": "v0",
         "producer_id": "scientific-memory",
         "suite_id": "scientific-memory-rendering-v0",
+        "workflow_id": "pcs.scientific_memory",
         "benchmark_runs": [{"benchmark_run_id": "pcs_rendering", "path": "/tmp/run.json", "passed": True}],
         "coverage_reports": [
             {
@@ -140,9 +141,23 @@ def test_labtrust_rendering_benchmark_passes(tmp_path: Path) -> None:
     ingest = json.loads((out / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     assert ingest["schema_version"] == "v0"
     assert ingest["producer_id"] == "scientific-memory"
+    assert ingest["workflow_id"] == "pcs.scientific_memory"
     assert ingest["benchmark_runs"]
     assert ingest["coverage_reports"]
     assert validate_benchmark_output_dir(out, REPO_ROOT) == []
+
+
+def test_failed_lean_case_emits_formal_failed_kind(tmp_path: Path) -> None:
+    report = run_rendering_benchmark(
+        BENCHMARKS / "failed" / "failed_lean_check",
+        repo_root=REPO_ROOT,
+        out_dir=tmp_path / "failed_lean_taxonomy",
+        isolated=True,
+    )
+    case = report["cases"][0]
+    assert case["passed"] is True
+    kinds = case.get("failure_kinds") or {}
+    assert kinds.get("formal_failed") is False
 
 
 def test_failure_kinds_taxonomy_on_cases(tmp_path: Path) -> None:

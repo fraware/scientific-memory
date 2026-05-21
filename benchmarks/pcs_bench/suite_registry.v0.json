@@ -47,9 +47,11 @@
       "render_failed",
       "query_failed",
       "staleness_failed",
-      "comparison_failed"
-    ]
+      "comparison_failed",
+      "formal_failed"
+    ],
+    "workflow_id": "pcs.scientific_memory"
   },
   "source_repo": "https://github.com/fraware/scientific-memory",
-  "source_commit": "registry-v0"
+  "source_commit": "31c02f8ef487d3509542affcf5b7339ca940d4ab"
 }

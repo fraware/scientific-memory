@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 from pathlib import Path
 from typing import Any
 
@@ -39,6 +40,31 @@ def validate_suite_id(repo_root: Path, suite_id: str) -> str | None:
         ]
         return f"unknown suite_id {suite_id!r}; known: {', '.join(known)}"
     return None
+
+
+def _resolve_source_commit(repo_root: Path) -> str:
+    try:
+        proc = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            check=True,
+            timeout=10,
+        )
+        return proc.stdout.strip() or "unknown"
+    except (OSError, subprocess.SubprocessError):
+        return "unknown"
+
+
+def refresh_registry_source_commit(repo_root: Path) -> str:
+    """Stamp suite_registry.v0.json source_commit from git HEAD (producer provenance)."""
+    path = (repo_root / REGISTRY_REL).resolve()
+    registry = load_suite_registry(repo_root)
+    commit = _resolve_source_commit(repo_root)
+    registry["source_commit"] = commit
+    path.write_text(json.dumps(registry, indent=2) + "\n", encoding="utf-8")
+    return commit
 
 
 def build_run_suite_manifest(

@@ -132,7 +132,7 @@ python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out
 just validate-pcs-benchmark-output benchmark_runs/pcs_rendering
 ```
 
-**pcs-bench canonical ingest:** `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`). Required arrays: `benchmark_runs`, `coverage_reports`, `explain_quality_reports`, `query_results`, `rendering_reports`, plus `source_repo`, `source_commit`, `signature_or_digest`.
+**pcs-bench canonical ingest:** `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`, `workflow_id`: `pcs.scientific_memory`). Required arrays: `benchmark_runs`, `coverage_reports`, `explain_quality_reports`, `query_results`, `rendering_reports`, plus `source_repo`, `source_commit`, `signature_or_digest`. Optional pcs-core validation: `--validate-pcs-core-output ../pcs-core` on the benchmark CLI or validate script.
 
 | Artifact | Role |
 |----------|------|
@@ -145,7 +145,7 @@ just validate-pcs-benchmark-output benchmark_runs/pcs_rendering
 
 `rendering_coverage_report.v0.json` uses pcs-core explain-quality sections: `provenance`, `hashes`, `handoffs`, `verification`, `formal_checks`, `limitations`, `lineage`, `repair_hints`.
 
-Benchmark failures are typed (not collapsed): `import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`. Each event includes `responsible_component`, `repair_hint`, and `artifact_path`.
+Benchmark failures are typed (not collapsed): `import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`, `formal_failed`. Each event includes `responsible_component`, `repair_hint`, and `artifact_path`.
 
 **External reviewer packet:** `benchmarks/rendering/external_reviewer_minimal/` (`suite_id`: `scientific-memory-external-reviewer-v0`). Run with `just pcs-benchmark-external-reviewer`.
 

@@ -24,6 +24,12 @@ from sm_pipeline.benchmark.report_builder import (
     write_pcs_bench_artifacts,
     write_v0_reports,
 )
+from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
+    resolve_pcs_core_from_env,
+    resolve_pcs_core_root,
+    validate_benchmark_artifacts_with_pcs_core,
+    validate_benchmark_reports_dual,
+)
 from sm_pipeline.benchmark.rendering import (
     check_rendering_regression,
     discover_case_dirs,
@@ -53,7 +59,11 @@ __all__ = [
     "run_rendering_benchmark",
     "suite_id_for_cases_path",
     "summarize_failure_kinds",
+    "resolve_pcs_core_from_env",
+    "resolve_pcs_core_root",
+    "validate_benchmark_artifacts_with_pcs_core",
     "validate_benchmark_output_dir",
+    "validate_benchmark_reports_dual",
     "validate_v0_reports",
     "write_pcs_bench_artifacts",
     "write_v0_reports",

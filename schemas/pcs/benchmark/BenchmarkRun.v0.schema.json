@@ -15,7 +15,26 @@
     "case_count": { "type": "integer", "minimum": 0 },
     "failures": { "type": "array", "items": { "type": "string" } },
     "failure_events": { "type": "array", "items": { "type": "object" } },
-    "failure_summary": { "type": "object" },
+    "failure_summary": {
+      "type": "object",
+      "properties": {
+        "by_kind": {
+          "type": "object",
+          "properties": {
+            "import_failed": { "type": "integer", "minimum": 0 },
+            "render_failed": { "type": "integer", "minimum": 0 },
+            "query_failed": { "type": "integer", "minimum": 0 },
+            "staleness_failed": { "type": "integer", "minimum": 0 },
+            "comparison_failed": { "type": "integer", "minimum": 0 },
+            "formal_failed": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": true
+        },
+        "total_events": { "type": "integer", "minimum": 0 },
+        "events": { "type": "array", "items": { "type": "object" } }
+      },
+      "additionalProperties": true
+    },
     "metrics": { "type": "object" },
     "cases": {
       "type": "array",

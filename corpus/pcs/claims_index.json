@@ -98,7 +98,7 @@
       "dataset_version": null,
       "environment_id": null,
       "failed_lean_theorems": null,
-      "imported_at": "2026-05-20T12:06:20Z",
+      "imported_at": "2026-05-21T11:18:44Z",
       "lean_check_result_id": "lean-check-release-pcs-v0.1-labtrust-qc",
       "lean_check_status": "ProofChecked",
       "lean_theorems": [
@@ -111,7 +111,7 @@
       "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
       "release_candidate": "pcs-v0.1.0-rc1",
       "release_id": "release-pcs-v0.1-labtrust-qc",
-      "release_manifest_hash": "sha256:ff3095cf961e408698594c78df92df3907ee91db211a82185548fe6058a89c21",
+      "release_manifest_hash": "sha256:3fdf2d4c16dd8ae782621737838884fd9968fae74d0df2e039b62751ea074bbe",
       "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
       "result_hash": null,
       "signed_bundle_hash": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",

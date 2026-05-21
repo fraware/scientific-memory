@@ -13,6 +13,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO_ROOT / "pipeline" / "src"))
 
 from sm_pipeline.benchmark.bench_registry import build_run_suite_manifest
+from sm_pipeline.benchmark.pcs_core_benchmark_validate import resolve_pcs_core_root
 from sm_pipeline.benchmark.report_builder import (
     PCS_BENCH_INGEST_FILENAME,
     validate_benchmark_output_dir,
@@ -38,8 +39,16 @@ def main() -> int:
     )
     parser.add_argument(
         "--dest",
-        default="",
+        default=None,
         help="Destination bundle directory (default: <source>_bundle)",
+    )
+    parser.add_argument(
+        "--validate-pcs-core-output",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PCS_CORE_ROOT",
+        help="Validate source dir against pcs-core schemas before packaging",
     )
     args = parser.parse_args()
 
@@ -48,7 +57,21 @@ def main() -> int:
         source = REPO_ROOT / source
     source = source.resolve()
 
-    errors = validate_benchmark_output_dir(source, REPO_ROOT)
+    pcs_core_root = None
+    if args.validate_pcs_core_output is not None:
+        raw = str(args.validate_pcs_core_output).strip()
+        from sm_pipeline.benchmark.pcs_core_benchmark_validate import resolve_pcs_core_from_env
+
+        pcs_core_root = (
+            resolve_pcs_core_from_env(repo_root=REPO_ROOT)
+            if raw == ""
+            else resolve_pcs_core_root(raw, repo_root=REPO_ROOT)
+        )
+        if pcs_core_root is None:
+            print("pcs-core root not found for pre-package validation", file=sys.stderr)
+            return 1
+
+    errors = validate_benchmark_output_dir(source, REPO_ROOT, pcs_core_root=pcs_core_root)
     if errors:
         for msg in errors:
             print(msg, file=sys.stderr)

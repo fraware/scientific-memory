@@ -39,6 +39,7 @@ PCS_BENCH_INGEST_FILENAME = "pcs_bench_ingest.v0.json"
 EXPLAIN_QUALITY_REPORT_FILENAME = "explain_quality_report.v0.json"
 BENCH_SUITE_MANIFEST_FILENAME = "bench_suite_manifest.v0.json"
 LEGACY_PAYLOAD_FILENAME = "pcs_bench_payload.json"
+PCS_WORKFLOW_ID = "pcs.scientific_memory"
 
 
 def _now() -> str:
@@ -320,6 +321,7 @@ def build_pcs_bench_ingest(
         "schema_version": "v0",
         "producer_id": "scientific-memory",
         "suite_id": suite_id,
+        "workflow_id": PCS_WORKFLOW_ID,
         "passed": bool(benchmark_run.get("passed")),
         "benchmark_runs": [
             {
@@ -365,6 +367,7 @@ def build_pcs_bench_ingest(
             },
         ],
         "failure_summary": benchmark_run.get("failure_summary") or {},
+        "failure_kinds": list(FAILURE_KINDS),
         "source_repo": SOURCE_REPO,
         "source_commit": source_commit,
     }
@@ -455,7 +458,12 @@ def load_v0_reports_from_dir(out_dir: Path) -> dict[str, dict[str, Any]]:
     return reports
 
 
-def validate_benchmark_output_dir(out_dir: Path, repo_root: Path) -> list[str]:
+def validate_benchmark_output_dir(
+    out_dir: Path,
+    repo_root: Path,
+    *,
+    pcs_core_root: Path | None = None,
+) -> list[str]:
     """Validate a completed PCS rendering benchmark output directory."""
     errors: list[str] = []
     out_dir = out_dir.resolve()
@@ -472,6 +480,7 @@ def validate_benchmark_output_dir(out_dir: Path, repo_root: Path) -> list[str]:
     errors.extend(validate_v0_reports(repo_root, reports))
     ingest = json.loads((out_dir / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     if isinstance(ingest, dict):
+        reports[PCS_BENCH_INGEST_FILENAME] = ingest
         errors.extend(validate_v0_reports(repo_root, {PCS_BENCH_INGEST_FILENAME: ingest}))
         expected_sig = canonical_hash(ingest)
         actual_sig = str(ingest.get("signature_or_digest") or "")
@@ -480,6 +489,8 @@ def validate_benchmark_output_dir(out_dir: Path, repo_root: Path) -> list[str]:
         suite_err = validate_suite_id(repo_root, str(ingest.get("suite_id") or ""))
         if suite_err:
             errors.append(suite_err)
+        if str(ingest.get("workflow_id") or "") != PCS_WORKFLOW_ID:
+            errors.append(f"pcs_bench_ingest.v0.json: workflow_id must be {PCS_WORKFLOW_ID!r}")
         for key in (
             "benchmark_runs",
             "coverage_reports",
@@ -489,6 +500,12 @@ def validate_benchmark_output_dir(out_dir: Path, repo_root: Path) -> list[str]:
         ):
             if key not in ingest:
                 errors.append(f"pcs_bench_ingest.v0.json: missing {key}")
+    if pcs_core_root is not None:
+        from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
+            validate_benchmark_artifacts_with_pcs_core,
+        )
+
+        errors.extend(validate_benchmark_artifacts_with_pcs_core(reports, pcs_core_root.resolve()))
     run = reports["benchmark_run.v0.json"]
     if not run.get("passed"):
         errors.extend(str(msg) for msg in (run.get("failures") or [])[:10])

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import sys
 import time
@@ -12,9 +13,17 @@ from typing import Any
 
 from sm_pipeline.benchmark.failure_taxonomy import (
     FAILURE_KINDS,
+    classify_failure_evidence_kind,
+    classify_section_failure_kind,
     failure_event,
     failure_messages,
+    formal_failure_context,
     summarize_failure_kinds,
+)
+from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
+    resolve_pcs_core_from_env,
+    resolve_pcs_core_root,
+    validate_benchmark_reports_dual,
 )
 from sm_pipeline.benchmark.pcs_sections import (
     BENCHMARK_RENDERING_SECTIONS,
@@ -617,11 +626,17 @@ def run_case(
         required_sections = list(required_sections) + ["Formal Trust Kernel"]
     section_report = evaluate_section_coverage(read_model, required=required_sections)
     if section_report["missing_sections"]:
+        section_kind = classify_section_failure_kind(list(section_report["missing_sections"]))
+        section_hint = (
+            "Re-import release and attach ProofObligation.v0 / LeanCheckResult.v0 for formal trust kernel."
+            if section_kind == "formal_failed"
+            else "Re-import release and verify read_model enrichment for required interpretability sections."
+        )
         failure_events.append(
             failure_event(
-                "render_failed",
+                section_kind,
                 f"missing sections: {', '.join(section_report['missing_sections'])}",
-                repair_hint="Re-import release and verify read_model enrichment for required interpretability sections.",
+                repair_hint=section_hint,
                 artifact_path=str(read_model_path),
             ),
         )
@@ -712,12 +727,21 @@ def run_case(
         expected_failure = _load_json(expected_failure_path) if expected_failure_path.is_file() else {}
         failure_report = _evaluate_failure_evidence(read_model, expected_failure)
         if not failure_report["passed"]:
+            evidence_kind = classify_failure_evidence_kind(read_model, expected_failure)
+            component, hint, artifacts = formal_failure_context(read_model)
+            if evidence_kind != "formal_failed":
+                component = str((read_model.get("staleness") or {}).get("responsible_component") or "Scientific Memory")
+                hint = (
+                    "Surface failure reason, responsible component, artifact path, repair hint, "
+                    "and non-claims in read_model."
+                )
             failure_events.append(
                 failure_event(
-                    "render_failed",
+                    evidence_kind,
                     "failure evidence rendering incomplete",
-                    repair_hint="Surface failure reason, responsible component, artifact path, repair hint, and non-claims in read_model.",
-                    artifact_path=str(read_model_path),
+                    responsible_component=component,
+                    repair_hint=hint,
+                    artifact_path=str(artifacts[0] if artifacts else read_model_path),
                     what_was_still_imported=["claim", "artifact_registry", "scientific_memory_import_report"],
                 ),
             )
@@ -768,6 +792,7 @@ def run_rendering_benchmark(
     repo_root: Path | None = None,
     out_dir: Path | None = None,
     isolated: bool = True,
+    validate_pcs_core_output: str | Path | None = None,
 ) -> dict[str, Any]:
     root = _repo_root(repo_root)
     case_dirs = discover_case_dirs(cases_path)
@@ -891,7 +916,24 @@ def run_rendering_benchmark(
             aggregate_failures=aggregate_failures,
             metrics=report["metrics"],
         )
-        schema_errors = validate_v0_reports(root, v0_reports)
+        pcs_core_root: Path | None = None
+        if validate_pcs_core_output is not None:
+            raw_pcs = str(validate_pcs_core_output).strip()
+            pcs_core_root = (
+                resolve_pcs_core_from_env(repo_root=root)
+                if raw_pcs == ""
+                else resolve_pcs_core_root(raw_pcs, repo_root=root)
+            )
+            if pcs_core_root is None:
+                aggregate_failures.append(
+                    "pcs-core validation requested but root not found "
+                    f"(arg={validate_pcs_core_output!r}, PCS_CORE_PATH={os.environ.get('PCS_CORE_PATH', '')!r})",
+                )
+        schema_errors = validate_benchmark_reports_dual(
+            v0_reports,
+            repo_root=root,
+            pcs_core_root=pcs_core_root,
+        )
         if schema_errors:
             aggregate_failures.extend(schema_errors[:10])
             report["passed"] = False
@@ -909,6 +951,8 @@ def run_rendering_benchmark(
         v0_paths.update(bench_paths)
         report["v0_reports"] = v0_paths
         report["pcs_bench_ingest"] = str(out_dir / PCS_BENCH_INGEST_FILENAME)
+        if pcs_core_root is not None:
+            report["pcs_core_validation_root"] = str(pcs_core_root)
         report_path = out_dir / "benchmark_run.v0.json"
         report["report_path"] = str(report_path)
         report["schema_version"] = BENCHMARK_SCHEMA
@@ -1028,17 +1072,30 @@ def main(argv: list[str] | None = None) -> int:
         default="",
         help="Write pcs-bench flattened JSON payload to this path",
     )
+    parser.add_argument(
+        "--validate-pcs-core-output",
+        nargs="?",
+        const="",
+        default=None,
+        metavar="PCS_CORE_ROOT",
+        help=(
+            "Validate v0 artifacts against pcs-core schemas. "
+            "Flag alone uses PCS_CORE_PATH/PCS_CORE_ROOT; optional path overrides."
+        ),
+    )
     args = parser.parse_args(argv)
 
     cases_path = Path(args.cases)
     repo_root = Path(args.repo_root) if args.repo_root else _repo_root(None)
     out_dir = Path(args.out) if args.out else repo_root / "benchmark_runs" / cases_path.name
 
+    pcs_core_validate = args.validate_pcs_core_output
     report = run_rendering_benchmark(
         cases_path,
         repo_root=repo_root,
         out_dir=out_dir,
         isolated=not args.in_place,
+        validate_pcs_core_output=pcs_core_validate,
     )
     if args.pcs_bench_out:
         bench_path = Path(args.pcs_bench_out)

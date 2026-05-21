@@ -25,7 +25,15 @@ def test_suite_registry_lists_rendering_suites() -> None:
     contract = registry["ingest_contract"]
     assert contract["schema_version"] == "v0"
     assert set(contract["explain_quality_section_ids"]) == set(EXPLAIN_QUALITY_SECTION_IDS)
-    assert "import_failed" in contract["failure_kinds"]
+    assert set(contract["failure_kinds"]) >= {
+        "import_failed",
+        "render_failed",
+        "query_failed",
+        "staleness_failed",
+        "comparison_failed",
+        "formal_failed",
+    }
+    assert contract.get("workflow_id") == "pcs.scientific_memory"
 
 
 def test_unknown_suite_id_rejected() -> None:
@@ -51,6 +59,8 @@ def test_ingest_canonical_shape_from_run(tmp_path: Path) -> None:
     assert ingest["schema_version"] == "v0"
     assert ingest["producer_id"] == "scientific-memory"
     assert ingest["suite_id"] == "scientific-memory-external-reviewer-v0"
+    assert ingest["workflow_id"] == "pcs.scientific_memory"
+    assert ingest.get("failure_kinds") and "formal_failed" in ingest["failure_kinds"]
     assert ingest["benchmark_runs"]
     assert ingest["coverage_reports"]
     assert ingest["explain_quality_reports"]
@@ -59,3 +69,34 @@ def test_ingest_canonical_shape_from_run(tmp_path: Path) -> None:
     assert ingest["signature_or_digest"] == canonical_hash(ingest)
     assert (out / "bench_suite_manifest.v0.json").is_file()
     assert validate_benchmark_output_dir(out, REPO_ROOT) == []
+
+
+def test_package_pcs_bench_bundle(tmp_path: Path) -> None:
+    import subprocess
+    import sys
+
+    out = tmp_path / "pack_probe"
+    run_rendering_benchmark(
+        EXTERNAL_REVIEWER,
+        repo_root=REPO_ROOT,
+        out_dir=out,
+        isolated=True,
+    )
+    bundle = tmp_path / "bundle"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts/package_pcs_bench_bundle.py"),
+            str(out),
+            "--dest",
+            str(bundle),
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert (bundle / PCS_BENCH_INGEST_FILENAME).is_file()
+    assert (bundle / "bench_suite_manifest.v0.json").is_file()
+    assert (bundle / "README.md").is_file()

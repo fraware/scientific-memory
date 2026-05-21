@@ -197,7 +197,17 @@ python scripts/bootstrap_pcs_rendering_benchmarks.py   # regenerate expected_*.j
 
 Cases: `labtrust_qc_release`, `tool_use_safety`, `computation_reproducibility`, `formal_trust_kernel`, plus `failed/*` (rejected certificate, stale, failed Lean/PF, missing registry metadata, result hash mismatch). External reviewer packet: `benchmarks/rendering/external_reviewer_minimal/` (5 cases).
 
-**pcs-bench:** canonical file `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`). Suite registry: `benchmarks/pcs_bench/suite_registry.v0.json`. See [pcs-bench-ingest.md](../pcs-bench-ingest.md). Validate: `just validate-pcs-benchmark-output`. Package: `python scripts/package_pcs_bench_bundle.py`.
+**pcs-bench:** canonical file `pcs_bench_ingest.v0.json` (`schema_version`: `v0`, `producer_id`: `scientific-memory`, `workflow_id`: `pcs.scientific_memory`). Suite registry: `benchmarks/pcs_bench/suite_registry.v0.json`. See [pcs-bench-ingest.md](../pcs-bench-ingest.md).
+
+```bash
+just pcs-benchmark-external-reviewer
+just validate-external-reviewer-benchmark
+just validate-pcs-benchmark-output-pcs-core benchmark_runs/pcs_rendering ../pcs-core
+python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_minimal
+uv run python scripts/sync_pcs_benchmark_schemas.py   # refresh SM mirrors from pcs-core
+```
+
+Typed benchmark failures: `import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`, `formal_failed`.
 
 ## CI gate
 

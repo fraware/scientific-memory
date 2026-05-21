@@ -199,23 +199,26 @@ def main() -> int:
     _run_portal_pcs_contracts()
 
     gate_out = REPO_ROOT / "benchmark_runs/pcs_rc_gate_rendering"
-    _run(
-        [
-            sys.executable,
-            "-m",
-            "sm_pipeline.benchmark.pcs_rendering",
-            "--cases",
-            "benchmarks/rendering/external_reviewer_minimal",
-            "--out",
-            str(gate_out),
-            "--no-check-regression",
-        ],
-        env=env,
-    )
-    _run(
-        [sys.executable, str(REPO_ROOT / "scripts/validate_pcs_benchmark_output.py"), str(gate_out)],
-        env=env,
-    )
+    bench_cmd = [
+        sys.executable,
+        "-m",
+        "sm_pipeline.benchmark.pcs_rendering",
+        "--cases",
+        "benchmarks/rendering/external_reviewer_minimal",
+        "--out",
+        str(gate_out),
+        "--no-check-regression",
+    ]
+    validate_cmd = [
+        sys.executable,
+        str(REPO_ROOT / "scripts/validate_pcs_benchmark_output.py"),
+        str(gate_out),
+    ]
+    if pcs_core.is_dir() and (pcs_core / "schemas").is_dir():
+        bench_cmd.extend(["--validate-pcs-core-output", str(pcs_core)])
+        validate_cmd.extend(["--validate-pcs-core-output", str(pcs_core)])
+    _run(bench_cmd, env=env)
+    _run(validate_cmd, env=env)
 
     index_path = REPO_ROOT / "corpus/pcs/claims_index.json"
     if not index_path.is_file():

@@ -442,6 +442,14 @@ def pcs_benchmark_rendering(
         "--check-regression/--no-check-regression",
         help="Enforce benchmarks/rendering/baseline_thresholds.json",
     ),
+    validate_pcs_core_output: str | None = typer.Option(
+        None,
+        "--validate-pcs-core-output",
+        help=(
+            "Validate v0 reports against pcs-core schemas. "
+            "Use flag alone for PCS_CORE_PATH; or pass a checkout path."
+        ),
+    ),
 ) -> None:
     """Run PCS import/render/query benchmarks (pcs-bench consumable report)."""
     from pathlib import Path
@@ -460,11 +468,15 @@ def pcs_benchmark_rendering(
     if out and not out_dir.is_absolute():
         out_dir = repo / out_dir
 
+    pcs_core_validate: str | None = None
+    if validate_pcs_core_output is not None:
+        pcs_core_validate = validate_pcs_core_output.strip()
     report = run_rendering_benchmark(
         cases_path,
         repo_root=repo,
         out_dir=out_dir,
         isolated=not in_place,
+        validate_pcs_core_output=pcs_core_validate,
     )
     report_path = report.get("report_path") or out_dir / "benchmark_run.v0.json"
     ingest_path = report.get("pcs_bench_ingest") or out_dir / "pcs_bench_ingest.v0.json"

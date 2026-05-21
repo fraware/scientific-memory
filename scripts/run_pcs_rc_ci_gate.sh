@@ -70,11 +70,18 @@ echo "==> PCS: pytest (full tests/pcs suite)"
 python -m pytest "$_root/tests/pcs" -q
 
 echo "==> PCS: rendering benchmark (external reviewer, pcs-bench ingest)"
+_pcs_bench_validate=()
+if [ -n "${PCS_CORE_PATH:-}" ] && [ -d "${PCS_CORE_PATH}/schemas" ]; then
+  _pcs_bench_validate=(--validate-pcs-core-output "${PCS_CORE_PATH}")
+fi
 python -m sm_pipeline.benchmark.pcs_rendering \
   --cases "$_root/benchmarks/rendering/external_reviewer_minimal" \
   --out "$_root/benchmark_runs/pcs_rc_ci_rendering" \
-  --no-check-regression
-python "$_root/scripts/validate_pcs_benchmark_output.py" "$_root/benchmark_runs/pcs_rc_ci_rendering"
+  --no-check-regression \
+  "${_pcs_bench_validate[@]}"
+python "$_root/scripts/validate_pcs_benchmark_output.py" \
+  "$_root/benchmark_runs/pcs_rc_ci_rendering" \
+  "${_pcs_bench_validate[@]}"
 
 if command -v just >/dev/null 2>&1; then
   echo "==> PCS: just pcs-render-claim"

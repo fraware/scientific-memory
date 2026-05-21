@@ -10,6 +10,7 @@ FAILURE_KINDS: tuple[str, ...] = (
     "query_failed",
     "staleness_failed",
     "comparison_failed",
+    "formal_failed",
 )
 
 _DEFAULT_COMPONENT = "Scientific Memory"
@@ -47,3 +48,45 @@ def summarize_failure_kinds(events: list[dict[str, Any]]) -> dict[str, bool]:
 
 def failure_messages(events: list[dict[str, Any]]) -> list[str]:
     return [f"{event['kind']}: {event['message']}" for event in events if event.get("message")]
+
+
+def _failed_lean_rows(read_model: dict[str, Any]) -> list[dict[str, Any]]:
+    kernel = read_model.get("formal_trust_kernel") or {}
+    return [
+        row
+        for row in (kernel.get("lean_check_results") or [])
+        if isinstance(row, dict) and str(row.get("result") or "").lower() == "failed"
+    ]
+
+
+def classify_section_failure_kind(missing_sections: list[str]) -> str:
+    if missing_sections and all(section == "Formal Trust Kernel" for section in missing_sections):
+        return "formal_failed"
+    return "render_failed"
+
+
+def classify_failure_evidence_kind(
+    read_model: dict[str, Any],
+    expected: dict[str, Any],
+) -> str:
+    """Route failure-mode benchmarks to formal_failed when Lean/formal evidence is the focus."""
+    explicit = str(expected.get("failure_kind") or "").strip()
+    if explicit in FAILURE_KINDS:
+        return explicit
+    if expected.get("formal_focus") or expected.get("require_formal_checks"):
+        return "formal_failed"
+    if _failed_lean_rows(read_model):
+        return "formal_failed"
+    return "render_failed"
+
+
+def formal_failure_context(read_model: dict[str, Any]) -> tuple[str, str, list[str]]:
+    """Responsible component, repair hint, and artifact paths from failed Lean rows."""
+    rows = _failed_lean_rows(read_model)
+    if not rows:
+        return "Formal Trust Kernel", "Re-run Lean check and attach LeanCheckResult.v0 to the release.", []
+    row = rows[0]
+    component = str(row.get("responsible_component") or "Formal Trust Kernel")
+    hint = str(row.get("repair_hint") or "Fix Lean proof or update proof_obligation.v0 / lean_check_result.v0.")
+    artifacts = [str(a) for a in (row.get("source_artifacts") or []) if a]
+    return component, hint, artifacts

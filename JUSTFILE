@@ -127,6 +127,9 @@ pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
 validate-pcs-benchmark-output out_dir="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out {{out_dir}}
 
+validate-pcs-benchmark-output-pcs-core out_dir="benchmark_runs/pcs_rendering" pcs_core="../pcs-core":
+	uv run --project pipeline python scripts/validate_pcs_benchmark_output.py --out {{out_dir}} --validate-pcs-core-output {{pcs_core}}
+
 pcs-benchmark-external-reviewer out_dir="benchmark_runs/external_reviewer_minimal":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering/external_reviewer_minimal --out {{out_dir}}
 
@@ -135,8 +138,20 @@ validate-pcs-benchmark-output-external-reviewer:
 
 validate-external-reviewer-benchmark: pcs-benchmark-external-reviewer validate-pcs-benchmark-output-external-reviewer
 
-package-pcs-bench-bundle SRC="benchmark_runs/pcs_rendering" DEST="":
+package-pcs-bench-bundle SRC="benchmark_runs/pcs_rendering":
+	uv run --project pipeline python scripts/package_pcs_bench_bundle.py {{SRC}}
+
+package-pcs-bench-bundle-to SRC="benchmark_runs/pcs_rendering" DEST="benchmark_runs/pcs_rendering_bundle":
 	uv run --project pipeline python scripts/package_pcs_bench_bundle.py {{SRC}} --dest {{DEST}}
+
+package-pcs-bench-bundle-pcs-core SRC="benchmark_runs/external_reviewer_minimal" pcs_core="../pcs-core":
+	uv run --project pipeline python scripts/package_pcs_bench_bundle.py {{SRC}} --validate-pcs-core-output {{pcs_core}}
+
+sync-pcs-benchmark-schemas PCS_CORE="":
+	uv run python scripts/sync_pcs_benchmark_schemas.py {{PCS_CORE}}
+
+refresh-pcs-bench-registry:
+	uv run python scripts/refresh_pcs_bench_registry.py
 
 # Recipe dependencies avoid nested `just` subprocesses (fixes PATH on Windows).
 check: fmt lint validate test build
