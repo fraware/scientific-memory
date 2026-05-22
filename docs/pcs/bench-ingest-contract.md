@@ -29,7 +29,7 @@ Embedded arrays contain full pcs-core v0 objects: `BenchmarkRun.v0`, `CoverageRe
 
 ### artifact_refs
 
-Required for pcs-bench: one `BenchmarkArtifactRef.v0` per embedded export, with `path` under the matching sidecar directory and `sha256` equal to the embedded `signature_or_digest`.
+pcs-bench requires one `BenchmarkArtifactRef.v0` per embedded export, with `path` under the matching sidecar directory and `sha256` equal to the embedded `signature_or_digest`.
 
 Suite registry: `benchmarks/pcs_bench/suite_registry.v0.json`.
 
@@ -81,7 +81,7 @@ Use `--release-grade` for producer output (not developer placeholders):
 - pcs-core schema validation passes
 - `artifact_refs` cover embedded digests
 - All five coverage metrics present
-- Thresholds: interpretability and query ≥ 0.95; failed-release, comparison, staleness ≥ 0.90 (skipped when not applicable)
+- Thresholds — interpretability and query ≥ 0.95; failed-release, comparison, staleness ≥ 0.90 (skipped when a case does not apply)
 
 ```bash
 sm-pipeline pcs-benchmark-rendering \
@@ -120,7 +120,7 @@ python scripts/validate_pcs_benchmark_output.py \
   --validate-pcs-core-output ../pcs-core
 ```
 
-Resolution order: CLI path, `PCS_CORE_PATH`, `PCS_CORE_ROOT`, `../pcs-core`, `./pcs-core`.
+Resolution order is CLI path, then `PCS_CORE_PATH`, `PCS_CORE_ROOT`, `../pcs-core`, and `./pcs-core`.
 
 The release verification gate (`scripts/run_pcs_rc_ci_gate.sh`) runs the external-reviewer suite with pcs-core validation when `PCS_CORE_PATH` is set.
 

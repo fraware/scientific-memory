@@ -2,7 +2,7 @@
 
 This repository integrates [Prime Intellect](https://www.primeintellect.ai/)
 inference (OpenAI-compatible chat completions) for **optional, human-reviewed**
-assistance. LLM output is **never** a source of truth for the portal: canonical
+assistance. LLM output stays outside the portal read path; canonical
 data remains `corpus/` JSON and `formal/` Lean, validated by the gate engine.
 
 **API reference:**
@@ -19,8 +19,7 @@ data remains `corpus/` JSON and `formal/` Lean, validated by the gate engine.
    `SM_LLM_MODEL_CLAIMS` / `SM_LLM_MODEL_MAPPING` / `SM_LLM_MODEL_LEAN` /
    `SM_LLM_MODEL_DEFAULT` for model routing.
 
-Environment variables are loaded from root `.env` when you run CLI commands
-(non-destructive: existing shell env wins).
+Environment variables load from root `.env` when you run CLI commands, and existing shell variables take precedence when already set.
 
 ## Commands
 

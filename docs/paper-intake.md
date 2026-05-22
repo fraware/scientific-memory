@@ -40,11 +40,11 @@ Selection heuristic:
 2. Your rationale tag should reference which part of the workflow will be exercised: extraction, normalization, mapping, Lean proof boundary, kernel witness, or graph composability.
 
 Notes:
-1. `metadata.tags` is already used for human navigation (for example `adsorption` or `surface science`). Do not remove existing tags; append hardness and rationale tags.
+1. `metadata.tags` is already used for human navigation (for example `adsorption` or `surface science`). Keep existing tags and append hardness and rationale tags.
 2. `batch-admit` does not currently populate hardness tags. After batch admit, update tags manually before extracting or formalizing.
 
 2. **Place source assets (optional)**
-   Source files (PDF, LaTeX, etc.) may be placed under the paper directory in a documented location (e.g. `corpus/papers/<paper_id>/source/`). For optional pandoc-based extraction, use `corpus/papers/<paper_id>/source/main.tex`; then run `just extract-from-source <paper_id>` to generate `suggested_claims.json` (section headings plus candidate_equations, candidate_symbols, and macro_context from preamble) for human review (requires pandoc; see [pandoc-latex-integration.md](tooling/pandoc-latex-integration.md)). The exact path is not enforced by schema in v0.1.
+   Source files (PDF, LaTeX, etc.) may be placed under the paper directory in a documented location (e.g. `corpus/papers/<paper_id>/source/`). For optional pandoc-based extraction, use `corpus/papers/<paper_id>/source/main.tex`, then run `just extract-from-source <paper_id>` to generate `suggested_claims.json` (section headings plus candidate_equations, candidate_symbols, and macro_context from preamble) for human review (requires pandoc; see [pandoc-latex-integration.md](tooling/pandoc-latex-integration.md)). Schema v0.1 leaves the exact path as a documented convention.
 
 3. **Extract claims and scaffold formal mapping**
    ```bash

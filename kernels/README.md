@@ -4,7 +4,7 @@ Executable kernels with declared verification boundaries and linked theorem card
 
 ## Shared test helpers (`kernel-conformance`)
 
-Cross-family numeric helpers (for example `assert_close`, monotonicity grids) live in the workspace package [`kernels/conformance/`](conformance/). New kernel families should depend on it in tests rather than copying helpers.
+Cross-family numeric helpers (for example `assert_close`, monotonicity grids) live in the workspace package [`kernels/conformance/`](conformance/), and new kernel families should depend on that package in tests instead of duplicating helper code.
 
 ## Numeric witness contract (SPEC v0.2, numerically_witnessed)
 

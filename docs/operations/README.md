@@ -1,6 +1,9 @@
-# Operations docs
+# Operations
 
-Operational policies and workflow notes:
+Policies for corpus intake edge cases and maintainer workflows.
 
-- [`hard-wedge-stress-papers.md`](hard-wedge-stress-papers.md) - intake scaffold
-  policy for hard-dimension stress papers
+| Document | Purpose |
+|----------|---------|
+| [hard-wedge-stress-papers.md](hard-wedge-stress-papers.md) | Hard-dimension stress scaffolds (intake-only papers in the index) |
+
+General maintainer operations: [maintainers.md](../maintainers.md).

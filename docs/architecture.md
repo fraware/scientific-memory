@@ -7,8 +7,9 @@ Scientific Memory is a monorepo with these main areas:
 - **schemas**: canonical JSON schemas for papers, claims, assumptions, theorem cards, manifests, and kernels.
 - **pipeline**: Python (`uv`) ingestion, extraction, normalization, validation, and publish tooling (`sm_pipeline`), including a **gate engine** ([`validate/gate_engine.py`](../pipeline/src/sm_pipeline/validate/gate_engine.py)) that runs checks in a fixed order, optional **stage orchestration** ([`pipeline_orchestrator.py`](../pipeline/src/sm_pipeline/pipeline_orchestrator.py)) for SPEC 8.x-shaped workflows, and **portal read model** ([`publish/portal_read_model.py`](../pipeline/src/sm_pipeline/publish/portal_read_model.py)) for `corpus-export.json`. Extension hooks and publication entry points are documented in [pipeline-extension-points.md](pipeline-extension-points.md).
 - **kernels**: executable kernels with declared verification boundaries; shared numeric test helpers live in the workspace package [`kernels/conformance/`](../kernels/conformance/) (`kernel-conformance`).
-- **portal**: Next.js app rendering from canonical corpus/manifests/exported bundle.
-- **benchmarks**: benchmark tasks and regression thresholds.
+- **portal**: Next.js app rendering from canonical corpus/manifests/exported bundle, including proof-carrying claim pages under `/pcs/claims/`.
+- **benchmarks**: benchmark tasks and regression thresholds, including PCS rendering suites for external review.
+- **corpus/pcs**: imported proof-carrying releases (signed bundles, release manifests, read models). See [pcs/README.md](pcs/README.md).
 
 ## Build and validation flow
 
@@ -27,22 +28,22 @@ Validation (`just validate` / `sm_pipeline.cli validate-all`) runs the **gate en
 - coverage integrity,
 - extraction run requirement (papers with non-empty claims must have `extraction_run.json`),
 - migration doc check when schemas change,
-- reviewer lifecycle (invalid claim status rejected; disputed without `review_notes` rejected),
+- reviewer lifecycle (invalid claim status rejected; disputed claims require non-empty `review_notes`),
 - snapshot baseline quality warnings (non-blocking).
 
 Optional: `validate-all --report-json <path>` writes a machine-readable report after success.
 
 ### Non-blocking warnings
 
-After strict checks succeed, `validate-all` may still print stderr warnings that do **not** change the exit code: snapshot baseline quality (e.g. `corpus/snapshots/last-release.json` metadata); **dependency graph bootstrap** hints when a paper has multiple theorem cards, no `dependency_ids`, and at least one machine-checked claim (tier-0 Lean regex extraction may leave an empty graph); **suggestion sidecar** schema issues for optional `llm_*_proposals.json` (including `llm_lean_proposals.json`) and `suggested_*.json` under paper directories. See [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md).
+After strict checks succeed, `validate-all` may still print stderr warnings while keeping exit code zero—snapshot baseline quality (for example `corpus/snapshots/last-release.json` metadata), **dependency graph bootstrap** hints when a paper has multiple theorem cards and empty `dependency_ids` alongside machine-checked claims (tier-0 Lean regex extraction may leave an empty graph), and **suggestion sidecar** schema issues for optional `llm_*_proposals.json` (including `llm_lean_proposals.json`) and `suggested_*.json` under paper directories. See [trust-boundary-and-extraction.md](reference/trust-boundary-and-extraction.md).
 
 ### Manifest fingerprint and graphs
 
 `publish_manifest` sets `manifest.build_hash_version` to **2** where `claims.json` exists (content-addressed digest over canonical corpus JSON, theorem cards, kernel index, and optional metadata source SHA256). Each publish recomputes `dependency_graph` and `kernel_index` from current cards and `corpus/kernels.json` unless `SM_PUBLISH_REUSE_MANIFEST_GRAPHS=1` is set.
 
-Gate 3 provenance remains strict for normal papers, with one narrow scaffold exception: papers tagged `hardness.primary:*` and still carrying empty `claims.json` may keep `manifest.json` while `metadata.source.sha256` is the all-zero sentinel. This is intended only for hard-dimension intake scaffolds.
+Provenance checks remain strict for normal papers. Hard-dimension intake scaffolds tagged `hardness.primary:*` with empty `claims.json` may use the all-zero `metadata.source.sha256` sentinel during intake only.
 
-## CI and release gates
+## CI and release
 
 Core workflows:
 
@@ -50,7 +51,9 @@ Core workflows:
 - **Portal CI**: portal lint, build, manifest-driven route smoke test, non-empty dependency graph assertion for Langmuir.
 - **Release workflow**: packages artifacts, emits checksums/changelog, runs deterministic checksum verification (`scripts/verify_release_checksums.sh`), then **Sigstore (cosign) keyless signing** of `dist/checksums.txt`, then creates a **GitHub Release** for the tag with uploaded assets (CHANGELOG, checksums, signatures, `release-bundle.zip`).
 
-Gate 7: checksums plus Sigstore signing; optional signature verification in verify script when `.sig` and `.pem` are present; consumers may download the release bundle from GitHub Releases.
+Release integrity combines checksums with Sigstore signing, and verifiers may confirm signatures when `.sig` and `.pem` are present. See [Release integrity](contributor-playbook.md#release-integrity-gate-7).
+
+PCS workflows (`corpus-validation`, `pcs-bench-producer`) run release verification and producer gates when pcs-core and pcs-bench are available. Operator documentation lives in [pcs/README.md](pcs/README.md).
 
 ## Contributor diagnostics
 
@@ -68,4 +71,4 @@ Current bundle contract is version `0.3` (`PORTAL_BUNDLE_VERSION`) and includes 
 
 Static routes for papers, claims, theorem cards, and kernels are pre-rendered at build time.
 
-Client Components in the portal (e.g. dependency graph views) must receive **serializable** props from Server Components only: for example, precomputed `nodeHrefById` maps instead of passing function callbacks across the server/client boundary.
+Client Components in the portal (for example dependency graph views) must receive **serializable** props from Server Components only—for example precomputed `nodeHrefById` maps that replace function callbacks across the server/client boundary.

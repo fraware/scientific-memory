@@ -1,6 +1,9 @@
-# Reference docs
+# Reference documentation
 
-Reference contracts that support day-to-day implementation:
+Contracts and boundaries that support implementation and review.
 
-- [`trust-boundary-and-extraction.md`](trust-boundary-and-extraction.md) -
-  canonical vs suggestion artifact boundary and risk register
+| Document | Purpose |
+|----------|---------|
+| [trust-boundary-and-extraction.md](trust-boundary-and-extraction.md) | Canonical JSON, optional suggestion sidecars, publish integrity, and risk register |
+
+Related: [generated-artifacts.md](../generated-artifacts.md), [pipeline-extension-points.md](../pipeline-extension-points.md).

@@ -24,7 +24,7 @@ Stages that remain **manual by design** (`formalization`, `kernel_linkage`) stil
 
 ## Validation
 
-- Add new invariant checks by extending the gate engine in [`validate/gate_engine.py`](../pipeline/src/sm_pipeline/validate/gate_engine.py) rather than ad hoc scripts, so `validate-all` and `--report-json` stay authoritative.
+- Add new invariant checks by extending the gate engine in [`validate/gate_engine.py`](../pipeline/src/sm_pipeline/validate/gate_engine.py) so `validate-all` and `--report-json` remain the authoritative validation path.
 
 ## Optional LLM proposals (Prime Intellect)
 
@@ -41,7 +41,7 @@ Schema changes require updates in lockstep per project rules: JSON schema under 
 
 ## Blueprints and leanblueprint (deferred, SPEC 8.4)
 
-[blueprint/](../blueprint/) and [blueprints/](blueprints/) are narrative and structural docs today. Integration with the **leanblueprint** ecosystem (auto-generated dependency graphs from Lean) is **deferred**: not required for merge gates.
+[blueprint/](../blueprint/) and [blueprints/](blueprints/) are narrative and structural docs today. Integration with the **leanblueprint** ecosystem (auto-generated dependency graphs from Lean) remains **deferred** and outside current merge gates.
 
 Until then:
 

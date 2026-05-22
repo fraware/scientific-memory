@@ -1,6 +1,6 @@
 # Playbook: Formalizer
 
-For contributors who add or extend Lean formalizations and link them to corpus claims. Follow this track end-to-end so CI passes without maintainer help.
+For contributors who add or extend Lean formalizations and link them to corpus claims, following this track end-to-end until local CI and the full gate sequence pass on the branch.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ For contributors who add or extend Lean formalizations and link them to corpus c
    `just validate` must pass. Ensure:
    - Every claim has `source_span`; claim/assumption/symbol IDs are unique per paper; `linked_assumptions` and `linked_symbols` resolve to existing IDs.
 
-2. **Provenance (Gate 3)**  
+2. **Provenance**  
    Every declaration in the paper’s manifest must be reachable from a claim via `mapping.json`’s `claim_to_decl`. No hand-edited coverage in `manifest.json`.
 
 3. **Lean build**  
@@ -48,8 +48,8 @@ For contributors who add or extend Lean formalizations and link them to corpus c
 |--------|------------|
 | Schema validation error | Check the reported file against `schemas/*.schema.json`; add missing required fields, fix types. |
 | Normalization (duplicate ID or broken link) | Deduplicate IDs per paper; ensure every `linked_assumptions` / `linked_symbols` entry exists in that paper’s assumptions/symbols. |
-| Provenance (declaration not linked) | Add the declaration to `mapping.json`’s `claim_to_decl` for a claim, or remove the declaration from the Lean file if it is not intended to be in the manifest. |
-| Coverage mismatch | Run `just publish-artifacts <paper_id>`; do not edit `manifest.json` coverage by hand. |
+| Provenance (declaration unlinked) | Add the declaration to `mapping.json`’s `claim_to_decl` for a claim, or remove the declaration from the Lean file when it should stay outside the manifest. |
+| Coverage mismatch | Run `just publish-artifacts <paper_id>` and regenerate coverage metrics instead of editing `manifest.json` by hand. |
 | Lean build failure | Fix the reported `.lean` error (e.g. missing import, type error). Use `just lake-build-verbose LOG=lake-build.log` for full output. |
 | Benchmark regression | Ensure extraction/mapping/theorem_cards counts did not drop; if intentional, baseline may need a team-agreed update in `benchmarks/baseline_thresholds.json`. |
 

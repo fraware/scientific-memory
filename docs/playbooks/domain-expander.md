@@ -22,7 +22,7 @@ For contributors who add papers in a **new domain** (e.g. first mathematics or p
    `just validate` and `lake build` (or `just build`) pass. No dangling references; coverage and provenance intact.
 
 5. **Benchmark baseline**  
-   If the new paper adds claims/declarations, update `benchmarks/baseline_thresholds.json` so Gate 6 regression check still passes (e.g. increase `paper_count`, `claim_count`, `declaration_count`, `machine_checked_count` as needed).
+   If the new paper adds claims/declarations, update `benchmarks/baseline_thresholds.json` so the benchmark regression check still passes (e.g. increase `paper_count`, `claim_count`, `declaration_count`, `machine_checked_count` as needed).
 
 ## End-to-end path (add a new domain slice)
 

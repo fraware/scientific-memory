@@ -9,14 +9,14 @@ This document is the canonical reference for the entire project. All engineering
 
 ## 1. Overview and Architecture
 
-Scientific Memory should be built as a **production-grade open-source monorepo** for proof-carrying scientific memory: a system that ingests mathematically structured scientific documents, converts their reusable core into machine-checkable Lean artifacts, links those artifacts to executable scientific kernels where possible, and publishes inspectable provenance-rich outputs.
+Scientific Memory should be built as a **production-grade open-source monorepo** for proof-carrying scientific memory—a system that ingests mathematically structured scientific documents, converts their reusable core into machine-checkable Lean artifacts, links those artifacts to executable scientific kernels where possible, and publishes inspectable provenance-rich outputs.
 
 **Stack:**
 
 - **Formal:** Lean 4 with Lake as the build system, mathlib4 as the reusable formal substrate, blueprint-style project documentation for theorem/proof planning, optional Verso-backed long-form technical docs.
 - **Context (as of February 2026):** Lean 4.28 is current; Lake supports remote artifact caching; mathlib4 remains the main community library; blueprint tooling is actively used across large Lean projects; Verso is used for Lean’s own long-form documentation.
 
-**Scientific justification:** M2F shows project-scale end-to-end autoformalization in Lean across long-form mathematical sources; MerLean shows a full LaTeX-to-Lean-to-LaTeX review loop on quantum-computing papers; the 2HDM formalization found a non-trivial error in a widely cited physics paper; recent chemistry work in Lean shows how explicit assumptions and derivations can be encoded in a reusable scientific library. The scientific case justifies building infrastructure rather than demos.
+**Scientific justification:** M2F shows project-scale end-to-end autoformalization in Lean across long-form mathematical sources; MerLean shows a full LaTeX-to-Lean-to-LaTeX review loop on quantum-computing papers; the 2HDM formalization found a non-trivial error in a widely cited physics paper; recent chemistry work in Lean shows how explicit assumptions and derivations can be encoded in a reusable scientific library. The scientific case supports production-grade infrastructure that other teams can extend.
 
 ---
 
@@ -24,21 +24,19 @@ Scientific Memory should be built as a **production-grade open-source monorepo**
 
 ### Mission
 
-Transform mathematically structured scientific knowledge from prose into machine-checkable, executable, composable artifacts.
+Transform mathematically structured scientific knowledge into machine-checkable, executable, composable artifacts.
 
 ### What success looks like
 
 A scientist can open a paper page in the project, inspect claims and assumptions, see which statements are formalized, inspect the dependency graph, run linked kernels, and trust that the artifact is reproducible and versioned.
 
-### What this project is not
+### Scope boundaries
 
-- Not a generic paper summarizer
-- Not an LLM-first system (LLMs are optional, suggest-only workers; artifacts are canonical)
-- Not “formalize all of science”
-- Not a pure theorem library detached from source literature
-- Not just a portal
-
-**It is a knowledge-upgrading pipeline.**
+- A **knowledge-upgrading pipeline** that links literature, formal artifacts, kernels, and published manifests.
+- **Claim-centric** pages with provenance, where summarization alone is insufficient.
+- **Artifact-canonical** workflows where optional LLM workers propose edits and humans gate every promotion.
+- **Domain-scoped** formalization aligned to source papers, with theorem libraries tied to corpus mapping.
+- **Portal as a read model** over generated JSON, alongside CLI validation and reproducible releases.
 
 ---
 
@@ -53,7 +51,7 @@ Every engineering decision must satisfy these principles.
    - executable witness
    - numerical validation
    - heuristic extraction
-   - human-reviewed prose mapping
+   - human-reviewed source-to-formal mapping
 4. **The public unit is the claim bundle, not the raw theorem.**
 5. **Compilation is the minimum bar.** No artifact is “accepted” unless the full project builds end to end.
 6. **Schema before UI.** The portal renders from canonical JSON/YAML artifacts, never from bespoke hand-written pages.
@@ -467,7 +465,7 @@ Build this as a **schema-first, artifact-first, Lean-centered monorepo** for sci
 
 - Do not optimize for demo polish before we have one full end-to-end paper artifact.
 - The first 6 weeks should produce a paper page backed by canonical claim objects, Lean declarations, theorem cards, and a passing build.
-- Every subsystem must answer one question: **does this help convert scientific prose into reusable, machine-checkable inheritance?**
+- Every subsystem should demonstrate how it advances reusable, machine-checkable scientific inheritance from structured sources.
 
 ---
 

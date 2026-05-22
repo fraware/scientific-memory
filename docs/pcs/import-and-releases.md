@@ -34,7 +34,7 @@ just pcs-import-release RELEASE_MANIFEST=path/to/ReleaseManifest.v0.json
 | `HandoffManifest.v0` | Producer handoff chain |
 | `WorkflowProfile.v0` | Resolved from `workflow_profile_id` on chain validation |
 
-Strict release mode sets `strict=true`, `allow_legacy=false`, and does not overlay fixture fields on import reports.
+Strict release mode sets `strict=true`, `allow_legacy=false`, and keeps import reports free of fixture field overlays.
 
 Python module (equivalent):
 
@@ -105,7 +105,7 @@ Legacy envelopes require `--allow-legacy` on `pcs-import-bundle`.
 - Optional `verification_result` (`VerificationResult.v0`)
 - Top-level `signature_or_digest`
 
-Canonical fixture: `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` (synced from pcs-core; do not edit in isolation).
+Canonical fixture `tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json` is synced from pcs-core and should be refreshed via `refresh-pcs-release` instead of isolated edits.
 
 ### Import outputs
 

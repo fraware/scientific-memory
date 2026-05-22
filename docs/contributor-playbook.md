@@ -1,10 +1,11 @@
 # Contributor playbook
 
-Single entry for onboarding, local CI without `just`, reuse, review, verification boundaries, Verso, schema migrations, and Gate 7 releases. High-level rules: [CONTRIBUTING.md](../CONTRIBUTING.md). Pipeline stages and publication hooks: [pipeline-extension-points.md](pipeline-extension-points.md). Maintainer operations: [maintainers.md](maintainers.md).
+Single entry for onboarding, local CI when `just` is unavailable, reuse, review, verification boundaries, Verso, schema migrations, and release integrity. High-level rules live in [CONTRIBUTING.md](../CONTRIBUTING.md); pipeline stages and publication hooks in [pipeline-extension-points.md](pipeline-extension-points.md); maintainer operations in [maintainers.md](maintainers.md).
 
 ## Table of contents
 
 - [Public alpha and repository state](#public-alpha-and-repository-state)
+- [Proof-Carrying Science (PCS)](#proof-carrying-science-pcs)
 - [Running from a release](#running-from-a-release)
 - [Expectations](#expectations)
 - [Contribution model](#contribution-model)
@@ -26,9 +27,9 @@ Single entry for onboarding, local CI without `just`, reuse, review, verificatio
 
 This section describes what "public alpha" means and how the repository is set up today.
 
-- The repository is public. **Eight papers** are in `corpus/index.json` (six formalized core slices plus two hard-dimension stress scaffolds; domains and narrative in [README](../README.md)). **Per-paper manifest facts** (machine-checked declaration counts, `build_hash_version`, dependency-graph edge counts) are generated in [docs/status/repo-snapshot.md](status/repo-snapshot.md) (`just repo-snapshot`); do not rely on hand-maintained counts in this bullet. Adsorption kernels carry Hypothesis-based property tests plus pytest numeric witnesses in CI.
+- The repository is public. **Eight papers** appear in `corpus/index.json` (six formalized core slices plus two hard-dimension stress scaffolds; domains and narrative in [README](../README.md)). **Per-paper manifest facts** (machine-checked declaration counts, `build_hash_version`, dependency-graph edge counts) are generated in [docs/status/repo-snapshot.md](status/repo-snapshot.md) via `just repo-snapshot`, which remains the authoritative source for those numbers. Adsorption kernels carry Hypothesis-based property tests plus pytest numeric witnesses in CI.
 - Contributors can add a claim, run the pipeline, and pass CI. All seven CI gates are in place (Lean build, schema validation including normalization, extraction_run for papers with claims, and kernel/theorem-card referential integrity, provenance, coverage, portal build, benchmark regression with proof-success snapshot, runtime budgets, minimum thresholds under `tasks`, and **`tasks_ceiling`** (e.g. source-span alignment error rate on `tasks.gold`), release integrity with checksums and Sigstore keyless signing). Validation is centralized in [`sm_pipeline.validate.gate_engine`](../pipeline/src/sm_pipeline/validate/gate_engine.py); use `validate-all --report-json` for a machine-readable report after a successful run. **Test counts:** run `just test` or `uv run pytest --collect-only -q` from the repo root (workspace includes `pipeline/tests` and `kernels/adsorption/tests`). Ruff on pipeline. Run `just doctor` if setup fails; use `just lake-build` or `just lake-build-verbose LOG=file.log` for Lean diagnostics.
-- Release and tagging are the single source of truth for "what is released." No separate artifact tarball is required for the alpha; cloning at a release tag is the canonical way to obtain a reproducible snapshot. Gate 7 is documented under [Release integrity (Gate 7)](#release-integrity-gate-7) in this playbook.
+- Release and tagging are the single source of truth for "what is released." The alpha expects contributors to clone at a release tag for a reproducible snapshot; release assets supplement that path. Release integrity is documented under [Release integrity (Gate 7)](#release-integrity-gate-7) in this playbook.
 - Maintainers preparing to go public should follow [maintainers.md](maintainers.md).
 
 ### Quick start (developers)
@@ -63,6 +64,19 @@ From the repo root:
 
    Use [Adding a paper and a claim](#adding-a-paper-and-a-claim) below. See [CONTRIBUTING.md](../CONTRIBUTING.md) and [Reviewer guide](#reviewer-guide) for workflow and review expectations.
 
+## Proof-Carrying Science (PCS)
+
+Scientific Memory can import proof-carrying releases from [pcs-core](https://github.com/SentinelOps-CI/pcs-core), render them in the portal at `/pcs/claims/<id>`, and publish benchmark ingest for [pcs-bench](https://github.com/fraware/pcs-bench).
+
+| Task | Command |
+|------|---------|
+| Read the operator guide | [pcs/README.md](pcs/README.md) |
+| Refresh fixtures from pcs-core | `just refresh-pcs-release` or `python scripts/refresh_pcs_release.py` |
+| Import all release trains into corpus | `just refresh-pcs-corpus-all` |
+| Full verify before release | `just prepare-pcs-release` or `just prepare-pcs-release-py` |
+
+PCS work remains optional for corpus contributors and mandatory for maintainers cutting a PCS integration release.
+
 ## Running from a release
 
 To use a specific released version:
@@ -73,7 +87,7 @@ To use a specific released version:
 ## Expectations
 
 - The first success criterion is one full paper artifact (claims, formalization, theorem cards, manifest, portal). Platform completeness is secondary.
-- Schema and corpus changes must follow [Schema versioning and migration notes](#schema-versioning-and-migration-notes) and the rules in [SPEC](SPEC.md); no merge without passing CI.
+- Schema and corpus changes must follow [Schema versioning and migration notes](#schema-versioning-and-migration-notes) and the rules in [SPEC](SPEC.md), with CI green before merge.
 
 ## Contribution model
 
@@ -88,7 +102,7 @@ Contributions flow through:
 
 Optional: run `just metrics` for derived metrics (includes normalization-policy report, reviewer_report, assumption-suggestions, dimension-visibility, dimension-suggestions); optional policy file `benchmarks/normalization_policy.json`; `just check-paper-blueprint <paper_id>`; `just export-diff-baseline` (or `sm-pipeline export-diff-baseline --baseline-id <id> --title ... --narrative ...`); `just check-tooling` (pandoc); `just extract-from-source <paper_id>`; `just build-verso`; `just mcp-server` (requires `uv sync --extra mcp`); proof-repair proposals via `sm-pipeline proof-repair-proposals -o path` (human-review only); human-gated `proof-repair-apply` after review (formal tree only; never in CI); bulk skeleton admission via `sm-pipeline batch-admit` (see [paper-intake](paper-intake.md)); stage-shaped automation via `sm_pipeline.pipeline_orchestrator` for SPEC 8.x steps where applicable.
 
-No hand-authored portal truth; no public theorem card without a linked claim ID.
+Portal truth comes from published manifests and exports; every public theorem card links to a claim ID.
 
 ## Domain policy
 
@@ -105,7 +119,7 @@ Follow a role-specific path for a focused workflow and gate checklist:
 | **Domain expander** | [playbooks/domain-expander.md](playbooks/domain-expander.md) | Adding a paper in a new domain (e.g. first mathematics or physics paper). |
 | **Release manager** | [playbooks/release-manager.md](playbooks/release-manager.md) | Cutting a release; tagging, signing, and publishing artifacts. |
 
-Each playbook includes a gate checklist, end-to-end path, and failure troubleshooting so you can complete the workflow without maintainer help.
+Each playbook includes a gate checklist, end-to-end path, and failure troubleshooting so you can complete the workflow using the published steps alone.
 
 ## One-time setup
 
@@ -126,7 +140,7 @@ just validate-corpus
 just benchmark-smoke
 ```
 
-If any of these fail, run `just doctor` to verify tool versions (uv, pnpm, lean, lake). If `lake` or `lean` is not found, ensure elan is installed and the repo is your working directory. For Lean build diagnostics use `just lake-build-verbose LOG=lake-build.log` to capture full output. Then fix the reported errors (schema, provenance, coverage, or benchmark thresholds) before changing the corpus.
+If any of these fail, run `just doctor` to verify tool versions (uv, pnpm, lean, lake). When `lake` or `lean` is missing from PATH, install elan and open the repository as your working directory. For Lean build diagnostics use `just lake-build-verbose LOG=lake-build.log` to capture full output, then fix the reported errors (schema, provenance, coverage, or benchmark thresholds) before changing the corpus.
 
 ## Local CI checklist (green before merge)
 

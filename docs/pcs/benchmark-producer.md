@@ -63,7 +63,7 @@ With `--release-grade`, the producer fails when:
 - `benchmark_runs`, `commands`, `logs`, or `explain_quality_reports` are empty
 - Coverage metrics fall below thresholds (interpretability and query ≥ 0.95; failed-release, comparison, and staleness ≥ 0.90)
 - Dialect reports or sidecar files are missing
-- `artifact_refs` do not cover embedded digests
+- `artifact_refs` must cover every embedded digest
 - `pcs-bench validate-ingest --release-grade` fails
 
 ## Suite registry

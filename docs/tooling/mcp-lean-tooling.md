@@ -45,7 +45,7 @@ directory for a tree that contains `corpus/papers` and `corpus/index.json`.
 **Run from the repository root** (or a parent that satisfies that layout) so
 paths resolve correctly.
 
-**CI:** MCP is not a merge gate for `just build` / `just validate`. Contract
+**CI.** MCP supplements local development while merge gates for `just build` and `just validate` stay unchanged. Contract
 tests run in `.github/workflows/mcp-contract.yml` after `uv sync --extra mcp`
 (`pipeline/tests/test_mcp_server_contract.py`, `test_mcp_server_data_paths.py`).
 For the same commands locally, see

@@ -75,12 +75,10 @@ When `formal_trust_kernel` is present:
 | Formal non-claims | required disclaimers (see below) |
 | Failed checks | theorem, obligation, repair hints when checks fail |
 
-**Required formal non-claims:**
+**Required formal non-claims**
 
-- The Lean check does not prove the scientific claim is true.
-- The Lean check does not prove the dataset is unbiased.
-- The Lean check does not prove the model is valid.
-- The Lean check proves only the declared PCS trust-envelope invariant.
+- The Lean check attests the declared PCS trust-envelope invariant only.
+- Scientific truth of the claim, unbiased datasets, and model validity remain outside the formal scope and must be stated explicitly in the UI.
 
 Milestone theorems include `PCS.CertificateMatchesRuntime`, `PCS.VerificationAdmitsBundle`, `PCS.SignedBundleAdmissible`, `PCS.RejectedCertificateNotAdmissible`, `PCS.StaleCertificateNotAdmissible`.
 
@@ -88,7 +86,7 @@ Strict import rejects missing formal artifacts when required, non-`ProofChecked`
 
 ## Artifact registry
 
-Each row exposes when available: artifact type, schema, producer, status, hash, source repo/commit, semantic checks, admission result, consumer repos.
+Each row exposes artifact type, schema, producer, status, hash, source repo/commit, semantic checks, admission result, and consumer repos when those fields are present.
 
 ## Lineage and staleness
 

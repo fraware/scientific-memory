@@ -1,11 +1,10 @@
-# Release documentation
+# Release documentation (legacy index)
 
-PCS (Proof-Carrying Science) integration docs moved to **[docs/pcs/](../pcs/README.md)**.
+PCS integration documentation lives in **[docs/pcs/README.md](../pcs/README.md)**.
 
-Quick verify:
+Quick verify before a PCS integration release:
 
 ```bash
-just refresh-pcs-release
-just pcs-rc-gate      # Git Bash / Linux / macOS
-just pcs-rc-gate-py   # Windows
+just prepare-pcs-release      # Git Bash / Linux / macOS
+just prepare-pcs-release-py   # Windows
 ```

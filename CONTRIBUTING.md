@@ -12,10 +12,10 @@ Every accepted contribution must improve at least one of:
 
 ## Non-negotiable requirements
 
-- No public declaration without source linkage.
-- No schema changes without migration notes.
-- No generated artifact without a reproducible generator.
-- No portal-only truth; portal renders from canonical corpus/manifests/export.
+- Every public declaration includes source linkage.
+- Every schema change ships with migration notes.
+- Every generated artifact has a reproducible generator command.
+- Portal views derive from canonical corpus, manifests, and export bundles.
 
 ## Contribution paths
 
@@ -25,6 +25,11 @@ Every accepted contribution must improve at least one of:
 4. Add or extend executable kernels.
 5. Improve validation/coverage/graph tooling.
 6. Improve portal rendering and observability.
+7. Extend proof-carrying science (PCS) import, rendering, or benchmark producer output.
+
+## Proof-Carrying Science (PCS)
+
+Optional integration with external release trains from pcs-core. Start at [docs/pcs/README.md](docs/pcs/README.md). Maintainer verify path: `just prepare-pcs-release` (or `just prepare-pcs-release-py` on Windows).
 
 ## Local checks
 
@@ -45,7 +50,7 @@ Use one canonical local sequence:
 2. `just check`
 3. `just benchmark`
 
-If `just` is not available (common on Windows/PowerShell without Bash), follow the equivalent no-`just` commands in [Contributor playbook – Local CI](docs/contributor-playbook.md#local-ci-checklist-green-before-merge).
+When `just` is unavailable (common on Windows/PowerShell without Bash), follow the equivalent commands in [Contributor playbook – Local CI](docs/contributor-playbook.md#local-ci-checklist-green-before-merge).
 
 **Test coverage:** Run `just test` locally. The workspace `pytest` configuration includes `pipeline/tests` and `kernels/adsorption/tests` (MCP contract/integration tests live in the pipeline suite). Confirm current counts with `uv run pytest --collect-only -q`. For MCP, ensure `uv sync --extra mcp` when exercising MCP-backed tests.
 

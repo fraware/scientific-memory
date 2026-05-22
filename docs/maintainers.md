@@ -22,10 +22,11 @@ Map each item to CI workflows and local commands. Keep evidence (green Actions U
 | Area | Target | How to verify |
 |------|--------|----------------|
 | Build reproducibility | Clean clone builds on Linux, macOS, Windows (where supported) | [Clean-room dry run](#clean-room-dry-run-maintainer) (below) |
-| Docs completeness | New contributor can complete one playbook without maintainer help | [Contributor playbook](contributor-playbook.md) (includes [local CI](contributor-playbook.md#local-ci-checklist-green-before-merge)) |
+| Docs completeness | New contributor completes one playbook end-to-end using published checklists | [Contributor playbook](contributor-playbook.md) (includes [local CI](contributor-playbook.md#local-ci-checklist-green-before-merge)) |
 | Contributor trial | Dry-run script passes on a fresh runner | `bash scripts/contributor_dry_run.sh` (monthly: `.github/workflows/contributor-dry-run-monthly.yml`) |
 | Security hygiene | Disclosure path clear; dependency updates automated | [SECURITY.md](../SECURITY.md), [Dependabot](../.github/dependabot.yml) |
-| Release verification | Tag produces signed assets; verify script documented | [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7), `scripts/verify_release_checksums.sh` |
+| Release verification | Tag produces signed assets; verify script documented | [Release integrity](contributor-playbook.md#release-integrity-gate-7), `scripts/verify_release_checksums.sh` |
+| PCS integration | Producer ingest validates against pcs-core | [pcs/README.md](pcs/README.md), `just prepare-pcs-release` |
 
 ### Required gates (must pass before public push)
 
@@ -42,7 +43,8 @@ These mirror merge expectations in [infra/README.md](infra/README.md) and [CONTR
 | 7 | Portal lint and build | `portal-ci.yml` | `pnpm --dir portal lint` and `pnpm --dir portal build` |
 | 8 | Portal graph smoke | `portal-ci.yml` | `node portal/scripts/smoke-graph.mjs` |
 | 9 | MCP contract (optional extras) | `mcp-contract.yml` | After `uv sync --extra mcp`, run MCP tests per [Local CI checklist](contributor-playbook.md#local-ci-checklist-green-before-merge) |
-| 10 | Release integrity (on tag) | `release.yml` | See [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7) |
+| 10 | PCS release verification and producer (when pcs-core present) | `corpus-validation.yml`, `pcs-bench-producer.yml` | `just prepare-pcs-release` — [pcs/README.md](pcs/README.md) |
+| 11 | Release integrity (on tag) | `release.yml` | See [Release integrity](contributor-playbook.md#release-integrity-gate-7) |
 
 **Full local mirror (no `just`):** [Local CI checklist](contributor-playbook.md#local-ci-checklist-green-before-merge).
 
@@ -54,9 +56,9 @@ Workflow files live under [.github/workflows/](../.github/workflows/). After the
 
 Aligned with [.cursor/rules/scientific-memory.mdc](../.cursor/rules/scientific-memory.mdc) and [SPEC.md](SPEC.md):
 
-- No public theorem card without a linked claim ID.
-- No claim without a valid `source_span`.
-- No hand-authored portal fields that duplicate generated manifests; portal renders from canonical JSON.
+- Every public theorem card links to a claim ID.
+- Every claim carries a valid `source_span`.
+- Portal fields come from generated manifests and canonical JSON exclusively.
 - Schema changes require schema file, Python models, example fixtures, and a migration note in [Schema versioning and migration notes](contributor-playbook.md#schema-versioning-and-migration-notes).
 
 ### Sign-off
@@ -78,7 +80,7 @@ Use this procedure before a public push to catch environment-specific failures. 
 
 ### Purpose
 
-Validate that a **fresh clone** reproduces a green build without hidden local state.
+Validate that a **fresh clone** reproduces a green build using only repository-documented setup steps.
 
 ### Linux and macOS
 
@@ -129,14 +131,14 @@ For each failure, capture:
 
 ### Success criteria
 
-- `just check` completes without error, or the equivalent commands in the [Local CI checklist](contributor-playbook.md#local-ci-checklist-green-before-merge) all pass.
+- `just check` completes successfully, or every equivalent command in the [Local CI checklist](contributor-playbook.md#local-ci-checklist-green-before-merge) passes.
 - At least one maintainer has confirmed Windows and one non-Windows path.
 
 ---
 
 ## Branch protection and required checks
 
-Configure GitHub **branch protection** on `main` (or your default branch) so external contributions cannot merge without the same gates as maintainers.
+Configure GitHub **branch protection** on `main` (or your default branch) so external contributions merge only after the same gates as maintainer merges.
 
 ### Recommended settings
 
@@ -144,7 +146,7 @@ Configure GitHub **branch protection** on `main` (or your default branch) so ext
 - Require approvals: at least **1** review for general changes; use judgment for urgent infra fixes.
 - Require status checks to pass before merging (see below).
 - Require conversation resolution before merging.
-- Do not allow bypassing the above for administrators unless breaking glass for security incidents.
+- Restrict administrator bypass to documented security incidents only.
 
 ### Required status checks
 
@@ -203,7 +205,7 @@ Edit [.github/CODEOWNERS](../.github/CODEOWNERS) so default review requests go t
 1. Contributor fills [.github/PULL_REQUEST_TEMPLATE.md](../.github/PULL_REQUEST_TEMPLATE.md).
 2. CI must pass per [Public push readiness](#public-push-readiness) gates above.
 3. Area owners (from CODEOWNERS or manual assignment) review for artifact and provenance impact.
-4. Squash or merge per repo policy; tag releases per [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7).
+4. Squash or merge per repo policy; tag releases per [release integrity](contributor-playbook.md#release-integrity-gate-7).
 
 ### Escalation
 
@@ -215,7 +217,7 @@ Edit [.github/CODEOWNERS](../.github/CODEOWNERS) so default review requests go t
 | Role | GitHub handle | Start date (UTC) | Notes |
 |------|---------------|------------------|--------|
 | Primary on-call triage | _TBD_ | | First 30 days; rotate weekly if multiple maintainers |
-| Release manager | _TBD_ | | Tag + verify [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7) |
+| Release manager | _TBD_ | | Tag + verify [release integrity](contributor-playbook.md#release-integrity-gate-7) |
 | Domain reviewer (default) | _TBD_ | | Corpus / formal PRs |
 
 Record roster assignment in your team runbook or a pinned issue if you need a paper trail.
@@ -245,4 +247,4 @@ Record roster assignment in your team runbook or a pinned issue if you need a pa
 - Median time to first maintainer response under 48 hours.
 - At least one external merged PR per month (adjust target by project size).
 - No unexplained CI red on `main` for more than 24 hours.
-- Release tags remain verifiable per [Release integrity (Gate 7)](contributor-playbook.md#release-integrity-gate-7).
+- Release tags remain verifiable per [release integrity](contributor-playbook.md#release-integrity-gate-7).

@@ -1,6 +1,6 @@
 # Tool-use safety conformance train (v0.1)
 
-Protocol conformance fixtures for the `agent_tool_use.safety_v0` workflow profile. This is not a product demo; it exercises the shared PCS trust loop with `ToolUseTrace.v0` and `ToolUseCertificate.v0`.
+Protocol conformance fixtures for the `agent_tool_use.safety_v0` workflow profile, exercising the shared PCS trust loop with `ToolUseTrace.v0` and `ToolUseCertificate.v0` for validation and import tests.
 
 ## Validate
 
