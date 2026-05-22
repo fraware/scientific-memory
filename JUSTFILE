@@ -136,7 +136,7 @@ validate-pcs-bench-ingest-release-grade INPUT="benchmark_runs/labtrust_rendering
 pcs-bench-producer pcs_core="../pcs-core" OUT="benchmark_runs/labtrust_rendering":
 	just pcs-benchmark-rendering-release-grade OUT={{OUT}} pcs_core={{pcs_core}}
 	just validate-pcs-bench-ingest-release-grade INPUT={{OUT}}/pcs_bench_ingest.v0.json pcs_core={{pcs_core}}
-	pcs-bench validate-ingest --input {{OUT}}/pcs_bench_ingest.v0.json --pcs-core {{pcs_core}}
+	pcs-bench validate-ingest --input {{OUT}}/pcs_bench_ingest.v0.json --pcs-core {{pcs_core}} --release-grade
 
 pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out {{OUT}}
@@ -294,12 +294,13 @@ pcs-rc-gate-py:
 	python scripts/run_pcs_rc_gate.py
 
 pcs-bench-producer-gate:
-	uv run python scripts/run_pcs_bench_producer_gate.py
+	uv run python scripts/run_pcs_bench_producer_gate.py --require-pcs-bench-cli
 
 pcs-bench-producer-gate-external:
 	uv run python scripts/run_pcs_bench_producer_gate.py \
 		--cases benchmarks/rendering/external_reviewer_minimal \
-		--out benchmark_runs/external_reviewer_minimal
+		--out benchmark_runs/external_reviewer_minimal \
+		--require-pcs-bench-cli
 
 pcs-phase2-gate: pcs-rc-gate
 

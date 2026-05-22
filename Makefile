@@ -9,10 +9,11 @@ INGEST ?= $(LABTRUST_OUT)/pcs_bench_ingest.v0.json
 
 # Release-grade PCS benchmark producer: render + validate ingest for pcs-bench gate.
 pcs-bench-producer:
-	uv run python scripts/run_pcs_bench_producer_gate.py
+	uv run python scripts/run_pcs_bench_producer_gate.py --require-pcs-bench-cli
 
 # Full external-reviewer packet (exercises failure/comparison/staleness metrics).
 pcs-bench-producer-external:
 	uv run python scripts/run_pcs_bench_producer_gate.py \
 		--cases benchmarks/rendering/external_reviewer_minimal \
-		--out benchmark_runs/external_reviewer_minimal
+		--out benchmark_runs/external_reviewer_minimal \
+		--require-pcs-bench-cli

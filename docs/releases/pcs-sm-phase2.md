@@ -207,18 +207,23 @@ python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_mini
 uv run python scripts/sync_pcs_benchmark_schemas.py   # refresh SM mirrors from pcs-core
 ```
 
-**Release-grade producer gate** (real `source_commit`, pcs-core schemas, coverage thresholds, `artifact_refs`):
+**Release-grade producer gate** (real `source_commit`, pcs-core schemas, coverage thresholds, full `artifact_refs`, dialect sidecars, `pcs-bench validate-ingest --release-grade`):
 
 ```bash
 make pcs-bench-producer
-# or
+# or (requires pcs-bench on PATH)
 just pcs-bench-producer-gate
 just pcs-bench-producer-gate-external   # 5-case external reviewer packet
 
 sm-pipeline validate-pcs-bench-ingest \
   --input benchmark_runs/labtrust_rendering/pcs_bench_ingest.v0.json \
   --pcs-core ../pcs-core --release-grade
+
+python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_minimal \
+  --validate-pcs-core-output ../pcs-core --release-grade
 ```
+
+CI checks out `fraware/pcs-bench` when available and runs the producer gate without fixture fallback.
 
 See [pcs-bench-ingest.md](../pcs-bench-ingest.md).
 

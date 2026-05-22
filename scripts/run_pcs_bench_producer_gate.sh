@@ -39,7 +39,7 @@ python "$_root/scripts/validate_pcs_bench_ingest.py" \
 
 if command -v pcs-bench >/dev/null 2>&1; then
   echo "==> PCS producer: pcs-bench validate-ingest"
-  pcs-bench validate-ingest --input "$_root/$INGEST" --pcs-core "$PCS_CORE"
+  pcs-bench validate-ingest --input "$_root/$INGEST" --pcs-core "$PCS_CORE" --release-grade
 else
   echo "warn: pcs-bench CLI not on PATH; skipped external validate-ingest" >&2
 fi

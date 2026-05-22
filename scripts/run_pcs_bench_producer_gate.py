@@ -83,6 +83,23 @@ def main() -> int:
         action="store_true",
         help="Do not invoke external pcs-bench validate-ingest",
     )
+    parser.add_argument(
+        "--require-pcs-bench-cli",
+        action="store_true",
+        help="Fail when pcs-bench is not on PATH (recommended for release trains)",
+    )
+    parser.add_argument(
+        "--release-grade",
+        action="store_true",
+        default=True,
+        help="Pass --release-grade to pcs-bench validate-ingest (default: on)",
+    )
+    parser.add_argument(
+        "--no-release-grade",
+        action="store_false",
+        dest="release_grade",
+        help="Omit --release-grade from pcs-bench validate-ingest",
+    )
     args = parser.parse_args()
 
     pcs_core = _resolve_pcs_core(args.pcs_core.strip() or None)
@@ -120,33 +137,45 @@ def main() -> int:
         ],
     )
 
-    _run(
-        [
-            sys.executable,
-            str(REPO_ROOT / "scripts/validate_pcs_bench_ingest.py"),
-            "--input",
-            _repo_rel(ingest),
-            "--pcs-core",
-            str(pcs_core),
-            "--release-grade",
-        ],
-    )
+    validate_cmd = [
+        sys.executable,
+        str(REPO_ROOT / "scripts/validate_pcs_bench_ingest.py"),
+        "--input",
+        _repo_rel(ingest),
+        "--pcs-core",
+        str(pcs_core),
+        "--release-grade",
+        "--skip-pcs-bench-cli",
+    ]
+    _run(validate_cmd)
 
     if not args.skip_pcs_bench_cli:
         pcs_bench = os.environ.get("PCS_BENCH_CLI", "pcs-bench")
         if shutil.which(pcs_bench):
-            _run(
-                [
-                    pcs_bench,
-                    "validate-ingest",
-                    "--input",
-                    str(ingest),
-                    "--pcs-core",
-                    str(pcs_core),
-                ],
-            )
+            pcs_cmd = [
+                pcs_bench,
+                "validate-ingest",
+                "--input",
+                str(ingest),
+                "--pcs-core",
+                str(pcs_core),
+            ]
+            if args.release_grade:
+                pcs_cmd.append("--release-grade")
+            _run(pcs_cmd)
+        elif args.require_pcs_bench_cli:
+            print(f"error: {pcs_bench} not on PATH; install pcs-bench for release-grade gate", file=sys.stderr)
+            return 1
         else:
             print(f"warn: {pcs_bench} not on PATH; skipped external validate-ingest", file=sys.stderr)
+
+    try:
+        from sm_pipeline.benchmark.bench_registry import refresh_registry_source_commit
+
+        commit = refresh_registry_source_commit(REPO_ROOT)
+        print(f"Updated suite_registry.v0.json source_commit -> {commit}")
+    except (OSError, ValueError) as exc:
+        print(f"warn: could not refresh suite registry source_commit: {exc}", file=sys.stderr)
 
     print(f"OK: PCS benchmark producer gate passed -> {ingest}")
     return 0

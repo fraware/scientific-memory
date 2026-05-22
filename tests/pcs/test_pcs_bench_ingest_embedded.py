@@ -74,9 +74,13 @@ def test_external_reviewer_ingest_passes_pcs_core_schema_and_semantics(tmp_path:
     )
     ingest = json.loads((out / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     assert ingest.get("artifact_refs")
-    assert len(ingest["artifact_refs"]) == len(ingest["explain_quality_reports"]) + len(
-        ingest["coverage_reports"],
+    expected_refs = (
+        len(ingest["explain_quality_reports"])
+        + len(ingest["coverage_reports"])
+        + len(ingest["benchmark_runs"])
+        + len(ingest.get("failure_localization_reports") or [])
     )
+    assert len(ingest["artifact_refs"]) == expected_refs
     sidecar_dir = out / EXPLAIN_QUALITY_SIDECARS_DIR
     assert sidecar_dir.is_dir()
     assert len(list(sidecar_dir.glob("*.v0.json"))) == len(ingest["explain_quality_reports"])

@@ -221,16 +221,21 @@ def main() -> int:
     _run(validate_cmd, env=env)
 
     if pcs_core.is_dir() and (pcs_core / "schemas").is_dir():
-        _run(
-            [
-                sys.executable,
-                str(REPO_ROOT / "scripts" / "run_pcs_bench_producer_gate.py"),
-                "--out",
-                "benchmark_runs/pcs_rc_gate_producer",
-                "--skip-pcs-bench-cli",
-            ],
-            env=env,
-        )
+        gate_args = [
+            sys.executable,
+            str(REPO_ROOT / "scripts" / "run_pcs_bench_producer_gate.py"),
+            "--out",
+            "benchmark_runs/pcs_rc_gate_producer",
+            "--pcs-core",
+            str(pcs_core),
+        ]
+        import shutil
+
+        if shutil.which("pcs-bench") or (REPO_ROOT / "pcs-bench").is_dir():
+            gate_args.append("--require-pcs-bench-cli")
+        else:
+            gate_args.append("--skip-pcs-bench-cli")
+        _run(gate_args, env=env)
 
     index_path = REPO_ROOT / "corpus/pcs/claims_index.json"
     if not index_path.is_file():

@@ -94,12 +94,17 @@ def main() -> int:
         shutil.rmtree(dest)
     dest.mkdir(parents=True)
 
-    for name in REQUIRED_FILES:
+    for name in (*REQUIRED_FILES, "bench_suite_manifest.v0.json"):
         src_file = source / name
         if src_file.is_file():
             shutil.copy2(src_file, dest / name)
 
-    for sidecar_name in ("explain_quality_reports", "coverage_reports"):
+    for sidecar_name in (
+        "explain_quality_reports",
+        "coverage_reports",
+        "benchmark_runs",
+        "failure_localization_reports",
+    ):
         sidecar_src = source / sidecar_name
         if sidecar_src.is_dir():
             shutil.copytree(sidecar_src, dest / sidecar_name)

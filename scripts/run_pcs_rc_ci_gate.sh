@@ -69,19 +69,20 @@ python "$_root/scripts/verify_tool_use_release_fixture.py"
 echo "==> PCS: pytest (full tests/pcs suite)"
 python -m pytest "$_root/tests/pcs" -q
 
-echo "==> PCS: rendering benchmark (external reviewer, pcs-bench ingest)"
-_pcs_bench_validate=()
+echo "==> PCS: release-grade producer gate (external reviewer, pcs-bench ingest)"
 if [ -n "${PCS_CORE_PATH:-}" ] && [ -d "${PCS_CORE_PATH}/schemas" ]; then
-  _pcs_bench_validate=(--validate-pcs-core-output "${PCS_CORE_PATH}")
+  _gate_args=(--require-pcs-bench-cli)
+  if [ ! -d "$_root/pcs-bench" ] && ! command -v pcs-bench >/dev/null 2>&1; then
+    _gate_args=(--skip-pcs-bench-cli)
+  fi
+  python "$_root/scripts/run_pcs_bench_producer_gate.py" \
+    --cases benchmarks/rendering/external_reviewer_minimal \
+    --out benchmark_runs/pcs_rc_ci_rendering \
+    --pcs-core "${PCS_CORE_PATH}" \
+    "${_gate_args[@]}"
+else
+  echo "warn: PCS_CORE_PATH missing; skipping release-grade producer gate" >&2
 fi
-python -m sm_pipeline.benchmark.pcs_rendering \
-  --cases "$_root/benchmarks/rendering/external_reviewer_minimal" \
-  --out "$_root/benchmark_runs/pcs_rc_ci_rendering" \
-  --no-check-regression \
-  "${_pcs_bench_validate[@]}"
-python "$_root/scripts/validate_pcs_benchmark_output.py" \
-  "$_root/benchmark_runs/pcs_rc_ci_rendering" \
-  "${_pcs_bench_validate[@]}"
 
 if command -v just >/dev/null 2>&1; then
   echo "==> PCS: just pcs-render-claim"

@@ -37,6 +37,17 @@ jobs:
             uv sync --project pipeline --extra pcs
           fi
 
+      - name: Checkout pcs-bench (ingest semantic validation)
+        uses: actions/checkout@v4
+        with:
+          repository: fraware/pcs-bench
+          path: pcs-bench
+        continue-on-error: true
+
+      - name: Install pcs-bench CLI
+        if: hashFiles('pcs-bench/pyproject.toml') != ''
+        run: uv pip install --system -e pcs-bench
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10
@@ -83,20 +94,20 @@ jobs:
         run: bash scripts/run_pcs_rc_ci_gate.sh
 
       - name: PCS benchmark producer gate (release-grade ingest)
-        if: hashFiles('pcs-core/schemas/**') != ''
+        if: hashFiles('pcs-core/schemas/**') != '' && hashFiles('pcs-bench/pyproject.toml') != ''
         env:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
-        run: uv run python scripts/run_pcs_bench_producer_gate.py --skip-pcs-bench-cli
+        run: uv run python scripts/run_pcs_bench_producer_gate.py --require-pcs-bench-cli
 
       - name: PCS external reviewer producer gate (full SM metrics)
-        if: hashFiles('pcs-core/schemas/**') != ''
+        if: hashFiles('pcs-core/schemas/**') != '' && hashFiles('pcs-bench/pyproject.toml') != ''
         env:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
         run: |
           uv run python scripts/run_pcs_bench_producer_gate.py \
             --cases benchmarks/rendering/external_reviewer_minimal \
             --out benchmark_runs/ci_external_reviewer_producer \
-            --skip-pcs-bench-cli
+            --require-pcs-bench-cli
 
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''

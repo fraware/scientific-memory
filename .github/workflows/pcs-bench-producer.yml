@@ -1,0 +1,88 @@
+name: pcs-bench-producer
+
+on:
+  pull_request:
+    paths:
+      - "pipeline/**"
+      - "benchmarks/rendering/**"
+      - "benchmarks/pcs_bench/**"
+      - "scripts/run_pcs_bench_producer_gate.py"
+      - "scripts/validate_pcs_bench_ingest.py"
+      - "schemas/pcs/benchmark/**"
+  push:
+    branches: [main]
+    paths:
+      - "pipeline/**"
+      - "benchmarks/rendering/**"
+      - "benchmarks/pcs_bench/**"
+      - "scripts/run_pcs_bench_producer_gate.py"
+      - "scripts/validate_pcs_bench_ingest.py"
+      - "schemas/pcs/benchmark/**"
+
+jobs:
+  producer-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Checkout pcs-core
+        uses: actions/checkout@v4
+        with:
+          repository: SentinelOps-CI/pcs-core
+          path: pcs-core
+
+      - name: Checkout pcs-bench
+        uses: actions/checkout@v4
+        with:
+          repository: fraware/pcs-bench
+          path: pcs-bench
+
+      - uses: astral-sh/setup-uv@v4
+
+      - name: Install Python deps
+        run: uv sync --all-packages
+
+      - name: Install pcs-core Python package
+        run: uv sync --project pipeline --extra pcs
+
+      - name: Install pcs-bench CLI
+        run: uv pip install --system -e pcs-bench
+
+      - name: Sync PCS benchmark schemas
+        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core
+
+      - name: LabTrust producer gate (release-grade)
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: |
+          uv run python scripts/run_pcs_bench_producer_gate.py \
+            --out benchmark_runs/ci_labtrust_producer \
+            --require-pcs-bench-cli
+
+      - name: External reviewer producer gate (release-grade)
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: |
+          uv run python scripts/run_pcs_bench_producer_gate.py \
+            --cases benchmarks/rendering/external_reviewer_minimal \
+            --out benchmark_runs/ci_external_reviewer_producer \
+            --require-pcs-bench-cli
+
+      - name: Package external reviewer bundle
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: |
+          uv run python scripts/package_pcs_bench_bundle.py \
+            benchmark_runs/ci_external_reviewer_producer \
+            --dest benchmark_runs/ci_external_reviewer_bundle \
+            --validate-pcs-core-output pcs-core \
+            --release-grade
+
+      - name: Upload pcs-bench producer artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pcs-bench-producer-${{ github.sha }}
+          path: |
+            benchmark_runs/ci_labtrust_producer/pcs_bench_ingest.v0.json
+            benchmark_runs/ci_external_reviewer_bundle/
+          if-no-files-found: error

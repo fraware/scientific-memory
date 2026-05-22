@@ -917,7 +917,10 @@ def run_rendering_benchmark(
             aggregate_failures=aggregate_failures,
             metrics=report["metrics"],
         )
-        from sm_pipeline.benchmark.pcs_core_ingest import validate_release_grade_ingest
+        from sm_pipeline.benchmark.pcs_core_ingest import (
+            build_producer_commands,
+            validate_release_grade_ingest,
+        )
         from sm_pipeline.benchmark.report_builder import (
             _load_case_configs,
             build_pcs_bench_ingest,
@@ -933,14 +936,13 @@ def run_rendering_benchmark(
             commit_errors = validate_release_grade_source_commit(source_commit_ingest)
             if commit_errors:
                 aggregate_failures.extend(commit_errors)
-        v0_reports[PCS_BENCH_INGEST_FILENAME] = build_pcs_bench_ingest(
-            benchmark_run=benchmark_run_doc,
-            v0_reports=v0_reports,
-            case_results=case_results,
-            suite_id=suite_id_ingest,
-            source_commit=source_commit_ingest,
-            case_configs=_load_case_configs(case_results, cases_path),
-        )
+
+        def _repo_rel(path: Path) -> str:
+            try:
+                return str(path.relative_to(root)).replace("\\", "/")
+            except ValueError:
+                return str(path).replace("\\", "/")
+
         pcs_core_root: Path | None = None
         if release_grade or validate_pcs_core_output is not None:
             pcs_arg = validate_pcs_core_output if validate_pcs_core_output is not None else ""
@@ -958,6 +960,25 @@ def run_rendering_benchmark(
                     f"(release_grade={release_grade}, arg={validate_pcs_core_output!r}, "
                     f"PCS_CORE_PATH={os.environ.get('PCS_CORE_PATH', '')!r})",
                 )
+
+        producer_commands = build_producer_commands(
+            cases_path=_repo_rel(cases_path),
+            out_dir=_repo_rel(out_dir),
+            pcs_core_path=str(pcs_core_root) if pcs_core_root is not None else None,
+            release_grade=release_grade,
+            passed=not aggregate_failures,
+        )
+        producer_logs = ["rendering_benchmark_summary.md"]
+        v0_reports[PCS_BENCH_INGEST_FILENAME] = build_pcs_bench_ingest(
+            benchmark_run=benchmark_run_doc,
+            v0_reports=v0_reports,
+            case_results=case_results,
+            suite_id=suite_id_ingest,
+            source_commit=source_commit_ingest,
+            case_configs=_load_case_configs(case_results, cases_path),
+            producer_commands=producer_commands,
+            producer_logs=producer_logs,
+        )
         schema_errors = validate_benchmark_reports_dual(
             v0_reports,
             repo_root=root,

@@ -1,5 +1,7 @@
 # pcs-bench ingest contract (Scientific Memory)
 
+Operator guide: [PCS_PRODUCER.md](PCS_PRODUCER.md).
+
 Scientific Memory exposes PCS rendering benchmarks as a **pcs-bench** producer. The canonical integration file is:
 
 `pcs_bench_ingest.v0.json`
@@ -27,7 +29,7 @@ Scientific Memory exposes PCS rendering benchmarks as a **pcs-bench** producer. 
 
 `benchmark_runs`, `coverage_reports`, `failure_localization_reports`, and `explain_quality_reports` embed full pcs-core v0 objects (`BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`).
 
-**`artifact_refs` (required for pcs-bench):** one `BenchmarkArtifactRef.v0` per embedded `ExplainQualityReport.v0`, with `path` under `explain_quality_reports/<report_id>.v0.json` and `sha256` matching the embedded report digest. Companion dialect JSON files remain on disk for debugging but are not path-only ingest rows.
+**`artifact_refs` (required for pcs-bench):** one `BenchmarkArtifactRef.v0` per embedded export (`BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`), with `path` under the matching sidecar directory and `sha256` equal to the embedded object `signature_or_digest`. Top-level SM dialect reports (`benchmark_run.v0.json`, `rendering_coverage_report.v0.json`, etc.) remain on disk for debugging; single-case suites reference `benchmark_run.v0.json` directly, multi-case suites use `benchmark_runs/<run_id>.v0.json`.
 
 Registry of suites: `benchmarks/pcs_bench/suite_registry.v0.json`.
 
@@ -40,6 +42,10 @@ Registry of suites: `benchmarks/pcs_bench/suite_registry.v0.json`.
 | `explain_quality_report.v0.json` | Bundle of `ExplainQualityReport.v0`-shaped per-case reports |
 | `query_coverage_report.v0.json` | Query dispatch (`list_claims`, `show_claim`, `check_stale`, filters, `compare_releases`) |
 | `failed_release_rendering_report.v0.json` | Failed-release evidence panels |
+| `explain_quality_reports/*.v0.json` | Per-case explain-quality sidecars (`artifact_refs`) |
+| `coverage_reports/*.v0.json` | Per-metric coverage sidecars (`artifact_refs`) |
+| `benchmark_runs/*.v0.json` | Per-case benchmark-run sidecars (multi-case suites) |
+| `failure_localization_reports/*.v0.json` | Failure-localization sidecars for failure-mode cases |
 | `bench_suite_manifest.v0.json` | Run pointer back to registry `suite_id` |
 
 Legacy alias: `pcs_bench_payload.json` (flattened paths; prefer ingest).

@@ -529,6 +529,11 @@ def validate_pcs_bench_ingest(
         "--release-grade",
         help="Also enforce release-grade producer gates (commit, coverage thresholds)",
     ),
+    skip_pcs_bench_cli: bool = typer.Option(
+        False,
+        "--skip-pcs-bench-cli",
+        help="Do not invoke external pcs-bench validate-ingest",
+    ),
 ) -> None:
     """Validate PcsBenchIngest.v0 (embedded contract + pcs-core schemas)."""
     from sm_pipeline.benchmark.pcs_core_benchmark_validate import resolve_pcs_core_root
@@ -547,6 +552,8 @@ def validate_pcs_bench_ingest(
         repo,
         pcs_core_root=pcs_core_root,
         release_grade=release_grade,
+        invoke_pcs_bench_cli=not skip_pcs_bench_cli,
+        require_pcs_bench_cli=release_grade and not skip_pcs_bench_cli,
     )
     if errors:
         for msg in errors:

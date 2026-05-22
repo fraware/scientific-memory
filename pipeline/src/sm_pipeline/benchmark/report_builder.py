@@ -18,11 +18,14 @@ from sm_pipeline.benchmark.pcs_core_coverage import (
 )
 from sm_pipeline.benchmark.pcs_core_ingest import (
     PCS_WORKFLOW_ID as PCS_CORE_INGEST_WORKFLOW_ID,
+    build_artifact_refs_for_ingest,
     build_embedded_pcs_bench_ingest,
     validate_embedded_ingest_contract,
     validate_release_grade_ingest,
+    write_benchmark_run_sidecars,
     write_coverage_sidecars,
     write_explain_quality_sidecars,
+    write_failure_localization_sidecars,
 )
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
 from sm_pipeline.pcs_validate.validator import validator_for
@@ -312,6 +315,8 @@ def build_pcs_bench_ingest(
     source_commit: str,
     case_configs: dict[str, dict[str, Any]] | None = None,
     artifact_refs: list[dict[str, Any]] | None = None,
+    producer_commands: list[dict[str, Any]] | None = None,
+    producer_logs: list[str] | None = None,
 ) -> dict[str, Any]:
     """Canonical pcs-bench ingest with embedded pcs-core v0 objects."""
     return build_embedded_pcs_bench_ingest(
@@ -322,6 +327,8 @@ def build_pcs_bench_ingest(
         case_results=case_results,
         case_configs=case_configs,
         artifact_refs=artifact_refs,
+        producer_commands=producer_commands,
+        producer_logs=producer_logs,
     )
 
 
@@ -329,7 +336,11 @@ def _load_case_configs(case_results: list[dict[str, Any]], cases_path: Path | No
     configs: dict[str, dict[str, Any]] = {}
     if cases_path is None:
         return configs
-    from sm_pipeline.benchmark.rendering import CASE_CONFIG_NAME, EXPECTED_FAILURE
+    from sm_pipeline.benchmark.rendering import (
+        CASE_CONFIG_NAME,
+        EXPECTED_FAILURE,
+        EXPECTED_STALENESS,
+    )
 
     for case_dir in cases_path.iterdir() if cases_path.is_dir() else []:
         if not case_dir.is_dir():
@@ -354,6 +365,12 @@ def _load_case_configs(case_results: list[dict[str, Any]], cases_path: Path | No
                         cfg["expected_failure_code"] = str(expected["failure_kind"])
                     if expected.get("formal_focus"):
                         cfg["formal_focus"] = True
+            except (OSError, json.JSONDecodeError):
+                pass
+        staleness_path = case_dir / EXPECTED_STALENESS
+        if staleness_path.is_file():
+            try:
+                cfg["expected_staleness"] = json.loads(staleness_path.read_text(encoding="utf-8"))
             except (OSError, json.JSONDecodeError):
                 pass
         configs[case_id] = cfg
@@ -432,6 +449,30 @@ def write_pcs_bench_artifacts(
             out_dir,
             [row for row in cov_reports if isinstance(row, dict)],
         )
+    bench_runs = ingest.get("benchmark_runs") or []
+    if isinstance(bench_runs, list) and len(bench_runs) > 1:
+        write_benchmark_run_sidecars(
+            out_dir,
+            [row for row in bench_runs if isinstance(row, dict)],
+        )
+    fl_reports = ingest.get("failure_localization_reports") or []
+    if isinstance(fl_reports, list) and fl_reports:
+        write_failure_localization_sidecars(
+            out_dir,
+            [row for row in fl_reports if isinstance(row, dict)],
+        )
+    commit = str(ingest.get("source_commit") or "")
+    if isinstance(eq_reports, list):
+        ingest["artifact_refs"] = build_artifact_refs_for_ingest(
+            explain_quality_reports=[row for row in eq_reports if isinstance(row, dict)],
+            coverage_reports=[row for row in cov_reports if isinstance(row, dict)] if isinstance(cov_reports, list) else [],
+            benchmark_runs=[row for row in bench_runs if isinstance(row, dict)] if isinstance(bench_runs, list) else [],
+            failure_localization_reports=[row for row in fl_reports if isinstance(row, dict)] if isinstance(fl_reports, list) else [],
+            source_commit=commit,
+        )
+        ingest["signature_or_digest"] = canonical_hash(
+            {k: v for k, v in ingest.items() if k != "signature_or_digest"},
+        )
     ingest_path.write_text(json.dumps(ingest, indent=2) + "\n", encoding="utf-8")
     paths = {PCS_BENCH_INGEST_FILENAME: str(ingest_path)}
 
@@ -440,6 +481,7 @@ def write_pcs_bench_artifacts(
         out_dir=out_dir,
         ingest_path=ingest_path,
         passed=bool(benchmark_run.get("passed")),
+        ingest=ingest,
     )
     manifest_path = out_dir / BENCH_SUITE_MANIFEST_FILENAME
     manifest_path.write_text(json.dumps(run_manifest, indent=2) + "\n", encoding="utf-8")
@@ -492,6 +534,8 @@ def validate_benchmark_output_dir(
     *,
     pcs_core_root: Path | None = None,
     release_grade: bool = False,
+    invoke_pcs_bench_cli: bool = False,
+    require_pcs_bench_cli: bool = False,
 ) -> list[str]:
     """Validate a completed PCS rendering benchmark output directory."""
     errors: list[str] = []
@@ -506,6 +550,16 @@ def validate_benchmark_output_dir(
     coverage_sidecar_dir = out_dir / "coverage_reports"
     if not coverage_sidecar_dir.is_dir():
         errors.append("missing coverage_reports/ (per-metric CoverageReport.v0 sidecars)")
+    ingest_probe = json.loads((out_dir / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
+    if isinstance(ingest_probe, dict):
+        fl_rows = ingest_probe.get("failure_localization_reports") or []
+        if fl_rows and not (out_dir / "failure_localization_reports").is_dir():
+            errors.append(
+                "missing failure_localization_reports/ (per-case FailureLocalizationResult.v0 sidecars)",
+            )
+        run_rows = ingest_probe.get("benchmark_runs") or []
+        if len(run_rows) > 1 and not (out_dir / "benchmark_runs").is_dir():
+            errors.append("missing benchmark_runs/ (per-case BenchmarkRun.v0 sidecars)")
     if errors:
         return errors
     try:
@@ -561,6 +615,21 @@ def validate_benchmark_output_dir(
     run = reports["benchmark_run.v0.json"]
     if not run.get("passed"):
         errors.extend(str(msg) for msg in (run.get("failures") or [])[:10])
+
+    if require_pcs_bench_cli or (invoke_pcs_bench_cli and release_grade):
+        from sm_pipeline.benchmark.pcs_bench_cli import require_pcs_bench_cli, run_pcs_bench_validate_ingest
+
+        missing = require_pcs_bench_cli()
+        if missing:
+            errors.append(missing)
+        elif pcs_core_root is not None:
+            errors.extend(
+                run_pcs_bench_validate_ingest(
+                    out_dir / PCS_BENCH_INGEST_FILENAME,
+                    pcs_core_root,
+                    release_grade=release_grade,
+                ),
+            )
     return errors
 
 
@@ -570,6 +639,8 @@ def validate_pcs_bench_ingest_file(
     *,
     pcs_core_root: Path | None = None,
     release_grade: bool = False,
+    invoke_pcs_bench_cli: bool = False,
+    require_pcs_bench_cli: bool = False,
 ) -> list[str]:
     """Validate a standalone pcs_bench_ingest.v0.json (contract + optional pcs-core schemas)."""
     ingest_path = ingest_path.resolve()
@@ -613,4 +684,18 @@ def validate_pcs_bench_ingest_file(
                 pcs_core_root.resolve(),
             ),
         )
+    if require_pcs_bench_cli or (invoke_pcs_bench_cli and release_grade):
+        from sm_pipeline.benchmark.pcs_bench_cli import require_pcs_bench_cli, run_pcs_bench_validate_ingest
+
+        missing = require_pcs_bench_cli()
+        if missing:
+            errors.append(missing)
+        elif pcs_core_root is not None:
+            errors.extend(
+                run_pcs_bench_validate_ingest(
+                    ingest_path,
+                    pcs_core_root,
+                    release_grade=release_grade,
+                ),
+            )
     return errors

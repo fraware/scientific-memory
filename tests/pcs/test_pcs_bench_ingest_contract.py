@@ -86,6 +86,46 @@ def test_ingest_canonical_shape_from_run(tmp_path: Path) -> None:
     assert validate_benchmark_output_dir(out, REPO_ROOT) == []
 
 
+@pytest.mark.skipif(
+    not (REPO_ROOT.parent / "pcs-core").is_dir(),
+    reason="pcs-core checkout not adjacent",
+)
+def test_package_bundle_release_grade(tmp_path: Path) -> None:
+    import subprocess
+    import sys
+
+    pcs_core = REPO_ROOT.parent / "pcs-core"
+    out = tmp_path / "pack_rg"
+    run_rendering_benchmark(
+        EXTERNAL_REVIEWER,
+        repo_root=REPO_ROOT,
+        out_dir=out,
+        isolated=True,
+        release_grade=True,
+        validate_pcs_core_output=str(pcs_core),
+    )
+    bundle = tmp_path / "bundle"
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(REPO_ROOT / "scripts/package_pcs_bench_bundle.py"),
+            str(out),
+            "--dest",
+            str(bundle),
+            "--validate-pcs-core-output",
+            str(pcs_core),
+            "--release-grade",
+        ],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert (bundle / "failure_localization_reports").is_dir()
+    assert (bundle / "coverage_reports").is_dir()
+
+
 def test_package_pcs_bench_bundle(tmp_path: Path) -> None:
     import subprocess
     import sys

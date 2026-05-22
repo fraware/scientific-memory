@@ -53,6 +53,8 @@ Reports are written to (validated against `schemas/pcs/benchmark/*.schema.json`)
 - `pcs_bench_ingest.v0.json` — **canonical pcs-bench ingest** (embedded `BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`, plus `artifact_refs`)
 - `explain_quality_reports/` — per-case `ExplainQualityReport.v0` sidecars referenced from ingest
 - `coverage_reports/` — per-metric `CoverageReport.v0` sidecars referenced from ingest
+- `benchmark_runs/` — per-case `BenchmarkRun.v0` sidecars (multi-case suites)
+- `failure_localization_reports/` — `FailureLocalizationResult.v0` sidecars for failure-mode cases
 - `pcs_bench_payload.json` — legacy flattened alias
 
 ### External reviewer minimal packet

@@ -40,7 +40,7 @@
     },
     "scientific_memory": {
       "repo": "https://github.com/fraware/scientific-memory",
-      "commit": "56162c2a607e0aab49101fdda80ca24afe14d7d7"
+      "commit": "755b6318e58b9ccfac05ea94cb5c3c76ec267713"
     }
   },
   "artifacts": {
@@ -105,18 +105,18 @@
       "schema": "proof_obligation.v0.schema.json",
       "producer": "pcs-core",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-      "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
-      "sha256": "sha256:de1ce4429ce4931547a1b8db2fc55f8ba2354263619a4d9d4910c5e8c6cc1516"
+      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+      "sha256": "sha256:1f08511feb76d8fcab7215e85379d928a7750978633a8ddc6f255f28ea7d3583"
     },
     "lean_check_result.v0.json": {
       "artifact_type": "LeanCheckResult.v0",
       "schema": "lean_check_result.v0.schema.json",
       "producer": "pcs-core",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-      "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
-      "sha256": "sha256:76c56e4df8204cc00fb74abb7bf712cfa678870f4a60f3e00fc2a04d7426d5fa"
+      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+      "sha256": "sha256:7b90c11b3b12d4990a18bdf7ba64bae6e6572d30ccc8618c4b34ab45579a7495"
     }
   },
   "release_status": "Validated",
-  "signature_or_digest": "sha256:50158eb7eb79ce507c9f1f1093b6fa31c05ca90670393e420fa1c9a0de5cca2c"
+  "signature_or_digest": "sha256:78817c5cc9f7adf93b9a7014aca9748046ffe71eeaae5fc72f4d0a2d164bb492"
 }

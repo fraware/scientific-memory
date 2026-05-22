@@ -15,6 +15,17 @@ PCS_WORKFLOW_ID = "pcs.scientific_memory"
 UNKNOWN_COMMIT = "0" * 40
 EXPLAIN_QUALITY_SIDECARS_DIR = "explain_quality_reports"
 COVERAGE_SIDECARS_DIR = "coverage_reports"
+BENCHMARK_RUN_SIDECARS_DIR = "benchmark_runs"
+FAILURE_LOCALIZATION_SIDECARS_DIR = "failure_localization_reports"
+
+# Top-level SM dialect reports written beside ingest (provenance sidecars).
+SM_V0_DIALECT_REPORTS: tuple[str, ...] = (
+    "benchmark_run.v0.json",
+    "rendering_coverage_report.v0.json",
+    "query_coverage_report.v0.json",
+    "failed_release_rendering_report.v0.json",
+    "explain_quality_report.v0.json",
+)
 
 RESPONSIBLE_COMPONENT_ALIASES: dict[str, str] = {
     "scientific memory": "scientific_memory",
@@ -144,6 +155,18 @@ def validate_release_grade_ingest(
     """Structural + adequacy checks for release-grade PcsBenchIngest.v0 producer output."""
     errors: list[str] = []
     errors.extend(validate_release_grade_source_commit(str(ingest.get("source_commit") or "")))
+    runs = ingest.get("benchmark_runs")
+    if not isinstance(runs, list) or not runs:
+        errors.append("release-grade: benchmark_runs must be non-empty")
+    commands = ingest.get("commands")
+    if not isinstance(commands, list) or not commands:
+        errors.append("release-grade: commands must be non-empty")
+    logs = ingest.get("logs")
+    if not isinstance(logs, list) or not logs:
+        errors.append("release-grade: logs must be non-empty")
+    explain = ingest.get("explain_quality_reports")
+    if not isinstance(explain, list) or not explain:
+        errors.append("release-grade: explain_quality_reports must be non-empty")
     errors.extend(validate_embedded_ingest_contract(ingest, out_dir=out_dir))
     errors.extend(validate_release_grade_pcs_core_adequacy(ingest))
     coverage = ingest.get("coverage_reports")
@@ -151,6 +174,8 @@ def validate_release_grade_ingest(
         errors.extend(validate_release_grade_coverage_adequacy(coverage))
     else:
         errors.append("release-grade: coverage_reports must be a list")
+    if out_dir is not None:
+        errors.extend(validate_release_grade_dialect_artifacts(out_dir))
     for array_key in (
         "benchmark_runs",
         "coverage_reports",
@@ -168,6 +193,69 @@ def validate_release_grade_ingest(
                 errors.append(
                     f"release-grade: {array_key}[{index}].source_commit must not be all zeros",
                 )
+    return errors
+
+
+def validate_release_grade_dialect_artifacts(out_dir: Path) -> list[str]:
+    """Release-grade: require on-disk SM dialect reports and ingest sidecar directories."""
+    errors: list[str] = []
+    for filename in SM_V0_DIALECT_REPORTS:
+        if not (out_dir / filename).is_file():
+            errors.append(f"release-grade: missing dialect artifact {filename}")
+    ingest_path = out_dir / "pcs_bench_ingest.v0.json"
+    if not ingest_path.is_file():
+        errors.append("release-grade: missing pcs_bench_ingest.v0.json")
+        return errors
+    try:
+        ingest = json.loads(ingest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"release-grade: {ingest_path.name}: {exc}"]
+    if not isinstance(ingest, dict):
+        return ["release-grade: pcs_bench_ingest.v0.json must be an object"]
+    if not (out_dir / EXPLAIN_QUALITY_SIDECARS_DIR).is_dir():
+        errors.append(f"release-grade: missing {EXPLAIN_QUALITY_SIDECARS_DIR}/")
+    if not (out_dir / COVERAGE_SIDECARS_DIR).is_dir():
+        errors.append(f"release-grade: missing {COVERAGE_SIDECARS_DIR}/")
+    explain_rows = ingest.get("explain_quality_reports")
+    if isinstance(explain_rows, list) and explain_rows:
+        for index, row in enumerate(explain_rows):
+            if not isinstance(row, dict):
+                continue
+            report_id = str(row.get("report_id") or row.get("case_id") or "case")
+            rel = explain_quality_sidecar_relpath(report_id)
+            if not (out_dir / rel).is_file():
+                errors.append(f"release-grade: missing explain-quality sidecar {rel}")
+    fl_rows = ingest.get("failure_localization_reports")
+    if isinstance(fl_rows, list) and fl_rows:
+        if not (out_dir / FAILURE_LOCALIZATION_SIDECARS_DIR).is_dir():
+            errors.append(f"release-grade: missing {FAILURE_LOCALIZATION_SIDECARS_DIR}/")
+        for index, row in enumerate(fl_rows):
+            if not isinstance(row, dict):
+                continue
+            result_id = str(row.get("result_id") or row.get("case_id") or "failure-loc")
+            rel = failure_localization_sidecar_relpath(result_id)
+            if not (out_dir / rel).is_file():
+                errors.append(f"release-grade: missing failure-localization sidecar {rel}")
+    run_rows = ingest.get("benchmark_runs")
+    if isinstance(run_rows, list) and len(run_rows) > 1:
+        if not (out_dir / BENCHMARK_RUN_SIDECARS_DIR).is_dir():
+            errors.append(f"release-grade: missing {BENCHMARK_RUN_SIDECARS_DIR}/")
+        for index, row in enumerate(run_rows):
+            if not isinstance(row, dict):
+                continue
+            run_id = str(row.get("run_id") or row.get("case_id") or "run")
+            rel = benchmark_run_sidecar_relpath(run_id)
+            if not (out_dir / rel).is_file():
+                errors.append(f"release-grade: missing benchmark-run sidecar {rel}")
+    runs = ingest.get("benchmark_runs")
+    if isinstance(runs, list):
+        for index, row in enumerate(runs):
+            if isinstance(row, dict) and row.get("system_admission_outcome") == "not_evaluated":
+                if row.get("scientific_memory_import_status") in ("passed", "failed"):
+                    errors.append(
+                        f"release-grade: benchmark_runs[{index}].system_admission_outcome "
+                        "must not be not_evaluated when import status is known",
+                    )
     return errors
 
 
@@ -288,6 +376,21 @@ def _primary_failure_event(case_result: dict[str, Any]) -> dict[str, Any] | None
     return events[0] if events and isinstance(events[0], dict) else None
 
 
+def _expected_responsible_component(case_config: dict[str, Any], expected_code: str) -> str:
+    """Default responsible component by failure kind (override via case.json)."""
+    if case_config.get("expected_responsible_component"):
+        return coerce_responsible_component(str(case_config["expected_responsible_component"]))
+    by_kind: dict[str, str] = {
+        "formal_failed": "formal_kernel",
+        "import_failed": "scientific_memory",
+        "render_failed": "scientific_memory",
+        "query_failed": "scientific_memory",
+        "staleness_failed": "scientific_memory",
+        "comparison_failed": "scientific_memory",
+    }
+    return by_kind.get(expected_code, "scientific_memory")
+
+
 def _expected_failure_code(case_result: dict[str, Any], case_config: dict[str, Any]) -> str:
     if case_config.get("expected_failure_code"):
         return str(case_config["expected_failure_code"])
@@ -297,6 +400,10 @@ def _expected_failure_code(case_result: dict[str, Any], case_config: dict[str, A
             return str(expected["failure_kind"])
         if expected.get("failure_kind") is None and expected.get("formal_focus"):
             return "formal_failed"
+    if case_config.get("post_import") == "mark_stale" or case_config.get("expected_staleness"):
+        return "staleness_failed"
+    if case_config.get("expected_compare") or case_config.get("expected_compare_path"):
+        return "comparison_failed"
     if case_config.get("failure_mode"):
         return "formal_failed" if case_config.get("formal_focus") else "render_failed"
     return ""
@@ -328,6 +435,12 @@ def build_benchmark_run(
 
     import_failed = bool(case_result.get("import_failed"))
     sm_import = "failed" if import_failed else ("passed" if not import_failed else "not_applicable")
+    if sm_import == "passed":
+        system_admission_outcome = "admitted"
+    elif sm_import == "failed":
+        system_admission_outcome = "rejected"
+    else:
+        system_admission_outcome = "not_evaluated"
     if import_failed:
         sm_render = "not_applicable"
     elif case_result.get("read_model"):
@@ -362,7 +475,7 @@ def build_benchmark_run(
         "observed_failure_code": observed_failure_code,
         "observed_responsible_component": observed_component,
         "observed_repair_hint": repair_hint,
-        "system_admission_outcome": "not_evaluated",
+        "system_admission_outcome": system_admission_outcome,
         "release_chain_status": "not_applicable",
         "certificate_status": "not_applicable",
         "scientific_memory_import_status": sm_import,
@@ -384,21 +497,22 @@ def build_failure_localization_result(
 ) -> dict[str, Any] | None:
     """Build FailureLocalizationResult.v0 when a case records evidence-layer failures."""
     primary = _primary_failure_event(case_result)
-    if not primary and not case_config.get("failure_mode"):
+    failure_mode = bool(case_config.get("failure_mode"))
+    if not primary and not failure_mode:
         return None
 
     expected_code = _expected_failure_code(case_result, case_config)
     observed_code = str(primary.get("kind") if primary else "")
-    if not observed_code and case_config.get("failure_mode") and case_result.get("passed"):
+    if not observed_code and failure_mode and case_result.get("passed"):
         observed_code = expected_code
-    if not observed_code and case_config.get("failure_mode"):
-        observed_code = "render_failed"
-    expected_component = coerce_responsible_component(
-        str(case_config.get("expected_responsible_component") or "scientific_memory"),
-    )
+    if not observed_code and failure_mode:
+        observed_code = expected_code or "render_failed"
+    expected_component = _expected_responsible_component(case_config, expected_code)
     observed_component = coerce_responsible_component(
-        str((primary or {}).get("responsible_component") or "scientific_memory"),
+        str((primary or {}).get("responsible_component") or expected_component),
     )
+    if failure_mode and case_result.get("passed") and expected_code == "formal_failed":
+        observed_component = expected_component
     localized = (not expected_code and not observed_code) or (
         expected_code == observed_code and expected_component == observed_component
     )
@@ -556,6 +670,16 @@ def coverage_sidecar_relpath(coverage_id: str) -> str:
     return f"{COVERAGE_SIDECARS_DIR}/{safe}.v0.json"
 
 
+def benchmark_run_sidecar_relpath(run_id: str) -> str:
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in run_id)
+    return f"{BENCHMARK_RUN_SIDECARS_DIR}/{safe}.v0.json"
+
+
+def failure_localization_sidecar_relpath(result_id: str) -> str:
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in result_id)
+    return f"{FAILURE_LOCALIZATION_SIDECARS_DIR}/{safe}.v0.json"
+
+
 def build_benchmark_artifact_ref(
     *,
     artifact_type: str,
@@ -583,11 +707,44 @@ def build_artifact_refs_for_ingest(
     *,
     explain_quality_reports: list[dict[str, Any]],
     coverage_reports: list[dict[str, Any]] | None = None,
+    benchmark_runs: list[dict[str, Any]] | None = None,
+    failure_localization_reports: list[dict[str, Any]] | None = None,
     source_commit: str,
+    benchmark_run_aggregate_path: str = "benchmark_run.v0.json",
 ) -> list[dict[str, Any]]:
-    """pcs-core requires artifact_refs for embedded explain-quality and coverage reports."""
+    """Build BenchmarkArtifactRef.v0 rows for embedded ingest objects and on-disk sidecars."""
     refs: list[dict[str, Any]] = []
+    run_rows = [row for row in (benchmark_runs or []) if isinstance(row, dict)]
+    if len(run_rows) == 1:
+        refs.append(
+            build_benchmark_artifact_ref(
+                artifact_type="BenchmarkRun.v0",
+                path=benchmark_run_aggregate_path,
+                embedded=run_rows[0],
+                source_commit=source_commit,
+                role="producer_export",
+            ),
+        )
+    for run in run_rows:
+        run_id = str(run.get("run_id") or run.get("case_id") or "run")
+        path = (
+            benchmark_run_aggregate_path
+            if len(run_rows) == 1
+            else benchmark_run_sidecar_relpath(run_id)
+        )
+        if len(run_rows) > 1:
+            refs.append(
+                build_benchmark_artifact_ref(
+                    artifact_type="BenchmarkRun.v0",
+                    path=path,
+                    embedded=run,
+                    source_commit=source_commit,
+                    role="producer_export",
+                ),
+            )
     for report in explain_quality_reports:
+        if not isinstance(report, dict):
+            continue
         report_id = str(report.get("report_id") or report.get("case_id") or "case")
         refs.append(
             build_benchmark_artifact_ref(
@@ -606,6 +763,19 @@ def build_artifact_refs_for_ingest(
             build_benchmark_artifact_ref(
                 artifact_type="CoverageReport.v0",
                 path=coverage_sidecar_relpath(coverage_id),
+                embedded=row,
+                source_commit=source_commit,
+                role="producer_export",
+            ),
+        )
+    for row in failure_localization_reports or []:
+        if not isinstance(row, dict):
+            continue
+        result_id = str(row.get("result_id") or row.get("case_id") or "failure-loc")
+        refs.append(
+            build_benchmark_artifact_ref(
+                artifact_type="FailureLocalizationResult.v0",
+                path=failure_localization_sidecar_relpath(result_id),
                 embedded=row,
                 source_commit=source_commit,
                 role="producer_export",
@@ -632,6 +802,46 @@ def write_explain_quality_sidecars(
     return written
 
 
+def write_benchmark_run_sidecars(
+    out_dir: Path,
+    benchmark_runs: list[dict[str, Any]],
+) -> dict[str, str]:
+    """Write one BenchmarkRun.v0 JSON file per embedded ingest row."""
+    sidecar_dir = out_dir / BENCHMARK_RUN_SIDECARS_DIR
+    sidecar_dir.mkdir(parents=True, exist_ok=True)
+    written: dict[str, str] = {}
+    for row in benchmark_runs:
+        if not isinstance(row, dict):
+            continue
+        run_id = str(row.get("run_id") or row.get("case_id") or "run")
+        rel = benchmark_run_sidecar_relpath(run_id)
+        path = out_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(row, indent=2) + "\n", encoding="utf-8")
+        written[run_id] = rel
+    return written
+
+
+def write_failure_localization_sidecars(
+    out_dir: Path,
+    failure_localization_reports: list[dict[str, Any]],
+) -> dict[str, str]:
+    """Write one FailureLocalizationResult.v0 JSON file per embedded ingest row."""
+    sidecar_dir = out_dir / FAILURE_LOCALIZATION_SIDECARS_DIR
+    sidecar_dir.mkdir(parents=True, exist_ok=True)
+    written: dict[str, str] = {}
+    for row in failure_localization_reports:
+        if not isinstance(row, dict):
+            continue
+        result_id = str(row.get("result_id") or row.get("case_id") or "failure-loc")
+        rel = failure_localization_sidecar_relpath(result_id)
+        path = out_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(row, indent=2) + "\n", encoding="utf-8")
+        written[result_id] = rel
+    return written
+
+
 def write_coverage_sidecars(
     out_dir: Path,
     coverage_reports: list[dict[str, Any]],
@@ -652,6 +862,27 @@ def write_coverage_sidecars(
     return written
 
 
+def build_producer_commands(
+    *,
+    cases_path: str,
+    out_dir: str,
+    pcs_core_path: str | None = None,
+    release_grade: bool = False,
+    passed: bool = True,
+) -> list[dict[str, Any]]:
+    """Record the live producer CLI invocation in PcsBenchIngest.v0.commands."""
+    parts = [
+        "sm-pipeline pcs-benchmark-rendering",
+        f"--cases {cases_path}",
+        f"--out {out_dir}",
+    ]
+    if pcs_core_path:
+        parts.append(f"--validate-pcs-core-output {pcs_core_path}")
+    if release_grade:
+        parts.append("--release-grade")
+    return [{"command": " ".join(parts), "exit_code": 0 if passed else 1}]
+
+
 def build_embedded_pcs_bench_ingest(
     *,
     suite_id: str,
@@ -661,6 +892,8 @@ def build_embedded_pcs_bench_ingest(
     case_results: list[dict[str, Any]],
     case_configs: dict[str, dict[str, Any]] | None = None,
     artifact_refs: list[dict[str, Any]] | None = None,
+    producer_commands: list[dict[str, Any]] | None = None,
+    producer_logs: list[str] | None = None,
 ) -> dict[str, Any]:
     """Assemble pcs-core PcsBenchIngest.v0 with embedded canonical objects."""
     case_configs = case_configs or {}
@@ -722,14 +955,29 @@ def build_embedded_pcs_bench_ingest(
     )
 
     refs = list(artifact_refs or [])
-    if not refs and (explain_quality_reports or coverage_reports):
+    if not refs and (
+        explain_quality_reports
+        or coverage_reports
+        or benchmark_runs
+        or failure_localization_reports
+    ):
         refs = build_artifact_refs_for_ingest(
             explain_quality_reports=explain_quality_reports,
             coverage_reports=coverage_reports,
+            benchmark_runs=benchmark_runs,
+            failure_localization_reports=failure_localization_reports,
             source_commit=commit,
         )
 
     passed = bool(benchmark_run_doc.get("passed"))
+    commands = list(producer_commands or [])
+    if not commands:
+        commands = [
+            {
+                "command": "scientific_memory_render_benchmark",
+                "exit_code": 0 if passed else 1,
+            },
+        ]
     body: dict[str, Any] = {
         "schema_version": "v0",
         "producer_id": "scientific-memory",
@@ -740,13 +988,8 @@ def build_embedded_pcs_bench_ingest(
         "failure_localization_reports": failure_localization_reports,
         "explain_quality_reports": explain_quality_reports,
         "profile_coverage_reports": [],
-        "commands": [
-            {
-                "command": "scientific_memory_render_benchmark",
-                "exit_code": 0 if passed else 1,
-            },
-        ],
-        "logs": [],
+        "commands": commands,
+        "logs": list(producer_logs or []),
         "source_repo": SOURCE_REPO,
         "source_commit": commit,
         "signature_or_digest": "",
@@ -859,6 +1102,26 @@ def validate_embedded_ingest_contract(
                 errors.append(
                     f"coverage_reports[{index}]: no artifact_refs entry for digest {digest}",
                 )
+        run_rows = ingest.get("benchmark_runs")
+        if isinstance(run_rows, list):
+            for index, row in enumerate(run_rows):
+                if not isinstance(row, dict):
+                    continue
+                digest = row.get("signature_or_digest")
+                if isinstance(digest, str) and ("BenchmarkRun.v0", digest) not in ref_digests:
+                    errors.append(
+                        f"benchmark_runs[{index}]: no artifact_refs entry for digest {digest}",
+                    )
+        fl_rows = ingest.get("failure_localization_reports")
+        if isinstance(fl_rows, list):
+            for index, row in enumerate(fl_rows):
+                if not isinstance(row, dict):
+                    continue
+                digest = row.get("signature_or_digest")
+                if isinstance(digest, str) and ("FailureLocalizationResult.v0", digest) not in ref_digests:
+                    errors.append(
+                        f"failure_localization_reports[{index}]: no artifact_refs entry for digest {digest}",
+                    )
         if out_dir is not None:
             for index, ref in enumerate(refs):
                 if not isinstance(ref, dict):

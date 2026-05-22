@@ -1,4 +1,5 @@
 {
+  "failure_kind": "staleness_failed",
   "required_checks": [
     "failure_reason_present",
     "responsible_component_present",

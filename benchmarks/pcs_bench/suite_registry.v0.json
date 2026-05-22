@@ -38,7 +38,10 @@
       "explain_quality_report.v0.json",
       "query_coverage_report.v0.json",
       "failed_release_rendering_report.v0.json",
-      "explain_quality_reports/"
+      "explain_quality_reports/",
+      "coverage_reports/",
+      "failure_localization_reports/",
+      "benchmark_runs/"
     ],
     "explain_quality_section_ids": [
       "provenance",
@@ -61,5 +64,5 @@
     "workflow_id": "pcs.scientific_memory"
   },
   "source_repo": "https://github.com/fraware/scientific-memory",
-  "source_commit": "31c02f8ef487d3509542affcf5b7339ca940d4ab"
+  "source_commit": "755b6318e58b9ccfac05ea94cb5c3c76ec267713"
 }

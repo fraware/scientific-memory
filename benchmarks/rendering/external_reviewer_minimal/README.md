@@ -15,6 +15,17 @@ Minimal PCS rendering benchmark for external reviewers and pcs-bench smoke inges
 ## Run
 
 ```bash
+sm-pipeline pcs-benchmark-rendering \
+  --cases benchmarks/rendering/external_reviewer_minimal \
+  --out benchmark_runs/external_reviewer_minimal \
+  --validate-pcs-core-output ../pcs-core \
+  --release-grade
+
+sm-pipeline validate-pcs-bench-ingest \
+  --input benchmark_runs/external_reviewer_minimal/pcs_bench_ingest.v0.json \
+  --pcs-core ../pcs-core \
+  --release-grade
+
 just validate-external-reviewer-benchmark-full
 
 # Or stepwise:

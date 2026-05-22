@@ -68,6 +68,16 @@ def main() -> int:
         action="store_true",
         help="Validate only pcs_bench_ingest.v0.json (skip companion v0 report files)",
     )
+    parser.add_argument(
+        "--skip-pcs-bench-cli",
+        action="store_true",
+        help="Do not invoke external pcs-bench validate-ingest",
+    )
+    parser.add_argument(
+        "--require-pcs-bench-cli",
+        action="store_true",
+        help="Fail when pcs-bench is not on PATH",
+    )
     args = parser.parse_args()
     raw = args.out_dir_flag or args.out_dir or "benchmark_runs/pcs_rendering"
     out_dir = Path(normalize_benchmark_out_dir(raw))
@@ -109,6 +119,9 @@ def main() -> int:
             repo_root,
             pcs_core_root=pcs_core_root,
             release_grade=args.release_grade,
+            invoke_pcs_bench_cli=not args.skip_pcs_bench_cli,
+            require_pcs_bench_cli=args.require_pcs_bench_cli
+            or (args.release_grade and not args.skip_pcs_bench_cli),
         )
     else:
         errors = validate_benchmark_output_dir(
@@ -116,6 +129,9 @@ def main() -> int:
             repo_root,
             pcs_core_root=pcs_core_root,
             release_grade=args.release_grade,
+            invoke_pcs_bench_cli=not args.skip_pcs_bench_cli,
+            require_pcs_bench_cli=args.require_pcs_bench_cli
+            or (args.release_grade and not args.skip_pcs_bench_cli),
         )
     if errors:
         for msg in errors:

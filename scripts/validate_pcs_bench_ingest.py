@@ -37,6 +37,11 @@ def main() -> int:
         default=str(REPO_ROOT),
         help="Scientific Memory repo root",
     )
+    parser.add_argument(
+        "--skip-pcs-bench-cli",
+        action="store_true",
+        help="Do not invoke external pcs-bench validate-ingest",
+    )
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
@@ -56,6 +61,8 @@ def main() -> int:
         repo_root,
         pcs_core_root=pcs_core_root,
         release_grade=args.release_grade,
+        invoke_pcs_bench_cli=not args.skip_pcs_bench_cli,
+        require_pcs_bench_cli=args.release_grade and not args.skip_pcs_bench_cli,
     )
     if errors:
         for msg in errors:

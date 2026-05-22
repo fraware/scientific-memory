@@ -11,6 +11,7 @@ from sm_pipeline.benchmark.pcs_core_coverage import SOURCE_REPO
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
 
 REGISTRY_REL = Path("benchmarks/pcs_bench/suite_registry.v0.json")
+PCS_BENCH_INGEST_FILENAME = "pcs_bench_ingest.v0.json"
 
 
 def load_suite_registry(repo_root: Path) -> dict[str, Any]:
@@ -76,16 +77,48 @@ def build_run_suite_manifest(
     out_dir: Path,
     ingest_path: Path,
     passed: bool,
+    ingest: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Per-run pointer from benchmark output dir back to registry suite."""
+    out_dir = out_dir.resolve()
+    dialect_reports = [
+        name
+        for name in (
+            "benchmark_run.v0.json",
+            "rendering_coverage_report.v0.json",
+            "query_coverage_report.v0.json",
+            "failed_release_rendering_report.v0.json",
+            "explain_quality_report.v0.json",
+            PCS_BENCH_INGEST_FILENAME,
+        )
+        if (out_dir / name).is_file()
+    ]
+    sidecar_dirs = [
+        dirname
+        for dirname in (
+            "explain_quality_reports",
+            "coverage_reports",
+            "benchmark_runs",
+            "failure_localization_reports",
+        )
+        if (out_dir / dirname).is_dir()
+    ]
+    artifact_ref_paths: list[str] = []
+    if isinstance(ingest, dict):
+        for ref in ingest.get("artifact_refs") or []:
+            if isinstance(ref, dict) and ref.get("path"):
+                artifact_ref_paths.append(str(ref["path"]).replace("\\", "/"))
     manifest = {
         "schema_version": "v0",
         "suite_id": suite_id,
         "registry_path": str(REGISTRY_REL).replace("\\", "/"),
         "ingest_path": str(ingest_path.resolve()),
-        "output_dir": str(out_dir.resolve()),
+        "output_dir": str(out_dir),
         "passed": passed,
         "source_repo": SOURCE_REPO,
+        "dialect_reports": dialect_reports,
+        "sidecar_directories": sidecar_dirs,
+        "artifact_ref_paths": artifact_ref_paths,
     }
     manifest["signature_or_digest"] = canonical_hash(manifest)
     return manifest

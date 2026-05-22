@@ -215,7 +215,7 @@
       "consumer_repos": [
         "pcs-core"
       ],
-      "hash": "sha256:ff7b211ebaf7443117bed3eb9e93ff7716aaa44940531e095c33a16d4e185b05",
+      "hash": "sha256:9ef5ba5f6e745a4f0ff50d23b774ec3f91e9e334d958d64c5141a228de92ba5e",
       "name": "lean_check_result.v0.json",
       "producer": "pcs-core",
       "registry_admission_result": "incomplete",
@@ -268,7 +268,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:36216ce0d08d4e166bf257d35f901e16a67fb827c05e16b3b72aa90c0e7dbeca",
+      "hash": "sha256:66369c9a6ee6e492fd016cd9c06798fe65c4e49bd22c1a3066f6752030825986",
       "name": "proof_obligation.v0.json",
       "producer": "pcs-core",
       "registry_admission_result": "incomplete",
@@ -754,7 +754,7 @@
       "trace_certificate.json",
       "verification_result.json"
     ],
-    "checked_at": "2026-05-22T00:54:57Z",
+    "checked_at": "2026-05-22T01:52:30Z",
     "checker": "pcs-core",
     "checker_version": "0.1.0",
     "formal_non_claims": [
@@ -767,7 +767,7 @@
     "lean_check_results": [
       {
         "actual": null,
-        "checked_at": "2026-05-22T00:54:57Z",
+        "checked_at": "2026-05-22T01:52:30Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.CertificateMatchesRuntime",
@@ -787,7 +787,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T00:54:57Z",
+        "checked_at": "2026-05-22T01:52:30Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.VerificationAdmitsBundle",
@@ -807,7 +807,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T00:54:57Z",
+        "checked_at": "2026-05-22T01:52:30Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.SignedBundleAdmissible",
@@ -827,7 +827,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T00:54:57Z",
+        "checked_at": "2026-05-22T01:52:30Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
@@ -846,7 +846,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T00:54:57Z",
+        "checked_at": "2026-05-22T01:52:30Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.StaleCertificateNotAdmissible",
@@ -1124,7 +1124,7 @@
     "id": "obl-set-release-pcs-v0.1-labtrust-qc",
     "payload": {
       "check_result_id": "lean-check-release-pcs-v0.1-labtrust-qc",
-      "checked_at": "2026-05-22T00:54:57Z",
+      "checked_at": "2026-05-22T01:52:30Z",
       "checker": "pcs-core",
       "checker_version": "0.1.0",
       "lean_version": "leanprover/lean4:v4.24.0",
@@ -1133,7 +1133,7 @@
       "release_id": "release-pcs-v0.1-labtrust-qc",
       "results": [
         {
-          "checked_at": "2026-05-22T00:54:57Z",
+          "checked_at": "2026-05-22T01:52:30Z",
           "lean_theorem": "PCS.CertificateMatchesRuntime",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-certificate-matches-runtime",
@@ -1145,7 +1145,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T00:54:57Z",
+          "checked_at": "2026-05-22T01:52:30Z",
           "lean_theorem": "PCS.VerificationAdmitsBundle",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-verification-admits-bundle",
@@ -1157,7 +1157,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T00:54:57Z",
+          "checked_at": "2026-05-22T01:52:30Z",
           "lean_theorem": "PCS.SignedBundleAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-signed-bundle-admissible",
@@ -1169,7 +1169,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T00:54:57Z",
+          "checked_at": "2026-05-22T01:52:30Z",
           "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-rejected-certificate-not-admissible",
@@ -1180,7 +1180,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T00:54:57Z",
+          "checked_at": "2026-05-22T01:52:30Z",
           "lean_theorem": "PCS.StaleCertificateNotAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-stale-certificate-not-admissible",
@@ -1192,14 +1192,14 @@
         }
       ],
       "schema_version": "v0",
-      "signature_or_digest": "sha256:b8c9bb8bf723899dead4ce19632943887525b54e4a80400cb00d5a568156384f",
-      "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
+      "signature_or_digest": "sha256:f312e000da976a997325276d7441a8b85279b7ef8ddd790163de25c60e14d9e8",
+      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "status": "ProofChecked"
     },
     "schema_version": "v0",
-    "signature_or_digest": "sha256:b8c9bb8bf723899dead4ce19632943887525b54e4a80400cb00d5a568156384f",
-    "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
+    "signature_or_digest": "sha256:f312e000da976a997325276d7441a8b85279b7ef8ddd790163de25c60e14d9e8",
+    "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
     "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
     "status": "ProofChecked",
     "summary": "LeanCheckResult.v0"
@@ -1215,8 +1215,8 @@
   ],
   "lineage": {
     "artifact_hashes": {
-      "lean_check_result.v0.json": "sha256:ff7b211ebaf7443117bed3eb9e93ff7716aaa44940531e095c33a16d4e185b05",
-      "proof_obligation.v0.json": "sha256:36216ce0d08d4e166bf257d35f901e16a67fb827c05e16b3b72aa90c0e7dbeca",
+      "lean_check_result.v0.json": "sha256:9ef5ba5f6e745a4f0ff50d23b774ec3f91e9e334d958d64c5141a228de92ba5e",
+      "proof_obligation.v0.json": "sha256:66369c9a6ee6e492fd016cd9c06798fe65c4e49bd22c1a3066f6752030825986",
       "runtime_receipt.json": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
       "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
       "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
@@ -1248,7 +1248,7 @@
     "previous_release_id": null,
     "recommended_action": "No action required; claim matches imported release artifacts.",
     "release_id": "release-pcs-v0.1-labtrust-qc",
-    "release_manifest_hash": "sha256:eeca6239abd8bc5087c13e6dbd4823547268b6177f2e118f7f389fd109a2e4c3",
+    "release_manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
     "schema_versions": {
       "science_claim_bundle": "v0",
       "signed_bundle": "v0"
@@ -1270,7 +1270,7 @@
     "artifact_type": "ProofObligation.v0",
     "id": "obl-set-release-pcs-v0.1-labtrust-qc",
     "payload": {
-      "generated_at": "2026-05-22T00:54:57Z",
+      "generated_at": "2026-05-22T01:52:30Z",
       "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
       "obligations": [
         {
@@ -1330,14 +1330,14 @@
       "release_candidate": "pcs-v0.1.0-rc1",
       "release_id": "release-pcs-v0.1-labtrust-qc",
       "schema_version": "v0",
-      "signature_or_digest": "sha256:b0e3acf124492cca718637b244474c6b2b69b971fad28115c957bfe6202e525b",
-      "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
+      "signature_or_digest": "sha256:b02a074372b1e941ee0a9a5db7f5624ba465cd26254c25334d6a20de0a0b1859",
+      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)"
     },
     "schema_version": "v0",
-    "signature_or_digest": "sha256:b0e3acf124492cca718637b244474c6b2b69b971fad28115c957bfe6202e525b",
-    "source_commit": "1a04707e6f6df43b6dddb8d593413c17796e9c39",
+    "signature_or_digest": "sha256:b02a074372b1e941ee0a9a5db7f5624ba465cd26254c25334d6a20de0a0b1859",
+    "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
     "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
     "status": null,
     "summary": "ProofObligation.v0"
@@ -1538,7 +1538,7 @@
   },
   "release_manifest": {
     "generated_at": "2026-05-18T23:17:38Z",
-    "manifest_hash": "sha256:eeca6239abd8bc5087c13e6dbd4823547268b6177f2e118f7f389fd109a2e4c3",
+    "manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
     "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
     "producer_repos": {
       "certifyedge": {
@@ -1565,10 +1565,10 @@
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_id": "release-pcs-v0.1-labtrust-qc",
     "release_status": "Validated",
-    "signature_or_digest": "sha256:eeca6239abd8bc5087c13e6dbd4823547268b6177f2e118f7f389fd109a2e4c3",
+    "signature_or_digest": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
     "validation_profile": "labtrust-v0.1-release-chain"
   },
-  "release_manifest_hash": "sha256:eeca6239abd8bc5087c13e6dbd4823547268b6177f2e118f7f389fd109a2e4c3",
+  "release_manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
   "reproduce_commands": [],
   "runtime_artifact_types": [
     "RuntimeReceipt.v0",
