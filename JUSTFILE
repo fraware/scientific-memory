@@ -123,6 +123,21 @@ pcs-benchmark-rendering CASES="benchmarks/rendering/labtrust_qc_release" OUT="be
 pcs-benchmark-rendering-pcs-core CASES="benchmarks/rendering/labtrust_qc_release" OUT="benchmark_runs/labtrust_rendering" pcs_core="../pcs-core":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases {{CASES}} --out {{OUT}} --validate-pcs-core-output {{pcs_core}}
 
+pcs-benchmark-rendering-release-grade CASES="benchmarks/rendering/labtrust_qc_release" OUT="benchmark_runs/labtrust_rendering" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.cli pcs-benchmark-rendering --cases {{CASES}} --out {{OUT}} --validate-pcs-core-output {{pcs_core}} --release-grade
+
+validate-pcs-bench-ingest INPUT="benchmark_runs/labtrust_rendering/pcs_bench_ingest.v0.json" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.cli validate-pcs-bench-ingest --input {{INPUT}} --pcs-core {{pcs_core}}
+
+validate-pcs-bench-ingest-release-grade INPUT="benchmark_runs/labtrust_rendering/pcs_bench_ingest.v0.json" pcs_core="../pcs-core":
+	uv run --project pipeline python -m sm_pipeline.cli validate-pcs-bench-ingest --input {{INPUT}} --pcs-core {{pcs_core}} --release-grade
+
+# Release-grade producer path (make pcs-bench-producer is equivalent).
+pcs-bench-producer pcs_core="../pcs-core" OUT="benchmark_runs/labtrust_rendering":
+	just pcs-benchmark-rendering-release-grade OUT={{OUT}} pcs_core={{pcs_core}}
+	just validate-pcs-bench-ingest-release-grade INPUT={{OUT}}/pcs_bench_ingest.v0.json pcs_core={{pcs_core}}
+	pcs-bench validate-ingest --input {{OUT}}/pcs_bench_ingest.v0.json --pcs-core {{pcs_core}}
+
 pcs-benchmark-rendering-all OUT="benchmark_runs/pcs_rendering":
 	uv run --project pipeline python -m sm_pipeline.benchmark.pcs_rendering --cases benchmarks/rendering --out {{OUT}}
 
@@ -277,6 +292,14 @@ pcs-rc-gate:
 # Cross-platform PCS gate (Windows-friendly)
 pcs-rc-gate-py:
 	python scripts/run_pcs_rc_gate.py
+
+pcs-bench-producer-gate:
+	uv run python scripts/run_pcs_bench_producer_gate.py
+
+pcs-bench-producer-gate-external:
+	uv run python scripts/run_pcs_bench_producer_gate.py \
+		--cases benchmarks/rendering/external_reviewer_minimal \
+		--out benchmark_runs/external_reviewer_minimal
 
 pcs-phase2-gate: pcs-rc-gate
 

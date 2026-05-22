@@ -324,11 +324,16 @@ def _validate_pcs_bench_ingest_semantics_local(ingest: dict[str, Any]) -> list[s
     """Minimal mirror of pcs-core ingest semantics when pcs_core package is not installed."""
     errors: list[str] = []
     explain_rows = ingest.get("explain_quality_reports")
+    coverage_rows = ingest.get("coverage_reports")
     refs = ingest.get("artifact_refs")
-    if isinstance(explain_rows, list) and explain_rows and refs is None:
+    has_embedded = (
+        (isinstance(explain_rows, list) and explain_rows)
+        or (isinstance(coverage_rows, list) and coverage_rows)
+    )
+    if has_embedded and refs is None:
         errors.append(
             "PcsBenchIngest.v0 producer 'scientific-memory' requires artifact_refs "
-            "when explain_quality_reports are embedded",
+            "when explain_quality_reports or coverage_reports are embedded",
         )
         return errors
     if not isinstance(refs, list):
@@ -348,6 +353,14 @@ def _validate_pcs_bench_ingest_semantics_local(ingest: dict[str, Any]) -> list[s
         if isinstance(digest, str) and ("ExplainQualityReport.v0", digest) not in ref_keys:
             errors.append(
                 f"explain_quality_reports[{index}]: missing artifact_refs entry for digest {digest}",
+            )
+    for index, row in enumerate(coverage_rows or []):
+        if not isinstance(row, dict):
+            continue
+        digest = row.get("signature_or_digest")
+        if isinstance(digest, str) and ("CoverageReport.v0", digest) not in ref_keys:
+            errors.append(
+                f"coverage_reports[{index}]: missing artifact_refs entry for digest {digest}",
             )
     return errors
 

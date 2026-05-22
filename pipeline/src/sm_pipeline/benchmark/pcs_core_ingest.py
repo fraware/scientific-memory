@@ -14,6 +14,7 @@ from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
 PCS_WORKFLOW_ID = "pcs.scientific_memory"
 UNKNOWN_COMMIT = "0" * 40
 EXPLAIN_QUALITY_SIDECARS_DIR = "explain_quality_reports"
+COVERAGE_SIDECARS_DIR = "coverage_reports"
 
 RESPONSIBLE_COMPONENT_ALIASES: dict[str, str] = {
     "scientific memory": "scientific_memory",
@@ -38,6 +39,15 @@ SM_COVERAGE_METRICS: tuple[str, ...] = (
     "staleness_detection",
 )
 
+# Release-grade producer gate: minimum coverage_ratio per SM metric (details.sm_metric).
+RELEASE_GRADE_COVERAGE_THRESHOLDS: dict[str, float] = {
+    "scientific_memory_interpretability": 0.95,
+    "query_correctness": 0.95,
+    "failed_release_rendering": 0.90,
+    "release_comparison": 0.90,
+    "staleness_detection": 0.90,
+}
+
 
 def _now() -> str:
     return datetime.now(UTC).isoformat()
@@ -54,6 +64,111 @@ def normalize_source_commit(raw: str) -> str:
     if len(text) == 40 and all(ch in "0123456789abcdef" for ch in text):
         return text
     return UNKNOWN_COMMIT
+
+
+def is_zero_source_commit(commit: str) -> bool:
+    """True when commit is the all-zero developer fixture placeholder."""
+    return normalize_source_commit(commit) == UNKNOWN_COMMIT
+
+
+def validate_release_grade_source_commit(commit: str) -> list[str]:
+    """Reject all-zero commits for release-grade benchmark output."""
+    normalized = normalize_source_commit(commit)
+    if is_zero_source_commit(normalized):
+        return [
+            "release-grade: source_commit must be a real 40-char git commit "
+            f"(got {normalized!r}); resolve git HEAD or set SCIENTIFIC_MEMORY_REPO_ROOT",
+        ]
+    return []
+
+
+def validate_release_grade_coverage_adequacy(coverage_reports: list[Any]) -> list[str]:
+    """Enforce minimum coverage_ratio per SM metric for release-grade output."""
+    errors: list[str] = []
+    projected_metrics: set[str] = set()
+    measured_ratios: dict[str, float] = {}
+    for index, row in enumerate(coverage_reports):
+        if not isinstance(row, dict):
+            continue
+        details = row.get("details") if isinstance(row.get("details"), dict) else {}
+        sm_metric = str(details.get("sm_metric") or "")
+        if not sm_metric:
+            continue
+        projected_metrics.add(sm_metric)
+        if details.get("applicability") == "not_applicable" or details.get("case_count") == 0:
+            continue
+        try:
+            ratio = float(row.get("coverage_ratio", 0.0))
+        except (TypeError, ValueError):
+            errors.append(f"coverage_reports[{index}]: invalid coverage_ratio")
+            continue
+        measured_ratios[sm_metric] = ratio
+
+    missing_metrics = set(RELEASE_GRADE_COVERAGE_THRESHOLDS) - projected_metrics
+    if missing_metrics:
+        errors.append(
+            "release-grade: missing coverage reports for sm_metric: "
+            + ", ".join(sorted(missing_metrics)),
+        )
+
+    for sm_metric, minimum in RELEASE_GRADE_COVERAGE_THRESHOLDS.items():
+        ratio = measured_ratios.get(sm_metric)
+        if ratio is None:
+            continue
+        if ratio < minimum:
+            errors.append(
+                f"release-grade: {sm_metric} coverage_ratio {ratio:.4f} "
+                f"below threshold {minimum:.2f}",
+            )
+    return errors
+
+
+def validate_release_grade_pcs_core_adequacy(ingest: dict[str, Any]) -> list[str]:
+    """When pcs_core is installed, require release-grade or external-review-grade adequacy tier."""
+    try:
+        from pcs_core.benchmark_ingest import assess_ingest_adequacy_tier
+    except ImportError:
+        return []
+    tier, findings = assess_ingest_adequacy_tier(ingest)
+    if tier in ("release-grade", "external-review-grade"):
+        return []
+    detail = "; ".join(findings) if findings else "no findings"
+    return [f"release-grade: pcs-core adequacy tier {tier!r} ({detail})"]
+
+
+def validate_release_grade_ingest(
+    ingest: dict[str, Any],
+    *,
+    out_dir: Path | None = None,
+) -> list[str]:
+    """Structural + adequacy checks for release-grade PcsBenchIngest.v0 producer output."""
+    errors: list[str] = []
+    errors.extend(validate_release_grade_source_commit(str(ingest.get("source_commit") or "")))
+    errors.extend(validate_embedded_ingest_contract(ingest, out_dir=out_dir))
+    errors.extend(validate_release_grade_pcs_core_adequacy(ingest))
+    coverage = ingest.get("coverage_reports")
+    if isinstance(coverage, list):
+        errors.extend(validate_release_grade_coverage_adequacy(coverage))
+    else:
+        errors.append("release-grade: coverage_reports must be a list")
+    for array_key in (
+        "benchmark_runs",
+        "coverage_reports",
+        "failure_localization_reports",
+        "explain_quality_reports",
+    ):
+        rows = ingest.get(array_key)
+        if not isinstance(rows, list):
+            continue
+        for index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                continue
+            nested_commit = row.get("source_commit")
+            if nested_commit is not None and is_zero_source_commit(str(nested_commit)):
+                errors.append(
+                    f"release-grade: {array_key}[{index}].source_commit must not be all zeros",
+                )
+    return errors
 
 
 def coerce_responsible_component(raw: str | None) -> str:
@@ -315,17 +430,33 @@ def _coverage_from_cases(
     passed_key: str = "passed",
 ) -> dict[str, Any]:
     total = len(cases)
+    if total == 0:
+        return build_coverage_report(
+            coverage_id=coverage_id,
+            metric=metric,
+            numerator=1.0,
+            denominator=1.0,
+            source_commit=source_commit,
+            details={
+                "sm_metric": sm_metric,
+                "case_count": 0,
+                "passed_cases": 0,
+                "applicability": "not_applicable",
+                "cases": [],
+            },
+        )
     passed = sum(1 for row in cases if row.get(passed_key))
     return build_coverage_report(
         coverage_id=coverage_id,
         metric=metric,
         numerator=float(passed),
-        denominator=float(total or 1),
+        denominator=float(total),
         source_commit=source_commit,
         details={
             "sm_metric": sm_metric,
             "case_count": total,
             "passed_cases": passed,
+            "applicability": "measured",
             "cases": [
                 {
                     "case_id": row.get("case_id"),
@@ -409,8 +540,7 @@ def project_coverage_reports(
                     ),
                 }
                 for row in staleness_cases
-            ]
-            or [{"case_id": "none", "passed": True}],
+            ],
             source_commit=source_commit,
         ),
     ]
@@ -419,6 +549,11 @@ def project_coverage_reports(
 def explain_quality_sidecar_relpath(report_id: str) -> str:
     safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in report_id)
     return f"{EXPLAIN_QUALITY_SIDECARS_DIR}/{safe}.v0.json"
+
+
+def coverage_sidecar_relpath(coverage_id: str) -> str:
+    safe = "".join(ch if ch.isalnum() or ch in "-_" else "-" for ch in coverage_id)
+    return f"{COVERAGE_SIDECARS_DIR}/{safe}.v0.json"
 
 
 def build_benchmark_artifact_ref(
@@ -447,9 +582,10 @@ def build_benchmark_artifact_ref(
 def build_artifact_refs_for_ingest(
     *,
     explain_quality_reports: list[dict[str, Any]],
+    coverage_reports: list[dict[str, Any]] | None = None,
     source_commit: str,
 ) -> list[dict[str, Any]]:
-    """pcs-core requires artifact_refs covering each embedded ExplainQualityReport.v0 digest."""
+    """pcs-core requires artifact_refs for embedded explain-quality and coverage reports."""
     refs: list[dict[str, Any]] = []
     for report in explain_quality_reports:
         report_id = str(report.get("report_id") or report.get("case_id") or "case")
@@ -458,6 +594,19 @@ def build_artifact_refs_for_ingest(
                 artifact_type="ExplainQualityReport.v0",
                 path=explain_quality_sidecar_relpath(report_id),
                 embedded=report,
+                source_commit=source_commit,
+                role="producer_export",
+            ),
+        )
+    for row in coverage_reports or []:
+        if not isinstance(row, dict):
+            continue
+        coverage_id = str(row.get("coverage_id") or row.get("metric") or "coverage")
+        refs.append(
+            build_benchmark_artifact_ref(
+                artifact_type="CoverageReport.v0",
+                path=coverage_sidecar_relpath(coverage_id),
+                embedded=row,
                 source_commit=source_commit,
                 role="producer_export",
             ),
@@ -480,6 +629,26 @@ def write_explain_quality_sidecars(
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
         written[report_id] = rel
+    return written
+
+
+def write_coverage_sidecars(
+    out_dir: Path,
+    coverage_reports: list[dict[str, Any]],
+) -> dict[str, str]:
+    """Write one CoverageReport.v0 JSON file per embedded ingest row."""
+    sidecar_dir = out_dir / COVERAGE_SIDECARS_DIR
+    sidecar_dir.mkdir(parents=True, exist_ok=True)
+    written: dict[str, str] = {}
+    for row in coverage_reports:
+        if not isinstance(row, dict):
+            continue
+        coverage_id = str(row.get("coverage_id") or row.get("metric") or "coverage")
+        rel = coverage_sidecar_relpath(coverage_id)
+        path = out_dir / rel
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(row, indent=2) + "\n", encoding="utf-8")
+        written[coverage_id] = rel
     return written
 
 
@@ -543,13 +712,6 @@ def build_embedded_pcs_bench_ingest(
 
     explain_quality_reports = [project_explain_quality_report(row) for row in explain_rows if isinstance(row, dict)]
 
-    refs = list(artifact_refs or [])
-    if not refs and explain_quality_reports:
-        refs = build_artifact_refs_for_ingest(
-            explain_quality_reports=explain_quality_reports,
-            source_commit=commit,
-        )
-
     coverage_reports = project_coverage_reports(
         suite_id=suite_id,
         source_commit=commit,
@@ -558,6 +720,14 @@ def build_embedded_pcs_bench_ingest(
         failed_report=failed_report,
         case_results=case_results,
     )
+
+    refs = list(artifact_refs or [])
+    if not refs and (explain_quality_reports or coverage_reports):
+        refs = build_artifact_refs_for_ingest(
+            explain_quality_reports=explain_quality_reports,
+            coverage_reports=coverage_reports,
+            source_commit=commit,
+        )
 
     passed = bool(benchmark_run_doc.get("passed"))
     body: dict[str, Any] = {
@@ -660,9 +830,14 @@ def validate_embedded_ingest_contract(
 
     refs = ingest.get("artifact_refs")
     explain_rows = explain if isinstance(explain, list) else []
-    if explain_rows and not refs:
-        errors.append("pcs_bench_ingest.v0.json: artifact_refs required when explain_quality_reports are embedded")
-    if isinstance(refs, list) and explain_rows:
+    coverage_rows = coverage if isinstance(coverage, list) else []
+    producer_embedded = bool(explain_rows or coverage_rows)
+    if producer_embedded and not refs:
+        errors.append(
+            "pcs_bench_ingest.v0.json: artifact_refs required when explain_quality_reports "
+            "or coverage_reports are embedded",
+        )
+    if isinstance(refs, list):
         ref_digests = {
             (str(ref.get("artifact_type")), str(ref.get("sha256")))
             for ref in refs
@@ -675,6 +850,14 @@ def validate_embedded_ingest_contract(
             if isinstance(digest, str) and ("ExplainQualityReport.v0", digest) not in ref_digests:
                 errors.append(
                     f"explain_quality_reports[{index}]: no artifact_refs entry for digest {digest}",
+                )
+        for index, row in enumerate(coverage_rows):
+            if not isinstance(row, dict):
+                continue
+            digest = row.get("signature_or_digest")
+            if isinstance(digest, str) and ("CoverageReport.v0", digest) not in ref_digests:
+                errors.append(
+                    f"coverage_reports[{index}]: no artifact_refs entry for digest {digest}",
                 )
         if out_dir is not None:
             for index, ref in enumerate(refs):

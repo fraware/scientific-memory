@@ -79,6 +79,43 @@
         }
       ]
     },
+    "BenchmarkArtifactRef.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "pcs-bench",
+        "labtrust-gym",
+        "certifyedge",
+        "provability-fabric",
+        "scientific-memory"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "BenchmarkArtifactRef.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "artifact_type",
+        "path",
+        "sha256",
+        "role",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/BenchmarkArtifactRef.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
     "BenchmarkCase.v0": {
       "allowed_runtime_producers": [
         "pcs-core"
@@ -1737,5 +1774,5 @@
   "registry_id": "pcs-artifact-registry-v0.1",
   "registry_version": "0.1.0",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:3dfa89c98b8a1a2564adf94d45707f725e09d6dc8382fcce0c35326cb2352416"
+  "signature_or_digest": "sha256:52f85a49adb004c158a20fce0fa52ca2f684715fa9c24f5cf0dcfb07b697dadb"
 }

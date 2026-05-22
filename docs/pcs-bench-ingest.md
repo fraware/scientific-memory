@@ -74,6 +74,37 @@ Benchmark failures are **not** collapsed into a single string. Each case emits `
 
 Each event includes `responsible_component`, `repair_hint`, `artifact_path`, and optional `what_was_still_imported`.
 
+## Release-grade producer gate
+
+For pcs-bench producer output (not developer fixtures), use `--release-grade`:
+
+- `source_commit` must be a real git HEAD (all-zero commits are rejected)
+- pcs-core schema validation must pass
+- `artifact_refs` must cover embedded explain-quality digests
+- All five SM coverage metrics must be present
+- Coverage adequacy: interpretability and query correctness ≥ 0.95; failed-release rendering, release comparison, and staleness detection ≥ 0.90 (skipped when `details.applicability` is `not_applicable` / `case_count` is 0)
+
+```bash
+sm-pipeline pcs-benchmark-rendering \
+  --cases benchmarks/rendering/labtrust_qc_release \
+  --out benchmark_runs/labtrust_rendering \
+  --validate-pcs-core-output ../pcs-core \
+  --release-grade
+
+sm-pipeline validate-pcs-bench-ingest \
+  --input benchmark_runs/labtrust_rendering/pcs_bench_ingest.v0.json \
+  --pcs-core ../pcs-core \
+  --release-grade
+
+make pcs-bench-producer
+
+# Cross-platform (Windows/macOS/Linux)
+uv run python scripts/run_pcs_bench_producer_gate.py
+uv run python scripts/run_pcs_bench_producer_gate.py \
+  --cases benchmarks/rendering/external_reviewer_minimal \
+  --out benchmark_runs/external_reviewer_minimal
+```
+
 ## pcs-core schema validation
 
 When a sibling [pcs-core](https://github.com/SentinelOps-CI/pcs-core) checkout is available, validate benchmark outputs against its canonical schemas:

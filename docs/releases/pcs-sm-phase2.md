@@ -207,6 +207,21 @@ python scripts/package_pcs_bench_bundle.py benchmark_runs/external_reviewer_mini
 uv run python scripts/sync_pcs_benchmark_schemas.py   # refresh SM mirrors from pcs-core
 ```
 
+**Release-grade producer gate** (real `source_commit`, pcs-core schemas, coverage thresholds, `artifact_refs`):
+
+```bash
+make pcs-bench-producer
+# or
+just pcs-bench-producer-gate
+just pcs-bench-producer-gate-external   # 5-case external reviewer packet
+
+sm-pipeline validate-pcs-bench-ingest \
+  --input benchmark_runs/labtrust_rendering/pcs_bench_ingest.v0.json \
+  --pcs-core ../pcs-core --release-grade
+```
+
+See [pcs-bench-ingest.md](../pcs-bench-ingest.md).
+
 Typed benchmark failures: `import_failed`, `render_failed`, `query_failed`, `staleness_failed`, `comparison_failed`, `formal_failed`.
 
 ## CI gate

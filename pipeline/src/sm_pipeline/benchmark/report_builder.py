@@ -20,6 +20,8 @@ from sm_pipeline.benchmark.pcs_core_ingest import (
     PCS_WORKFLOW_ID as PCS_CORE_INGEST_WORKFLOW_ID,
     build_embedded_pcs_bench_ingest,
     validate_embedded_ingest_contract,
+    validate_release_grade_ingest,
+    write_coverage_sidecars,
     write_explain_quality_sidecars,
 )
 from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
@@ -424,6 +426,12 @@ def write_pcs_bench_artifacts(
             out_dir,
             [row for row in eq_reports if isinstance(row, dict)],
         )
+    cov_reports = ingest.get("coverage_reports") or []
+    if isinstance(cov_reports, list):
+        write_coverage_sidecars(
+            out_dir,
+            [row for row in cov_reports if isinstance(row, dict)],
+        )
     ingest_path.write_text(json.dumps(ingest, indent=2) + "\n", encoding="utf-8")
     paths = {PCS_BENCH_INGEST_FILENAME: str(ingest_path)}
 
@@ -483,6 +491,7 @@ def validate_benchmark_output_dir(
     repo_root: Path,
     *,
     pcs_core_root: Path | None = None,
+    release_grade: bool = False,
 ) -> list[str]:
     """Validate a completed PCS rendering benchmark output directory."""
     errors: list[str] = []
@@ -494,6 +503,9 @@ def validate_benchmark_output_dir(
     sidecar_dir = out_dir / "explain_quality_reports"
     if not sidecar_dir.is_dir():
         errors.append("missing explain_quality_reports/ (per-case ExplainQualityReport.v0 sidecars)")
+    coverage_sidecar_dir = out_dir / "coverage_reports"
+    if not coverage_sidecar_dir.is_dir():
+        errors.append("missing coverage_reports/ (per-metric CoverageReport.v0 sidecars)")
     if errors:
         return errors
     try:
@@ -537,6 +549,8 @@ def validate_benchmark_output_dir(
         from sm_pipeline.benchmark.pcs_core_benchmark_validate import _validate_pcs_bench_ingest_semantics
 
         errors.extend(_validate_pcs_bench_ingest_semantics(ingest))
+        if release_grade:
+            errors.extend(validate_release_grade_ingest(ingest, out_dir=out_dir))
 
     if pcs_core_root is not None:
         from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
@@ -547,4 +561,56 @@ def validate_benchmark_output_dir(
     run = reports["benchmark_run.v0.json"]
     if not run.get("passed"):
         errors.extend(str(msg) for msg in (run.get("failures") or [])[:10])
+    return errors
+
+
+def validate_pcs_bench_ingest_file(
+    ingest_path: Path,
+    repo_root: Path,
+    *,
+    pcs_core_root: Path | None = None,
+    release_grade: bool = False,
+) -> list[str]:
+    """Validate a standalone pcs_bench_ingest.v0.json (contract + optional pcs-core schemas)."""
+    ingest_path = ingest_path.resolve()
+    out_dir = ingest_path.parent
+    errors: list[str] = []
+    try:
+        ingest = json.loads(ingest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        return [f"{ingest_path}: {exc}"]
+    if not isinstance(ingest, dict):
+        return [f"{ingest_path}: expected JSON object"]
+
+    if release_grade:
+        errors.extend(validate_release_grade_ingest(ingest, out_dir=out_dir))
+    else:
+        errors.extend(validate_embedded_ingest_contract(ingest, out_dir=out_dir))
+
+    expected_sig = canonical_hash(ingest)
+    actual_sig = str(ingest.get("signature_or_digest") or "")
+    if actual_sig != expected_sig:
+        errors.append(f"{ingest_path.name}: signature_or_digest mismatch (recompute canonical hash)")
+
+    suite_err = validate_suite_id(repo_root, str(ingest.get("suite_id") or ""))
+    if suite_err:
+        errors.append(suite_err)
+    if str(ingest.get("workflow_id") or "") != PCS_WORKFLOW_ID:
+        errors.append(f"{ingest_path.name}: workflow_id must be {PCS_WORKFLOW_ID!r}")
+
+    from sm_pipeline.benchmark.pcs_core_benchmark_validate import _validate_pcs_bench_ingest_semantics
+
+    errors.extend(_validate_pcs_bench_ingest_semantics(ingest))
+
+    if pcs_core_root is not None:
+        from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
+            validate_benchmark_artifacts_with_pcs_core,
+        )
+
+        errors.extend(
+            validate_benchmark_artifacts_with_pcs_core(
+                {PCS_BENCH_INGEST_FILENAME: ingest},
+                pcs_core_root.resolve(),
+            ),
+        )
     return errors

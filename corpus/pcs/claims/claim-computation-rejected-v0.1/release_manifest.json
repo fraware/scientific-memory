@@ -36,16 +36,16 @@
       "artifact_type": "LeanCheckResult.v0",
       "producer": "pcs-core",
       "schema": "lean_check_result.v0.schema.json",
-      "sha256": "sha256:64d21ccf61376710b9fd305bb16666edcf27498b6c1a3ad4645e39f9f4fef3d8",
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:dbfb300ffd1439b4efc87e30b3c7b0a50ece91caf63c5a7992264a4d47cbfade",
+      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "proof_obligation.v0.json": {
       "artifact_type": "ProofObligation.v0",
       "producer": "pcs-core",
       "schema": "proof_obligation.v0.schema.json",
-      "sha256": "sha256:1b191f8d110b25a06b4c4f6af84e9656ce00abe1a41a2d5f51b7514d45d51c1e",
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "sha256": "sha256:be8833ffd365eb53075be70a8b70af346f3755b93baddba40a5afb773855e020",
+      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "result_artifact.json": {
@@ -76,7 +76,7 @@
       "artifact_type": "VerificationResult.v0",
       "producer": "pcs-core",
       "schema": "schemas/VerificationResult.v0.schema.json",
-      "sha256": "sha256:95965ee03f24ff41236ee4dd2d284a253717b3369a465a3718d3fa6916ef4967",
+      "sha256": "sha256:f73d61825d1ac16d0ca3bca23897b6c22e61c01b96a0dadac95013d3f6463f1f",
       "source_commit": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
@@ -132,7 +132,7 @@
   "release_id": "release-pcs-v0.1-scientific-computation-rejected",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:da38d05a4cef85ad3c9b9663740e794589e9774ea50d8e528eeee649059a7465",
+  "signature_or_digest": "sha256:ed8e9ab1f0ed6ecb9ccf30b64cc07c0746332837c104fe510d2eeb209dce9515",
   "validation_profile": "scientific_computation.reproducibility_v0",
   "workflow_profile_id": "scientific_computation.reproducibility_v0"
 }

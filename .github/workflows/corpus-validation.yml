@@ -82,6 +82,22 @@ jobs:
           PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
         run: bash scripts/run_pcs_rc_ci_gate.sh
 
+      - name: PCS benchmark producer gate (release-grade ingest)
+        if: hashFiles('pcs-core/schemas/**') != ''
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: uv run python scripts/run_pcs_bench_producer_gate.py --skip-pcs-bench-cli
+
+      - name: PCS external reviewer producer gate (full SM metrics)
+        if: hashFiles('pcs-core/schemas/**') != ''
+        env:
+          PCS_CORE_PATH: ${{ github.workspace }}/pcs-core
+        run: |
+          uv run python scripts/run_pcs_bench_producer_gate.py \
+            --cases benchmarks/rendering/external_reviewer_minimal \
+            --out benchmark_runs/ci_external_reviewer_producer \
+            --skip-pcs-bench-cli
+
       - name: Run PCS live integration (pcs-core)
         if: hashFiles('pcs-core/python/**') != ''
         env:

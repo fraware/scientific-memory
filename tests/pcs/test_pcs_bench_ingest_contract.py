@@ -115,3 +115,6 @@ def test_package_pcs_bench_bundle(tmp_path: Path) -> None:
     assert (bundle / PCS_BENCH_INGEST_FILENAME).is_file()
     assert (bundle / "bench_suite_manifest.v0.json").is_file()
     assert (bundle / "README.md").is_file()
+    assert (bundle / "explain_quality_reports").is_dir()
+    assert (bundle / "coverage_reports").is_dir()
+    assert list((bundle / "coverage_reports").glob("*.v0.json"))

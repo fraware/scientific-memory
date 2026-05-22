@@ -14,7 +14,12 @@ from sm_pipeline.benchmark.pcs_core_benchmark_validate import (
     resolve_pcs_core_from_env,
     resolve_pcs_core_root,
 )
-from sm_pipeline.benchmark.report_builder import normalize_benchmark_out_dir, validate_benchmark_output_dir
+from sm_pipeline.benchmark.report_builder import (
+    PCS_BENCH_INGEST_FILENAME,
+    normalize_benchmark_out_dir,
+    validate_benchmark_output_dir,
+    validate_pcs_bench_ingest_file,
+)
 
 
 def main() -> int:
@@ -53,6 +58,16 @@ def main() -> int:
         action="store_true",
         help="Fail when pcs-core validation was requested but checkout/schemas are unavailable",
     )
+    parser.add_argument(
+        "--release-grade",
+        action="store_true",
+        help="Enforce release-grade producer gates on pcs_bench_ingest.v0.json",
+    )
+    parser.add_argument(
+        "--ingest-only",
+        action="store_true",
+        help="Validate only pcs_bench_ingest.v0.json (skip companion v0 report files)",
+    )
     args = parser.parse_args()
     raw = args.out_dir_flag or args.out_dir or "benchmark_runs/pcs_rendering"
     out_dir = Path(normalize_benchmark_out_dir(raw))
@@ -84,7 +99,24 @@ def main() -> int:
             return 1
     else:
         pcs_core_root = resolve_pcs_core_root(None, repo_root=repo_root)
-    errors = validate_benchmark_output_dir(out_dir, repo_root, pcs_core_root=pcs_core_root)
+    if args.ingest_only:
+        ingest_path = out_dir / PCS_BENCH_INGEST_FILENAME
+        if not ingest_path.is_file():
+            print(f"missing {ingest_path}", file=sys.stderr)
+            return 1
+        errors = validate_pcs_bench_ingest_file(
+            ingest_path,
+            repo_root,
+            pcs_core_root=pcs_core_root,
+            release_grade=args.release_grade,
+        )
+    else:
+        errors = validate_benchmark_output_dir(
+            out_dir,
+            repo_root,
+            pcs_core_root=pcs_core_root,
+            release_grade=args.release_grade,
+        )
     if errors:
         for msg in errors:
             print(msg, file=sys.stderr)

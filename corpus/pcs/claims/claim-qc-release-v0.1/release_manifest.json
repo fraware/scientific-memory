@@ -4,16 +4,16 @@
       "artifact_type": "LeanCheckResult.v0",
       "producer": "pcs-core",
       "schema": "lean_check_result.v0.schema.json",
-      "sha256": "sha256:403eaf8e8eddaa73eccaa8ea889fe17f08046f0cc2a27a32b29a655202598428",
-      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
+      "sha256": "sha256:f6d09ffd053fcdae4cc0b34037ed0e704dca268e9d6aaba7f85c012202ab0380",
+      "source_commit": "51449908f2ba88397be12c0bc5fe36c55ea224eb",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "proof_obligation.v0.json": {
       "artifact_type": "ProofObligation.v0",
       "producer": "pcs-core",
       "schema": "proof_obligation.v0.schema.json",
-      "sha256": "sha256:e76876e168a4ae92c9123b157ccf62cf16b841df39107b6a99c98e0cfc40d1c6",
-      "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
+      "sha256": "sha256:1917ed65175524eefe2afd7b0ba00cc9fab6edf9a4f7477ec6a6b7cec0b1168c",
+      "source_commit": "51449908f2ba88397be12c0bc5fe36c55ea224eb",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core"
     },
     "runtime_receipt.json": {
@@ -104,7 +104,7 @@
       "repo": "https://github.com/SentinelOps-CI/provability-fabric"
     },
     "scientific_memory": {
-      "commit": "8e6f1b61d44b1561057bd5ce26cf5a085767e8bf",
+      "commit": "1bc32bdd48c1f7e3762d6d6ee0bcc5a43e597e08",
       "repo": "https://github.com/fraware/scientific-memory"
     }
   },
@@ -116,7 +116,7 @@
   "release_id": "release-pcs-v0.1-tool-use-safety",
   "release_status": "Validated",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:b3c1d6c28e6bd899cfd7de52747384ec20e100f876bf90d68375d03d504e02cd",
+  "signature_or_digest": "sha256:45d413da0e6bef0e137e62ba9c14914eaacb921128b0ecad5b125c88135f484f",
   "validation_profile": "agent_tool_use.safety_v0",
   "workflow_profile_id": "agent_tool_use.safety_v0"
 }

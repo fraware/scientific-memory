@@ -12,7 +12,7 @@
       "dataset_version": "v0.1.0",
       "environment_id": "env-linux-py312-uv",
       "failed_lean_theorems": null,
-      "imported_at": "2026-05-19T09:00:05Z",
+      "imported_at": "2026-05-21T12:12:18Z",
       "lean_check_result_id": "lean-check-release-pcs-v0.1-scientific-computation-rejected",
       "lean_check_status": "ProofChecked",
       "lean_theorems": [
@@ -25,7 +25,7 @@
       "obligation_set_id": "obl-set-release-pcs-v0.1-scientific-computation-rejected",
       "release_candidate": "pcs-v0.1-scientific-computation-conformance",
       "release_id": "release-pcs-v0.1-scientific-computation-rejected",
-      "release_manifest_hash": "sha256:da38d05a4cef85ad3c9b9663740e794589e9774ea50d8e528eeee649059a7465",
+      "release_manifest_hash": "sha256:ed8e9ab1f0ed6ecb9ccf30b64cc07c0746332837c104fe510d2eeb209dce9515",
       "render_path": "/pcs/claims/claim-computation-rejected-v0.1",
       "result_hash": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "signed_bundle_hash": "sha256:00a129896574d8d315aa349ebf861a3ba4b5e320af6afa5a0c838e46a5be479b",
@@ -55,7 +55,7 @@
       "dataset_version": "v0.1.0",
       "environment_id": "env-linux-py312-uv",
       "failed_lean_theorems": null,
-      "imported_at": "2026-05-19T14:41:55Z",
+      "imported_at": "2026-05-21T12:12:26Z",
       "lean_check_result_id": "lean-check-release-pcs-v0.1-scientific-computation-reproducibility",
       "lean_check_status": "ProofChecked",
       "lean_theorems": [
@@ -98,7 +98,7 @@
       "dataset_version": null,
       "environment_id": null,
       "failed_lean_theorems": null,
-      "imported_at": "2026-05-21T11:18:44Z",
+      "imported_at": "2026-05-22T00:54:59Z",
       "lean_check_result_id": "lean-check-release-pcs-v0.1-labtrust-qc",
       "lean_check_status": "ProofChecked",
       "lean_theorems": [
@@ -111,7 +111,7 @@
       "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
       "release_candidate": "pcs-v0.1.0-rc1",
       "release_id": "release-pcs-v0.1-labtrust-qc",
-      "release_manifest_hash": "sha256:3fdf2d4c16dd8ae782621737838884fd9968fae74d0df2e039b62751ea074bbe",
+      "release_manifest_hash": "sha256:eeca6239abd8bc5087c13e6dbd4823547268b6177f2e118f7f389fd109a2e4c3",
       "render_path": "/pcs/claims/claim-pcs-qc-release-v0.1",
       "result_hash": null,
       "signed_bundle_hash": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
@@ -141,7 +141,7 @@
       "dataset_version": null,
       "environment_id": null,
       "failed_lean_theorems": null,
-      "imported_at": "2026-05-19T14:40:41Z",
+      "imported_at": "2026-05-21T12:12:25Z",
       "lean_check_result_id": "lean-check-release-pcs-v0.1-tool-use-safety",
       "lean_check_status": "ProofChecked",
       "lean_theorems": [
@@ -154,7 +154,7 @@
       "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety",
       "release_candidate": "pcs-v0.1-tool-use-safety-conformance",
       "release_id": "release-pcs-v0.1-tool-use-safety",
-      "release_manifest_hash": "sha256:b3c1d6c28e6bd899cfd7de52747384ec20e100f876bf90d68375d03d504e02cd",
+      "release_manifest_hash": "sha256:45d413da0e6bef0e137e62ba9c14914eaacb921128b0ecad5b125c88135f484f",
       "render_path": "/pcs/claims/claim-qc-release-v0.1",
       "result_hash": null,
       "signed_bundle_hash": "sha256:af460dd9e8c0f17520ca41a72883b4e5eaa43c362c84e21dee6246ebbf9af8fb",
@@ -163,7 +163,7 @@
         "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
         "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
         "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-        "scientific_memory": "8e6f1b61d44b1561057bd5ce26cf5a085767e8bf"
+        "scientific_memory": "1bc32bdd48c1f7e3762d6d6ee0bcc5a43e597e08"
       },
       "stale": false,
       "stale_reasons": [],

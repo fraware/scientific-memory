@@ -52,7 +52,20 @@ Reports are written to (validated against `schemas/pcs/benchmark/*.schema.json`)
 - `failed_release_rendering_report.v0.json` — failure-evidence rendering for failed cases
 - `pcs_bench_ingest.v0.json` — **canonical pcs-bench ingest** (embedded `BenchmarkRun.v0`, `CoverageReport.v0`, `FailureLocalizationResult.v0`, `ExplainQualityReport.v0`, plus `artifact_refs`)
 - `explain_quality_reports/` — per-case `ExplainQualityReport.v0` sidecars referenced from ingest
+- `coverage_reports/` — per-metric `CoverageReport.v0` sidecars referenced from ingest
 - `pcs_bench_payload.json` — legacy flattened alias
+
+### External reviewer minimal packet
+
+`external_reviewer_minimal/` — five cases for external review and pcs-bench smoke ingest (see `external_reviewer_minimal/README.md`).
+
+### Release-grade producer
+
+```bash
+make pcs-bench-producer
+just pcs-bench-producer-gate
+just pcs-bench-producer-gate-external
+```
 - `rendering_benchmark_summary.md` — human-readable summary
 
 Validate a completed run (auto-detects adjacent `pcs-core` for schema + semantic checks when present):

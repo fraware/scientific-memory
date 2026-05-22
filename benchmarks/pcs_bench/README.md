@@ -33,6 +33,11 @@ just validate-external-reviewer-benchmark-pcs-core
 # Full suite
 just pcs-benchmark-rendering-all-pcs-core
 just validate-pcs-benchmark-output-pcs-core benchmark_runs/pcs_rendering ../pcs-core
+
+# Release-grade producer gate (pcs-bench consumable, no fixture fallback)
+make pcs-bench-producer
+just pcs-bench-producer-gate
+just pcs-bench-producer-gate-external
 ```
 
 ## Package for upload

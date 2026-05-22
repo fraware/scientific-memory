@@ -50,6 +50,11 @@ def main() -> int:
         metavar="PCS_CORE_ROOT",
         help="Validate source dir against pcs-core schemas before packaging",
     )
+    parser.add_argument(
+        "--release-grade",
+        action="store_true",
+        help="Enforce release-grade producer gates before packaging",
+    )
     args = parser.parse_args()
 
     source = Path(args.source_dir)
@@ -71,7 +76,12 @@ def main() -> int:
             print("pcs-core root not found for pre-package validation", file=sys.stderr)
             return 1
 
-    errors = validate_benchmark_output_dir(source, REPO_ROOT, pcs_core_root=pcs_core_root)
+    errors = validate_benchmark_output_dir(
+        source,
+        REPO_ROOT,
+        pcs_core_root=pcs_core_root,
+        release_grade=args.release_grade,
+    )
     if errors:
         for msg in errors:
             print(msg, file=sys.stderr)
@@ -89,9 +99,10 @@ def main() -> int:
         if src_file.is_file():
             shutil.copy2(src_file, dest / name)
 
-    sidecar_src = source / "explain_quality_reports"
-    if sidecar_src.is_dir():
-        shutil.copytree(sidecar_src, dest / "explain_quality_reports")
+    for sidecar_name in ("explain_quality_reports", "coverage_reports"):
+        sidecar_src = source / sidecar_name
+        if sidecar_src.is_dir():
+            shutil.copytree(sidecar_src, dest / sidecar_name)
 
     ingest = json.loads((source / PCS_BENCH_INGEST_FILENAME).read_text(encoding="utf-8"))
     suite_id = str(ingest.get("suite_id") or "")

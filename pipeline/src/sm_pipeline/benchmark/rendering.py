@@ -793,6 +793,7 @@ def run_rendering_benchmark(
     out_dir: Path | None = None,
     isolated: bool = True,
     validate_pcs_core_output: str | Path | None = None,
+    release_grade: bool = False,
 ) -> dict[str, Any]:
     root = _repo_root(repo_root)
     case_dirs = discover_case_dirs(cases_path)
@@ -916,6 +917,7 @@ def run_rendering_benchmark(
             aggregate_failures=aggregate_failures,
             metrics=report["metrics"],
         )
+        from sm_pipeline.benchmark.pcs_core_ingest import validate_release_grade_ingest
         from sm_pipeline.benchmark.report_builder import (
             _load_case_configs,
             build_pcs_bench_ingest,
@@ -925,6 +927,12 @@ def run_rendering_benchmark(
         benchmark_run_doc = v0_reports["benchmark_run.v0.json"]
         suite_id_ingest = str(benchmark_run_doc.get("suite_id") or suite_id)
         source_commit_ingest = resolve_source_commit(root)
+        if release_grade:
+            from sm_pipeline.benchmark.pcs_core_ingest import validate_release_grade_source_commit
+
+            commit_errors = validate_release_grade_source_commit(source_commit_ingest)
+            if commit_errors:
+                aggregate_failures.extend(commit_errors)
         v0_reports[PCS_BENCH_INGEST_FILENAME] = build_pcs_bench_ingest(
             benchmark_run=benchmark_run_doc,
             v0_reports=v0_reports,
@@ -934,17 +942,21 @@ def run_rendering_benchmark(
             case_configs=_load_case_configs(case_results, cases_path),
         )
         pcs_core_root: Path | None = None
-        if validate_pcs_core_output is not None:
-            raw_pcs = str(validate_pcs_core_output).strip()
+        if release_grade or validate_pcs_core_output is not None:
+            pcs_arg = validate_pcs_core_output if validate_pcs_core_output is not None else ""
+            raw_pcs = str(pcs_arg).strip()
             pcs_core_root = (
                 resolve_pcs_core_from_env(repo_root=root)
                 if raw_pcs == ""
                 else resolve_pcs_core_root(raw_pcs, repo_root=root)
             )
             if pcs_core_root is None:
+                pcs_core_root = resolve_pcs_core_root(None, repo_root=root)
+            if pcs_core_root is None:
                 aggregate_failures.append(
-                    "pcs-core validation requested but root not found "
-                    f"(arg={validate_pcs_core_output!r}, PCS_CORE_PATH={os.environ.get('PCS_CORE_PATH', '')!r})",
+                    "pcs-core validation required but root not found "
+                    f"(release_grade={release_grade}, arg={validate_pcs_core_output!r}, "
+                    f"PCS_CORE_PATH={os.environ.get('PCS_CORE_PATH', '')!r})",
                 )
         schema_errors = validate_benchmark_reports_dual(
             v0_reports,
@@ -953,6 +965,7 @@ def run_rendering_benchmark(
         )
         if schema_errors:
             aggregate_failures.extend(schema_errors[:10])
+        if aggregate_failures:
             report["passed"] = False
             report["failures"] = aggregate_failures
             run_doc = v0_reports["benchmark_run.v0.json"]
@@ -968,6 +981,19 @@ def run_rendering_benchmark(
             cases_path=cases_path,
         )
         v0_paths.update(bench_paths)
+        if release_grade:
+            ingest_path = out_dir / PCS_BENCH_INGEST_FILENAME
+            if ingest_path.is_file():
+                ingest_reload = json.loads(ingest_path.read_text(encoding="utf-8"))
+                if isinstance(ingest_reload, dict):
+                    release_errors = validate_release_grade_ingest(ingest_reload, out_dir=out_dir)
+                    if release_errors:
+                        aggregate_failures.extend(release_errors)
+                        report["passed"] = False
+                        report["failures"] = aggregate_failures
+                        run_doc = v0_reports["benchmark_run.v0.json"]
+                        run_doc["passed"] = False
+                        run_doc["failures"] = aggregate_failures
         report["v0_reports"] = v0_paths
         report["pcs_bench_ingest"] = str(out_dir / PCS_BENCH_INGEST_FILENAME)
         if pcs_core_root is not None:
@@ -1102,6 +1128,14 @@ def main(argv: list[str] | None = None) -> int:
             "Flag alone uses PCS_CORE_PATH/PCS_CORE_ROOT; optional path overrides."
         ),
     )
+    parser.add_argument(
+        "--release-grade",
+        action="store_true",
+        help=(
+            "Release-grade producer gate: real source_commit, pcs-core validation, "
+            "artifact_refs, SM coverage metrics, and coverage adequacy thresholds"
+        ),
+    )
     args = parser.parse_args(argv)
 
     cases_path = Path(args.cases)
@@ -1109,12 +1143,15 @@ def main(argv: list[str] | None = None) -> int:
     out_dir = Path(args.out) if args.out else repo_root / "benchmark_runs" / cases_path.name
 
     pcs_core_validate = args.validate_pcs_core_output
+    if args.release_grade and pcs_core_validate is None:
+        pcs_core_validate = ""
     report = run_rendering_benchmark(
         cases_path,
         repo_root=repo_root,
         out_dir=out_dir,
         isolated=not args.in_place,
         validate_pcs_core_output=pcs_core_validate,
+        release_grade=args.release_grade,
     )
     if args.pcs_bench_out:
         bench_path = Path(args.pcs_bench_out)

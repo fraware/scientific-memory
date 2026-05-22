@@ -450,6 +450,14 @@ def pcs_benchmark_rendering(
             "Use flag alone for PCS_CORE_PATH; or pass a checkout path."
         ),
     ),
+    release_grade: bool = typer.Option(
+        False,
+        "--release-grade",
+        help=(
+            "Release-grade producer gate: real source_commit, pcs-core validation, "
+            "artifact_refs, SM coverage metrics, and coverage adequacy thresholds"
+        ),
+    ),
 ) -> None:
     """Run PCS import/render/query benchmarks (pcs-bench consumable report)."""
     from pathlib import Path
@@ -471,12 +479,15 @@ def pcs_benchmark_rendering(
     pcs_core_validate: str | None = None
     if validate_pcs_core_output is not None:
         pcs_core_validate = validate_pcs_core_output.strip()
+    elif release_grade:
+        pcs_core_validate = ""
     report = run_rendering_benchmark(
         cases_path,
         repo_root=repo,
         out_dir=out_dir,
         isolated=not in_place,
         validate_pcs_core_output=pcs_core_validate,
+        release_grade=release_grade,
     )
     report_path = report.get("report_path") or out_dir / "benchmark_run.v0.json"
     ingest_path = report.get("pcs_bench_ingest") or out_dir / "pcs_bench_ingest.v0.json"
@@ -500,3 +511,45 @@ def pcs_benchmark_rendering(
         for msg in report.get("failures") or []:
             console.print(f"  - {msg}")
         raise typer.Exit(code=1)
+
+
+def validate_pcs_bench_ingest(
+    input: str = typer.Option(
+        ...,
+        "--input",
+        help="Path to pcs_bench_ingest.v0.json",
+    ),
+    pcs_core: str = typer.Option(
+        ...,
+        "--pcs-core",
+        help="pcs-core checkout root for schema validation",
+    ),
+    release_grade: bool = typer.Option(
+        False,
+        "--release-grade",
+        help="Also enforce release-grade producer gates (commit, coverage thresholds)",
+    ),
+) -> None:
+    """Validate PcsBenchIngest.v0 (embedded contract + pcs-core schemas)."""
+    from sm_pipeline.benchmark.pcs_core_benchmark_validate import resolve_pcs_core_root
+    from sm_pipeline.benchmark.report_builder import validate_pcs_bench_ingest_file
+
+    repo = _repo_root()
+    ingest_path = Path(input)
+    if not ingest_path.is_absolute():
+        ingest_path = repo / ingest_path
+    pcs_core_root = resolve_pcs_core_root(pcs_core, repo_root=repo)
+    if pcs_core_root is None:
+        console.print(f"[red]pcs-core root not found: {pcs_core}[/red]")
+        raise typer.Exit(code=1)
+    errors = validate_pcs_bench_ingest_file(
+        ingest_path,
+        repo,
+        pcs_core_root=pcs_core_root,
+        release_grade=release_grade,
+    )
+    if errors:
+        for msg in errors:
+            console.print(f"[red]{msg}[/red]")
+        raise typer.Exit(code=1)
+    console.print(f"[green]OK[/green] {ingest_path}")
