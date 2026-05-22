@@ -27,6 +27,16 @@
       "expected_claim_ids": [
         "claim-pcs-qc-release-v0.1"
       ]
+    },
+    {
+      "id": "by_source_commit",
+      "type": "by_source_commit",
+      "params": {
+        "commit": "17ed831acfd775889ab497d11004cceb083a9c2d"
+      },
+      "expected_claim_ids": [
+        "claim-pcs-qc-release-v0.1"
+      ]
     }
   ]
 }

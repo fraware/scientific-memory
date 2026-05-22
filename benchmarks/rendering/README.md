@@ -79,7 +79,7 @@ python scripts/validate_pcs_benchmark_output.py benchmark_runs/pcs_rendering
 python scripts/package_pcs_bench_bundle.py benchmark_runs/pcs_rendering --validate-pcs-core-output ../pcs-core
 ```
 
-pcs-bench contract: [docs/pcs-bench-ingest.md](../../docs/pcs-bench-ingest.md). Suite registry: [benchmarks/pcs_bench/suite_registry.v0.json](../pcs_bench/suite_registry.v0.json).
+pcs-bench contract: [docs/pcs/bench-ingest-contract.md](../../docs/pcs/bench-ingest-contract.md). Suite registry: [benchmarks/pcs_bench/suite_registry.v0.json](../pcs_bench/suite_registry.v0.json). Operator guide: [docs/pcs/benchmark-producer.md](../../docs/pcs/benchmark-producer.md).
 
 Regression floors: `baseline_thresholds.json` (enforced by default via `--check-regression`).
 
@@ -90,3 +90,5 @@ After fixture or import changes:
 ```bash
 python scripts/bootstrap_pcs_rendering_benchmarks.py
 ```
+
+Run this after `just refresh-pcs-release` when LabTrust `source_commit` or claim metadata changes.

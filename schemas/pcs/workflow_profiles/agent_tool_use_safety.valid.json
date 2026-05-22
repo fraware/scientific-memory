@@ -51,10 +51,5 @@
     "unknown_authorization_status"
   ],
   "limitations_notice": "This artifact is a proof-carrying tool-use simulation result. It is not a guarantee that a real deployed agent is safe.",
-  "formal_trust_required": true,
-  "formal_trust_artifacts": [
-    "ProofObligation.v0",
-    "LeanCheckResult.v0"
-  ],
   "signature_or_digest": "sha256:39ea95403f2f7065eaa7cda0084f8f68865bdb9054882e10f016e6d255bc0a49"
 }

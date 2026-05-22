@@ -6,7 +6,7 @@
   "workflow_profile_id": "labtrust.qc_release_v0.1",
   "validator": "pcs-core",
   "validator_version": "0.1.0",
-  "checked_at": "2026-05-18T21:29:17Z",
+  "checked_at": "2026-05-18T23:17:38Z",
   "status": "ProofChecked",
   "checks": [
     {
@@ -312,5 +312,31 @@
   "failure_codes": [],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
   "source_commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
-  "signature_or_digest": "sha256:36225aa613aae49684d8d575fd95bfb31de49a9b41128226d66da9210290c715"
+  "signature_or_digest": "sha256:3000ec6b27f2fc65be0c647a2e8c68ee528babe9779c8fa1d411053d13f904dd",
+  "formal_checks": [
+    {
+      "check_id": "lean.admissible_release_has_matching_trace_hash",
+      "status": "passed",
+      "artifact": "lean_check_result.v0.json",
+      "lean_theorem": "admissible_release_has_matching_trace_hash"
+    },
+    {
+      "check_id": "lean.admissible_release_has_verified_input_hash_equal_to_bundle_hash",
+      "status": "passed",
+      "artifact": "lean_check_result.v0.json",
+      "lean_theorem": "admissible_release_has_verified_input_hash_equal_to_bundle_hash"
+    },
+    {
+      "check_id": "lean.admissible_release_has_signed_input_hash_equal_to_verified_input_hash",
+      "status": "passed",
+      "artifact": "lean_check_result.v0.json",
+      "lean_theorem": "admissible_release_has_signed_input_hash_equal_to_verified_input_hash"
+    },
+    {
+      "check_id": "lean.kernel_build",
+      "status": "passed",
+      "artifact": "lean_check_result.v0.json",
+      "lean_theorem": "ReleaseChainAdmissible"
+    }
+  ]
 }

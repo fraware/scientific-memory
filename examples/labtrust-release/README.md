@@ -1,20 +1,16 @@
-# LabTrust release example (Scientific Memory)
+# LabTrust release example
 
-Canonical Phase 2 fixtures live under:
-
-`tests/pcs/fixtures/labtrust-release/`
-
-Populate from pcs-core (sibling checkout) then import:
+Canonical fixtures: `tests/pcs/fixtures/labtrust-release/`
 
 ```bash
 just sync-labtrust-release
 just pcs-import-release
 ```
 
-Or import the test fixture tree directly:
+Custom manifest:
 
 ```bash
 just pcs-import-release RELEASE_MANIFEST=tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json
 ```
 
-The on-disk manifest artifact name is `ReleaseManifest.v0.json` (pcs-core convention).
+Documentation: [docs/pcs/import-and-releases.md](../../docs/pcs/import-and-releases.md).

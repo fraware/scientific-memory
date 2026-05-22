@@ -79,6 +79,43 @@
         }
       ]
     },
+    "BenchmarkArtifactRef.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "pcs-bench",
+        "labtrust-gym",
+        "certifyedge",
+        "provability-fabric",
+        "scientific-memory"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "BenchmarkArtifactRef.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "artifact_type",
+        "path",
+        "sha256",
+        "role",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/BenchmarkArtifactRef.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
     "BenchmarkCase.v0": {
       "allowed_runtime_producers": [
         "pcs-core"
@@ -103,6 +140,7 @@
         "case_kind",
         "input_artifacts",
         "expected_status",
+        "expected_system_outcome",
         "expected_failure_code",
         "expected_responsible_component",
         "expected_repair_hint_kind",
@@ -112,6 +150,34 @@
       ],
       "runtime_producer": "pcs-core",
       "schema": "schemas/BenchmarkCase.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
+    "BenchmarkMetricRegistry.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "BenchmarkMetricRegistry.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "registry_id",
+        "registry_version",
+        "metrics",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/BenchmarkMetricRegistry.v0.schema.json",
       "schema_owner": "pcs-core",
       "semantic_checks": []
     },
@@ -165,6 +231,7 @@
         "benchmark_suite_id",
         "runs",
         "metrics",
+        "metric_summaries",
         "summary",
         "coverage",
         "failures",
@@ -709,6 +776,46 @@
         }
       ]
     },
+    "ExplainQualityReport.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "Provability Fabric"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "ExplainQualityReport.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "Provability Fabric",
+        "Scientific Memory"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "report_id",
+        "suite_id",
+        "case_id",
+        "producer_id",
+        "required_sections",
+        "sections",
+        "sections_present_count",
+        "sections_required_count",
+        "quality_score",
+        "gaps",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/ExplainQualityReport.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
     "FailureCaseManifest.v0": {
       "allowed_runtime_producers": [
         "pcs-core"
@@ -874,6 +981,127 @@
           "severity": "required"
         }
       ]
+    },
+    "MetricSummary.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "MetricSummary.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "metric_id",
+        "score",
+        "applicability",
+        "numerator",
+        "denominator",
+        "reason",
+        "details",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/MetricSummary.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
+    "PcsBenchIngest.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "pcs-bench",
+        "labtrust-gym",
+        "certifyedge",
+        "provability-fabric",
+        "scientific-memory"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "PcsBenchIngest.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "pcs-bench"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "producer_id",
+        "suite_id",
+        "workflow_id",
+        "benchmark_runs",
+        "coverage_reports",
+        "failure_localization_reports",
+        "explain_quality_reports",
+        "profile_coverage_reports",
+        "commands",
+        "logs",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/PcsBenchIngest.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
+    },
+    "ProfileCoverageReport.v0": {
+      "allowed_runtime_producers": [
+        "pcs-core",
+        "Provability Fabric"
+      ],
+      "allowed_statuses": [
+        "Draft",
+        "Validated",
+        "Deprecated"
+      ],
+      "artifact_type": "ProfileCoverageReport.v0",
+      "canonical_hash_required": true,
+      "consumer_repos": [
+        "pcs-core",
+        "Provability Fabric"
+      ],
+      "producer": "pcs-core",
+      "release_mode_required": false,
+      "required_release_fields": [
+        "schema_version",
+        "coverage_id",
+        "workflow_profile_id",
+        "producer_id",
+        "artifact_types_required",
+        "artifact_types_covered",
+        "semantic_checks_required",
+        "semantic_checks_covered",
+        "handoff_steps_required",
+        "handoff_steps_covered",
+        "numerator",
+        "denominator",
+        "coverage_ratio",
+        "details",
+        "source_repo",
+        "source_commit",
+        "signature_or_digest"
+      ],
+      "runtime_producer": "pcs-core",
+      "schema": "schemas/ProfileCoverageReport.v0.schema.json",
+      "schema_owner": "pcs-core",
+      "semantic_checks": []
     },
     "ProofObligation.v0": {
       "allowed_runtime_producers": [
@@ -1546,5 +1774,5 @@
   "registry_id": "pcs-artifact-registry-v0.1",
   "registry_version": "0.1.0",
   "schema_version": "v0",
-  "signature_or_digest": "sha256:8e972612ea2a8ba67a544503ff75084629bd0fac4da4933d792d11cc906a8fff"
+  "signature_or_digest": "sha256:52f85a49adb004c158a20fce0fa52ca2f684715fa9c24f5cf0dcfb07b697dadb"
 }

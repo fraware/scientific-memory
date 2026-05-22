@@ -22,7 +22,7 @@ Each run writes **`pcs_bench_ingest.v0.json`** with:
 
 Companion SM dialect files (`rendering_coverage_report.v0.json`, etc.) and `explain_quality_report.v0.json` (bundle) remain for debugging; pcs-bench ingests the embedded manifest.
 
-Contract: [docs/pcs-bench-ingest.md](../../docs/pcs-bench-ingest.md).
+Contract: [docs/pcs/bench-ingest-contract.md](../../docs/pcs/bench-ingest-contract.md).
 
 ## Dependencies
 
@@ -33,7 +33,7 @@ uv sync --project pipeline --extra pcs
 pip install -e ../pcs-bench
 ```
 
-Operator guide: [docs/PCS_PRODUCER.md](../../docs/PCS_PRODUCER.md).
+Operator guide: [docs/pcs/benchmark-producer.md](../../docs/pcs/benchmark-producer.md).
 
 ## Run and validate
 

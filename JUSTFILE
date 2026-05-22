@@ -99,6 +99,20 @@ refresh-pcs-release:
 	bash scripts/sm_python.sh scripts/regenerate_labtrust_negative_fixtures.py
 	bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py --write
 	bash scripts/sm_python.sh scripts/refresh_pcs_canonical_fixture.py --copy-to-fixture --sync-pcs-core-alias
+	uv run python scripts/bootstrap_pcs_rendering_benchmarks.py
+
+# Cross-platform refresh (Windows/macOS/Linux; includes benchmark expectations)
+refresh-pcs-release-py:
+	python scripts/refresh_pcs_release.py
+
+# Import all release trains into corpus/pcs and refresh portal export
+refresh-pcs-corpus-all:
+	python scripts/refresh_pcs_corpus_all.py
+
+# Maintainer path: sync fixtures, corpus, then verify (requires ../pcs-core and pcs-bench on PATH)
+prepare-pcs-release: refresh-pcs-release refresh-pcs-corpus-all pcs-rc-gate
+
+prepare-pcs-release-py: refresh-pcs-release-py refresh-pcs-corpus-all pcs-rc-gate-py
 
 # Legacy alias (do not vendor repo-by-repo; use refresh-pcs-release)
 refresh-pcs-fixtures: refresh-pcs-release

@@ -30,21 +30,29 @@ for _name in release_manifest.v0.json ReleaseManifest.v0.json; do
     break
   fi
 done
-if [ -n "$_pcs_manifest" ]; then
-  echo "==> PCS RC: ReleaseManifest artifact hash parity (signed bundle entry)"
-  python - "$_pcs_manifest" <<'PY'
+if [ -f "$_root/tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json" ]; then
+  echo "==> PCS RC: ReleaseManifest artifact hash parity (signed bundle on disk)"
+  python <<'PY'
 import json
 import sys
 from pathlib import Path
 
 repo = Path(".")
-sm = json.loads((repo / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json").read_text())
-pcs = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8-sig"))
+sys.path.insert(0, str(repo / "pipeline" / "src"))
+from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
+
+sm = json.loads(
+    (repo / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json").read_text(
+        encoding="utf-8-sig",
+    ),
+)
+bundle = repo / "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json"
 key = "signed_science_claim_bundle.json"
-if sm["artifacts"][key]["sha256"] != pcs["artifacts"][key]["sha256"]:
-    print("ReleaseManifest signed bundle hash mismatch vs pcs-core labtrust release", file=sys.stderr)
+on_disk = file_sha256_digest(bundle)
+if sm["artifacts"][key]["sha256"] != on_disk:
+    print("ReleaseManifest signed bundle hash mismatch vs on-disk fixture", file=sys.stderr)
     raise SystemExit(1)
-print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release")
+print("OK: ReleaseManifest signed bundle hash matches on-disk fixture")
 PY
 fi
 

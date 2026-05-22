@@ -2,11 +2,13 @@
 
 | Start here | Purpose |
 |------------|---------|
+| [pcs/README.md](pcs/README.md) | **Proof-Carrying Science (PCS)** — import, releases, benchmarks, portal rendering |
 | [SPEC.md](SPEC.md) | Canonical product and engineering spec |
 | [architecture.md](architecture.md) | Monorepo layout and validation flow |
 | [contributor-playbook.md](contributor-playbook.md) | Onboarding, local CI (no `just`), reuse, review, verification, Verso, schema migrations, Gate 7 releases, add a paper / claim |
 | [CONTRIBUTING.md](../CONTRIBUTING.md) | Contribution rules and local checks |
 | [maintainers.md](maintainers.md) | Public push checklist, clean-room, branch protection, triage, launch cadence |
+| [pcs/README.md](pcs/README.md) | Proof-Carrying Science: import releases, portal rendering, pcs-bench producer |
 
 | Reference | Purpose |
 |-----------|---------|

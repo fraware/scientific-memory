@@ -1,18 +1,18 @@
 {
   "artifacts": {
-    "runtime_receipt.json": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
-    "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
-    "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
+    "runtime_receipt.json": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
+    "science_claim_bundle.certified.json": "sha256:b8af33a7b24abf12fd938a59af6be91ac5e761365d8ecf3639fd0f196969de36",
+    "science_claim_bundle.pending.json": "sha256:f71e6d92c910f6db94661c712e06cf04c946bf560ede48346dd15e88cc54c6c8",
     "scientific_memory_import_report.json": "sha256:1598d195ad94b6d2f487569ab3fb53c2160d429ce50d8ea311be0e122c8e3050",
-    "signed_science_claim_bundle.json": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
-    "trace.json": "sha256:0b356b952c0eb5c033e4e7166113f5e34aa76af7f473362bcbc0d2b337dabb04",
-    "trace_certificate.json": "sha256:1fb39e4677c3a7838ec09079bf3d69684cd8fdb1d3e2f234ff333270920aaef7",
-    "verification_result.json": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679"
+    "signed_science_claim_bundle.json": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
+    "trace.json": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
+    "trace_certificate.json": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c",
+    "verification_result.json": "sha256:a1a66ee0720d4dd35718c9b50ab6422f80f37813cedead7720f54b94e1b3aa1e"
   },
   "certifyedge_commit": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
   "generated_at": "2026-05-18T23:17:38Z",
-  "labtrust_gym_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
-  "pcs_core_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+  "labtrust_gym_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
+  "pcs_core_commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
   "provability_fabric_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
   "release_candidate": "pcs-v0.1.0-rc1",
   "schema_version": "v0",

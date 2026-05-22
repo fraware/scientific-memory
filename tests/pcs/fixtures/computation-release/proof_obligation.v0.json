@@ -3,7 +3,7 @@
   "obligation_set_id": "obl-set-release-pcs-v0.1-scientific-computation-reproducibility",
   "release_id": "release-pcs-v0.1-scientific-computation-reproducibility",
   "release_candidate": "pcs-v0.1-scientific-computation-conformance",
-  "generated_at": "2026-05-19T14:26:39Z",
+  "generated_at": "2026-05-22T11:48:43Z",
   "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)",
   "obligations": [
     {
@@ -61,6 +61,6 @@
     }
   ],
   "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
-  "source_commit": "a397b4bed3606f61d2fa0bdf210ec5f3433e6118",
-  "signature_or_digest": "sha256:9f22b3e47feee86cdc50925e70df8fe86bf0e4dd03445a86486e25cf73ef50fd"
+  "source_commit": "9d105755c9d2668022e11bf8f2c0169ddbca4aec",
+  "signature_or_digest": "sha256:5ce7532e56a9cfa68b0e7d8e2e39999170613064331a59583959c9d85e0b7b48"
 }

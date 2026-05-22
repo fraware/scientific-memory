@@ -73,13 +73,13 @@
   "artifact_hashes": [
     {
       "algorithm": "sha256",
-      "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+      "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
       "name": "signature_or_digest",
       "source_artifact": "claim-pcs-qc-release-v0.1"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:512a6818f59380688ce9926d8b6adfbcb920829f50d2274ec1cf96ebe8925069",
+      "digest": "sha256:52aae25fd8625d1f09589e0fff8e73c10a5e197ffb56cedb1903af4bef5fcdc1",
       "name": "signature_or_digest",
       "source_artifact": "as-pcs-qc-release-v0.1"
     },
@@ -115,7 +115,7 @@
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
+      "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
       "name": "signature_or_digest",
       "source_artifact": "receipt-qc-release"
     },
@@ -139,7 +139,7 @@
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:8e4ef9e6616eb556841e39a106d4a4bef0f474c6d6135a95d7a3e0866b199b03",
+      "digest": "sha256:019cf4df7fcc90735647e2d9529cc7607ceec26debc0bc32d91f0e308a1c83fa",
       "name": "signature_or_digest",
       "source_artifact": "scb-pcs-qc-release-v0.1"
     },
@@ -151,31 +151,31 @@
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+      "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
       "name": "claim-pcs-qc-release-v0.1",
       "source_artifact": "evidence-pcs-qc-release-v0.1"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
+      "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
       "name": "receipt-qc-release",
       "source_artifact": "evidence-pcs-qc-release-v0.1"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
+      "digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
       "name": "signature_or_digest",
       "source_artifact": "evidence-pcs-qc-release-v0.1"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+      "digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
       "name": "claim_artifact",
       "source_artifact": "claim_artifact"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
+      "digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
       "name": "runtime_receipt",
       "source_artifact": "runtime_receipt"
     },
@@ -187,13 +187,13 @@
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
+      "digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
       "name": "evidence_bundle",
       "source_artifact": "evidence_bundle"
     },
     {
       "algorithm": "sha256",
-      "digest": "sha256:54f0cb6f1d8635a42f6592d4007a38802f71f2e489efdb4dfc4996db8a8c59ba",
+      "digest": "sha256:cda7040c4648a6faa4d3e0e076e75315a256bd4b0c8951ba01ae4b260a80bd77",
       "name": "signed_bundle",
       "source_artifact": "signed_bundle"
     }
@@ -215,7 +215,7 @@
       "consumer_repos": [
         "pcs-core"
       ],
-      "hash": "sha256:9ef5ba5f6e745a4f0ff50d23b774ec3f91e9e334d958d64c5141a228de92ba5e",
+      "hash": "sha256:9a3529f3910a3218ad86d175d6772ef467b45f2ac8470954d25524a8850d7bf7",
       "name": "lean_check_result.v0.json",
       "producer": "pcs-core",
       "registry_admission_result": "incomplete",
@@ -244,7 +244,7 @@
         "lean_theorem_in_catalog"
       ],
       "semantic_checks_performed": [],
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "status": "Validated"
     },
@@ -268,7 +268,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:66369c9a6ee6e492fd016cd9c06798fe65c4e49bd22c1a3066f6752030825986",
+      "hash": "sha256:f345d17e40f89aeb83256ea06cdb0152c8841486cc1553b074cf81ab6994698b",
       "name": "proof_obligation.v0.json",
       "producer": "pcs-core",
       "registry_admission_result": "incomplete",
@@ -294,7 +294,7 @@
         "obligations_reference_known_kinds"
       ],
       "semantic_checks_performed": [],
-      "source_commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "source_commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "status": "Validated"
     },
@@ -317,7 +317,7 @@
         "CertifyEdge",
         "Provability Fabric"
       ],
-      "hash": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
+      "hash": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
       "name": "runtime_receipt.json",
       "producer": "LabTrust-Gym",
       "registry_admission_result": "incomplete",
@@ -341,7 +341,7 @@
         "source_commit_matches_release_manifest"
       ],
       "semantic_checks_performed": [],
-      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
@@ -366,7 +366,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
+      "hash": "sha256:b8af33a7b24abf12fd938a59af6be91ac5e761365d8ecf3639fd0f196969de36",
       "name": "science_claim_bundle.certified.json",
       "producer": "LabTrust-Gym",
       "registry_admission_result": "incomplete",
@@ -391,7 +391,7 @@
         "certified_bundle_has_certificate_when_checked"
       ],
       "semantic_checks_performed": [],
-      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
@@ -416,7 +416,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
+      "hash": "sha256:f71e6d92c910f6db94661c712e06cf04c946bf560ede48346dd15e88cc54c6c8",
       "name": "science_claim_bundle.pending.json",
       "producer": "LabTrust-Gym",
       "registry_admission_result": "incomplete",
@@ -441,7 +441,7 @@
         "certified_bundle_has_certificate_when_checked"
       ],
       "semantic_checks_performed": [],
-      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
@@ -486,7 +486,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
+      "hash": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
       "name": "signed_science_claim_bundle.json",
       "producer": "Provability Fabric",
       "registry_admission_result": "incomplete",
@@ -523,7 +523,7 @@
       "artifact_type": "LabTrust.Trace.v0",
       "canonical_hash_required": false,
       "consumer_repos": [],
-      "hash": "sha256:0b356b952c0eb5c033e4e7166113f5e34aa76af7f473362bcbc0d2b337dabb04",
+      "hash": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
       "name": "trace.json",
       "producer": "LabTrust-Gym",
       "registry_admission_result": "admitted",
@@ -535,7 +535,7 @@
       "schema_owner": "",
       "semantic_checks": [],
       "semantic_checks_performed": [],
-      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated"
     },
@@ -559,7 +559,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:1fb39e4677c3a7838ec09079bf3d69684cd8fdb1d3e2f234ff333270920aaef7",
+      "hash": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c",
       "name": "trace_certificate.json",
       "producer": "CertifyEdge",
       "registry_admission_result": "incomplete",
@@ -606,7 +606,7 @@
         "Provability Fabric",
         "Scientific Memory"
       ],
-      "hash": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679",
+      "hash": "sha256:a1a66ee0720d4dd35718c9b50ab6422f80f37813cedead7720f54b94e1b3aa1e",
       "name": "verification_result.json",
       "producer": "Provability Fabric",
       "registry_admission_result": "incomplete",
@@ -683,17 +683,17 @@
     "producer": "labtrust-gym",
     "producer_version": "0.2.0",
     "schema_version": "v0",
-    "signature_or_digest": "sha256:512a6818f59380688ce9926d8b6adfbcb920829f50d2274ec1cf96ebe8925069",
-    "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+    "signature_or_digest": "sha256:52aae25fd8625d1f09589e0fff8e73c10a5e197ffb56cedb1903af4bef5fcdc1",
+    "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "status": "HumanReviewed"
   },
-  "bundle_signature_or_digest": "sha256:54f0cb6f1d8635a42f6592d4007a38802f71f2e489efdb4dfc4996db8a8c59ba",
+  "bundle_signature_or_digest": "sha256:cda7040c4648a6faa4d3e0e076e75315a256bd4b0c8951ba01ae4b260a80bd77",
   "canonical_digests": {
-    "claim_artifact": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
-    "evidence_bundle": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
-    "runtime_receipt": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
-    "signed_bundle": "sha256:54f0cb6f1d8635a42f6592d4007a38802f71f2e489efdb4dfc4996db8a8c59ba",
+    "claim_artifact": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+    "evidence_bundle": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
+    "runtime_receipt": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
+    "signed_bundle": "sha256:cda7040c4648a6faa4d3e0e076e75315a256bd4b0c8951ba01ae4b260a80bd77",
     "trace_certificate": "sha256:b40e23cccf21540bc90d3939b9c274e2c88da5bdb39fcce72e504ade00699f29"
   },
   "certificate_artifact_types": [
@@ -712,7 +712,7 @@
     "id": "claim-pcs-qc-release-v0.1",
     "producer": "labtrust-gym",
     "producer_version": "0.2.0",
-    "signature_or_digest": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
+    "signature_or_digest": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
     "status": "CertificateChecked",
     "text": "A sample may be released only after accession, QC completion, analysis, authorization by a release-capable actor, and satisfaction of the required temporal protocol constraints."
   },
@@ -721,8 +721,8 @@
   "evidence_bundle": {
     "artifact_hashes": {
       "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7": "sha256:b40e23cccf21540bc90d3939b9c274e2c88da5bdb39fcce72e504ade00699f29",
-      "claim-pcs-qc-release-v0.1": "sha256:fdb569eec1d621cb054f8ec92f99dea99f4a8d1506e50b447c1b4806f6a077b1",
-      "receipt-qc-release": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b"
+      "claim-pcs-qc-release-v0.1": "sha256:eff5efcd98a70befb7496f1b9ae17b92aec2e3e11f0015ed31124ec375d4a2dc",
+      "receipt-qc-release": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5"
     },
     "assumption_set_refs": [
       "as-pcs-qc-release-v0.1"
@@ -742,8 +742,8 @@
       "receipt-qc-release"
     ],
     "schema_version": "v0",
-    "signature_or_digest": "sha256:b3ecb165d1bd5bb91b6a46b57581ab8ae676b4272de52abd109557fa38f74811",
-    "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+    "signature_or_digest": "sha256:f61ef9958c887bd05f67c1940623cf0910ee1694712b3f1d428dda2d729a2ad6",
+    "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym"
   },
   "formal_trust_kernel": {
@@ -754,7 +754,7 @@
       "trace_certificate.json",
       "verification_result.json"
     ],
-    "checked_at": "2026-05-22T01:52:30Z",
+    "checked_at": "2026-05-22T11:52:40Z",
     "checker": "pcs-core",
     "checker_version": "0.1.0",
     "formal_non_claims": [
@@ -767,7 +767,7 @@
     "lean_check_results": [
       {
         "actual": null,
-        "checked_at": "2026-05-22T01:52:30Z",
+        "checked_at": "2026-05-22T11:52:40Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.CertificateMatchesRuntime",
@@ -787,7 +787,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T01:52:30Z",
+        "checked_at": "2026-05-22T11:52:40Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.VerificationAdmitsBundle",
@@ -807,7 +807,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T01:52:30Z",
+        "checked_at": "2026-05-22T11:52:40Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.SignedBundleAdmissible",
@@ -827,7 +827,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T01:52:30Z",
+        "checked_at": "2026-05-22T11:52:40Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
@@ -846,7 +846,7 @@
       },
       {
         "actual": null,
-        "checked_at": "2026-05-22T01:52:30Z",
+        "checked_at": "2026-05-22T11:52:40Z",
         "expected": null,
         "formal_scope": "Formalization covers PCS trust-envelope predicates in the Lean trust kernel (certificate/runtime alignment, PF verification admission, and signed-bundle hash binding). Scientific domain semantics, data quality, and model validity are out of scope.",
         "lean_theorem": "PCS.StaleCertificateNotAdmissible",
@@ -1014,11 +1014,11 @@
       ],
       "invariants": {
         "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
-        "certified_bundle_hash": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
+        "certified_bundle_hash": "sha256:b8af33a7b24abf12fd938a59af6be91ac5e761365d8ecf3639fd0f196969de36",
         "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
       },
       "manifest_path": "handoff_manifest.bundle_to_verifier.v0.json",
-      "signature_or_digest": "sha256:1e725aaee5337275b41ba8bae768f29bad2ad95cca53e53ca4c349d693fbee2d",
+      "signature_or_digest": "sha256:d7440ac1c88cf38f65cfa9c4ca8e35598dfaffa1a759337f3be38dd0df49a1cb",
       "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym",
       "status": "Validated",
@@ -1124,7 +1124,7 @@
     "id": "obl-set-release-pcs-v0.1-labtrust-qc",
     "payload": {
       "check_result_id": "lean-check-release-pcs-v0.1-labtrust-qc",
-      "checked_at": "2026-05-22T01:52:30Z",
+      "checked_at": "2026-05-22T11:52:40Z",
       "checker": "pcs-core",
       "checker_version": "0.1.0",
       "lean_version": "leanprover/lean4:v4.24.0",
@@ -1133,7 +1133,7 @@
       "release_id": "release-pcs-v0.1-labtrust-qc",
       "results": [
         {
-          "checked_at": "2026-05-22T01:52:30Z",
+          "checked_at": "2026-05-22T11:52:40Z",
           "lean_theorem": "PCS.CertificateMatchesRuntime",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-certificate-matches-runtime",
@@ -1145,7 +1145,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T01:52:30Z",
+          "checked_at": "2026-05-22T11:52:40Z",
           "lean_theorem": "PCS.VerificationAdmitsBundle",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-verification-admits-bundle",
@@ -1157,7 +1157,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T01:52:30Z",
+          "checked_at": "2026-05-22T11:52:40Z",
           "lean_theorem": "PCS.SignedBundleAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-signed-bundle-admissible",
@@ -1169,7 +1169,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T01:52:30Z",
+          "checked_at": "2026-05-22T11:52:40Z",
           "lean_theorem": "PCS.RejectedCertificateNotAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-rejected-certificate-not-admissible",
@@ -1180,7 +1180,7 @@
           "status": "ProofChecked"
         },
         {
-          "checked_at": "2026-05-22T01:52:30Z",
+          "checked_at": "2026-05-22T11:52:40Z",
           "lean_theorem": "PCS.StaleCertificateNotAdmissible",
           "lean_version": "leanprover/lean4:v4.24.0",
           "obligation_id": "obl-stale-certificate-not-admissible",
@@ -1192,14 +1192,14 @@
         }
       ],
       "schema_version": "v0",
-      "signature_or_digest": "sha256:f312e000da976a997325276d7441a8b85279b7ef8ddd790163de25c60e14d9e8",
-      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+      "signature_or_digest": "sha256:cf5f3fcea790e3bbb250e26ca79babeca221be756e59828d40ec5361c6d4d0e2",
+      "source_commit": "9d105755c9d2668022e11bf8f2c0169ddbca4aec",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "status": "ProofChecked"
     },
     "schema_version": "v0",
-    "signature_or_digest": "sha256:f312e000da976a997325276d7441a8b85279b7ef8ddd790163de25c60e14d9e8",
-    "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+    "signature_or_digest": "sha256:cf5f3fcea790e3bbb250e26ca79babeca221be756e59828d40ec5361c6d4d0e2",
+    "source_commit": "9d105755c9d2668022e11bf8f2c0169ddbca4aec",
     "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
     "status": "ProofChecked",
     "summary": "LeanCheckResult.v0"
@@ -1215,16 +1215,16 @@
   ],
   "lineage": {
     "artifact_hashes": {
-      "lean_check_result.v0.json": "sha256:9ef5ba5f6e745a4f0ff50d23b774ec3f91e9e334d958d64c5141a228de92ba5e",
-      "proof_obligation.v0.json": "sha256:66369c9a6ee6e492fd016cd9c06798fe65c4e49bd22c1a3066f6752030825986",
-      "runtime_receipt.json": "sha256:6ce21d9dfb66906920008fa8f450f56c90de7f4c9c4d874c67bb453df80c68a4",
-      "science_claim_bundle.certified.json": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca",
-      "science_claim_bundle.pending.json": "sha256:c41f340e669bdcf079db455953d0277b2cd3cae03efe6fe2391ee122ed4763d0",
+      "lean_check_result.v0.json": "sha256:9a3529f3910a3218ad86d175d6772ef467b45f2ac8470954d25524a8850d7bf7",
+      "proof_obligation.v0.json": "sha256:f345d17e40f89aeb83256ea06cdb0152c8841486cc1553b074cf81ab6994698b",
+      "runtime_receipt.json": "sha256:3ad5c55458a79ef502508f86cd215c746d42b4f0cc5c9aa4feeba9c03b4e1d60",
+      "science_claim_bundle.certified.json": "sha256:b8af33a7b24abf12fd938a59af6be91ac5e761365d8ecf3639fd0f196969de36",
+      "science_claim_bundle.pending.json": "sha256:f71e6d92c910f6db94661c712e06cf04c946bf560ede48346dd15e88cc54c6c8",
       "scientific_memory_import_report.json": "sha256:1598d195ad94b6d2f487569ab3fb53c2160d429ce50d8ea311be0e122c8e3050",
-      "signed_science_claim_bundle.json": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
-      "trace.json": "sha256:0b356b952c0eb5c033e4e7166113f5e34aa76af7f473362bcbc0d2b337dabb04",
-      "trace_certificate.json": "sha256:1fb39e4677c3a7838ec09079bf3d69684cd8fdb1d3e2f234ff333270920aaef7",
-      "verification_result.json": "sha256:d6dd6e8677ef2d92be2f697efb0556a46a8a83f315c22d39afbf1b8935bb9679"
+      "signed_science_claim_bundle.json": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
+      "trace.json": "sha256:f99eb0a90cd2b9819816a25ec4e938663d26ae8d40868cd8188665e940f7ad5c",
+      "trace_certificate.json": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c",
+      "verification_result.json": "sha256:a1a66ee0720d4dd35718c9b50ab6422f80f37813cedead7720f54b94e1b3aa1e"
     },
     "bundle_id": "scb-pcs-qc-release-v0.1",
     "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
@@ -1248,16 +1248,16 @@
     "previous_release_id": null,
     "recommended_action": "No action required; claim matches imported release artifacts.",
     "release_id": "release-pcs-v0.1-labtrust-qc",
-    "release_manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
+    "release_manifest_hash": "sha256:67f2043c7b12fc2f12432d242d05a0fc6c6862ed15a3853eb1bc41bf103a4d3c",
     "schema_versions": {
       "science_claim_bundle": "v0",
       "signed_bundle": "v0"
     },
-    "signed_bundle_hash": "sha256:55352f10f9817c32aaaa267be54f081a9c91b8a6bd3291f606d67bd55602f42d",
+    "signed_bundle_hash": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
     "source_commits": {
       "certifyedge": "635fca3771ad54fe3f8b49d1bb77ee35d0680ddc",
-      "labtrust_gym": "8369892d8872bc08ef5acb6cf503f38665c36733",
-      "pcs_core": "5ed33a0f995df88392ee0fc849967e9c42038738",
+      "labtrust_gym": "17ed831acfd775889ab497d11004cceb083a9c2d",
+      "pcs_core": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
       "provability_fabric": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
       "scientific_memory": "0e059e934bc95bcc4dc0cb6593b18b07a28529a2"
     },
@@ -1270,7 +1270,7 @@
     "artifact_type": "ProofObligation.v0",
     "id": "obl-set-release-pcs-v0.1-labtrust-qc",
     "payload": {
-      "generated_at": "2026-05-22T01:52:30Z",
+      "generated_at": "2026-05-22T11:52:40Z",
       "obligation_set_id": "obl-set-release-pcs-v0.1-labtrust-qc",
       "obligations": [
         {
@@ -1330,21 +1330,21 @@
       "release_candidate": "pcs-v0.1.0-rc1",
       "release_id": "release-pcs-v0.1-labtrust-qc",
       "schema_version": "v0",
-      "signature_or_digest": "sha256:b02a074372b1e941ee0a9a5db7f5624ba465cd26254c25334d6a20de0a0b1859",
-      "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+      "signature_or_digest": "sha256:90662b83ff388e5db0ceefc9fba70f76993f96cb74c01fc252084a8c8b407512",
+      "source_commit": "9d105755c9d2668022e11bf8f2c0169ddbca4aec",
       "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
       "trust_boundary": "PCS trust-envelope invariants (Lean/PCS.lean)"
     },
     "schema_version": "v0",
-    "signature_or_digest": "sha256:b02a074372b1e941ee0a9a5db7f5624ba465cd26254c25334d6a20de0a0b1859",
-    "source_commit": "162955f2bbe0d5ccbc2b85f06e93b7560b3a6ed4",
+    "signature_or_digest": "sha256:90662b83ff388e5db0ceefc9fba70f76993f96cb74c01fc252084a8c8b407512",
+    "source_commit": "9d105755c9d2668022e11bf8f2c0169ddbca4aec",
     "source_repo": "https://github.com/SentinelOps-CI/pcs-core",
     "status": null,
     "summary": "ProofObligation.v0"
   },
   "release_chain_validation": {
     "artifacts_checked": 8,
-    "checked_at": "2026-05-18T21:29:17Z",
+    "checked_at": "2026-05-18T23:17:38Z",
     "checks": [
       {
         "check_id": "manifest_present",
@@ -1530,7 +1530,7 @@
     "failure_codes": [],
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_id": "release-pcs-v0.1-labtrust-qc",
-    "signature_or_digest": "sha256:36225aa613aae49684d8d575fd95bfb31de49a9b41128226d66da9210290c715",
+    "signature_or_digest": "sha256:3000ec6b27f2fc65be0c647a2e8c68ee528babe9779c8fa1d411053d13f904dd",
     "status": "ProofChecked",
     "validation_id": "validation-pcs-v0.1-labtrust-qc-rc",
     "validator": "pcs-core",
@@ -1538,7 +1538,7 @@
   },
   "release_manifest": {
     "generated_at": "2026-05-18T23:17:38Z",
-    "manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
+    "manifest_hash": "sha256:67f2043c7b12fc2f12432d242d05a0fc6c6862ed15a3853eb1bc41bf103a4d3c",
     "manifest_path": "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json",
     "producer_repos": {
       "certifyedge": {
@@ -1546,11 +1546,11 @@
         "repo": "https://github.com/fraware/CertifyEdge"
       },
       "labtrust_gym": {
-        "commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+        "commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
         "repo": "https://github.com/fraware/LabTrust-Gym"
       },
       "pcs_core": {
-        "commit": "5ed33a0f995df88392ee0fc849967e9c42038738",
+        "commit": "17e414501b3e1c58e8fbde1fe89a828440a945d9",
         "repo": "https://github.com/SentinelOps-CI/pcs-core"
       },
       "provability_fabric": {
@@ -1565,10 +1565,10 @@
     "release_candidate": "pcs-v0.1.0-rc1",
     "release_id": "release-pcs-v0.1-labtrust-qc",
     "release_status": "Validated",
-    "signature_or_digest": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
+    "signature_or_digest": "sha256:67f2043c7b12fc2f12432d242d05a0fc6c6862ed15a3853eb1bc41bf103a4d3c",
     "validation_profile": "labtrust-v0.1-release-chain"
   },
-  "release_manifest_hash": "sha256:23b621b9a51bba8bf1273662713d3dc1e5d13a2d129dab79eab43fc59dbc2420",
+  "release_manifest_hash": "sha256:67f2043c7b12fc2f12432d242d05a0fc6c6862ed15a3853eb1bc41bf103a4d3c",
   "reproduce_commands": [],
   "runtime_artifact_types": [
     "RuntimeReceipt.v0",
@@ -1598,18 +1598,18 @@
     "run_id": "qc-release",
     "run_outcome": "passed",
     "schema_version": "v0",
-    "signature_or_digest": "sha256:ecce874ad042b848e57bfa54dc4ea9a5992ea351a06ed5da49e3a5c28da55d8b",
-    "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+    "signature_or_digest": "sha256:b311c7e474ba4053a9c0265b8a9f13cf2a505f89d5205d19242246223cf148c5",
+    "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
     "source_repo": "https://github.com/fraware/LabTrust-Gym",
     "started_at": "2026-01-15T08:00:00Z",
     "status": "RuntimeObserved",
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
   },
   "schema_version": "PcsClaimReadModel.v0",
-  "signed_bundle_hash": "sha256:5a1dbcca22b2eb7865dcf380ca2586b54512d5f9d161c70af9acfe6d208ed062",
+  "signed_bundle_hash": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
   "source_repositories": [
     {
-      "source_commit": "8369892d8872bc08ef5acb6cf503f38665c36733",
+      "source_commit": "17ed831acfd775889ab497d11004cceb083a9c2d",
       "source_repo": "https://github.com/fraware/LabTrust-Gym"
     },
     {
@@ -1770,7 +1770,7 @@
     ],
     "id": "verification-31ac5758-9219-47cf-b832-0ca8ae07a871",
     "overall_outcome": "pass",
-    "signature_or_digest": "sha256:8e4ef9e6616eb556841e39a106d4a4bef0f474c6d6135a95d7a3e0866b199b03",
+    "signature_or_digest": "sha256:019cf4df7fcc90735647e2d9529cc7607ceec26debc0bc32d91f0e308a1c83fa",
     "source_commit": "b0dbbbe1c110ec2301d452d2ef1074354cce170f",
     "source_repo": "https://github.com/SentinelOps-CI/provability-fabric",
     "status": "ProofChecked",

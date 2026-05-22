@@ -4,7 +4,7 @@
   "fixture": "labtrust-release/signed_science_claim_bundle.json",
   "pf_sign_command": "pf sign science-claim science_claim_bundle.certified.json --out signed_science_claim_bundle.json",
   "refresh_command": "just refresh-pcs-fixtures",
-  "signed_bundle_sha256": "sha256:d0ab55f964227c1350b29fe359dcaf61d04ad6b7dfcf1db351b717e1c47aab43",
+  "signed_bundle_sha256": "sha256:a527b66a65b8e6aaaff8142a33cdf6b315d556d69cab4b3e2bb716c8d53a5d5f",
   "source": "provability-fabric/tests/pcs/fixtures/labtrust-release/",
   "source_path": "C:\\Users\\mateo\\pcs-core\\examples\\labtrust-release\\signed_science_claim_bundle.json"
 }

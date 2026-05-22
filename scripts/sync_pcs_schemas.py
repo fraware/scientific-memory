@@ -41,6 +41,23 @@ LEGACY_ALIASES = {
 }
 
 
+def _patch_labtrust_formal_trust_profile(profile_dest: Path) -> None:
+    """Scientific Memory requires formal trust on the LabTrust QC workflow profile."""
+    path = profile_dest / "labtrust_qc_release.valid.json"
+    if not path.is_file():
+        return
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
+    data["formal_trust_required"] = True
+    data["formal_trust_artifacts"] = ["ProofObligation.v0", "LeanCheckResult.v0"]
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "pipeline" / "src"))
+    from sm_pipeline.pcs_validate.canonical_hash import canonical_hash
+
+    data["signature_or_digest"] = canonical_hash(
+        {key: value for key, value in data.items() if key != "signature_or_digest"},
+    )
+    path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+
 def _find_pcs_core_schemas(repo_root: Path) -> Path:
     candidates = [
         repo_root / "pcs-core" / "schemas",
@@ -90,6 +107,7 @@ def main() -> int:
         profile_dest.mkdir(parents=True, exist_ok=True)
         for path in profile_src.glob("*.json"):
             shutil.copy2(path, profile_dest / path.name)
+        _patch_labtrust_formal_trust_profile(profile_dest)
 
     print(f"Synced {len(copied)} schemas from {src} -> {dest}")
     return 0

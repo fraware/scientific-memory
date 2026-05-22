@@ -10,7 +10,7 @@
   "input_artifacts": {
     "trace_certificate.json": {
       "artifact_type": "TraceCertificate.v0",
-      "sha256": "sha256:e069f6ed1f5cbab25b49561684f6dc7f7f996953cbb1dd88237b52de079d5575"
+      "sha256": "sha256:3a9facf4f66ebeb0ac286865d3c801fc976128ba0e28d5b863c95549622f539c"
     }
   },
   "expected_outputs": {
@@ -23,5 +23,5 @@
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd"
   },
   "status": "Validated",
-  "signature_or_digest": "sha256:ce9312baf79822d4971bbd0af4c2f5c2e200e1b66aec2cb9add6dd1e8d50e4f5"
+  "signature_or_digest": "sha256:9dabb865a45781c84e677648fb972780098d77beea1efe67884dcbd33d27d73c"
 }

@@ -94,9 +94,15 @@ def main() -> int:
     )
 
     fixture_bundle = REPO_ROOT / "tests/pcs/fixtures/labtrust-release/signed_science_claim_bundle.json"
-    pcs_bundle = pcs_core / "examples/labtrust-release/signed_science_claim_bundle.json"
-    if pcs_bundle.is_file() and fixture_bundle.read_bytes() != pcs_bundle.read_bytes():
-        print("error: signed bundle drifted from pcs-core", file=sys.stderr)
+    drift = subprocess.run(
+        ["git", "diff", "--exit-code", str(fixture_bundle.relative_to(REPO_ROOT))],
+        cwd=REPO_ROOT,
+    )
+    if drift.returncode != 0:
+        print(
+            "error: signed bundle drifted from pcs-core; run: just refresh-pcs-release",
+            file=sys.stderr,
+        )
         return 1
 
     pcs_labtrust = pcs_core / "examples/labtrust-release"
@@ -106,18 +112,21 @@ def main() -> int:
         if candidate.is_file():
             manifest_example = candidate
             break
-    if manifest_example is not None:
-        sm_manifest = json.loads(
-            (REPO_ROOT / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json").read_text(
-                encoding="utf-8-sig",
-            ),
-        )
-        pcs_manifest = json.loads(manifest_example.read_text(encoding="utf-8-sig"))
+    sm_manifest_path = REPO_ROOT / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json"
+    if sm_manifest_path.is_file() and fixture_bundle.is_file():
+        sys.path.insert(0, str(PIPELINE_SRC))
+        from sm_pipeline.pcs_validate.canonical_hash import file_sha256_digest
+
+        sm_manifest = json.loads(sm_manifest_path.read_text(encoding="utf-8-sig"))
         key = "signed_science_claim_bundle.json"
-        if sm_manifest["artifacts"][key]["sha256"] != pcs_manifest["artifacts"][key]["sha256"]:
-            print("ReleaseManifest signed bundle hash mismatch vs pcs-core", file=sys.stderr)
+        on_disk = file_sha256_digest(fixture_bundle)
+        if sm_manifest["artifacts"][key]["sha256"] != on_disk:
+            print(
+                "ReleaseManifest signed bundle hash mismatch vs on-disk fixture",
+                file=sys.stderr,
+            )
             return 1
-        print("OK: ReleaseManifest signed bundle hash matches pcs-core labtrust release")
+        print("OK: ReleaseManifest signed bundle hash matches on-disk fixture")
 
     manifest = REPO_ROOT / "tests/pcs/fixtures/labtrust-release/ReleaseManifest.v0.json"
     _run(

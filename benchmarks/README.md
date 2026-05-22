@@ -15,7 +15,7 @@ The run writes `benchmarks/reports/latest.json` and compares results against
 - [`rendering/`](rendering/README.md): PCS import/render/query benchmarks for the
   Scientific Memory evidence layer (`just pcs-benchmark-rendering`)
 - [`pcs_bench/`](pcs_bench/README.md): Suite registry and ingest contract for **pcs-bench**
-- [pcs-bench ingest](../docs/pcs-bench-ingest.md): Canonical `pcs_bench_ingest.v0.json` shape
+- [PCS documentation](../docs/pcs/README.md): Import, releases, producer, and ingest contract
 - [`tasks/`](tasks/README.md): deterministic benchmark scorers
 - [`gold/`](gold/README.md): human-reviewed gold labels per paper
 - [`llm_eval/`](llm_eval/README.md): reviewed LLM reference bundles used as

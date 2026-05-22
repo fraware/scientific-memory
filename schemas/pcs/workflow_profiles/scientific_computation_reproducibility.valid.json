@@ -55,10 +55,5 @@
     "unreproducible_command"
   ],
   "limitations_notice": "This artifact is a proof-carrying computational reproducibility result. It verifies that declared inputs, environment metadata, code provenance, execution command, and result artifact hashes are internally consistent. It does not prove that the scientific model is true, that the dataset is unbiased, or that the result is externally valid.",
-  "formal_trust_required": true,
-  "formal_trust_artifacts": [
-    "ProofObligation.v0",
-    "LeanCheckResult.v0"
-  ],
   "signature_or_digest": "sha256:57ec645d429826df128e8226f8a5de20b8d13dee043dfec40c254b002c1b0420"
 }

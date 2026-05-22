@@ -24,8 +24,8 @@
   "invariants": {
     "certificate_id": "cert-trace-a1b8ff9d-7d5f-489c-98b1-a3a630cb87d7",
     "trace_hash": "sha256:c3e8a3dc4ad86d533de1dfa4ae7fe2a338c2cff3c945404c96a75216524d58cd",
-    "certified_bundle_hash": "sha256:bcadef8351d1ddc4cd90185096c337a85d3922d05cd6f3aeaa171f1b8d9dc5ca"
+    "certified_bundle_hash": "sha256:b8af33a7b24abf12fd938a59af6be91ac5e761365d8ecf3639fd0f196969de36"
   },
   "status": "Validated",
-  "signature_or_digest": "sha256:1e725aaee5337275b41ba8bae768f29bad2ad95cca53e53ca4c349d693fbee2d"
+  "signature_or_digest": "sha256:d7440ac1c88cf38f65cfa9c4ca8e35598dfaffa1a759337f3be38dd0df49a1cb"
 }

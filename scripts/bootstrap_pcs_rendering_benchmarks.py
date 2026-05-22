@@ -24,6 +24,26 @@ from sm_pipeline.pcs_import.release_manifest_importer import import_release_mani
 
 BENCHMARKS = REPO_ROOT / "benchmarks" / "rendering"
 
+
+def _labtrust_gym_commit_from_fixture(fixture_dir: str) -> str | None:
+    """Read LabTrust-Gym source_commit from runtime_receipt.json (fixture authority)."""
+    receipt_path = REPO_ROOT / fixture_dir / "runtime_receipt.json"
+    if not receipt_path.is_file():
+        return None
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8-sig"))
+    commit = receipt.get("source_commit")
+    return commit if isinstance(commit, str) and commit else None
+
+
+def _enrich_case_def(case_def: dict) -> dict:
+    enriched = dict(case_def)
+    if "labtrust-release" in enriched.get("fixture_dir", ""):
+        commit = _labtrust_gym_commit_from_fixture(enriched["fixture_dir"])
+        if commit:
+            enriched["source_commit"] = commit
+    return enriched
+
+
 CASE_DEFS: list[dict] = [
     {
         "case_id": "labtrust_qc_release",
@@ -524,8 +544,15 @@ def _write_case(case_def: dict, *, failed: bool = False) -> None:
         ):
             required_checks.insert(1, "responsible_component_present")
         required_checks.append("what_was_still_imported")
+        expected_failure: dict = {"required_checks": required_checks}
+        if case_def.get("post_import") == "patch_lean_failed" or case_def.get("case_id") in (
+            "failed_lean_check",
+            "failed_lean",
+        ):
+            expected_failure["failure_kind"] = "formal_failed"
+            expected_failure["formal_focus"] = True
         (case_dir / "expected_failure.json").write_text(
-            json.dumps({"required_checks": required_checks}, indent=2) + "\n",
+            json.dumps(expected_failure, indent=2) + "\n",
             encoding="utf-8",
         )
 
@@ -535,12 +562,12 @@ def _write_case(case_def: dict, *, failed: bool = False) -> None:
 
 def main() -> None:
     for case_def in CASE_DEFS:
-        _write_case(case_def, failed=False)
+        _write_case(_enrich_case_def(case_def), failed=False)
     for case_def in FAILED_CASE_DEFS:
-        _write_case(case_def, failed=True)
+        _write_case(_enrich_case_def(case_def), failed=True)
     for case_def in EXTERNAL_REVIEWER_CASE_DEFS:
         failed = bool(case_def.get("post_import")) and case_def["case_id"] != "release_compare"
-        _write_case(case_def, failed=failed)
+        _write_case(_enrich_case_def(case_def), failed=failed)
     print(f"Wrote PCS rendering benchmarks under {BENCHMARKS}")
 
 

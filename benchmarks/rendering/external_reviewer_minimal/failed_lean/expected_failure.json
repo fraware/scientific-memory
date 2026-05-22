@@ -1,6 +1,4 @@
 {
-  "failure_kind": "formal_failed",
-  "formal_focus": true,
   "required_checks": [
     "failure_reason_present",
     "artifact_path_present",
@@ -8,5 +6,7 @@
     "non_claims_present",
     "partial_import_present",
     "what_was_still_imported"
-  ]
+  ],
+  "failure_kind": "formal_failed",
+  "formal_focus": true
 }

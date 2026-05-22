@@ -52,7 +52,7 @@
       "id": "by_source_commit",
       "type": "by_source_commit",
       "params": {
-        "commit": "8369892d8872bc08ef5acb6cf503f38665c36733"
+        "commit": "17ed831acfd775889ab497d11004cceb083a9c2d"
       },
       "expected_claim_ids": [
         "claim-pcs-qc-release-v0.1"

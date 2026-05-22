@@ -1,16 +1,16 @@
-# LabTrust release PCS fixture
+# LabTrust release fixture
 
-Canonical input for Scientific Memory import/render tests.
+Canonical input for Scientific Memory import and render tests.
 
-**Source of truth:** `pcs-core/examples/labtrust-release/` (PF-signed bundle with real `provability_fabric_commit` provenance; aligned on vendor)
+**Source of truth:** `pcs-core/examples/labtrust-release/` (signed bundle with Provability Fabric provenance).
 
-Refresh:
+Refresh from pcs-core:
 
 ```bash
-just refresh-pcs-fixtures
+just refresh-pcs-release
 ```
 
-Integrity check (CI / `just test-pcs`):
+Integrity check:
 
 ```bash
 bash scripts/sm_python.sh scripts/verify_labtrust_release_fixture.py

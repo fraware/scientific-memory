@@ -1,14 +1,14 @@
 {
   "artifact_hashes": {
-    "lean_check_result.v0.json": "sha256:f6d09ffd053fcdae4cc0b34037ed0e704dca268e9d6aaba7f85c012202ab0380",
-    "proof_obligation.v0.json": "sha256:1917ed65175524eefe2afd7b0ba00cc9fab6edf9a4f7477ec6a6b7cec0b1168c",
-    "runtime_receipt.json": "sha256:6ea1cf9af78a850a0790a047f1f1807f07be41e02a838a62e0a8ba9f202c24c2",
-    "science_claim_bundle.certified.json": "sha256:21cec2008298ed8c48319e685e5219acbc3091dd9c40b171c9aa51c5f5ff8174",
+    "lean_check_result.v0.json": "sha256:41f5af9dda75be6bcd930dc56646827807d0dd11f90db56d0a346a9a3c3fada2",
+    "proof_obligation.v0.json": "sha256:31f96b5ee97635abf53f5967f762fef26bfec91db4172e61e4bf5a6e6a4b6f9c",
+    "runtime_receipt.json": "sha256:eddf1ad1446050bb029ac1bf31b6755c247e631a44c51d245041e41d1f362e3d",
+    "science_claim_bundle.certified.json": "sha256:08b07170dd8406bfe0cee6cedbe2e02b9f280f4fc81858f8dad36431a40d54d6",
     "signed_science_claim_bundle.json": "sha256:f1a857b7751594d0df4461224555a16f0a6ab3e632e09be95fc64b4e4388102d",
-    "tool_use_certificate.valid.json": "sha256:4c2732b485fbaef340d57330403c9f1aba5530b395594cd6ca120ea0e8f5b502",
-    "tool_use_trace.valid.json": "sha256:cf47cfa5593b6801072d4462f134b9642c1002c38ab3d37c19ce5752ebca4e48",
-    "verification_result.json": "sha256:f73d61825d1ac16d0ca3bca23897b6c22e61c01b96a0dadac95013d3f6463f1f",
-    "workflow_profile.v0.json": "sha256:2d006b20aab138929001c1fdbd51061f833c1f8ce3cd2ae1eeac876240516b05"
+    "tool_use_certificate.valid.json": "sha256:1b8fb66898980e0868927b8e62400aa8c992a0d6a9f193c755fbe1656e404a68",
+    "tool_use_trace.valid.json": "sha256:b31313785703270d7cc5402c694c5eb88e71535490506d0785cebe30f4e3e585",
+    "verification_result.json": "sha256:75172d4523d382d944b9bf9be53569ed2955ca874f52346220dcf44fcd4e4a30",
+    "workflow_profile.v0.json": "sha256:0f54c947169f2733cf05ae8486b73afbc7bd82ec51275448f72d18ad29783e66"
   },
   "bundle_id": "scb-qc-release-v0.1",
   "certificate_id": "cert-tool-use-safety-v0",
@@ -26,7 +26,7 @@
     "obligation_set_id": "obl-set-release-pcs-v0.1-tool-use-safety"
   },
   "release_id": "release-pcs-v0.1-tool-use-safety",
-  "release_manifest_hash": "sha256:45d413da0e6bef0e137e62ba9c14914eaacb921128b0ecad5b125c88135f484f",
+  "release_manifest_hash": "sha256:4577f1fe9b06110199dcbcd9a3278449f13b115a3c68fcb3e4d8b9ca7cf74ff2",
   "schema_versions": {
     "science_claim_bundle": "v0",
     "signed_bundle": "v0"
@@ -37,7 +37,7 @@
     "certifyedge": "cb6848001e2e60a484e04eba5ad6be3fe2e4eccc",
     "pcs_core": "a361fd2b388f88cdbc9e4e4691ae49dba714ab6c",
     "provability_fabric": "0f659b90c80c46a6bbfd51b0d37ea723b032fb9d",
-    "scientific_memory": "1bc32bdd48c1f7e3762d6d6ee0bcc5a43e597e08"
+    "scientific_memory": "2fe935daf9f72fa5139ac233ac8e69c80bfa47c0"
   },
   "stale": false,
   "stale_reasons": [],

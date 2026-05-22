@@ -123,7 +123,7 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    readme = REPO_ROOT / "docs/pcs-bench-ingest.md"
+    readme = REPO_ROOT / "docs/pcs/bench-ingest-contract.md"
     if readme.is_file():
         shutil.copy2(readme, dest / "README.md")
 
