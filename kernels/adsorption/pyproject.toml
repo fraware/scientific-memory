@@ -6,7 +6,7 @@ dependencies = [
   "hypothesis>=6.92",
   "kernel-conformance",
   "pydantic>=2.8",
-  "pytest>=8.0",
+  "pytest>=9.0.3",
 ]
 
 [tool.uv.sources]
