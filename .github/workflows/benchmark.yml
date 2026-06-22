@@ -25,7 +25,7 @@ jobs:
           if [ -f benchmarks/reports/trend/proof_success_history.json ]; then echo "Trend history: benchmarks/reports/trend/proof_success_history.json"; fi
 
       - name: Upload benchmark reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: benchmark-reports
           path: benchmarks/reports/
