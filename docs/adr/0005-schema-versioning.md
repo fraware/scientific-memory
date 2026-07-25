@@ -18,3 +18,10 @@ Schemas evolve; corpus and manifests must remain valid across changes. We need a
 
 - Single source of truth for "what changed and how to fix" in [contributor-playbook.md](../contributor-playbook.md#schema-versioning-and-migration-notes).
 - New contributors and CI rely on the latest schemas only; no legacy version support in tooling for now.
+
+## Migration notes (assurance)
+
+- Assurance artifacts use explicit `*.v1` schema filenames under `schemas/assurance/` and instance field `schema_version: "v1"`.
+- Corpus PCS artifacts remain `*.v0` under `schemas/pcs/`. Do not mix version families in a single artifact identity (a PCS claim stays `v0`; an assurance outcome stays `v1`).
+- Assurance records may reference PCS claim IDs and digests; they must not rewrite PCS or corpus claim JSON.
+- See [ADR 0014](0014-assurance-action-chain.md) and [docs/assurance/](../assurance/README.md).

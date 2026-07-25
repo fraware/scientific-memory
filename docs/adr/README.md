@@ -17,5 +17,6 @@ SPEC 10.1 requires ADRs for major design decisions. This directory is the single
 | [0011](0011-llm-worker-suggest-only.md) | LLM worker (suggest-only) | Optional Prime Intellect chat completions; claim/mapping/Lean proposal sidecars; human-gated apply (`proof-repair-apply` for Lean); warn-only schema check for sidecars. |
 | [0012](0012-trust-boundary-canonical-artifacts.md) | Trust boundary and publish integrity | Recompute manifest graphs; content-addressed build hash; normalization preserves unresolved links; canonical vs suggestion artifacts. |
 | [0013](0013-llm-evaluation-policy.md) | LLM evaluation policy | Prompt template digests; `benchmarks/llm_eval` reference fixtures; `tasks.llm_eval`; human rubric; optional live-eval scripts. |
+| [0014](0014-assurance-action-chain.md) | Assurance action-chain | Outcome/calibration schemas; append-only action DAG; PCS as evidence layer; no automatic claim rewrite. |
 
-When adding a new ADR, use the next number (e.g. 0014) and add a row to this table.
+When adding a new ADR, use the next number (e.g. 0015) and add a row to this table.

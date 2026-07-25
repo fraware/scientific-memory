@@ -12,6 +12,7 @@ What artifact does this PR improve?
 - [ ] portal rendering
 - [ ] benchmarking
 - [ ] LLM integration / evaluation
+- [ ] assurance / action-chain
 - [ ] infra / DX
 
 ## Artifact impact
