@@ -24,6 +24,7 @@ pcs-core = { path = "../../pcs-core/python", editable = true }
 
 [project.scripts]
 sm-pipeline = "sm_pipeline.cli:app"
+sm = "sm_pipeline.cli:app"
 
 [build-system]
 requires = ["hatchling"]

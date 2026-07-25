@@ -13,6 +13,7 @@ from sm_pipeline.cli import (
     publish,
     validate_cmd,
 )
+from sm_pipeline.assurance import cli as assurance_cli
 
 app = typer.Typer()
 
@@ -89,3 +90,11 @@ app.command("pcs-validate-bundle")(pcs.pcs_validate_bundle)
 app.command("pcs-render-claim")(pcs.pcs_render_claim)
 app.command("pcs-benchmark-rendering")(pcs.pcs_benchmark_rendering)
 app.command("validate-pcs-bench-ingest")(pcs.validate_pcs_bench_ingest)
+
+# Assurance / autonomous science
+app.command("import-assurance-release")(assurance_cli.import_assurance_release_cmd)
+app.command("validate-action-chain")(assurance_cli.validate_action_chain_cmd)
+app.command("add-outcome")(assurance_cli.add_outcome_cmd)
+app.command("add-calibration")(assurance_cli.add_calibration_cmd)
+app.command("export-action-chain")(assurance_cli.export_action_chain_cmd)
+app.command("export-assurance-portal-data")(assurance_cli.export_assurance_portal_data_cmd)

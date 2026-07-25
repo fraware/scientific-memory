@@ -231,6 +231,30 @@ publish-artifacts PAPER_ID:
 export-portal-data:
 	uv run --project pipeline python -m sm_pipeline.cli export-portal-data
 
+export-assurance-portal-data:
+	uv run --project pipeline python -m sm_pipeline.cli export-assurance-portal-data
+
+import-assurance-release RELEASE:
+	uv run --project pipeline python -m sm_pipeline.cli import-assurance-release "{{RELEASE}}"
+
+validate-action-chain ACTION_ID:
+	uv run --project pipeline python -m sm_pipeline.cli validate-action-chain "{{ACTION_ID}}"
+
+add-outcome OUTCOME:
+	uv run --project pipeline python -m sm_pipeline.cli add-outcome "{{OUTCOME}}"
+
+add-calibration CALIBRATION:
+	uv run --project pipeline python -m sm_pipeline.cli add-calibration "{{CALIBRATION}}"
+
+export-action-chain ACTION_ID OUT:
+	uv run --project pipeline python -m sm_pipeline.cli export-action-chain "{{ACTION_ID}}" --out "{{OUT}}"
+
+metrics-autonomous-science OUT="metrics-autonomous-science.json":
+	uv run --project pipeline python -m sm_pipeline.cli metrics autonomous-science --out "{{OUT}}"
+
+test-assurance:
+	uv run --project pipeline pytest tests/test_assurance_layer.py -q
+
 # Scaffold benchmarks/gold/<PAPER_ID>/ from corpus (claims, source_spans, assumptions). Run when adding gold for a new paper (SPEC 12).
 scaffold-gold PAPER_ID:
 	uv run --project pipeline python -m sm_pipeline.cli scaffold-gold --paper-id {{PAPER_ID}}
