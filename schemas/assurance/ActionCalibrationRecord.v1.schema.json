@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/ActionCalibrationRecord.v1.schema.json",
+  "title": "ActionCalibrationRecord.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "calibration_id",
+    "action_id",
+    "decision_basis",
+    "prediction_presence",
+    "predicted_success",
+    "predicted_information_gain",
+    "predicted_cost",
+    "predicted_time",
+    "predicted_risk",
+    "realized_outcome_id",
+    "calibration_class",
+    "admissibility_error",
+    "prioritization_error",
+    "authorization_error",
+    "verifier_disagreement",
+    "uncertainty",
+    "missingness",
+    "aggregation_eligibility",
+    "integrity",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "calibration_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "decision_basis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "decision_node_id": { "type": ["string", "null"] },
+        "evidence_node_ids": {
+          "type": "array",
+          "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+        }
+      }
+    },
+    "prediction_presence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "success",
+        "information_gain",
+        "cost",
+        "time",
+        "risk"
+      ],
+      "properties": {
+        "success": { "type": "boolean" },
+        "information_gain": { "type": "boolean" },
+        "cost": { "type": "boolean" },
+        "time": { "type": "boolean" },
+        "risk": { "type": "boolean" }
+      },
+      "description": "Explicit presence flags; never invent probabilities when false"
+    },
+    "predicted_success": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "predicted_information_gain": {
+      "type": ["number", "null"]
+    },
+    "predicted_cost": {
+      "type": ["number", "null"]
+    },
+    "predicted_time": {
+      "type": ["number", "null"],
+      "description": "Predicted duration in seconds when present"
+    },
+    "predicted_risk": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "realized_outcome_id": {
+      "type": ["string", "null"]
+    },
+    "calibration_class": {
+      "type": "string",
+      "enum": [
+        "well_calibrated",
+        "overconfident",
+        "underconfident",
+        "misprioritized",
+        "inadmissible_action",
+        "indeterminate",
+        "not_aggregable"
+      ]
+    },
+    "admissibility_error": {
+      "type": ["boolean", "null"]
+    },
+    "prioritization_error": {
+      "type": ["boolean", "null"]
+    },
+    "authorization_error": {
+      "type": ["boolean", "null"]
+    },
+    "verifier_disagreement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["present"],
+      "properties": {
+        "present": { "type": "boolean" },
+        "summary": { "type": ["string", "null"] }
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement"],
+      "properties": {
+        "statement": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+      }
+    },
+    "missingness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["has_missing_fields", "fields"],
+      "properties": {
+        "has_missing_fields": { "type": "boolean" },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "reason"],
+            "properties": {
+              "field": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "reason": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+            }
+          }
+        }
+      }
+    },
+    "aggregation_eligibility": {
+      "type": "boolean",
+      "description": "false when delayed outcome unresolved, missing realized outcome, or schema mismatch"
+    },
+    "realized_success": {
+      "type": ["boolean", "null"]
+    },
+    "realized_information_gain": {
+      "type": ["number", "null"]
+    },
+    "realized_cost": {
+      "type": ["number", "null"]
+    },
+    "realized_time": {
+      "type": ["number", "null"]
+    },
+    "integrity": {
+      "$ref": "common.defs.v1.schema.json#/$defs/integrity_envelope"
+    },
+    "privacy": {
+      "$ref": "common.defs.v1.schema.json#/$defs/privacy_level"
+    }
+  }
+}
