@@ -16,6 +16,7 @@ The run writes `benchmarks/reports/latest.json` and compares results against
   Scientific Memory evidence layer (`just pcs-benchmark-rendering`)
 - [`pcs_bench/`](pcs_bench/README.md) — Suite registry and ingest contract for **pcs-bench**
 - [PCS documentation](../docs/pcs/README.md) — Import, releases, producer, and ingest contract
+- [`assurance/`](assurance/README.md) — Gate 6 task `assurance` floors and pinned metrics gold
 - [`tasks/`](tasks/README.md): deterministic benchmark scorers
 - [`gold/`](gold/README.md): human-reviewed gold labels per paper
 - [`llm_eval/`](llm_eval/README.md): reviewed LLM reference bundles used as
@@ -37,6 +38,8 @@ The run writes `benchmarks/reports/latest.json` and compares results against
 - `tasks.llm_eval`: regression over reviewed reference bundles in
   `benchmarks/llm_eval/`, including disagreement fields, promotion counters, and
   reviewer-time aggregation.
+- `tasks.assurance`: reconstruction and evidence-node floors for
+  `corpus/assurance/` pilots (not live authorization rates).
 
 ## Current corpus and gold policy
 

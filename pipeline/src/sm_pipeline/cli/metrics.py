@@ -10,6 +10,10 @@ app = typer.Typer()
 
 @app.command("metrics")
 def metrics_cmd(
+    category: Optional[str] = typer.Argument(
+        None,
+        help="Optional metrics category (e.g. autonomous-science). Omit for SPEC-12 flags.",
+    ),
     median_intake: bool = typer.Option(
         False,
         "--median-intake-time",
@@ -80,9 +84,54 @@ def metrics_cmd(
         "--reviewer-report",
         help="Reviewer lifecycle report: claims by status, disputed with/without notes",
     ),
-    output: Optional[str] = typer.Option(None, "--output", "-o", help="Write JSON report to path"),
+    output: Optional[str] = typer.Option(
+        None,
+        "--output",
+        "--out",
+        "-o",
+        help="Write JSON report to path",
+    ),
 ) -> None:
-    """Compute metrics from corpus (SPEC 12). Default: run all; use flags to run specific metrics."""
+    """Compute metrics from corpus (SPEC 12). Default: run all; use flags to run specific metrics.
+
+    Category mode: `sm metrics autonomous-science --out metrics.json`
+    """
+    repo_root = Path(".").resolve()
+
+    if category == "autonomous-science":
+        import json as _json
+
+        from sm_pipeline.assurance.metrics import compute_autonomous_science_metrics
+        from sm_pipeline.assurance.validate import AssuranceValidationError
+
+        try:
+            report = compute_autonomous_science_metrics(repo_root)
+        except AssuranceValidationError as exc:
+            typer.echo(str(exc), err=True)
+            raise typer.Exit(1) from exc
+        except ModuleNotFoundError as exc:
+            typer.echo(
+                "autonomous-science metrics unavailable (assurance module missing)",
+                err=True,
+            )
+            raise typer.Exit(1) from exc
+        out_path = Path(output) if output else None
+        if out_path:
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(_json.dumps(report, indent=2) + "\n", encoding="utf-8")
+            typer.echo(f"Report written to {out_path}")
+        else:
+            typer.echo(_json.dumps(report, indent=2))
+        return
+
+    if category is not None:
+        typer.echo(
+            f"Unsupported metrics category {category!r} "
+            "(supported: autonomous-science, or omit for SPEC-12)",
+            err=True,
+        )
+        raise typer.Exit(1)
+
     from sm_pipeline.metrics import (
         compute_median_intake_time,
         compute_dependency_metrics,
@@ -98,8 +147,6 @@ def metrics_cmd(
         compute_dimension_suggestions,
         compute_reviewer_status_metrics,
     )
-
-    repo_root = Path(".").resolve()
     run_all = not (
         median_intake
         or dependency

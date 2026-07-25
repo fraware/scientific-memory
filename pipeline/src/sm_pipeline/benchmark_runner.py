@@ -18,6 +18,7 @@ TASK_NAMES = (
     "llm_suggestions",
     "llm_lean_suggestions",
     "llm_eval",
+    "assurance",
 )
 TREND_HISTORY_MAX_ENTRIES = 100
 TREND_HISTORY_FILENAME = "proof_success_history.json"

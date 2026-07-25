@@ -72,6 +72,17 @@
       "promotion_rejected_total": 0,
       "promotion_edited_total": 0,
       "promotion_pending_total": 0
+    },
+    "assurance": {
+      "action_count": 2,
+      "population_action_count": 2,
+      "evidence_sufficiency_numerator": 2,
+      "evidence_sufficiency_denominator": 2,
+      "reconstruction_completeness_numerator": 2,
+      "reconstruction_completeness_denominator": 2,
+      "metrics_reconciled": 1,
+      "metric_keys": 11,
+      "floors_loaded": 1
     }
   }
 }

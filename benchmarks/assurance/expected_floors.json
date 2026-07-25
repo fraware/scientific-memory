@@ -1,0 +1,13 @@
+{
+  "schema_version": "v1",
+  "notes": "Gold floors for autonomous-science metrics after pilot ingest. Gate 6 also enforces these via benchmarks/baseline_thresholds.json tasks.assurance.",
+  "metrics_floors": {
+    "action_count": 2,
+    "population_action_count": 2,
+    "evidence_sufficiency.numerator_min": 2,
+    "evidence_sufficiency.denominator_min": 2,
+    "reconstruction_completeness.numerator_min": 2,
+    "reconstruction_completeness.denominator_min": 2,
+    "metrics_reconciled": 1
+  }
+}
