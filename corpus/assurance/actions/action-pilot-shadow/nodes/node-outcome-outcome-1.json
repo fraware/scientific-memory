@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:acec0123d9bfc026cc3a14068a3597ee48d6910c11722c693c190c95f6581524",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "empirically_measured"
+  ],
+  "external_ref_ids": [],
+  "node_class": "outcome",
+  "node_id": "node-outcome-outcome-1",
+  "payload": null,
+  "payload_ref": "outcomes/outcome-1.json",
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "Outcome outcome-1"
+}

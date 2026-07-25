@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:925d4c39ffca2ac173c8658f964e75432fb1cdfc5a9c7fb96cc9f334342ae5c2",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "admissibility_decision",
+  "node_id": "node-admissibility_decision",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "admissibility_decision for action-pilot-retrospective"
+}

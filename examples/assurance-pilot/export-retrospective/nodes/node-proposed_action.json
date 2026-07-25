@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:b63acefce0bc40e4be3ff9e6793e9eef56fda17fcf3e2ce784bf567694eb1243",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "proposed_action",
+  "node_id": "node-proposed_action",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "proposed_action for action-pilot-retrospective"
+}

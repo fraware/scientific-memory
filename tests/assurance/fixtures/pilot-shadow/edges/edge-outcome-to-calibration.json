@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:7e0e7f5c7763a1bce76b2c980e9656bfdf59600b8451ad47ffec9fdfa82a1ee2",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-outcome-to-calibration",
+  "from_node_id": "node-outcome-outcome-1",
+  "notes": null,
+  "relation": "calibrates",
+  "schema_version": "v1",
+  "to_node_id": "node-calibration-cal-1"
+}

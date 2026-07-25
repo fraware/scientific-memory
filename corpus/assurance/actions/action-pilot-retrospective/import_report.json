@@ -1,0 +1,37 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "created_at": "2026-07-24T22:30:36Z",
+  "errors": [],
+  "ok": true,
+  "release_id": "pilot-retrospective-v0",
+  "schema_version": "v1",
+  "warnings": [
+    "PCS mode=none; no PCS evidence attached"
+  ],
+  "written_paths": [
+    "corpus\\assurance\\actions\\action-pilot-retrospective\\execution\\execution.json",
+    "corpus\\assurance\\actions\\action-pilot-retrospective\\outcomes\\outcome-1.json",
+    "corpus\\assurance\\actions\\action-pilot-retrospective\\calibrations\\cal-1.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-admissibility_decision.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-calibration-cal-1.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-claim.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-evidence.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-grant.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-outcome-outcome-1.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-proposed_action.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-review.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-runtime_action.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-source.json",
+    "corpus/assurance/actions/action-pilot-retrospective/nodes/node-verification_result.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-admissibility_decision-to-review.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-claim-to-proposed_action.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-evidence-to-claim.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-grant-to-runtime_action.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-outcome-to-calibration.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-proposed_action-to-admissibility_decision.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-review-to-grant.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-runtime_action-to-verification_result.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-source-to-evidence.json",
+    "corpus/assurance/actions/action-pilot-retrospective/edges/edge-verification_result-to-outcome.json"
+  ]
+}

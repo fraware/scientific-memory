@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:1097f4af713a793e5e6e9fac6fdf5ca50e8d4070406f4927c6a3f62f7885400b",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "evidence",
+  "node_id": "node-evidence",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "evidence for action-pilot-shadow"
+}

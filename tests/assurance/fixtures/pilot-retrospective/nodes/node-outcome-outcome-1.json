@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:488c78ccb685d6cf107854a3ab8299b72eadd51a2991b9f71621a208da2d4507",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "empirically_measured"
+  ],
+  "external_ref_ids": [],
+  "node_class": "outcome",
+  "node_id": "node-outcome-outcome-1",
+  "payload": null,
+  "payload_ref": "outcomes/outcome-1.json",
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "Outcome outcome-1"
+}

@@ -1,0 +1,71 @@
+{
+  "action_id": "action-pilot-shadow",
+  "adverse_events": [],
+  "claim_ids": [
+    "claim-demo-1"
+  ],
+  "data_commitments": {
+    "notes": null,
+    "source_digests": [
+      {
+        "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "name": "raw.csv"
+      }
+    ]
+  },
+  "delayed_result_status": "delayed_unresolved",
+  "environment_context": {
+    "instrument_ids": [
+      "inst-1"
+    ],
+    "site": "lab-a",
+    "summary": "Lab bench"
+  },
+  "evidence_classes": [
+    "empirically_measured",
+    "human_reviewed"
+  ],
+  "external_refs": [],
+  "integrity": {
+    "content_digest": "sha256:802e91183ec458b8e766f4c43d32061bb75b8e8f2086d7e3e47c383a0a0c0f5b",
+    "created_at": "2026-07-02T12:00:00Z",
+    "schema_version": "v1",
+    "writer_identity": "fixture-builder"
+  },
+  "intervention_performed": {
+    "performed_at": "2026-07-02T00:00:00Z",
+    "summary": "Ran protocol A"
+  },
+  "measured_result": {
+    "result_kind": "not_yet_available",
+    "summary": "Pending",
+    "units": null,
+    "value": null
+  },
+  "missing_data": {
+    "fields": [],
+    "has_missing_data": false
+  },
+  "outcome_id": "outcome-1",
+  "pcs_claim_ids": [],
+  "privacy": "public",
+  "proposed_action_id": "pa-1",
+  "protocol": {
+    "description": "Synthetic protocol",
+    "protocol_id": "proto-1",
+    "version": "1"
+  },
+  "protocol_deviations": [],
+  "replication_status": "not_attempted",
+  "reviewer_assessment": {
+    "notes": null,
+    "reviewer_identity": "reviewer-1",
+    "status": "accepted"
+  },
+  "schema_version": "v1",
+  "scientific_question_id": "q-1",
+  "uncertainty": {
+    "quantitative": null,
+    "statement": "\u00b15% relative"
+  }
+}

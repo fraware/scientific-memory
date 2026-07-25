@@ -1,0 +1,37 @@
+{
+  "action_id": "action-pilot-shadow",
+  "created_at": "2026-07-24T22:30:37Z",
+  "errors": [],
+  "ok": true,
+  "release_id": "pilot-shadow-v0",
+  "schema_version": "v1",
+  "warnings": [
+    "PCS mode=none; no PCS evidence attached"
+  ],
+  "written_paths": [
+    "corpus\\assurance\\actions\\action-pilot-shadow\\execution\\execution.json",
+    "corpus\\assurance\\actions\\action-pilot-shadow\\outcomes\\outcome-1.json",
+    "corpus\\assurance\\actions\\action-pilot-shadow\\calibrations\\cal-1.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-admissibility_decision.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-calibration-cal-1.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-claim.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-evidence.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-grant.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-outcome-outcome-1.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-proposed_action.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-review.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-runtime_action.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-source.json",
+    "corpus/assurance/actions/action-pilot-shadow/nodes/node-verification_result.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-admissibility_decision-to-review.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-claim-to-proposed_action.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-evidence-to-claim.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-grant-to-runtime_action.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-outcome-to-calibration.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-proposed_action-to-admissibility_decision.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-review-to-grant.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-runtime_action-to-verification_result.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-source-to-evidence.json",
+    "corpus/assurance/actions/action-pilot-shadow/edges/edge-verification_result-to-outcome.json"
+  ]
+}

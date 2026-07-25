@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:1fcbd4533141c3b62625affe47f10f4fceec724ea9928d3b406904ab2edf36df",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "claim",
+  "node_id": "node-claim",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "claim for action-pilot-shadow"
+}

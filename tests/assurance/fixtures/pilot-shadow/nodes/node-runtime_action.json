@@ -1,0 +1,17 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:1b4f9bf71cd30d4ad4c91ce0b334a4d0ab755f18aedcf7f2a7e033ee910f8eaf",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "runtime_action",
+  "node_id": "node-runtime_action",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "runtime_action for action-pilot-shadow"
+}

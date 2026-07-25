@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:d3360843c008d9dd737b25ace629e06abb3a1cd15774c5f0e2b205508231e8cc",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-admissibility_decision-to-review",
+  "from_node_id": "node-admissibility_decision",
+  "notes": null,
+  "relation": "reviews",
+  "schema_version": "v1",
+  "to_node_id": "node-review"
+}

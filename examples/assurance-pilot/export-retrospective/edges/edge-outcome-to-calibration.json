@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:eb6d0730d61b09a500fdafd9280d90a1a65c0118c71c55c6bdac5caf158a5d49",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-outcome-to-calibration",
+  "from_node_id": "node-outcome-outcome-1",
+  "notes": null,
+  "relation": "calibrates",
+  "schema_version": "v1",
+  "to_node_id": "node-calibration-cal-1"
+}

@@ -1,0 +1,142 @@
+{
+  "schema_version": "v1",
+  "generated_at": "2026-07-25T06:08:31Z",
+  "population_action_ids": [
+    "action-pilot-retrospective",
+    "action-pilot-shadow"
+  ],
+  "metrics": {
+    "evidence_sufficiency": {
+      "definition_id": "assurance.evidence_sufficiency.v1",
+      "numerator": 2.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "decision_and_review_agreement": {
+      "definition_id": "assurance.decision_and_review_agreement.v1",
+      "numerator": 2.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "outcome_resolution": {
+      "definition_id": "assurance.outcome_resolution.v1",
+      "numerator": 1.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "calibration_error": {
+      "definition_id": "assurance.calibration_error.v1",
+      "numerator": 0.30000000000000004,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective"
+      ],
+      "exclusions": [
+        {
+          "id": "action-pilot-shadow",
+          "reason": "no aggregable success predictions"
+        }
+      ],
+      "notes": "numerator is mean absolute calibration error over aggregable records"
+    },
+    "replication_rate": {
+      "definition_id": "assurance.replication_rate.v1",
+      "numerator": 0.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "adverse_event_frequency": {
+      "definition_id": "assurance.adverse_event_frequency.v1",
+      "numerator": 0.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "time_to_outcome": {
+      "definition_id": "assurance.time_to_outcome.v1",
+      "numerator": 4000.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": "numerator is mean realized_time seconds"
+    },
+    "information_gain": {
+      "definition_id": "assurance.information_gain.v1",
+      "numerator": 0.0,
+      "denominator": 2.0,
+      "included_ids": [],
+      "exclusions": [
+        {
+          "id": "action-pilot-retrospective",
+          "reason": "information_gain not defined"
+        },
+        {
+          "id": "action-pilot-shadow",
+          "reason": "information_gain not defined"
+        }
+      ],
+      "notes": null
+    },
+    "cost": {
+      "definition_id": "assurance.cost.v1",
+      "numerator": 110.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "missingness": {
+      "definition_id": "assurance.missingness.v1",
+      "numerator": 1.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    },
+    "reconstruction_completeness": {
+      "definition_id": "assurance.reconstruction_completeness.v1",
+      "numerator": 2.0,
+      "denominator": 2.0,
+      "included_ids": [
+        "action-pilot-retrospective",
+        "action-pilot-shadow"
+      ],
+      "exclusions": [],
+      "notes": null
+    }
+  },
+  "notes": "Denominators are population sizes; included_ids + exclusions partition the population."
+}

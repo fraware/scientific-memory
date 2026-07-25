@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-shadow",
+  "content_digest": "sha256:b37c9de8c938b89272829905b180b617d6156efe6abb99372846a5dbbd0327eb",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-review-to-grant",
+  "from_node_id": "node-review",
+  "notes": null,
+  "relation": "grants",
+  "schema_version": "v1",
+  "to_node_id": "node-grant"
+}

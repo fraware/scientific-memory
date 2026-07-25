@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:fca1b80fd65d4d2c9883c333b2b546350b01aaf40e78e4c87bbdbfa5aeade395",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-proposed_action-to-admissibility_decision",
+  "from_node_id": "node-proposed_action",
+  "notes": null,
+  "relation": "decides",
+  "schema_version": "v1",
+  "to_node_id": "node-admissibility_decision"
+}

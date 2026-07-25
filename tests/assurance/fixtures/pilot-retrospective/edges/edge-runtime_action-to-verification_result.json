@@ -1,0 +1,11 @@
+{
+  "action_id": "action-pilot-retrospective",
+  "content_digest": "sha256:617f687f8a1d0d6f7b8b22359433667c3b32ac2f01b965af904048787303aa87",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-runtime_action-to-verification_result",
+  "from_node_id": "node-runtime_action",
+  "notes": null,
+  "relation": "verifies",
+  "schema_version": "v1",
+  "to_node_id": "node-verification_result"
+}
