@@ -648,6 +648,8 @@ Blueprint docs (e.g. `docs/blueprints/<paper>.md`) list claim IDs and target dec
 - **2026-03-22 (LLM eval provenance):** Optional `reviewer_time_seconds` on [`schemas/llm_run_provenance.schema.json`](../schemas/llm_run_provenance.schema.json) / `LlmRunMetadata`; `benchmarks/tasks/llm_eval/scorer.py` aggregates `reviewer_time_seconds_total` and `reviewer_time_observations`.
 - **2026-03-22 (provenance scaffold exception):** Gate 3 provenance still rejects `manifest.json` when `metadata.source.sha256` is the all-zero sentinel for normal papers. Narrow exception: papers tagged `hardness.primary:*` with empty `claims.json` may keep manifests during intake scaffolding.
 
+- **2026-07-24 (assurance / autonomous science):** Added `schemas/assurance/*.v1.schema.json` (`ScientificOutcomeRecord`, `ActionCalibrationRecord`, action-chain node/edge, release manifest, metrics, external refs). Pipeline package `sm_pipeline.assurance`; corpus store `corpus/assurance/`; CLI alias `sm` (= `sm-pipeline`) with `import-assurance-release`, `validate-action-chain`, `add-outcome`, `add-calibration`, `export-action-chain`, `export-assurance-portal-data`, and `metrics autonomous-science`. Portal `/assurance` reads `portal/.generated/assurance-export.json` only. Gate `assurance_corpus` in `validate-all`; Gate 6 task `assurance`. PCS `*.v0` unchanged; outcomes/calibrations never rewrite claim digests or status. See [ADR 0014](adr/0014-assurance-action-chain.md) and [docs/assurance/](assurance/README.md).
+
 ## Release integrity (Gate 7)
 
 SPEC Gate 7 requires: "Manifest signed; changelog generated; release artifact hash emitted." This section describes how the project satisfies Gate 7.

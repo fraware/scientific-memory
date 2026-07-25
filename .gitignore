@@ -1,10 +1,11 @@
 # =============================================================================
 # Scientific Memory — ignore rules
 # =============================================================================
-# Note: `portal/.generated/corpus-export.json` and `portal/.generated/pcs-export.json`
-# are intentionally TRACKED so `pnpm --dir portal build` and portal CI succeed
-# without a prior export step. Do not add `portal/.generated/` here unless you
-# change CI to generate those bundles first.
+# Note: `portal/.generated/corpus-export.json`, `portal/.generated/pcs-export.json`,
+# and `portal/.generated/assurance-export.json` are intentionally TRACKED so
+# `pnpm --dir portal build` and portal CI succeed without a prior export step.
+# Do not add `portal/.generated/` here unless you change CI to generate those
+# bundles first.
 
 # -----------------------------------------------------------------------------
 # Lean / Lake

@@ -7,9 +7,10 @@ Scientific Memory is a monorepo with these main areas:
 - **schemas**: canonical JSON schemas for papers, claims, assumptions, theorem cards, manifests, and kernels.
 - **pipeline**: Python (`uv`) ingestion, extraction, normalization, validation, and publish tooling (`sm_pipeline`), including a **gate engine** ([`validate/gate_engine.py`](../pipeline/src/sm_pipeline/validate/gate_engine.py)) that runs checks in a fixed order, optional **stage orchestration** ([`pipeline_orchestrator.py`](../pipeline/src/sm_pipeline/pipeline_orchestrator.py)) for SPEC 8.x-shaped workflows, and **portal read model** ([`publish/portal_read_model.py`](../pipeline/src/sm_pipeline/publish/portal_read_model.py)) for `corpus-export.json`. Extension hooks and publication entry points are documented in [pipeline-extension-points.md](pipeline-extension-points.md).
 - **kernels**: executable kernels with declared verification boundaries; shared numeric test helpers live in the workspace package [`kernels/conformance/`](../kernels/conformance/) (`kernel-conformance`).
-- **portal**: Next.js app rendering from canonical corpus/manifests/exported bundle, including proof-carrying claim pages under `/pcs/claims/`.
-- **benchmarks**: benchmark tasks and regression thresholds, including PCS rendering suites for external review.
+- **portal**: Next.js app rendering from canonical corpus/manifests/exported bundle, including proof-carrying claim pages under `/pcs/claims/` and assurance action pages under `/assurance`.
+- **benchmarks**: benchmark tasks and regression thresholds, including PCS rendering suites and the Gate 6 `assurance` task.
 - **corpus/pcs**: imported proof-carrying releases (signed bundles, release manifests, read models). See [pcs/README.md](pcs/README.md).
+- **corpus/assurance**: append-only scientific action chains, outcomes, and calibrations. See [assurance/README.md](assurance/README.md) and [ADR 0014](adr/0014-assurance-action-chain.md).
 
 ## Build and validation flow
 
@@ -29,6 +30,8 @@ Validation (`just validate` / `sm_pipeline.cli validate-all`) runs the **gate en
 - extraction run requirement (papers with non-empty claims must have `extraction_run.json`),
 - migration doc check when schemas change,
 - reviewer lifecycle (invalid claim status rejected; disputed claims require non-empty `review_notes`),
+- PCS corpus integrity (`pcs_corpus`),
+- assurance corpus integrity (`assurance_corpus`: schema registry, digests, action-chain DAGs under `corpus/assurance/`),
 - snapshot baseline quality warnings (non-blocking).
 
 Optional: `validate-all --report-json <path>` writes a machine-readable report after success.
@@ -55,6 +58,8 @@ Release integrity combines checksums with Sigstore signing, and verifiers may co
 
 PCS workflows (`corpus-validation`, `pcs-bench-producer`) run release verification and producer gates when pcs-core and pcs-bench are available. Operator documentation lives in [pcs/README.md](pcs/README.md).
 
+Assurance corpus validation runs inside `just validate` / `validate-all` as gate `assurance_corpus`. Portal assurance pages consume only `portal/.generated/assurance-export.json` (`just export-assurance-portal-data`). The layer is not a live authorization or execution system; see [assurance/README.md](assurance/README.md).
+
 ## Contributor diagnostics
 
 - `just doctor` verifies `uv`, `pnpm`, `lean`, and `lake` availability.
@@ -63,7 +68,7 @@ PCS workflows (`corpus-validation`, `pcs-bench-producer`) run release verificati
 
 ## Portal data model
 
-The portal reads from canonical corpus files and can prefer the exported bundle `portal/.generated/corpus-export.json` produced by `just export-portal-data` (built by `sm_pipeline.publish.portal_read_model.build_portal_bundle`).
+The portal reads from canonical corpus files and can prefer the exported bundle `portal/.generated/corpus-export.json` produced by `just export-portal-data` (built by `sm_pipeline.publish.portal_read_model.build_portal_bundle`). PCS claim pages use `portal/.generated/pcs-export.json`; assurance action pages use `portal/.generated/assurance-export.json`.
 
 The export bundle now includes precomputed lookup indices under `indices` (claim, theorem-card, declaration, and kernel reverse lookups). Portal read paths should use these indices first, then fall back to direct corpus scans only when no export is available.
 

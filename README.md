@@ -58,6 +58,7 @@ The project optimizes for:
 | `portal/` | Next.js UI from `corpus-export.json` and corpus data |
 | `benchmarks/` | Regression tasks, gold labels, thresholds, proof-success trends |
 | PCS integration | Import proof-carrying releases, portal evidence UI, pcs-bench producer ([docs/pcs/](docs/pcs/README.md)) |
+| Assurance | Append-only action chains, outcomes, and calibration ([docs/assurance/](docs/assurance/README.md)) |
 
 ---
 
@@ -100,6 +101,7 @@ If you cannot use `just`, run the equivalent `uv`/`lake`/`pnpm` commands from [C
 - **Corpus** — Eight indexed papers in `corpus/index.json` (six formalized slices plus two hard-dimension stress scaffolds). Live counts and manifest hashes live in [docs/status/repo-snapshot.md](docs/status/repo-snapshot.md) (`just repo-snapshot`).
 - **Pipeline** — Ingest, validate, publish, and portal export via [`gate_engine`](pipeline/src/sm_pipeline/validate/gate_engine.py). Trust boundary details appear in [docs/reference/trust-boundary-and-extraction.md](docs/reference/trust-boundary-and-extraction.md).
 - **PCS** — Proof-carrying release import, portal claim pages, and pcs-bench producer ([docs/pcs/README.md](docs/pcs/README.md)).
+- **Assurance** — Append-only scientific action chains, outcomes, and calibration records; not live authz/execution ([docs/assurance/README.md](docs/assurance/README.md)).
 - **CI and releases** — [docs/infra/README.md](docs/infra/README.md) and [docs/maintainers.md](docs/maintainers.md); verify tagged releases with `scripts/verify_release_checksums.sh`.
 - **Metrics and benchmarks** — `just metrics` and `just benchmark` ([docs/metrics.md](docs/metrics.md), [benchmarks/README.md](benchmarks/README.md)).
 - **Optional tooling** — LLM proposals (suggest-only), MCP, Pandoc/LaTeX, Verso ([docs/tooling/README.md](docs/tooling/README.md)); role playbooks ([docs/playbooks/README.md](docs/playbooks/README.md)).
@@ -171,6 +173,7 @@ flowchart TD
 |-------|------|
 | **Index** | [docs/README.md](docs/README.md) |
 | **Proof-Carrying Science (PCS)** | [docs/pcs/README.md](docs/pcs/README.md) |
+| **Assurance / autonomous science** | [docs/assurance/README.md](docs/assurance/README.md) |
 | **Role playbooks** (formalizer, reviewer, domain expander, release manager) | [docs/playbooks/README.md](docs/playbooks/README.md) |
 | **Contributor playbook** (setup, paper workflow, local CI, reuse, review, releases) | [docs/contributor-playbook.md](docs/contributor-playbook.md) |
 | Architecture | [docs/architecture.md](docs/architecture.md) |

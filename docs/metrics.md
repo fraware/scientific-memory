@@ -140,6 +140,7 @@ just metrics -o report.json
 - **Dimension suggestions (8.3):** Heuristic suggested unit/dimension for symbols (from kernels and symbol names); `--dimension-suggestions`; human triage only, no corpus auto-edit.
 - **Normalization policy (8.3):** Waiver-backed policy checks; `--normalization-policy`. Reads `benchmarks/normalization_policy.json`; reports unwaived cross-paper duplicates, assumption coverage, and dimension violations; warn-only unless CI promotes to fail.
 - **Reviewer status:** Theorem-card reviewer queues and consistency checks; emitted as `reviewer_status` in `just metrics` output.
+- **Autonomous science (assurance):** `uv run --project pipeline sm metrics autonomous-science --out metrics.json` (or `just metrics-autonomous-science`). Reports numerator/denominator/`included_ids`/exclusions for evidence sufficiency, decision/review agreement, outcome resolution, calibration error, replication, adverse events, time to outcome, information gain, cost, missingness, and reconstruction completeness. Each slice partitions the population (`included_ids` + exclusions == population). Gate 6 task `assurance` enforces floors in `benchmarks/baseline_thresholds.json`. Metrics measure reconstruction and evidence presence for recorded action chains; they are not live authorization rates and do not rewrite claim status. See [docs/assurance/](assurance/README.md) and [benchmarks/assurance/](../benchmarks/assurance/).
 
 ---
 
@@ -147,6 +148,7 @@ just metrics -o report.json
 
 - **Dashboard (product coverage):** Portal `/dashboard`; data from paper manifests.
 - **Derived metrics:** Run `just metrics` (or `uv run --project pipeline python -m sm_pipeline.cli metrics`); optional `-o report.json`.
+- **Assurance metrics:** `uv run --project pipeline sm metrics autonomous-science --out metrics.json` (or `just metrics-autonomous-science`).
 - **Extraction / proof metrics:** Run `just benchmark`; see `benchmarks/reports/` (e.g. `latest.json` with `tasks.gold`, `tasks.llm_suggestions`, `tasks.llm_lean_suggestions`, and `proof_success_snapshot`).
 - **Formalization health:** Lean build in CI (gate 1); Lake and theorem cards for structure.
 - **Infra health:** CI run times and test results in GitHub Actions.

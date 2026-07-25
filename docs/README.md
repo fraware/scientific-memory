@@ -25,6 +25,18 @@ Optional integration with [pcs-core](https://github.com/SentinelOps-CI/pcs-core)
 
 Legacy paths (`PCS_PRODUCER.md`, `pcs-labtrust-import.md`, etc.) redirect into `docs/pcs/`.
 
+## Assurance / autonomous science
+
+Append-only action chains, scientific outcomes, and calibration records. PCS remains the evidence layer; assurance does not rewrite claims and is not live authorization or execution.
+
+| Document | Purpose |
+|----------|---------|
+| [assurance/README.md](assurance/README.md) | Hub (scope, non-claims, CLI) |
+| [assurance/import.md](assurance/import.md) | Release import |
+| [assurance/reconstruction.md](assurance/reconstruction.md) | Export and clean reconstruction |
+| [assurance/pilot-interpretation.md](assurance/pilot-interpretation.md) | Pilot fixtures |
+| [adr/0014-assurance-action-chain.md](adr/0014-assurance-action-chain.md) | Ontology and immutability |
+
 ## Reference
 
 | Document | Purpose |
@@ -74,4 +86,4 @@ Legacy paths (`PCS_PRODUCER.md`, `pcs-labtrust-import.md`, etc.) redirect into `
 
 ## Playbook quick links
 
-[Public alpha](contributor-playbook.md#public-alpha-and-repository-state) · [Local CI](contributor-playbook.md#local-ci-checklist-green-before-merge) · [Reuse](contributor-playbook.md#reusing-scientific-memory) · [Theorem-card review](contributor-playbook.md#theorem-card-reviewer-lifecycle-policy) · [Verification boundary](contributor-playbook.md#verification-boundary) · [Schema migrations](contributor-playbook.md#schema-versioning-and-migration-notes) · [Release integrity](contributor-playbook.md#release-integrity-gate-7) · [PCS](pcs/README.md)
+[Public alpha](contributor-playbook.md#public-alpha-and-repository-state) · [Local CI](contributor-playbook.md#local-ci-checklist-green-before-merge) · [Reuse](contributor-playbook.md#reusing-scientific-memory) · [Theorem-card review](contributor-playbook.md#theorem-card-reviewer-lifecycle-policy) · [Verification boundary](contributor-playbook.md#verification-boundary) · [Schema migrations](contributor-playbook.md#schema-versioning-and-migration-notes) · [Release integrity](contributor-playbook.md#release-integrity-gate-7) · [PCS](pcs/README.md) · [Assurance](assurance/README.md)
