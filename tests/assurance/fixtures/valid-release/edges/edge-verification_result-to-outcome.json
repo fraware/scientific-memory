@@ -1,0 +1,11 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:9ecbe2eb86cf39f63a1649165f5125c2fdea396ea686256f6c1a8e395c445547",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-verification_result-to-outcome",
+  "from_node_id": "node-verification_result",
+  "notes": null,
+  "relation": "realizes",
+  "schema_version": "v1",
+  "to_node_id": "node-outcome-outcome-1"
+}

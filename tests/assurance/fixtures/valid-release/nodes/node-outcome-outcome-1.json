@@ -1,0 +1,17 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:3672790a8ab94a7cdc11a6c5b2804e0d520e1fdc4fc0deffbb312abdb4c781df",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "empirically_measured"
+  ],
+  "external_ref_ids": [],
+  "node_class": "outcome",
+  "node_id": "node-outcome-outcome-1",
+  "payload": null,
+  "payload_ref": "outcomes/outcome-1.json",
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "Outcome outcome-1"
+}

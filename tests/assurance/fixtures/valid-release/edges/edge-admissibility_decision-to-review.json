@@ -1,0 +1,11 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:bc73a4a4ff81586d1fcce4ccebd1a75f2e39f503f85abb8094c9277aa689a630",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-admissibility_decision-to-review",
+  "from_node_id": "node-admissibility_decision",
+  "notes": null,
+  "relation": "reviews",
+  "schema_version": "v1",
+  "to_node_id": "node-review"
+}

@@ -1,0 +1,17 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:f447baff528f2840a8e92abaef68fa74ef618b2373da6de4c2c747f0b1b3dadd",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "verification_result",
+  "node_id": "node-verification_result",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "verification_result for action-valid-release"
+}

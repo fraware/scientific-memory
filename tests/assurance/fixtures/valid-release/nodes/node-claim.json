@@ -1,0 +1,17 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:69cd862d401bbb969859bd0bbd9430feb9a412502ae6339a7da7ac3f94f2a4cc",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "unchecked_advisory"
+  ],
+  "external_ref_ids": [],
+  "node_class": "claim",
+  "node_id": "node-claim",
+  "payload": null,
+  "payload_ref": null,
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "claim for action-valid-release"
+}

@@ -1,0 +1,17 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:bfd2a119165671e9007959e3cd3a9929f559d0ab8ee06a95ac0ae4aebf3bf02c",
+  "created_at": "2026-07-01T00:00:00Z",
+  "evidence_classes": [
+    "human_reviewed"
+  ],
+  "external_ref_ids": [],
+  "node_class": "calibration_update",
+  "node_id": "node-calibration-cal-1",
+  "payload": null,
+  "payload_ref": "calibrations/cal-1.json",
+  "pcs_claim_id": null,
+  "privacy": "public",
+  "schema_version": "v1",
+  "summary": "Calibration cal-1"
+}

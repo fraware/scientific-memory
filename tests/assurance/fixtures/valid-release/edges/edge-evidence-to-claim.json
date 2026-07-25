@@ -1,0 +1,11 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:e25cc98c0630e40ac7cb309a0fcb0c2dcc1214bf1ec7d4c712ff104792c27fac",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-evidence-to-claim",
+  "from_node_id": "node-evidence",
+  "notes": null,
+  "relation": "supports",
+  "schema_version": "v1",
+  "to_node_id": "node-claim"
+}

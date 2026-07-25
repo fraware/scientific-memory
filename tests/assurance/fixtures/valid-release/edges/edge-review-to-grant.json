@@ -1,0 +1,11 @@
+{
+  "action_id": "action-valid-release",
+  "content_digest": "sha256:5cf37ae6661a7ac7b9ef5eb29ee890ccec7596a470aa64a5d55ff978ffb08742",
+  "created_at": "2026-07-01T00:00:00Z",
+  "edge_id": "edge-review-to-grant",
+  "from_node_id": "node-review",
+  "notes": null,
+  "relation": "grants",
+  "schema_version": "v1",
+  "to_node_id": "node-grant"
+}

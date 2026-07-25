@@ -1,0 +1,49 @@
+{
+  "action_id": "action-valid-release",
+  "admissibility_error": false,
+  "aggregation_eligibility": true,
+  "authorization_error": false,
+  "calibration_class": "well_calibrated",
+  "calibration_id": "cal-1",
+  "decision_basis": {
+    "decision_node_id": "node-admissibility_decision",
+    "summary": "Prior success estimate from similar runs"
+  },
+  "integrity": {
+    "content_digest": "sha256:4924be67a8cc58dd0b6777714d442972a7f55ed683793019661ca1fabe35e2ff",
+    "created_at": "2026-07-03T12:00:00Z",
+    "schema_version": "v1",
+    "writer_identity": "fixture-builder"
+  },
+  "missingness": {
+    "fields": [],
+    "has_missing_fields": false
+  },
+  "predicted_cost": 100.0,
+  "predicted_information_gain": null,
+  "predicted_risk": null,
+  "predicted_success": 0.7,
+  "predicted_time": 3600.0,
+  "prediction_presence": {
+    "cost": true,
+    "information_gain": false,
+    "risk": false,
+    "success": true,
+    "time": true
+  },
+  "prioritization_error": false,
+  "privacy": "public",
+  "realized_cost": 110.0,
+  "realized_information_gain": null,
+  "realized_outcome_id": "outcome-1",
+  "realized_success": true,
+  "realized_time": 4000.0,
+  "schema_version": "v1",
+  "uncertainty": {
+    "statement": "Prediction from historical rates"
+  },
+  "verifier_disagreement": {
+    "present": false,
+    "summary": null
+  }
+}
