@@ -10,6 +10,7 @@
     "test:pcs-tool-use-phase2-contract": "node scripts/verify-pcs-phase2-read-model.mjs ../tests/pcs/fixtures/tool-use-release/.phase2-read-model.json",
     "test:pcs-computation-phase2-contract": "node scripts/verify-pcs-phase2-read-model.mjs ../tests/pcs/fixtures/computation-release/.phase2-read-model.json",
     "test:pcs-computation-rejected-phase2-contract": "node scripts/verify-pcs-phase2-read-model.mjs ../tests/pcs/fixtures/computation-rejected-release/.phase2-read-model.json",
+    "test:assurance-export": "node scripts/verify-assurance-export.mjs",
     "lint": "prettier --check \"app/**/*.{ts,tsx,css}\" \"lib/**/*.ts\" \"scripts/**/*.mjs\" \"*.json\" && tsc --noEmit",
     "format": "prettier --write ."
   },

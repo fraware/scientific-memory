@@ -6,6 +6,7 @@ const links = [
   { href: "/dashboard", label: "Dashboard" },
   { href: "/diff", label: "Diff" },
   { href: "/pcs", label: "PCS claims" },
+  { href: "/assurance", label: "Assurance" },
 ] as const;
 
 export function SiteNav() {

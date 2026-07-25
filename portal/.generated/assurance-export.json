@@ -1,0 +1,961 @@
+{
+  "action_ids": [
+    "action-pilot-retrospective",
+    "action-pilot-shadow"
+  ],
+  "actions": {
+    "action-pilot-retrospective": {
+      "action_id": "action-pilot-retrospective",
+      "calibrations": [
+        {
+          "action_id": "action-pilot-retrospective",
+          "aggregation_eligibility": true,
+          "calibration_class": "well_calibrated",
+          "calibration_id": "cal-1",
+          "missingness": {
+            "fields": [],
+            "has_missing_fields": false
+          },
+          "non_claim": "Calibration does not rewrite claim status.",
+          "predicted_cost": 100.0,
+          "predicted_information_gain": null,
+          "predicted_risk": null,
+          "predicted_success": 0.7,
+          "predicted_time": 3600.0,
+          "prediction_presence": {
+            "cost": true,
+            "information_gain": false,
+            "risk": false,
+            "success": true,
+            "time": true
+          },
+          "privacy": "public",
+          "realized_outcome_id": "outcome-1",
+          "schema_version": "AssuranceCalibrationReadModel.v1"
+        }
+      ],
+      "chronology": [
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "admissibility_decision",
+          "node_id": "node-admissibility_decision",
+          "summary": "admissibility_decision for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "calibration_update",
+          "node_id": "node-calibration-cal-1",
+          "summary": "Calibration cal-1"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "claim",
+          "node_id": "node-claim",
+          "summary": "claim for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "evidence",
+          "node_id": "node-evidence",
+          "summary": "evidence for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "grant",
+          "node_id": "node-grant",
+          "summary": "grant for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "empirically_measured"
+          ],
+          "node_class": "outcome",
+          "node_id": "node-outcome-outcome-1",
+          "summary": "Outcome outcome-1"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "proposed_action",
+          "node_id": "node-proposed_action",
+          "summary": "proposed_action for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "review",
+          "node_id": "node-review",
+          "summary": "review for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "runtime_action",
+          "node_id": "node-runtime_action",
+          "summary": "runtime_action for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "source",
+          "node_id": "node-source",
+          "summary": "source for action-pilot-retrospective"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "verification_result",
+          "node_id": "node-verification_result",
+          "summary": "verification_result for action-pilot-retrospective"
+        }
+      ],
+      "edges": [
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:14cb16d970f885ee7e1fb8e9914b0226d85c251ee1e17bb825981e25574cbba0",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-admissibility_decision-to-review",
+          "from_node_id": "node-admissibility_decision",
+          "notes": null,
+          "relation": "reviews",
+          "schema_version": "v1",
+          "to_node_id": "node-review"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:6e08a25aa57977360e68b0dd920416a522af05b7fbaf0595e3a543ee3219cd8c",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-claim-to-proposed_action",
+          "from_node_id": "node-claim",
+          "notes": null,
+          "relation": "proposes",
+          "schema_version": "v1",
+          "to_node_id": "node-proposed_action"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:be38a85cc42176ce51e658e8caceb2c36bf3295f8151055e81ff7581d7d61e05",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-evidence-to-claim",
+          "from_node_id": "node-evidence",
+          "notes": null,
+          "relation": "supports",
+          "schema_version": "v1",
+          "to_node_id": "node-claim"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:28cf12f418325223ae893a1a32897a6089e18ca8b98224a940a1a570af55eead",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-grant-to-runtime_action",
+          "from_node_id": "node-grant",
+          "notes": null,
+          "relation": "executes",
+          "schema_version": "v1",
+          "to_node_id": "node-runtime_action"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:eb6d0730d61b09a500fdafd9280d90a1a65c0118c71c55c6bdac5caf158a5d49",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-outcome-to-calibration",
+          "from_node_id": "node-outcome-outcome-1",
+          "notes": null,
+          "relation": "calibrates",
+          "schema_version": "v1",
+          "to_node_id": "node-calibration-cal-1"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:fca1b80fd65d4d2c9883c333b2b546350b01aaf40e78e4c87bbdbfa5aeade395",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-proposed_action-to-admissibility_decision",
+          "from_node_id": "node-proposed_action",
+          "notes": null,
+          "relation": "decides",
+          "schema_version": "v1",
+          "to_node_id": "node-admissibility_decision"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:3c8d4d2630bca46a445fdb1508f65b76afcfb514a95ffaa3f059112f2c4cec52",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-review-to-grant",
+          "from_node_id": "node-review",
+          "notes": null,
+          "relation": "grants",
+          "schema_version": "v1",
+          "to_node_id": "node-grant"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:617f687f8a1d0d6f7b8b22359433667c3b32ac2f01b965af904048787303aa87",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-runtime_action-to-verification_result",
+          "from_node_id": "node-runtime_action",
+          "notes": null,
+          "relation": "verifies",
+          "schema_version": "v1",
+          "to_node_id": "node-verification_result"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:5ab533c6693130788332706b098c343fdf00c9d781607f2b713deee1a9dbb42e",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-source-to-evidence",
+          "from_node_id": "node-source",
+          "notes": null,
+          "relation": "supports",
+          "schema_version": "v1",
+          "to_node_id": "node-evidence"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:debae11ed3924f72d07fb3be2e07e7c8d635969dd069afd8db7a0d711432c1f6",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-verification_result-to-outcome",
+          "from_node_id": "node-verification_result",
+          "notes": null,
+          "relation": "realizes",
+          "schema_version": "v1",
+          "to_node_id": "node-outcome-outcome-1"
+        }
+      ],
+      "gaps": [],
+      "nodes": [
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:925d4c39ffca2ac173c8658f964e75432fb1cdfc5a9c7fb96cc9f334342ae5c2",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "admissibility_decision",
+          "node_id": "node-admissibility_decision",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "admissibility_decision for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:4d3b6888fb4867ac749ed0bc66438d836131af1952cc243021d77964f64bd4a6",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "calibration_update",
+          "node_id": "node-calibration-cal-1",
+          "payload": null,
+          "payload_ref": "calibrations/cal-1.json",
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "Calibration cal-1"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:dd33642dc6555a5feb28e4e86d52bc85f9f7419882533604949b6e7f5f90a825",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "claim",
+          "node_id": "node-claim",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "claim for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:39b104c0ee341c884595da012e52f69e455404ea4349e640cf36d7364e948078",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "evidence",
+          "node_id": "node-evidence",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "evidence for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:798b8c967a63222dba6fe07a22efc55e4bb0351bbbab949aeda27b1d82685cd5",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "grant",
+          "node_id": "node-grant",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "grant for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:488c78ccb685d6cf107854a3ab8299b72eadd51a2991b9f71621a208da2d4507",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "empirically_measured"
+          ],
+          "external_ref_ids": [],
+          "node_class": "outcome",
+          "node_id": "node-outcome-outcome-1",
+          "payload": null,
+          "payload_ref": "outcomes/outcome-1.json",
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "Outcome outcome-1"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:b63acefce0bc40e4be3ff9e6793e9eef56fda17fcf3e2ce784bf567694eb1243",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "proposed_action",
+          "node_id": "node-proposed_action",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "proposed_action for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:06e97bcf3a66d18cf10e5fc4ca56bc4d5c378a62e8893b29aaf17370c782e654",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "review",
+          "node_id": "node-review",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "review for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:f76ac880240944a847ccb295b7feba9d2a656443aa3a8caa7f4044e75a1ab650",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "runtime_action",
+          "node_id": "node-runtime_action",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "runtime_action for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:b0cc3d6a0c1f27449bd7264b0da842cb5f956ffa16449718dc0c8fb97b72fcdb",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "source",
+          "node_id": "node-source",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "source for action-pilot-retrospective"
+        },
+        {
+          "action_id": "action-pilot-retrospective",
+          "content_digest": "sha256:6e01d42d59e0e7eb3fe889b10eae182a5747e5cb9ab767f2276096a3cdd4da52",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "verification_result",
+          "node_id": "node-verification_result",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "verification_result for action-pilot-retrospective"
+        }
+      ],
+      "outcomes": [
+        {
+          "action_id": "action-pilot-retrospective",
+          "adverse_events": [],
+          "claim_ids": [
+            "claim-demo-1"
+          ],
+          "delayed_result_status": "not_delayed",
+          "evidence_classes": [
+            "empirically_measured",
+            "human_reviewed"
+          ],
+          "measured_result": {
+            "result_kind": "quantitative",
+            "summary": "Yield within band",
+            "units": "fraction",
+            "value": 0.82
+          },
+          "missing_data": {
+            "fields": [],
+            "has_missing_data": false
+          },
+          "non_claim": "Presence of this record does not constitute claim acceptance.",
+          "outcome_id": "outcome-1",
+          "privacy": "public",
+          "proposed_action_id": "pa-1",
+          "replication_status": "not_attempted",
+          "reviewer_assessment": {
+            "notes": null,
+            "reviewer_identity": "reviewer-1",
+            "status": "accepted"
+          },
+          "schema_version": "AssuranceOutcomeReadModel.v1",
+          "scientific_question_id": "q-1"
+        }
+      ]
+    },
+    "action-pilot-shadow": {
+      "action_id": "action-pilot-shadow",
+      "calibrations": [
+        {
+          "action_id": "action-pilot-shadow",
+          "aggregation_eligibility": false,
+          "calibration_class": "not_aggregable",
+          "calibration_id": "cal-1",
+          "missingness": {
+            "fields": [
+              {
+                "field": "realized_outcome_id",
+                "reason": "delayed unresolved"
+              }
+            ],
+            "has_missing_fields": true
+          },
+          "non_claim": "Calibration does not rewrite claim status.",
+          "predicted_cost": 100.0,
+          "predicted_information_gain": null,
+          "predicted_risk": null,
+          "predicted_success": 0.7,
+          "predicted_time": 3600.0,
+          "prediction_presence": {
+            "cost": true,
+            "information_gain": false,
+            "risk": false,
+            "success": true,
+            "time": true
+          },
+          "privacy": "public",
+          "realized_outcome_id": null,
+          "schema_version": "AssuranceCalibrationReadModel.v1"
+        }
+      ],
+      "chronology": [
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "admissibility_decision",
+          "node_id": "node-admissibility_decision",
+          "summary": "admissibility_decision for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "calibration_update",
+          "node_id": "node-calibration-cal-1",
+          "summary": "Calibration cal-1"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "claim",
+          "node_id": "node-claim",
+          "summary": "claim for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "evidence",
+          "node_id": "node-evidence",
+          "summary": "evidence for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "grant",
+          "node_id": "node-grant",
+          "summary": "grant for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "empirically_measured"
+          ],
+          "node_class": "outcome",
+          "node_id": "node-outcome-outcome-1",
+          "summary": "Outcome outcome-1"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "proposed_action",
+          "node_id": "node-proposed_action",
+          "summary": "proposed_action for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "node_class": "review",
+          "node_id": "node-review",
+          "summary": "review for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "runtime_action",
+          "node_id": "node-runtime_action",
+          "summary": "runtime_action for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "source",
+          "node_id": "node-source",
+          "summary": "source for action-pilot-shadow"
+        },
+        {
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "node_class": "verification_result",
+          "node_id": "node-verification_result",
+          "summary": "verification_result for action-pilot-shadow"
+        }
+      ],
+      "edges": [
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:d3360843c008d9dd737b25ace629e06abb3a1cd15774c5f0e2b205508231e8cc",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-admissibility_decision-to-review",
+          "from_node_id": "node-admissibility_decision",
+          "notes": null,
+          "relation": "reviews",
+          "schema_version": "v1",
+          "to_node_id": "node-review"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:32d572253513caa2aff2fb5e2aec4182ab3aa2037896c87ebf8625bb0f4818d9",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-claim-to-proposed_action",
+          "from_node_id": "node-claim",
+          "notes": null,
+          "relation": "proposes",
+          "schema_version": "v1",
+          "to_node_id": "node-proposed_action"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:39b1fd1696ec107b98b35f0e853190508da22c6a2a000edff90c59e2dcb4052f",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-evidence-to-claim",
+          "from_node_id": "node-evidence",
+          "notes": null,
+          "relation": "supports",
+          "schema_version": "v1",
+          "to_node_id": "node-claim"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:a2e929018066c0f9e05665e12a1179286af9761d8a60751ed8a77545d5949279",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-grant-to-runtime_action",
+          "from_node_id": "node-grant",
+          "notes": null,
+          "relation": "executes",
+          "schema_version": "v1",
+          "to_node_id": "node-runtime_action"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:7e0e7f5c7763a1bce76b2c980e9656bfdf59600b8451ad47ffec9fdfa82a1ee2",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-outcome-to-calibration",
+          "from_node_id": "node-outcome-outcome-1",
+          "notes": null,
+          "relation": "calibrates",
+          "schema_version": "v1",
+          "to_node_id": "node-calibration-cal-1"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:88a75be1abb2158bcf772569ba7c8ec8f00b3eafba67474eff8dd00ad63737e3",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-proposed_action-to-admissibility_decision",
+          "from_node_id": "node-proposed_action",
+          "notes": null,
+          "relation": "decides",
+          "schema_version": "v1",
+          "to_node_id": "node-admissibility_decision"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:b37c9de8c938b89272829905b180b617d6156efe6abb99372846a5dbbd0327eb",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-review-to-grant",
+          "from_node_id": "node-review",
+          "notes": null,
+          "relation": "grants",
+          "schema_version": "v1",
+          "to_node_id": "node-grant"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:5ee84b2b2d60b24ff1828b7935aaad865f3482c19c1c0cd64f217deabda1b306",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-runtime_action-to-verification_result",
+          "from_node_id": "node-runtime_action",
+          "notes": null,
+          "relation": "verifies",
+          "schema_version": "v1",
+          "to_node_id": "node-verification_result"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:dd0ef594f45713699307153b088f68c5d13c39edce20ca574456b2e36bedd195",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-source-to-evidence",
+          "from_node_id": "node-source",
+          "notes": null,
+          "relation": "supports",
+          "schema_version": "v1",
+          "to_node_id": "node-evidence"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:92cca3d9e2b31ae59ba216dab6cbaeb2a575846ee97b6543d6b0470e66b71085",
+          "created_at": "2026-07-01T00:00:00Z",
+          "edge_id": "edge-verification_result-to-outcome",
+          "from_node_id": "node-verification_result",
+          "notes": null,
+          "relation": "realizes",
+          "schema_version": "v1",
+          "to_node_id": "node-outcome-outcome-1"
+        }
+      ],
+      "gaps": [
+        {
+          "gap_id": "delayed_outcome:outcome-1",
+          "reason": "Unresolved delayed outcome"
+        }
+      ],
+      "nodes": [
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:e69a5dad142cdd3499c30514f9bc5eade451d7067d49ed61d545ef2c152fce3f",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "admissibility_decision",
+          "node_id": "node-admissibility_decision",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "admissibility_decision for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:bb238e7998f585850849df01559de0d85e664d55ff3a8c8ace391e5fdaa8790d",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "calibration_update",
+          "node_id": "node-calibration-cal-1",
+          "payload": null,
+          "payload_ref": "calibrations/cal-1.json",
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "Calibration cal-1"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:1fcbd4533141c3b62625affe47f10f4fceec724ea9928d3b406904ab2edf36df",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "claim",
+          "node_id": "node-claim",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "claim for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:1097f4af713a793e5e6e9fac6fdf5ca50e8d4070406f4927c6a3f62f7885400b",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "evidence",
+          "node_id": "node-evidence",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "evidence for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:c26dec6f95fe8b1cedad91aac7c42c953c4cbbaaf1826a67ecaea418d52bc2bc",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "grant",
+          "node_id": "node-grant",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "grant for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:acec0123d9bfc026cc3a14068a3597ee48d6910c11722c693c190c95f6581524",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "empirically_measured"
+          ],
+          "external_ref_ids": [],
+          "node_class": "outcome",
+          "node_id": "node-outcome-outcome-1",
+          "payload": null,
+          "payload_ref": "outcomes/outcome-1.json",
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "Outcome outcome-1"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:9b115866bb76d262fafe6bd883727902874cac535f9a332b2d6ecfe17c1fd267",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "proposed_action",
+          "node_id": "node-proposed_action",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "proposed_action for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:1afb95c4d85a508e8b6858e2186e38893acd952b41d9074fe5917dccd16c00f3",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "human_reviewed"
+          ],
+          "external_ref_ids": [],
+          "node_class": "review",
+          "node_id": "node-review",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "review for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:1b4f9bf71cd30d4ad4c91ce0b334a4d0ab755f18aedcf7f2a7e033ee910f8eaf",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "runtime_action",
+          "node_id": "node-runtime_action",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "runtime_action for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:c75bad2fef795674e69658c0e12e16017583bfea0a7ddef725afb9aac2386856",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "source",
+          "node_id": "node-source",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "source for action-pilot-shadow"
+        },
+        {
+          "action_id": "action-pilot-shadow",
+          "content_digest": "sha256:66f261dd4332c429c593dbcd4acdcff9b62ad43897fb528e50c021da3a9e5c51",
+          "created_at": "2026-07-01T00:00:00Z",
+          "evidence_classes": [
+            "unchecked_advisory"
+          ],
+          "external_ref_ids": [],
+          "node_class": "verification_result",
+          "node_id": "node-verification_result",
+          "payload": null,
+          "payload_ref": null,
+          "pcs_claim_id": null,
+          "privacy": "public",
+          "schema_version": "v1",
+          "summary": "verification_result for action-pilot-shadow"
+        }
+      ],
+      "outcomes": [
+        {
+          "action_id": "action-pilot-shadow",
+          "adverse_events": [],
+          "claim_ids": [
+            "claim-demo-1"
+          ],
+          "delayed_result_status": "delayed_unresolved",
+          "evidence_classes": [
+            "empirically_measured",
+            "human_reviewed"
+          ],
+          "measured_result": {
+            "result_kind": "not_yet_available",
+            "summary": "Pending",
+            "units": null,
+            "value": null
+          },
+          "missing_data": {
+            "fields": [],
+            "has_missing_data": false
+          },
+          "non_claim": "Presence of this record does not constitute claim acceptance.",
+          "outcome_id": "outcome-1",
+          "privacy": "public",
+          "proposed_action_id": "pa-1",
+          "replication_status": "not_attempted",
+          "reviewer_assessment": {
+            "notes": null,
+            "reviewer_identity": "reviewer-1",
+            "status": "accepted"
+          },
+          "schema_version": "AssuranceOutcomeReadModel.v1",
+          "scientific_question_id": "q-1"
+        }
+      ]
+    }
+  },
+  "generated_at": "2026-07-25T06:08:25Z",
+  "include_internal": false,
+  "schema_version": "AssurancePortalExport.v1"
+}
