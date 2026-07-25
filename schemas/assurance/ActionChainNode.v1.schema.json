@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/ActionChainNode.v1.schema.json",
+  "title": "ActionChainNode.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "node_id",
+    "action_id",
+    "node_class",
+    "summary",
+    "created_at",
+    "content_digest",
+    "privacy",
+    "evidence_classes"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "node_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "node_class": {
+      "$ref": "common.defs.v1.schema.json#/$defs/node_class"
+    },
+    "summary": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "created_at": {
+      "$ref": "common.defs.v1.schema.json#/$defs/iso_datetime"
+    },
+    "content_digest": {
+      "$ref": "common.defs.v1.schema.json#/$defs/hex_digest"
+    },
+    "privacy": {
+      "$ref": "common.defs.v1.schema.json#/$defs/privacy_level"
+    },
+    "evidence_classes": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/evidence_class" }
+    },
+    "payload_ref": {
+      "type": ["string", "null"],
+      "description": "Relative path to outcome/calibration/PCS artifact when applicable"
+    },
+    "pcs_claim_id": {
+      "type": ["string", "null"]
+    },
+    "external_ref_ids": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+    },
+    "payload": {
+      "type": ["object", "null"],
+      "description": "Optional inline public payload; internal/redacted stripped on public export"
+    }
+  }
+}

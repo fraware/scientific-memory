@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/AssuranceReleaseManifest.v1.schema.json",
+  "title": "AssuranceReleaseManifest.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_id",
+    "action_id",
+    "created_at",
+    "lifecycle",
+    "artifacts",
+    "checksums_path"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "release_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "created_at": {
+      "$ref": "common.defs.v1.schema.json#/$defs/iso_datetime"
+    },
+    "lifecycle": {
+      "$ref": "common.defs.v1.schema.json#/$defs/lifecycle_state"
+    },
+    "producer": {
+      "type": ["string", "null"]
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["refs", "pcs", "execution", "outcomes", "calibrations", "nodes", "edges"],
+      "properties": {
+        "refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "pcs": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["bundle", "claim_pointers", "none"]
+            },
+            "bundle_path": { "type": ["string", "null"] },
+            "claim_pointers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["claim_id", "digest"],
+                "properties": {
+                  "claim_id": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+                  "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+                }
+              }
+            }
+          }
+        },
+        "execution": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "outcomes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "calibrations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "nodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "edges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "digest"],
+            "properties": {
+              "path": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        }
+      }
+    },
+    "checksums_path": {
+      "type": "string",
+      "const": "checksums.txt"
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  }
+}

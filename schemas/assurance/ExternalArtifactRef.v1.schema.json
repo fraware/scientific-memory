@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/ExternalArtifactRef.v1.schema.json",
+  "title": "ExternalArtifactRef.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ref_id",
+    "system_kind",
+    "artifact_id",
+    "content_digest",
+    "lifecycle"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "ref_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "system_kind": {
+      "$ref": "common.defs.v1.schema.json#/$defs/external_system_kind"
+    },
+    "artifact_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "artifact_version": {
+      "type": ["string", "null"]
+    },
+    "content_digest": {
+      "$ref": "common.defs.v1.schema.json#/$defs/hex_digest"
+    },
+    "uri": {
+      "type": ["string", "null"]
+    },
+    "lifecycle": {
+      "$ref": "common.defs.v1.schema.json#/$defs/lifecycle_state"
+    },
+    "snapshot_path": {
+      "type": ["string", "null"],
+      "description": "Optional path relative to assurance release refs/ for a committed snapshot"
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  }
+}

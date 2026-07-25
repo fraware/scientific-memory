@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/AutonomousScienceMetrics.v1.schema.json",
+  "title": "AutonomousScienceMetrics.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated_at",
+    "population_action_ids",
+    "metrics"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "generated_at": {
+      "$ref": "common.defs.v1.schema.json#/$defs/iso_datetime"
+    },
+    "population_action_ids": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_sufficiency",
+        "decision_and_review_agreement",
+        "outcome_resolution",
+        "calibration_error",
+        "replication_rate",
+        "adverse_event_frequency",
+        "time_to_outcome",
+        "information_gain",
+        "cost",
+        "missingness",
+        "reconstruction_completeness"
+      ],
+      "properties": {
+        "evidence_sufficiency": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "decision_and_review_agreement": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "outcome_resolution": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "calibration_error": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "replication_rate": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "adverse_event_frequency": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "time_to_outcome": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "information_gain": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "cost": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "missingness": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        },
+        "reconstruction_completeness": {
+          "$ref": "common.defs.v1.schema.json#/$defs/metric_slice"
+        }
+      }
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  }
+}

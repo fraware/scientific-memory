@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/common.defs.v1.schema.json",
+  "title": "Assurance common definitions v1",
+  "$defs": {
+    "schema_version_v1": {
+      "type": "string",
+      "const": "v1"
+    },
+    "nonempty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "hex_digest": {
+      "type": "string",
+      "pattern": "^(sha256:)?[a-f0-9]{64}$"
+    },
+    "iso_datetime": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_class": {
+      "type": "string",
+      "enum": [
+        "formally_checked",
+        "certificate_checked",
+        "runtime_observed",
+        "empirically_measured",
+        "human_reviewed",
+        "unchecked_advisory"
+      ]
+    },
+    "privacy_level": {
+      "type": "string",
+      "enum": ["public", "internal", "redacted"]
+    },
+    "external_system_kind": {
+      "type": "string",
+      "enum": ["vsa", "akta", "scope", "pf", "pcs", "execution", "other"]
+    },
+    "lifecycle_state": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "admissible_for_import",
+        "imported",
+        "superseded",
+        "rejected",
+        "indeterminate"
+      ]
+    },
+    "integrity_envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "content_digest",
+        "writer_identity",
+        "schema_version",
+        "created_at"
+      ],
+      "properties": {
+        "content_digest": { "$ref": "#/$defs/hex_digest" },
+        "writer_identity": { "$ref": "#/$defs/nonempty_string" },
+        "schema_version": { "$ref": "#/$defs/schema_version_v1" },
+        "created_at": { "$ref": "#/$defs/iso_datetime" }
+      }
+    },
+    "node_class": {
+      "type": "string",
+      "enum": [
+        "source",
+        "evidence",
+        "claim",
+        "proposed_action",
+        "admissibility_decision",
+        "review",
+        "grant",
+        "runtime_action",
+        "verification_result",
+        "outcome",
+        "replication",
+        "calibration_update"
+      ]
+    },
+    "metric_slice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "definition_id",
+        "numerator",
+        "denominator",
+        "exclusions",
+        "included_ids"
+      ],
+      "properties": {
+        "definition_id": { "$ref": "#/$defs/nonempty_string" },
+        "numerator": { "type": "number" },
+        "denominator": { "type": "number", "minimum": 0 },
+        "included_ids": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/nonempty_string" }
+        },
+        "exclusions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "reason"],
+            "properties": {
+              "id": { "$ref": "#/$defs/nonempty_string" },
+              "reason": { "$ref": "#/$defs/nonempty_string" }
+            }
+          }
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

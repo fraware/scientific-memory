@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/ActionChainEdge.v1.schema.json",
+  "title": "ActionChainEdge.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "edge_id",
+    "action_id",
+    "from_node_id",
+    "to_node_id",
+    "relation",
+    "created_at",
+    "content_digest"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "edge_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "from_node_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "to_node_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "relation": {
+      "type": "string",
+      "enum": [
+        "supports",
+        "proposes",
+        "decides",
+        "reviews",
+        "grants",
+        "executes",
+        "verifies",
+        "realizes",
+        "replicates",
+        "calibrates",
+        "depends_on"
+      ]
+    },
+    "created_at": {
+      "$ref": "common.defs.v1.schema.json#/$defs/iso_datetime"
+    },
+    "content_digest": {
+      "$ref": "common.defs.v1.schema.json#/$defs/hex_digest"
+    },
+    "notes": {
+      "type": ["string", "null"]
+    }
+  }
+}
