@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://scientific-memory.org/schemas/assurance/ScientificOutcomeRecord.v1.schema.json",
+  "title": "ScientificOutcomeRecord.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "outcome_id",
+    "action_id",
+    "scientific_question_id",
+    "claim_ids",
+    "proposed_action_id",
+    "external_refs",
+    "pcs_claim_ids",
+    "intervention_performed",
+    "protocol",
+    "protocol_deviations",
+    "measured_result",
+    "data_commitments",
+    "uncertainty",
+    "adverse_events",
+    "missing_data",
+    "delayed_result_status",
+    "reviewer_assessment",
+    "replication_status",
+    "environment_context",
+    "integrity",
+    "privacy",
+    "evidence_classes"
+  ],
+  "properties": {
+    "schema_version": {
+      "$ref": "common.defs.v1.schema.json#/$defs/schema_version_v1"
+    },
+    "outcome_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "scientific_question_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+      "minItems": 1
+    },
+    "proposed_action_id": {
+      "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string"
+    },
+    "external_refs": {
+      "type": "array",
+      "items": { "$ref": "ExternalArtifactRef.v1.schema.json" },
+      "description": "VSA, AKTA, SCOPE, PF, execution, and other typed refs"
+    },
+    "pcs_claim_ids": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+    },
+    "intervention_performed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "performed_at": {
+          "type": ["string", "null"]
+        },
+        "operator_identity": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocol_id", "description"],
+      "properties": {
+        "protocol_id": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "description": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "version": { "type": ["string", "null"] }
+      }
+    },
+    "protocol_deviations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description"],
+        "properties": {
+          "description": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+          "severity": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "measured_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "result_kind"],
+      "properties": {
+        "summary": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "result_kind": {
+          "type": "string",
+          "enum": [
+            "quantitative",
+            "qualitative",
+            "binary",
+            "indeterminate",
+            "not_yet_available"
+          ]
+        },
+        "value": {
+          "type": ["number", "string", "boolean", "object", "null"]
+        },
+        "units": { "type": ["string", "null"] }
+      }
+    },
+    "data_commitments": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_digests"],
+      "properties": {
+        "source_digests": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "digest"],
+            "properties": {
+              "name": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "digest": { "$ref": "common.defs.v1.schema.json#/$defs/hex_digest" }
+            }
+          }
+        },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+    "uncertainty": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["statement"],
+      "properties": {
+        "statement": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "quantitative": {
+          "type": ["object", "null"],
+          "additionalProperties": true
+        }
+      }
+    },
+    "adverse_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["description", "severity"],
+        "properties": {
+          "description": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+          "severity": {
+            "type": "string",
+            "enum": ["none", "low", "medium", "high", "critical"]
+          },
+          "mitigation": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "missing_data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["has_missing_data", "fields"],
+      "properties": {
+        "has_missing_data": { "type": "boolean" },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["field", "reason"],
+            "properties": {
+              "field": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+              "reason": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+            }
+          }
+        }
+      }
+    },
+    "delayed_result_status": {
+      "type": "string",
+      "enum": ["not_delayed", "delayed_unresolved", "delayed_resolved"]
+    },
+    "reviewer_assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "unreviewed",
+            "accepted",
+            "accepted_with_reservations",
+            "rejected",
+            "indeterminate"
+          ]
+        },
+        "notes": { "type": ["string", "null"] },
+        "reviewer_identity": { "type": ["string", "null"] }
+      }
+    },
+    "replication_status": {
+      "type": "string",
+      "enum": [
+        "not_attempted",
+        "in_progress",
+        "replicated",
+        "failed_to_replicate",
+        "inconclusive"
+      ]
+    },
+    "environment_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" },
+        "instrument_ids": {
+          "type": "array",
+          "items": { "$ref": "common.defs.v1.schema.json#/$defs/nonempty_string" }
+        },
+        "site": { "type": ["string", "null"] }
+      }
+    },
+    "integrity": {
+      "$ref": "common.defs.v1.schema.json#/$defs/integrity_envelope"
+    },
+    "privacy": {
+      "$ref": "common.defs.v1.schema.json#/$defs/privacy_level"
+    },
+    "evidence_classes": {
+      "type": "array",
+      "items": { "$ref": "common.defs.v1.schema.json#/$defs/evidence_class" },
+      "minItems": 1
+    }
+  }
+}
