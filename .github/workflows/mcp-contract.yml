@@ -16,12 +16,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: SentinelOps-CI/pcs-core
+          ref: 9c971f5f9da8a424924dd8f48d6a3b71a1009e1b
           path: pcs-core
 
       - name: Make PCS dependency available at uv.lock sibling path
         run: |
           test -f "$GITHUB_WORKSPACE/pcs-core/python/pyproject.toml"
           ln -sfn "$GITHUB_WORKSPACE/pcs-core" "$GITHUB_WORKSPACE/../pcs-core"
+
+      - name: Verify pinned PCS revision and repair upstream packaging metadata
+        run: python scripts/prepare_pcs_core_workspace.py
       - uses: astral-sh/setup-uv@v4
       - name: Install deps (including MCP extras)
         run: uv sync --all-packages --extra mcp
