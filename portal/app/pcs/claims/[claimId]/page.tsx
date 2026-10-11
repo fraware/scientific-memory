@@ -22,9 +22,14 @@ export default async function PcsClaimRoute({
         <h1 className="text-3xl font-semibold">PCS claim not found</h1>
         <p className="mt-2 text-gray-600">
           No imported claim with id “{claimId}”. Run{" "}
-          <code className="rounded bg-gray-100 px-1">just pcs-import-bundle</code>{" "}
+          <code className="rounded bg-gray-100 px-1">
+            just pcs-import-bundle
+          </code>{" "}
           then{" "}
-          <code className="rounded bg-gray-100 px-1">just pcs-render-claim</code>.
+          <code className="rounded bg-gray-100 px-1">
+            just pcs-render-claim
+          </code>
+          .
         </p>
       </main>
     );
