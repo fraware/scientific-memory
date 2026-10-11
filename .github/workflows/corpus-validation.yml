@@ -34,7 +34,7 @@ jobs:
 
       - name: Sync PCS benchmark schemas from pcs-core
         if: hashFiles('pcs-core/schemas/**') != ''
-        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core
+        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core/schemas
 
       - name: Install pcs-core extra (when checked out)
         run: |
