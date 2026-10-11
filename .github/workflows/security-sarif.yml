@@ -31,7 +31,7 @@ jobs:
         run: uv sync --all-packages
       - name: Generate Ruff SARIF (warning-first)
         run: |
-          uv run --project pipeline ruff check pipeline kernels kernels/conformance scripts tests --output-format sarif --exit-zero > ruff.sarif
+          uvx --from ruff==0.17.0 ruff check pipeline kernels kernels/conformance scripts tests --output-format sarif --exit-zero > ruff.sarif
       - name: Upload SARIF to code scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
