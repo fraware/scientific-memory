@@ -54,7 +54,7 @@ jobs:
 
       - name: Install pcs-bench CLI
         if: hashFiles('pcs-bench/pyproject.toml') != ''
-        run: uv pip install --system -e pcs-bench
+        run: uv pip install --python .venv/bin/python -e pcs-bench
 
       - uses: pnpm/action-setup@v4
         with:
