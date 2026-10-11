@@ -54,7 +54,7 @@ jobs:
         run: uv pip install --system -e pcs-bench
 
       - name: Sync PCS benchmark schemas
-        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core
+        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core/schemas
 
       - name: LabTrust producer gate (release-grade)
         env:
