@@ -85,7 +85,7 @@ jobs:
         run: uv run --project pipeline python -m sm_pipeline.cli validate-all
 
       - name: Run pipeline tests
-        run: uv run --project pipeline pytest
+        run: uv run --all-packages pytest
 
       - name: Run PCS contract tests
         env:
