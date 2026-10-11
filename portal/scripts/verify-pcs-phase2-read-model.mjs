@@ -19,7 +19,13 @@ const registryEntry = z.object({
   source_commit: z.string().min(40),
   hash: z.string().startsWith("sha256:"),
   semantic_checks_performed: z.array(z.string()),
-  admission_status: z.enum(["passed", "warning", "failed", "deferred", "not_applicable"]),
+  admission_status: z.enum([
+    "passed",
+    "warning",
+    "failed",
+    "deferred",
+    "not_applicable",
+  ]),
   registry_admission_result: z.string().min(1),
 });
 
@@ -101,7 +107,9 @@ const phase2Schema = z
     release_chain_validation: z.object({
       validation_id: z.string().min(1),
       status: z.literal("ProofChecked"),
-      checks: z.array(z.object({ check_id: z.string(), status: z.string() })).min(1),
+      checks: z
+        .array(z.object({ check_id: z.string(), status: z.string() }))
+        .min(1),
     }),
     artifact_registry: z.array(registryEntry).min(1),
     handoff_manifests: z.array(handoffEntry).optional(),
@@ -128,13 +136,25 @@ const phase2Schema = z
       claim_id: z.string().min(1),
       certificate_id: z.string().min(1),
       signed_bundle_hash: z.string().startsWith("sha256:"),
-      claim_state: z.enum(["current", "stale", "superseded", "withdrawn", "revalidated"]),
+      claim_state: z.enum([
+        "current",
+        "stale",
+        "superseded",
+        "withdrawn",
+        "revalidated",
+      ]),
       recommended_action: z.string().min(1),
     }),
     staleness: z.object({
       stale: z.boolean(),
       stale_reasons: z.array(z.string()),
-      claim_state: z.enum(["current", "stale", "superseded", "withdrawn", "revalidated"]),
+      claim_state: z.enum([
+        "current",
+        "stale",
+        "superseded",
+        "withdrawn",
+        "revalidated",
+      ]),
       repair_hint: z.string(),
       recommended_action: z.string().min(1),
     }),
@@ -206,7 +226,8 @@ const phase2Schema = z
       if (!certs.includes("ComputationWitness.v0")) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "certificate_artifact_types must include ComputationWitness.v0",
+          message:
+            "certificate_artifact_types must include ComputationWitness.v0",
           path: ["certificate_artifact_types"],
         });
       }
@@ -214,14 +235,16 @@ const phase2Schema = z
       if (!notice.includes("computational provenance")) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "limitation_notice must include computation reproducibility disclaimer",
+          message:
+            "limitation_notice must include computation reproducibility disclaimer",
           path: ["limitation_notice"],
         });
       }
     } else if (!(data.handoff_manifests?.length ?? 0)) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
-        message: "handoff_manifests required for release workflows with producer handoffs",
+        message:
+          "handoff_manifests required for release workflows with producer handoffs",
         path: ["handoff_manifests"],
       });
     }
@@ -239,12 +262,15 @@ const phase2Schema = z
       if (kernel.overall_status !== "ProofChecked") {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "formal_trust_kernel.overall_status must be ProofChecked for passed releases",
+          message:
+            "formal_trust_kernel.overall_status must be ProofChecked for passed releases",
           path: ["formal_trust_kernel", "overall_status"],
         });
       }
       for (const snippet of REQUIRED_FORMAL_NON_CLAIM_SNIPPETS) {
-        const found = (kernel.formal_non_claims ?? []).some((line) => line.includes(snippet));
+        const found = (kernel.formal_non_claims ?? []).some((line) =>
+          line.includes(snippet),
+        );
         if (!found) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
@@ -266,12 +292,18 @@ const phase2Schema = z
 
 const modelPath = process.argv[2]
   ? path.resolve(process.argv[2])
-  : path.resolve(__dirname, "../../tests/pcs/fixtures/labtrust-release/.phase2-read-model.json");
+  : path.resolve(
+      __dirname,
+      "../../tests/pcs/fixtures/labtrust-release/.phase2-read-model.json",
+    );
 
 const raw = JSON.parse(readFileSync(modelPath, "utf8"));
 const parsed = phase2Schema.safeParse(raw);
 if (!parsed.success) {
-  console.error("PCS Phase 2 read model contract failed:", parsed.error.flatten());
+  console.error(
+    "PCS Phase 2 read model contract failed:",
+    parsed.error.flatten(),
+  );
   process.exit(1);
 }
 console.log(
