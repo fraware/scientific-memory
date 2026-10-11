@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Checkout pcs-core (workspace dependency)
+        uses: actions/checkout@v4
+        with:
+          repository: SentinelOps-CI/pcs-core
+          path: pcs-core
       - uses: astral-sh/setup-uv@v4
       - name: Install deps (including MCP extras)
         run: uv sync --all-packages --extra mcp
