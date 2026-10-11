@@ -16,9 +16,14 @@ export default async function PcsClaimsIndexPage() {
       {claimIds.length === 0 ? (
         <p className="mt-6 text-sm text-gray-600">
           No claims imported yet. Run{" "}
-          <code className="rounded bg-gray-100 px-1">just pcs-import-release</code>{" "}
+          <code className="rounded bg-gray-100 px-1">
+            just pcs-import-release
+          </code>{" "}
           then{" "}
-          <code className="rounded bg-gray-100 px-1">just pcs-render-claim claim-pcs-qc-release-v0.1</code>.
+          <code className="rounded bg-gray-100 px-1">
+            just pcs-render-claim claim-pcs-qc-release-v0.1
+          </code>
+          .
         </p>
       ) : (
         <ul className="mt-6 space-y-3">
@@ -29,7 +34,11 @@ export default async function PcsClaimsIndexPage() {
               const stale = model?.staleness?.stale === true;
               return (
                 <li key={claimId} className="rounded border p-4">
-                  <ClaimListHeader claimId={claimId} releaseId={releaseId} stale={stale} />
+                  <ClaimListHeader
+                    claimId={claimId}
+                    releaseId={releaseId}
+                    stale={stale}
+                  />
                   {model?.claim?.text != null && (
                     <p className="mt-2 line-clamp-2 text-sm text-gray-700">
                       {model.claim.text}
