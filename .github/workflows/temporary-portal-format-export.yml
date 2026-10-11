@@ -1,0 +1,55 @@
+name: Temporary portal formatting export
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/temporary-portal-format-export.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  format-export:
+    if: github.repository == 'fraware/scientific-memory' && github.head_ref == 'fix/ci-workspace-bootstrap-20261011'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "10.0.0"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+      - name: Install pinned tooling without lifecycle scripts
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Produce exact formatting, then check portal
+        run: |
+          pnpm --dir portal exec prettier --write \
+            "app/pcs/claims/[claimId]/page.tsx" \
+            "app/pcs/page.tsx" \
+            "lib/pcsData.ts" \
+            "scripts/verify-pcs-phase2-read-model.mjs" \
+            "scripts/verify-pcs-read-model.mjs"
+          git diff --check
+          pnpm --dir portal lint
+      - name: Export deterministic formatted bytes to log
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from base64 import b64encode
+          paths = [
+              "portal/app/pcs/claims/[claimId]/page.tsx",
+              "portal/app/pcs/page.tsx",
+              "portal/lib/pcsData.ts",
+              "portal/scripts/verify-pcs-phase2-read-model.mjs",
+              "portal/scripts/verify-pcs-read-model.mjs",
+          ]
+          for i, path in enumerate(paths):
+              value = b64encode(Path(path).read_bytes()).decode("ascii")
+              print(f"__FMT_BEGIN_{i}__", flush=True)
+              for j in range(0, len(value), 96):
+                  print("FMT_" + value[j:j + 96], flush=True)
+              print(f"__FMT_END_{i}__", flush=True)
+          PY
