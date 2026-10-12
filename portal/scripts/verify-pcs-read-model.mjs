@@ -34,7 +34,9 @@ const readModelSchema = z.object({
     verifier: z.string().optional(),
     checks: z.array(z.object({ outcome: z.string() })).min(1),
   }),
-  artifact_hashes: z.array(z.object({ name: z.string(), digest: z.string() })).min(5),
+  artifact_hashes: z
+    .array(z.object({ name: z.string(), digest: z.string() }))
+    .min(5),
   canonical_digests: z.object({
     claim_artifact: z.string().startsWith("sha256:"),
     runtime_receipt: z.string().startsWith("sha256:"),

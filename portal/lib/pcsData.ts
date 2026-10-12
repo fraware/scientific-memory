@@ -13,7 +13,9 @@ async function readPcsExport(): Promise<PcsPortalExport | null> {
   return JSON.parse(raw) as PcsPortalExport;
 }
 
-async function readClaimFromCorpus(claimId: string): Promise<PcsClaimReadModel | null> {
+async function readClaimFromCorpus(
+  claimId: string,
+): Promise<PcsClaimReadModel | null> {
   const p = path.join(CORPUS_PCS, claimId, "read_model.json");
   const raw = await fs.readFile(p, "utf8").catch(() => null);
   if (!raw) return null;
@@ -25,7 +27,9 @@ export async function getAllPcsClaimIds(): Promise<string[]> {
   if (exported?.claim_ids?.length) {
     return exported.claim_ids;
   }
-  const entries = await fs.readdir(CORPUS_PCS, { withFileTypes: true }).catch(() => []);
+  const entries = await fs
+    .readdir(CORPUS_PCS, { withFileTypes: true })
+    .catch(() => []);
   return entries.filter((e) => e.isDirectory()).map((e) => e.name);
 }
 

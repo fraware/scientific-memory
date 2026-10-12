@@ -29,7 +29,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: SentinelOps-CI/pcs-core
+          ref: 9c971f5f9da8a424924dd8f48d6a3b71a1009e1b
           path: pcs-core
+
+      - name: Make PCS dependency available at uv.lock sibling path
+        run: |
+          test -f "$GITHUB_WORKSPACE/pcs-core/python/pyproject.toml"
+          ln -sfn "$GITHUB_WORKSPACE/pcs-core" "$GITHUB_WORKSPACE/../pcs-core"
+
+      - name: Verify pinned PCS revision and repair upstream packaging metadata
+        run: python scripts/prepare_pcs_core_workspace.py
 
       - name: Checkout pcs-bench
         uses: actions/checkout@v4
@@ -49,7 +58,7 @@ jobs:
         run: uv pip install --system -e pcs-bench
 
       - name: Sync PCS benchmark schemas
-        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core
+        run: uv run python scripts/sync_pcs_benchmark_schemas.py pcs-core/schemas
 
       - name: LabTrust producer gate (release-grade)
         env:
