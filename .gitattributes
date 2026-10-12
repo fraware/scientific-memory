@@ -4,3 +4,4 @@ scripts/node_bin/node text eol=lf
 
 # These externally digested release artifacts must retain exact byte encodings.
 tests/pcs/fixtures/computation-release/*.json -text
+tests/pcs/fixtures/computation-rejected-release/*.json -text
